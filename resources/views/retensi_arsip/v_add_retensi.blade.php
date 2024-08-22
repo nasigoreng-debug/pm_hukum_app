@@ -21,7 +21,6 @@
                 <div class="col">
                     <!-- general form elements -->
                     <div class="row col-margin">
-
                         <!-- /.card-header -->
                         <div class="col-xs-2">
                             <label>Pengadilan Agama Pengaju</label>

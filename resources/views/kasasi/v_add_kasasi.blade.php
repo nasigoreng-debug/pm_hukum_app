@@ -21,9 +21,8 @@
                 <div class="col">
                     <!-- general form elements -->
                     <div class="card card-primary mt-3 ml-3 mb-3 mr-3">
-
                         <!-- /.card-header -->
-                        <!-- <div class="form-group ml-3 mt-2 mb-2 mr-3">
+                        <!-- <div class="form-group col-xs-6">
                             <label>Pengadilan Agama Pengaju</label>
                             <select name="pa_pengaju" class="form-control @error('pa_pengaju') is-invalid @enderror" autofocus>
                                 <option>{{old('pa_pengaju')}}</option>
@@ -60,7 +59,7 @@
                                 @enderror
                             </div>
                         </div> -->
-                        <div class="form-group ml-3 mt-2 mb-2 mr-3">
+                        <div class="form-group col-xs-6">
                             <label>Tanggal Masuk</label>
                             <input type="date" class="form-control @error('tgl_masuk') is-invalid @enderror" value="{{old('tgl_masuk')}}" name="tgl_masuk">
                             <div id="validationServerUsernameFeedback" class="invalid-feedback text-danger">
@@ -69,7 +68,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <!-- <div class="form-group ml-3 mt-2 mb-2 mr-3">
+                        <!-- <div class="form-group col-xs-6">
                             <label>Pemohon Kasasi</label>
                             <input type="text" class="form-control @error('pemohon_kasasi') is-invalid @enderror" value="{{old('pemohon_kasasi')}}" name="pemohon_kasasi">
                             <div id="validationServerUsernameFeedback" class="invalid-feedback text-danger">
@@ -78,7 +77,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="form-group ml-3 mt-2 mb-2 mr-3">
+                        <div class="form-group col-xs-6">
                             <label>Termohon Kasasi</label>
                             <input type="text" class="form-control @error('termohon_kasasi') is-invalid @enderror" value="{{old('termohon_kasasi')}}" name="termohon_kasasi">
                             <div id="validationServerUsernameFeedback" class="invalid-feedback text-danger">
@@ -87,7 +86,7 @@
                                 @enderror
                             </div>
                         </div> -->
-                        <!-- <div class="form-group ml-3 mt-2 mb-2 mr-3">
+                        <!-- <div class="form-group col-xs-6">
                             <label>Nomor Perkara PA</label>
                             <input type="text" class="form-control @error('no_pa') is-invalid @enderror" value="{{old('no_pa')}}" name="no_pa">
                             <div id="validationServerUsernameFeedback" class="invalid-feedback text-danger">
@@ -97,7 +96,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group ml-3 mt-2 mb-2 mr-3">
+                        <div class="form-group col-xs-6">
                             <label>Tanggal Putus PA</label>
                             <input type="date" class="form-control @error('tgl_put_pa') is-invalid @enderror" value="{{old('tgl_put_pa')}}" name="tgl_put_pa">
                             <div id="validationServerUsernameFeedback" class="invalid-feedback text-danger">
@@ -106,7 +105,7 @@
                                 @enderror
                             </div>
                         </div> -->
-                        <div class="form-group ml-3 mt-2 mb-2 mr-3">
+                        <div class="form-group col-xs-6">
                             <label>Nomor Perkara Kasasi</label>
                             <input type="text" class="form-control @error('no_kasasi') is-invalid @enderror" value="{{old('no_kasasi')}}" name="no_kasasi">
                             <div id="validationServerUsernameFeedback" class="invalid-feedback text-danger">
@@ -115,7 +114,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="form-group ml-3 mt-2 mb-2 mr-3">
+                        <div class="form-group col-xs-6">
                             <label>Nomor Perkara Banding</label>
                             <input type="text" class="form-control @error('no_banding') is-invalid @enderror" value="{{old('no_banding')}}" name="no_banding">
                             <div id="validationServerUsernameFeedback" class="invalid-feedback text-danger">
@@ -124,7 +123,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <!-- <div class="form-group ml-3 mt-2 mb-2 mr-3">
+                        <!-- <div class="form-group col-xs-6">
                             <label>Tanggal Putus Banding</label>
                             <input type="date" class="form-control @error('tgl_put_banding') is-invalid @enderror" value="{{old('tgl_put_banding')}}" name="tgl_put_banding">
                             <div id="validationServerUsernameFeedback" class="invalid-feedback text-danger">
@@ -133,8 +132,8 @@
                                 @enderror
                             </div>
                         </div> -->
-                        
-                        <!-- <div class="form-group ml-3 mt-2 mb-2 mr-3">
+
+                        <!-- <div class="form-group col-xs-6">
                             <label>Tanggal Putus Kasasi</label>
                             <input type="date" class="form-control @error('tgl_put_kasasi') is-invalid @enderror" value="{{old('tgl_put_kasasi')}}" name="tgl_put_kasasi">
                             <div id="validationServerUsernameFeedback" class="invalid-feedback text-danger">
@@ -143,7 +142,7 @@
                                 @enderror
                             </div>
                         </div> -->
-                        <div class="form-group ml-3 mt-2 mb-2 mr-3">
+                        <div class="form-group col-xs-6">
                             <label>Status Putusan Kasasi</label>
                             <select name="status_put" class="form-control @error('status_put') is-invalid @enderror">
                                 <option>{{old('status_put')}}</option>
@@ -160,7 +159,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="form-group ml-3 mt-2 mb-2 mr-3">
+                        <div class="form-group col-xs-6">
                             <label>Salput Kasasi</label>
                             <input type="file" class="form-control @error('salput_kasasi') is-invalid @enderror" value="{{old('salput_kasasi')}}" name="salput_kasasi">
                             <div id="validationServerUsernameFeedback" class="invalid-feedback text-danger">
@@ -169,7 +168,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group col-xs-6">
                             <button class="btn btn-success">Simpan</button>
                             <button type="reset" class="btn btn-danger">Reset</button>
                             <a href="/kasasi" class="btn btn-sm btn-info mb-2"></i>Kembali</a>
