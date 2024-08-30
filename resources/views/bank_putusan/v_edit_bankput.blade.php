@@ -39,7 +39,6 @@
                                 @enderror
                             </div>
                         </div>
-
                         <div class="col-xs-6">
                             <label for="jenis_perkara">Jenis Perkara</label>
                             <select name="jenis_perkara" type="text" class="form-control @error('jenis_perkara') is-invalid @enderror">

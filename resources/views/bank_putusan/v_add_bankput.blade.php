@@ -102,7 +102,7 @@
                             <select name="keterangan" class="form-control @error('keterangan') is-invalid @enderror">
                                 <option>{{old('keterangan')}}</option>
                                 <option> e-Court </option>
-                                <option> Non e-Court  </option>
+                                <option> Non e-Court </option>
                             </select>
                             <div id="validationServerUsernameFeedback" class="invalid-feedback text-danger">
                                 @error('keterangan')
@@ -136,9 +136,7 @@
                     </div>
                 </div>
             </div>
-
         </form>
-
     </div>
 
 </div>

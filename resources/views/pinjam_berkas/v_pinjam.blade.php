@@ -101,16 +101,17 @@
                         </a>
                         <button type="button" class="btn btn-purple btn-xs" data-toggle="modal" data-target="#detail{{ $data->id_pinjam }}">
                             <i class="fa fa-eye"></i>
-                        <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#delete{{ $data->id_pinjam }}">
-                            <i class="fa fa-trash-o"></i>
-                        </button>
-                        @elseif(Auth::user()->level===2)
-                        <a href="/pinjam/edit/{{$data->id_pinjam}}" class="btn btn-warning btn-xs">
-                            <i class="fa fa-edit"></i>
-                        </a>
-                        @elseif(Auth::user()->level===3)
-
-                        @endif
+                            <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#delete{{ $data->id_pinjam }}">
+                                <i class="fa fa-trash-o"></i>
+                            </button>
+                            @elseif(Auth::user()->level===2)
+                            </a>
+                            <button type="button" class="btn btn-purple btn-xs" data-toggle="modal" data-target="#detail{{ $data->id_pinjam }}">
+                                <a href="/pinjam/edit/{{$data->id_pinjam}}" class="btn btn-warning btn-xs">
+                                    <i class="fa fa-edit"></i>
+                                    <i class="fa fa-eye"></i>
+                                    @elseif(Auth::user()->level===3)
+                                    @endif
                     </td>
                 </tr>
                 @endforeach
@@ -130,9 +131,9 @@
             </div>
             <div class="modal-body">
                 <table class="table table-small-font table-bordered table-hover">
-                        <td class="user-image hidden-xs hidden-sm">
-                            <img src="{{ asset('/dokumen_pinjam/'.$data->dokumen) }}" width="800" height="1000">
-                        </td>
+                    <td class="user-image hidden-xs hidden-sm">
+                        <img src="{{ asset('/dokumen_pinjam/'.$data->dokumen) }}" width="800" height="1000">
+                    </td>
                 </table>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>

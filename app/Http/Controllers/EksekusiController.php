@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\EksekusiModel;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 
 class EksekusiController extends Controller
 {
@@ -17,9 +19,80 @@ class EksekusiController extends Controller
         $data = [
             'title' => 'Perkara Eksekusi',
             'eksekusi' => $this->EksekusiModel->allData(),
+
+        ];
+
+        //Function Tahun sekarang
+        $day = Carbon::now()->format('d');
+        $month = Carbon::now()->format('m');
+        $year = Carbon::now()->format('Y');
+
+        //eksekusi
+        $eksekusi_total = DB::table('tb_eksekusi')
+            ->count();
+
+        //eksekusi
+        $eksekusi_masuk_thn_ini = DB::table('tb_eksekusi')
+            ->whereYear('tgl_permohonan', $year)
+            ->count();
+
+        //eksekusi Bulan Ini
+        $eksekusi_bln_ini = DB::table('tb_eksekusi')
+            ->whereDay('tgl_permohonan', $day)
+            ->count();
+
+        //eksekusi belum selesai
+        $eksekusi_blm_selesai_0000 = DB::table('tb_eksekusi')->where('tgl_selesai', 0000 - 00 - 00)->count();
+        //upy_hk belum selesai
+        $eksekusi_blm_selesai_null = DB::table('tb_eksekusi')->where('tgl_selesai', Null)->count();
+
+        $eksekusi_blm_selesai =  $eksekusi_blm_selesai_0000 + $eksekusi_blm_selesai_null;
+
+        //eksekusi selesai 
+        $eksekusi_selesai = $eksekusi_total - $eksekusi_blm_selesai;
+
+        //Presentase selesai
+        $eksekusi_progres = $eksekusi_selesai / $eksekusi_total * 100;
+        $eksekusi_presentase = round($eksekusi_progres);
+        return view('/eksekusi/v_dashboard_eksekusi', $data, compact(
+            'eksekusi_total',
+            'eksekusi_masuk_thn_ini',
+            'eksekusi_bln_ini',
+            'eksekusi_presentase',
+            'eksekusi_blm_selesai',
+            'eksekusi_selesai',
+            'eksekusi_presentase',
+
+        ));
+    }
+
+    public function total_eks()
+    {
+        $data = [
+            'title' => 'Perkara Eksekusi',
+            'eksekusi' => $this->EksekusiModel->allData(),
         ];
         return view('/eksekusi/v_eksekusi', $data);
     }
+
+    public function berjalan_eks()
+    {
+        $data = [
+            'title' => 'Perkara Eksekusi',
+            'eksekusi' => $this->EksekusiModel->berjalan_eks(),
+        ];
+        return view('/eksekusi/v_eksekusi_berjalan', $data);
+    }
+
+    public function selesai_eks()
+    {
+        $data = [
+            'title' => 'Perkara Eksekusi',
+            'eksekusi' => $this->EksekusiModel->selesai_eks(),
+        ];
+        return view('/eksekusi/v_eksekusi_selesai', $data);
+    }
+
 
     //Detail
     public function detail($id_eks)

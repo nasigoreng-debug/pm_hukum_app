@@ -38,7 +38,7 @@ use App\Http\Controllers\RegPkController;
 Route::get('/', [HomeController::class, 'index']);
 
 //Arsip Perkara
-Route::get('/arsip', [ArsipController::class, 'index'])->name('arsip');
+Route::get('/arsip', [ArsipController::class, 'index'])->name('arsip')->name('detail');
 Route::get('/arsip/detail/{id_perkara}', [ArsipController::class, 'detail'])->name('detail');
 Route::get('/arsip/add', [ArsipController::class, 'add'])->name('add');
 Route::post('/arsip/insert', [ArsipController::class, 'insert'])->name('insert');
@@ -57,6 +57,9 @@ Route::post('/bankput/update/{id_bankput}', [BankputController::class, 'update']
 
 //Eksekusi
 Route::get('/eks', [EksekusiController::class, 'index'])->name('eks');
+Route::get('/eks/total', [EksekusiController::class, 'total_eks'])->name('total_eks');
+Route::get('/eks/berjalan', [EksekusiController::class, 'berjalan_eks'])->name('berjalan_eks');
+Route::get('/eks/selesai', [EksekusiController::class, 'selesai_eks'])->name('selesai_eks');
 Route::get('/eks/detail/{id_eks}', [EksekusiController::class, 'detail'])->name('detail');
 Route::get('/eks/add', [EksekusiController::class, 'add'])->name('add');
 Route::post('/eks/insert', [EksekusiController::class, 'insert'])->name('insert');
