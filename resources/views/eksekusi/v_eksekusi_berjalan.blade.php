@@ -19,7 +19,7 @@
   </div>
   <div class="panel-body">
 
-    <script type="text/javascript">
+    <!-- <script type="text/javascript">
       jQuery(document).ready(function($) {
         $("#example-4").dataTable({
           dom: "<'row'<'col-sm-5'l><'col-sm-7'Tf>r>" +
@@ -30,7 +30,42 @@
           }
         });
       });
-    </script>
+    </script> -->
+    <script type="text/javascript">
+            jQuery(document).ready(function($) {
+                $("#example-3").dataTable().yadcf([{
+                        column_number: 1,
+                    },
+                    {
+                        column_number: 2,
+                        filter_type: 'text'
+                    },
+                    {
+                        column_number: 3,
+                        filter_type: 'text'
+                    },
+                    {
+                        column_number: 4,
+                        filter_type: 'text'
+                    },
+                    {
+                        column_number: 5,
+                    },
+                    {
+                        column_number: 6,
+                        filter_type: 'text'
+                    },
+                    {
+                        column_number: 7,
+                        filter_type: 'text'
+                    },
+                    {
+                        column_number: 8,
+                        filter_type: 'text'
+                    },
+                ]);
+            });
+        </script>
     <td class="text-center" style="font-size: 5px;">
       @if(Auth::user()->level===1)
       <a href="/eks/add" class="btn btn-sm btn-info mb-2">Tambah Data</a>
@@ -49,12 +84,12 @@
       {{ session('pesan') }}
     </div>
     @endif
-    <table class="table table-bordered table-striped" id="example-4">
+    <table class="table table-bordered table-striped" id="example-3">
       <thead class="bg-gray">
         <tr>
-          <th style="width: 15px;">No</th>
+          <th style="width: 20px;">No</th>
           <th style="width: 100px;">Satua Kerja</th>
-          <th style="width: 135px;">Nomor Perkara Eksekusi</th>
+          <th style="width: 140px;">Nomor Perkara Eksekusi</th>
           <th style="width: 135px;">Juncto</th>
           <th style="width: 100px;">Tanggal Permohonan</th>
           <th style="width: 100px;">Proses Terakhir</th>
@@ -92,9 +127,9 @@
           <td>{{ $data->proses_terakhir }}</td>
           <td class="text-center">
             @if($data->tgl_eks=="0000-00-00")
-
+            
             @elseif($data->tgl_eks=="")
-
+            
             @else
             {{ date('d-m-Y', strtotime($data->tgl_eks)) }}
             @endif

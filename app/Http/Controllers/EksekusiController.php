@@ -147,7 +147,7 @@ class EksekusiController extends Controller
         ];
 
         $this->EksekusiModel->addData($data);
-        return redirect()->route('eks')->with('pesan', 'Data Berhasil Ditambahkan !!');
+        return redirect()->route('berjalan_eks')->with('pesan', 'Data Berhasil Ditambahkan !!');
     }
 
     //Edit Data
@@ -195,7 +195,7 @@ class EksekusiController extends Controller
 
         $this->EksekusiModel->editData($id_eks, $data);
 
-        return redirect()->route('eks')->with('pesan', 'Data Berhasil Diupdate !!');
+        return redirect()->route('berjalan_eks')->with('pesan', 'Data Berhasil Diupdate !!');
     }
 
 
