@@ -199,31 +199,8 @@
                             @endif
                         </td>
                     </tr>
-                    <tr class="text-start border">
-                        <td>Nomor Perkara Kasasi</td>
-                        <!-- <td>{{$data->no_kasasi}}</td> -->
-                        <td class="text-start">
-                            @if($data->no_kasasi=="")
-                            Tidak mengajukan permohonan kasasi
-                            @elseif($data->no_kasasi=="")
-                            Tidak mengajukan permohonan kasasi
-                            @else
-                            {{$data->no_kasasi}}
-                            @endif
-                        </td>
-                    </tr>
-                    <tr class="text-start border">
-                        <td>Tanggal Putus Kasasi</td>
-                        <td class="text-start">
-                            @if($data->tgl_put_kasasi=="0000-00-00")
-                            Tidak mengajukan permohonan kasasi
-                            @elseif($data->tgl_put_kasasi=="")
-                            Tidak mengajukan permohonan kasasi
-                            @else
-                            {{ date('d-m-Y', strtotime($data->tgl_put_kasasi)) }}
-                            @endif
-                        </td>
-                    </tr>
+                    
+                   
                     <tr class="text-start border">
                         <td>Nomor PK</td>
                         <td>{{$data->no_pk}}</td>

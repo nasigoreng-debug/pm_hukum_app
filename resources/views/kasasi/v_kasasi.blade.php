@@ -93,9 +93,9 @@
                     <!-- <td class="text-center">{{ date('d-m-Y', strtotime($data->tgl_put_kasasi)) }}</td> -->
                     <td class="text-center">
                         @if($data->tgl_put_kasasi=="0000-00-00")
-                        Belum diinput!!!
+                    <p class="text-danger">Belum diinput!!!</p>
                         @elseif($data->tgl_put_kasasi=="")
-                        Belum diinput!!!
+                    <p class="text-danger">Belum diinput!!!</p>
                         @else
                         {{ date('d-m-Y', strtotime($data->tgl_put_kasasi)) }}
                         @endif

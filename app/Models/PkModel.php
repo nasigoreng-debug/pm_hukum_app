@@ -13,12 +13,19 @@ class PkModel extends Model
     {
         // return DB::table('tb_peninjauan_kembali')->orderBy('tgl_masuk', 'desc')->get();
 
-        return DB::table('tb_peninjauan_kembali')
+        // return DB::table('tb_peninjauan_kembali')
 
-            ->Join('tb_reg_pk', 'tb_peninjauan_kembali.no_banding', '=', 'tb_reg_pk.no_banding')
-            ->Join('tb_reg_kasasi', 'tb_peninjauan_kembali.no_banding', '=', 'tb_reg_kasasi.no_banding')
-            ->latest()
-            ->get();
+        //     ->Join('tb_reg_pk', 'tb_peninjauan_kembali.no_banding', '=', 'tb_reg_pk.no_banding')
+        //     ->Join('tb_reg_kasasi', 'tb_peninjauan_kembali.no_banding', '=', 'tb_reg_kasasi.no_banding')
+        //     ->latest('tb_peninjauan_kembali.tgl_masuk')
+        //     ->get();
+
+            return  DB::table('tb_reg_pk')
+                    ->join('tb_peninjauan_kembali', function ($join) {
+                    $join->on('tb_reg_pk.no_banding', '=', 'tb_peninjauan_kembali.no_banding')
+                    ->orderByDesc('tb_peninjauan_kembali.tgl_masuk');
+                    })
+                    ->get();
     }
 
     public function detailData($id_pk)

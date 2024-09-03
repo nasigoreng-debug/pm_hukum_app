@@ -11,11 +11,17 @@ class KasasiModel extends Model
     {
         // return DB::table('tb_kasasi')->orderBy('tgl_masuk', 'desc')->get();
 
-        return DB::table('tb_kasasi')
+        // return DB::table('tb_kasasi')
+        //     ->Join('tb_reg_kasasi', 'tb_kasasi.no_banding', '=', 'tb_reg_kasasi.no_banding')
+        //     ->orderByDesc('tb_kasasi.tgl_masuk')
+        //     ->get();
 
-            ->Join('tb_reg_kasasi', 'tb_kasasi.no_banding', '=', 'tb_reg_kasasi.no_banding')
-            ->latest()
-            ->get();
+        return  DB::table('tb_reg_kasasi')
+                    ->join('tb_kasasi', function ($join) {
+                    $join->on('tb_reg_kasasi.no_banding', '=', 'tb_kasasi.no_banding')
+                    ->orderByDesc('tb_kasasi.tgl_masuk');
+                    })
+                    ->get();
     }
 
     public function detailData($id_kasasi)
