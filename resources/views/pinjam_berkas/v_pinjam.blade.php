@@ -134,16 +134,16 @@
                 <card class="table table-small-font table-bordered table-hover">
                     <span class="user-image hidden-xs hidden-sm justify-content-center">
 
-                        @if($data->tgl_kembali=="0000-00-00")
+                        @if($data->bkt_pinjam=="0000-00-00")
 
-                        @elseif($data->tgl_kembali=="")
+                        @elseif($data->bkt_pinjam=="")
 
                         @else
-                        <img src="{{ asset('/dokumen_pinjam/'.$data->dokumen) }}" width="400" height="600">
+                        <img src="{{ asset('/dokumen_pinjam/bkt_pinjam/'.$data->bkt_pinjam) }}" width="400" height="600">
                         @endif
                     </span>
                     <span class="user-image hidden-xs hidden-sm justify-content-center">
-                        <img src="{{ asset('/dokumen_pinjam/'.$data->dokumen) }}" width="400" height="600">
+                        <img src="{{ asset('/dokumen_pinjam/bkt_kembali/'.$data->bkt_kembali) }}" width="400" height="600">
                     </span>
                 </card>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">

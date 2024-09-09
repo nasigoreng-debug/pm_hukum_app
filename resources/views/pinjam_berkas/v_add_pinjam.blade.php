@@ -68,15 +68,24 @@
                                 @enderror
                             </div>
                         </div>
-                            <div class="form-group ml-3 mt-2 mb-2 mr-3">
-                                        <label>Upload Foto Bukti Peminjaman</label>
-                                        <input type="file" class="form-control form-control-sm @error('dokumen') is-invalid @enderror" value="{{old('dokumen')}}" name="dokumen">
-                                        <div                    id="validationServerUsernameFeedback" class="invalid-feedback">
-                                            @error('dokumen')
-                                            {{ $message }}
-                                            @enderror
-                                        </div>
+                        <div class="form-group ml-3 mt-2 mb-2 mr-3">
+                            <label>Upload Foto Bukti Peminjaman</label>
+                            <input type="file" class="form-control form-control-sm @error('bkt_pinjam') is-invalid @enderror" value="{{old('bkt_pinjam')}}" name="bkt_pinjam">
+                            <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                                @error('bkt_pinjam')
+                                {{ $message }}
+                                @enderror
                             </div>
+                        </div>
+                        <div class="form-group ml-3 mt-2 mb-2 mr-3">
+                            <label>Upload Foto Bukti Kembali</label>
+                            <input type="file" class="form-control form-control-sm @error('bkt_kembali') is-invalid @enderror" value="{{old('bkt_kembali')}}" name="bkt_kembali">
+                            <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                                @error('bkt_kembali')
+                                {{ $message }}
+                                @enderror
+                            </div>
+                        </div>
                         <div class="form-group">
                             <button class="btn btn-success">Simpan</button>
                             <button type="reset" class="btn btn-danger">Reset</button>
