@@ -35,7 +35,9 @@
 </head>
 
 <body class="page-body">
-
+    <div class="page-loading-overlay">
+        <div class="loader-2"></div>
+    </div>
     <div class="page-container">
 
         <!-- Sidebar -->

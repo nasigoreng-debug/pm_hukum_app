@@ -127,14 +127,25 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 colspan="2" class="text-white text-center bg-success">Detail Bukti Peminjaman</h4>
+                <h4 colspan="2" class="text-white text-center bg-success">Detail</h4>
             </div>
             <div class="modal-body">
-                <table class="table table-small-font table-bordered table-hover">
-                    <td class="user-image hidden-xs hidden-sm">
-                        <img src="{{ asset('/dokumen_pinjam/'.$data->dokumen) }}" width="800" height="1000">
-                    </td>
-                </table>
+                <h4 colspan="2" class="text-white text-center bg-success">Bukti Peminjaman - Bukti Kembali</h4>
+                <card class="table table-small-font table-bordered table-hover">
+                    <span class="user-image hidden-xs hidden-sm justify-content-center">
+
+                        @if($data->tgl_kembali=="0000-00-00")
+
+                        @elseif($data->tgl_kembali=="")
+
+                        @else
+                        <img src="{{ asset('/dokumen_pinjam/'.$data->dokumen) }}" width="400" height="600">
+                        @endif
+                    </span>
+                    <span class="user-image hidden-xs hidden-sm justify-content-center">
+                        <img src="{{ asset('/dokumen_pinjam/'.$data->dokumen) }}" width="400" height="600">
+                    </span>
+                </card>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
