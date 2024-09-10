@@ -20,16 +20,9 @@ class PinjamController extends Controller
             'title' => 'Pinjam Berkas',
             'pinjam' => $this->PinjamModel->allData(),
         ];
-
-        $awal = DB::table('tb_pinjam_berkas')
-            ->where('tgl_pinjam');
-
-        $akhir = DB::table('tb_pinjam_berkas')
-            ->where('tgl_kembali');
-
+        $sekarang =  date("Y-m-d");
         return view('/pinjam_berkas/v_pinjam', $data)
-            ->with('awal', $awal)
-            ->with('akhir', $akhir);
+            ->with("sekarang", $sekarang);
     }
 
     public function detail($id_pinjam)
@@ -141,6 +134,22 @@ class PinjamController extends Controller
                 'bkt_pinjam' => $fileName,
                 'keterangan' => Request()->keterangan,
             ];
+        } elseif (Request()->bkt_kembali <> "") {
+            //upload file
+
+            $file = Request()->bkt_kembali;
+            $fileName = 'bkt_kembali' . '_' .  str_replace("/", "_",  Request()->no_banding) . '_' . date('dmY') . '.' . $file->extension();
+            $file->move(public_path('dokumen_pinjam/bkt_kembali'), $fileName);
+
+            $data = [
+                'nama_peminjam' => Request()->nama_peminjam,
+                'no_banding' => Request()->no_banding,
+                'tgl_pinjam' => Request()->tgl_pinjam,
+                'tgl_kembali' => Request()->tgl_kembali,
+                'bkt_kembali' => $fileName,
+                'keterangan' => Request()->keterangan,
+            ];
+        } elseif (Request()->bkt_kembali <> "") {
         } else {
             $data = [
                 'nama_peminjam' => Request()->nama_peminjam,
@@ -150,21 +159,7 @@ class PinjamController extends Controller
                 'keterangan' => Request()->keterangan,
             ];
         }
-
-
-        if (Request()->bkt_kembali <> "") {
-            //upload file
-
-            $file = Request()->bkt_kembali;
-            $fileName = 'bkt_kembali' . '_' .  str_replace("/", "_",  Request()->no_banding) . '_' . date('dmY') . '.' . $file->extension();
-            $file->move(public_path('dokumen_pinjam/bkt_kembali'), $fileName);
-
-            $data = [
-                'bkt_kembali' => $fileName,
-            ];
-
-            $this->PinjamModel->editData($id_pinjam, $data);
-        }
+        $this->PinjamModel->editData($id_pinjam, $data);
         return redirect()->route('pinjam')->with('pesan', 'Data Berhasil Diupdate !!');
     }
 

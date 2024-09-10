@@ -99,7 +99,7 @@
                         @if($data->lampiran=="")
 
                         @else
-                        <a href="surat_masuk/{{$data->lampiran}}" class="text-blue"><i class="fa fa-file-pdf-o"></i></i></a>
+                        <a href="public/surat_masuk/{{$data->lampiran}}" class="text-blue"><i class="fa fa-file-pdf-o"></i></i></a>
                         @endif
 
                     </td>

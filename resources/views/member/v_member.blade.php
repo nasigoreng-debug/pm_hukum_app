@@ -32,7 +32,7 @@
                             </td>
                             <td class="user-image hidden-xs hidden-sm">
 
-                                <img src="{{ asset('/img/'.$data->foto_user) }}" alt="" title="">
+                                <img src="{{ asset('public/img/'.$data->foto_user) }}" alt="" title="">
 
                             </td>
                             <td class="user-name">

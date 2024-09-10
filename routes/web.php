@@ -38,7 +38,7 @@ use App\Http\Controllers\RegPkController;
 Route::get('/', [HomeController::class, 'index']);
 
 //Arsip Perkara
-Route::get('/arsip', [ArsipController::class, 'index'])->name('arsip')->name('detail');
+Route::get('/arsip', [ArsipController::class, 'index'])->name('arsip');
 Route::get('/arsip/detail/{id_perkara}', [ArsipController::class, 'detail'])->name('detail');
 Route::get('/arsip/add', [ArsipController::class, 'add'])->name('add');
 Route::post('/arsip/insert', [ArsipController::class, 'insert'])->name('insert');

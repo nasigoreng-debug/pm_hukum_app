@@ -6,7 +6,7 @@
         <section class="sidebar-user-info">
             <div class="sidebar-user-info-inner">
                 <a href="extra-profile.html" class="user-profile">
-                    <img src="{{ asset('/img/'.Auth::user()->foto_user) }}" width="50" height="60" class="img-circle img-corona" />
+                    <img src="{{ asset('public/img/'.Auth::user()->foto_user) }}" width="50" height="60" class="img-circle img-corona" />
                     <span class="user-status is-online" style="font-size: 12px;">
                         <h5 class="text-white">{{ Auth::user()->name }}</h5>
                         <p class="text-yellow">@if(Auth::user()->level===1)

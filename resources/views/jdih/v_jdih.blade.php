@@ -157,7 +157,7 @@
                             @if($data->dokumen=="")
 
                             @else
-                            <a href="jdih/{{$data->dokumen}}" class="text-blue" target="_blank"><i class="fa fa-file-pdf-o"></i></i></a>
+                            <a href="public/jdih/{{$data->dokumen}}" class="text-blue" target="_blank"><i class="fa fa-file-pdf-o"></i></i></a>
                             @endif
 
                         </td>

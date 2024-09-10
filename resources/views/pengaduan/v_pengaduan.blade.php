@@ -110,14 +110,14 @@
                         @if($data->surat_pgd=="")
 
                         @else
-                        <a href="surat_pengaduan/{{$data->surat_pgd}}" class="text-blue" target="_blank"><i class="fa fa-file-pdf-o"></i></a>
+                        <a href="public/surat_pengaduan/{{$data->surat_pgd}}" class="text-blue" target="_blank"><i class="fa fa-file-pdf-o"></i></a>
                         @endif
                     </td>
                     <td class="text-center">
                         @if($data->lampiran=="")
 
                         @else
-                        <a href="lampiran_pengaduan/{{$data->lampiran}}" class="text-blue" target="_blank"><i class="fa fa-file-pdf-o"></i></a>
+                        <a href="public/lampiran_pengaduan/{{$data->lampiran}}" class="text-blue" target="_blank"><i class="fa fa-file-pdf-o"></i></a>
                         @endif
                     </td>
                     <td class="text-center">

@@ -101,14 +101,14 @@
                         @if($data->put_rtf=="")
 
                         @else
-                        <a href="bank_putusan_rtf/{{$data->put_rtf}}" class="text-blue" target="_blank"><i class="fa fa-file-pdf-o"></i></a>
+                        <a href="public/bank_putusan_rtf/{{$data->put_rtf}}" class="text-blue" target="_blank"><i class="fa fa-file-pdf-o"></i></a>
                         @endif
                     </td>
                     <td class="text-center">
                         @if($data->put_anonim=="")
 
                         @else
-                        <a href="bank_putusan_anonim/{{$data->put_anonim}}" class="text-blue" target="_blank"><i class="fa fa-file-pdf-o"></i></a>
+                        <a href="public/bank_putusan_anonim/{{$data->put_anonim}}" class="text-blue" target="_blank"><i class="fa fa-file-pdf-o"></i></a>
                         @endif
                     </td>
                     <td>{{ $data->keterangan }}</td>

@@ -19,7 +19,9 @@ class RegKasasiController extends Controller
             'title' => 'Register Kasasi',
             'reg_kasasi' => $this->RegKasasiModel->allData(),
         ];
-        return view('/reg_kasasi/v_reg_kasasi', $data);
+        $sekarang =  date("Y-m-d");
+        return view('/reg_kasasi/v_reg_kasasi', $data)
+            ->with("sekarang", $sekarang);
     }
 
     public function detail($id_reg_kasasi)

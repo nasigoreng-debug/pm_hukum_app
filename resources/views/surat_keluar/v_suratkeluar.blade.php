@@ -26,7 +26,7 @@
                         "t" +
                         "<'row'<'col-xs-6'i><'col-xs-6'p>>",
                     tableTools: {
-                        sSwfPath: "assets/js/datatables/tabletools/copy_csv_xls_pdf.swf"
+                        sSwfPath: "{{ asset('public/template')}}/assets/js/datatables/tabletools/copy_csv_xls_pdf.swf"
                     }
                 });
             });
@@ -95,7 +95,7 @@
 
                         @if($data->lampiran=="")
                         @else
-                        <a href="lampiran_surat_keluar/{{$data->lampiran}}" class="text-blue"><i class="fa fa-file-pdf-o"></i></i></a>
+                        <a href="public/lampiran_surat_keluar/{{$data->lampiran}}" class="text-blue"><i class="fa fa-file-pdf-o"></i></i></a>
                         @endif
 
                     </td>

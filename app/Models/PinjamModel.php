@@ -11,7 +11,7 @@ class PinjamModel extends Model
     {
         // return DB::table('tb_pinjam_berkas')->orderBy('tgl_pinjam', 'desc')->get();
         return DB::table('tb_pinjam_berkas')
-            ->selectRaw("*, IF(tgl_kembali='0000-00-00', DATEDIFF(NOW(), tgl_pinjam), DATEDIFF(tgl_kembali, tgl_pinjam)) AS selisih")
+            ->selectRaw("*, IF(tgl_kembali='NULL', DATEDIFF(NOW(), tgl_pinjam), DATEDIFF(tgl_kembali, tgl_pinjam)) AS kurang")
             ->orderBy('tgl_pinjam', 'desc')->get();
     }
 

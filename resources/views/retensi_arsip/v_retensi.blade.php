@@ -121,7 +121,7 @@
                         @if($data->putusan=="")
 
                         @else
-                        <a href="retensi_arsip_perkara/{{$data->putusan}}" class="text-blue"><i class="fa fa-file-pdf-o"></i></a>
+                        <a href="public/retensi_arsip_perkara/{{$data->putusan}}" class="text-blue"><i class="fa fa-file-pdf-o"></i></a>
                         @endif
                     </td>
                     <td class="text-center">

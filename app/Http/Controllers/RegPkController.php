@@ -19,7 +19,9 @@ class RegPkController extends Controller
             'title' => 'Register Peninjauan Kembali',
             'reg_pk' => $this->RegPkModel->allData(),
         ];
-        return view('/reg_pk/v_reg_pk', $data);
+        $sekarang =  date("Y-m-d");
+        return view('/reg_pk/v_reg_pk', $data)
+            ->with("sekarang", $sekarang);
     }
 
     public function detail($id_reg_pk)

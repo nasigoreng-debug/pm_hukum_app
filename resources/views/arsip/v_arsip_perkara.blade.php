@@ -96,7 +96,7 @@
                         @if($data->putusan=="")
 
                         @else
-                        <a href="arsip_perkara_putusan/{{$data->putusan}}" class="text-blue" target="_blank"><i class="fa fa-file-pdf-o"></i></i></a>
+                        <a href="public/arsip_perkara_putusan/{{$data->putusan}}" class="text-blue" target="_blank"><i class="fa fa-file-pdf-o"></i></i></a>
                         @endif
 
                     </td>

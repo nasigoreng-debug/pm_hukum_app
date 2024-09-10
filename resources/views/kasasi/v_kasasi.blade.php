@@ -57,8 +57,8 @@
                     <!-- <th style="width: 100px;">Pemohon</th>
                     <th style="width: 100px;">Termohon</th> -->
                     <th class="text-center" style="width: 70px;">Nomor Kasasi</th>
-                    <th class="text-center" style="width: 60px;">Putus Kasasi</th>
-                    <th class="text-center" style="width: 60px;">Nomor Banding</th>
+                    <th class="text-center" style="width: 50px;">Putus Kasasi</th>
+                    <th class="text-center" style="width: 70px;">Nomor Banding</th>
                     <th class="text-center" style="width: 70px;">Status Putusan</th>
                     <th class="text-center" style="width: 30px;">Putusan</th>
                     <th class="text-center" style="width: 50px;">Action</th>
@@ -93,9 +93,9 @@
                     <!-- <td class="text-center">{{ date('d-m-Y', strtotime($data->tgl_put_kasasi)) }}</td> -->
                     <td class="text-center">
                         @if($data->tgl_put_kasasi=="0000-00-00")
-                    <p class="text-danger">Belum diinput!!!</p>
+                        <span class="badge badge-danger">Belum diinput!!!</span>
                         @elseif($data->tgl_put_kasasi=="")
-                    <p class="text-danger">Belum diinput!!!</p>
+                        <span class="badge badge-danger">Belum diinput!!!</span>
                         @else
                         {{ date('d-m-Y', strtotime($data->tgl_put_kasasi)) }}
                         @endif
@@ -110,15 +110,15 @@
                         <a href="kasasi_perkara_putusan/{{$data->salput_kasasi}}" class="text-blue" target="_blank"><i class="fa fa-file-pdf-o"></i></a>
                         @endif
                     </td> -->
-                    <td class="text-center" >
-                            @if($data->salput_kasasi=="")
-                            <i class="bi text-danger bi-filetype-pdf"></i>
-                            @elseif($data->salput_kasasi=="0000-00-00")
-                            <i class="bi text-danger bi-filetype-pdf"></i>
-                            @else
-                            <a href="kasasi_perkara_putusan/{{$data->salput_kasasi}}" class="text-blue" target="_blank"><i class="bi text-success bi-file-earmark-pdf-fill"></i></i></i></a>
-                            @endif
-                        </td>
+                    <td class="text-center">
+                        @if($data->salput_kasasi=="")
+                        <i class="bi text-danger bi-filetype-pdf"></i>
+                        @elseif($data->salput_kasasi=="0000-00-00")
+                        <i class="bi text-danger bi-filetype-pdf"></i>
+                        @else
+                        <a href="public/kasasi_perkara_putusan/{{$data->salput_kasasi}}" class="text-blue" target="_blank"><i class="bi text-success bi-file-earmark-pdf-fill"></i></i></i></a>
+                        @endif
+                    </td>
                     <td class="text-center">
                         @if(Auth::user()->level===1)
                         <button type="button" class="btn btn-purple btn-xs" data-toggle="modal" data-target="#detail{{ $data->id_kasasi }}">
@@ -216,16 +216,16 @@
                     <tr class="text-start border">
                         <td>Tanggal Putus Kasasi</td>
                         <td class="text-start">
-                        @if($data->tgl_put_kasasi=="0000-00-00")
-                        Belum Putus
-                        @elseif($data->tgl_put_kasasi=="")
-                        Belum Putus
-                        @else
-                        {{ date('d-m-Y', strtotime($data->tgl_put_kasasi)) }}
-                        @endif
-                    </td>
+                            @if($data->tgl_put_kasasi=="0000-00-00")
+                            Belum Putus
+                            @elseif($data->tgl_put_kasasi=="")
+                            Belum Putus
+                            @else
+                            {{ date('d-m-Y', strtotime($data->tgl_put_kasasi)) }}
+                            @endif
+                        </td>
                     </tr>
-                    
+
                     <tr class="text-start border">
                         <td>Status Putusan</td>
                         <td>{{$data->status_put}}</td>

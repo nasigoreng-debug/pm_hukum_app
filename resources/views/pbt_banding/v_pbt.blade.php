@@ -88,7 +88,7 @@
                         @if($data->pbt_put=="")
 
                         @else
-                        <a href="pbt_putusan/{{$data->pbt_put}}" class="text-blue"><i class="fa fa-file-pdf-o"></i></i></a>
+                        <a href="public/pbt_putusan/{{$data->pbt_put}}" class="text-blue"><i class="fa fa-file-pdf-o"></i></i></a>
                         @endif
 
                     </td>

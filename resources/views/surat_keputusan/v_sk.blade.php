@@ -86,7 +86,7 @@
                         @if($data->dokumen=="")
 
                         @else
-                        <a href="surat_keputusan/{{$data->dokumen}}" class="text-blue"><i class="fa fa-file-pdf-o"></i></i></a>
+                        <a href="public/surat_keputusan/{{$data->dokumen}}" class="text-blue"><i class="fa fa-file-pdf-o"></i></i></a>
                         @endif
 
                     </td>

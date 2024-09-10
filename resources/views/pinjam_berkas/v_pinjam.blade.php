@@ -83,15 +83,21 @@
                     <td class="text-center">{{ date('d-m-Y', strtotime($data->tgl_pinjam)) }}</td>
                     <td class="text-center">
                         @if($data->tgl_kembali=="0000-00-00")
-
+                        <span class="badge badge-danger">belum kembali</span>
                         @elseif($data->tgl_kembali=="")
-
+                        <span class="badge badge-danger">belum kembali</span>
                         @else
                         {{ date('d-m-Y', strtotime($data->tgl_kembali)) }}
                         @endif
                     </td>
                     <td class="text-center">
-                        {{ number_format($data->selisih, 0, ",", ".")}}
+                        @if($data->tgl_kembali=="0000-00-00")
+                        <span class="badge badge-danger">{{Carbon\Carbon::parse($data->tgl_pinjam)->diffIndays($sekarang)}} Hari</span>
+                        @elseif($data->tgl_kembali=="")
+                        <span class="badge badge-danger">{{Carbon\Carbon::parse($data->tgl_pinjam)->diffIndays($sekarang)}} Hari</span>
+                        @else
+                        <span class="badge badge-success"> {{Carbon\Carbon::parse($data->tgl_pinjam)->diffIndays($data->tgl_kembali)}} Hari</span>
+                        @endif
                     </td>
                     <td>{{ $data->keterangan }}</td>
                     <td class="text-center" style="font-size: 5px;">
@@ -100,18 +106,18 @@
                             <i class="fa fa-edit"></i>
                         </a>
                         <button type="button" class="btn btn-purple btn-xs" data-toggle="modal" data-target="#detail{{ $data->id_pinjam }}">
-                            <i class="fa fa-eye"></i>
-                            <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#delete{{ $data->id_pinjam }}">
-                                <i class="fa fa-trash-o"></i>
-                            </button>
-                            @elseif(Auth::user()->level===2)
-                            </a>
-                            <button type="button" class="btn btn-purple btn-xs" data-toggle="modal" data-target="#detail{{ $data->id_pinjam }}">
-                                <a href="/pinjam/edit/{{$data->id_pinjam}}" class="btn btn-warning btn-xs">
-                                    <i class="fa fa-edit"></i>
-                                    <i class="fa fa-eye"></i>
-                                    @elseif(Auth::user()->level===3)
-                                    @endif
+                            <i class="fa fa-eye"></i></button>
+                        <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#delete{{ $data->id_pinjam }}">
+                            <i class="fa fa-trash-o"></i></button>
+                        @elseif(Auth::user()->level===2)
+                        <a href="/pinjam/edit/{{$data->id_pinjam}}" class="btn btn-warning btn-xs">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                        <button type="button" class="btn btn-purple btn-xs" data-toggle="modal" data-target="#detail{{ $data->id_pinjam }}">
+                            <i class="fa fa-eye"></i></button>
+                        @elseif(Auth::user()->level===3)
+
+                        @endif
                     </td>
                 </tr>
                 @endforeach
@@ -133,17 +139,10 @@
                 <h4 colspan="2" class="text-white text-center bg-success">Bukti Peminjaman - Bukti Kembali</h4>
                 <card class="table table-small-font table-bordered table-hover">
                     <span class="user-image hidden-xs hidden-sm justify-content-center">
-
-                        @if($data->bkt_pinjam=="0000-00-00")
-
-                        @elseif($data->bkt_pinjam=="")
-
-                        @else
-                        <img src="{{ asset('/dokumen_pinjam/bkt_pinjam/'.$data->bkt_pinjam) }}" width="400" height="600">
-                        @endif
+                        <img src="{{ asset('public/dokumen_pinjam/bkt_pinjam/'.$data->bkt_pinjam) }}" width="400" height="600">
                     </span>
                     <span class="user-image hidden-xs hidden-sm justify-content-center">
-                        <img src="{{ asset('/dokumen_pinjam/bkt_kembali/'.$data->bkt_kembali) }}" width="400" height="600">
+                        <img src="{{ asset('public/dokumen_pinjam/bkt_kembali/'.$data->bkt_kembali) }}" width="400" height="600">
                     </span>
                 </card>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">

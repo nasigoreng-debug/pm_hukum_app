@@ -64,8 +64,8 @@
                     <th class="text-center" style="width: 80px;">Box</th>
 
                     <th class="text-center" style="width: 100px;">Putus PK</th>
-                    <!-- <th class="text-center" style="width: 50px;">Lama Proses</th> -->
-                    <th class="text-center" style="width: 120px;">Keterangan</th>
+                    <th class="text-center" style="width: 50px;">Lama Proses</th>
+                    <!-- <th class="text-center" style="width: 120px;">Keterangan</th> -->
                     <th class="text-center" style="width: 100px;">Action</th>
                 </tr>
             </thead>
@@ -85,8 +85,8 @@
                     <th class="text-center">Putus PA</th> -->
                     <th class="text-center">Box</th>
                     <th class="text-center">Putus PK</th>
-                    <!-- <th class="text-center">Lama Proses</th> -->
-                    <th class="text-center">Keterangan</th>
+                    <th class="text-center">Lama Proses</th>
+                    <!-- <th class="text-center">Keterangan</th> -->
                     <th class="text-center">Action</th>
                 </tr>
             </tfoot>
@@ -99,9 +99,9 @@
                     <td class="text-center">{{ date('d-m-Y', strtotime($data->tgl_masuk)) }}</td>
                     <td class="text-center">
                         @if($data->tgl_register=="")
-                        <button type="button" class="btn btn-warning btn-xs">Data Not Available</button>
+                        <span class="badge badge-danger">Data Not Available</span>
                         @elseif($data->tgl_register=="0000-00-00")
-                        <button type="button" class="btn btn-warning btn-xs">Data Not Available</button>
+                        <span class="badge badge-danger">Data Not Available</span>
                         @else
                         {{ date('d-m-Y', strtotime($data->tgl_register)) }}
                         @endif
@@ -115,24 +115,32 @@
                     <td class="text-center">{{ date('d-m-Y', strtotime($data->tgl_put_pa)) }}</td> -->
                     <td class="text-center">
                         @if($data->no_box=="")
-                        <button type="button" class="btn btn-danger btn-xs">Belum diinput</button>
+                        <span class="badge badge-danger">Belum diinput</span>
                         @elseif($data->no_box=="0000-00-00")
-                        <button type="button" class="btn btn-danger btn-xs">Belum diinput</button>
+                        <span class="badge badge-danger">Belum diinput</span>
                         @else
-                        <button type="button" class="btn btn-success btn-xs">{{ $data->no_box }}</button>
+                        <span class="badge badge-success">{{ $data->no_box }}</span>
                         @endif
                     </td>
                     <td class="text-center">
                         @if($data->tgl_put_pk=="0000-00-00")
-                        <button type="button" class="btn btn-warning btn-xs">Proses</button>
+                        <span class="badge badge-warning">Proses</span>
                         @elseif($data->tgl_put_pk=="")
-                        <button type="button" class="btn btn-warning btn-xs">Proses</button>
+                        <span class="badge badge-warning">Proses</span>
                         @else
                         {{ date('d-m-Y', strtotime($data->tgl_put_pk)) }}
                         @endif
                     </td>
-
-                    <td>{{ $data->keterangan }}</td>
+                    <td class="text-center">
+                        @if($data->tgl_put_pk=="0000-00-00")
+                        <span class="badge badge-danger">{{Carbon\Carbon::parse($data->tgl_register)->diffIndays($sekarang)}} Hari</span>
+                        @elseif($data->tgl_put_pk=="")
+                        <span class="badge badge-danger">{{Carbon\Carbon::parse($data->tgl_register)->diffIndays($sekarang)}} Hari</span>
+                        @else
+                        <span class="badge badge-success"> {{Carbon\Carbon::parse($data->tgl_register)->diffIndays($data->tgl_put_pk)}} Hari</span>
+                        @endif
+                    </td>
+                    <!-- <td>{{ $data->keterangan }}</td> -->
                     <td class="text-center">
                         @if(Auth::user()->level===1)
                         <button type="button" class="btn btn-purple btn-xs" data-toggle="modal" data-target="#detail{{ $data->id_reg_pk }}">
@@ -251,9 +259,9 @@
                         <td>Tanggal Putus PK</td>
                         <td class="text-start">
                             @if($data->tgl_put_pk=="0000-00-00")
-                            <button type="button" class="btn btn-warning btn-xs">Proses</button>
+                            <span class="badge badge-warning">Proses</span>
                             @elseif($data->tgl_put_pk=="")
-                            <button type="button" class="btn btn-warning btn-xs">Proses</button>
+                            <span class="badge badge-warning">Proses</span>
                             @else
                             {{ date('d-m-Y', strtotime($data->tgl_put_pk)) }}
                             @endif
@@ -262,11 +270,11 @@
                     <tr class="text-start border">
                         <td>Nomor Box</td>
                         <td> @if($data->no_box=="")
-                            <button type="button" class="btn btn-danger btn-xs">Belum diinput</button>
+                            <span class="badge badge-success">Belum diinput</span>
                             @elseif($data->no_box=="0000-00-00")
-                            <button type="button" class="btn btn-danger btn-xs">Belum diinput</button>
+                            <span class="badge badge-success">Belum diinput</span>
                             @else
-                            <button type="button" class="btn btn-success btn-xs">{{ $data->no_box }}</button>
+                            <span class="badge badge-success">{{ $data->no_box }}</span>
                             @endif
                         </td>
                     </tr>

@@ -66,17 +66,17 @@
 
             <tfoot class="bg-gray">
                 <tr>
-                    <th class="text-center" style="width: 5px;" >No</th>
-                    <th class="text-center" style="width: 50px;" >Satker</th>
-                    <th class="text-center" style="width: 60px;" >Tanggal Masuk</th>
+                    <th class="text-center" style="width: 5px;">No</th>
+                    <th class="text-center" style="width: 50px;">Satker</th>
+                    <th class="text-center" style="width: 60px;">Tanggal Masuk</th>
                     <!-- <th class="text-center" style="width: 10px;" >Pemohon</th>
                     <th class="text-center" style="width: 10px;" >Termohon</th> -->
-                    <th class="text-center" style="width: 70px;" >Nomor PK</th>
-                    <th class="text-center" style="width: 60px;" >Putus PK</th>
-                    <th class="text-center" style="width: 60px;" >Nomor Banding</th>
-                    <th class="text-center" style="width: 70px;" >Status Putusan</th>
-                    <th class="text-center" style="width: 30px;" >Putusan</th>
-                    <th class="text-center" style="width: 30px;" >Action</th>
+                    <th class="text-center" style="width: 70px;">Nomor PK</th>
+                    <th class="text-center" style="width: 60px;">Putus PK</th>
+                    <th class="text-center" style="width: 60px;">Nomor Banding</th>
+                    <th class="text-center" style="width: 70px;">Status Putusan</th>
+                    <th class="text-center" style="width: 30px;">Putusan</th>
+                    <th class="text-center" style="width: 30px;">Action</th>
                 </tr>
             </tfoot>
 
@@ -91,9 +91,9 @@
                     <td class="text-start">{{ $data->no_pk }}</td>
                     <td class="text-center">
                         @if($data->tgl_put_pk=="0000-00-00")
-                        <p class="text-danger">Belum diinput!!!</p>
+                        <span class="badge badge-danger">Belum diinput!!!</span>
                         @elseif($data->tgl_put_pk=="")
-                        <p class="text-danger">Belum diinput!!!</p>
+                        <span class="badge badge-danger">Belum diinput!!!</span>
                         @else
                         {{ date('d-m-Y', strtotime($data->tgl_put_pk)) }}
                         @endif
@@ -105,7 +105,7 @@
                         @if($data->salput_pk=="")
 
                         @else
-                        <a href="peninjauan_kembali/{{$data->salput_pk}}" class="text-blue"><i class="fa fa-file-pdf-o"></i></a>
+                        <a href="public/peninjauan_kembali/{{$data->salput_pk}}" class="text-blue"><i class="fa fa-file-pdf-o"></i></a>
                         @endif
                     </td>
                     <td class="text-center">
@@ -199,8 +199,8 @@
                             @endif
                         </td>
                     </tr>
-                    
-                   
+
+
                     <tr class="text-start border">
                         <td>Nomor PK</td>
                         <td>{{$data->no_pk}}</td>

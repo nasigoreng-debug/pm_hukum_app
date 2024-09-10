@@ -93,23 +93,22 @@ class HomeController extends Controller
         $bankput_presentase = round($bankput_progres);
 
         //Jumlah Peminjam
-        $pinjam = DB::table('tb_pinjam_berkas')->count();
+        $pinjam = DB::table('tb_arsip_perkara')->count();
 
         //Belum kembali
 
-        $pinjam_bl_kembali_0000 = DB::table('tb_pinjam_berkas')->where('tgl_kembali', 0000 - 00 - 00)->count();
+        $pinjam_bl_kembali_0000 = DB::table('tb_pinjam_berkas')->whereNull('tgl_kembali')->count();
 
-        $pinjam_bl_kembali_null = DB::table('tb_pinjam_berkas')->where('tgl_kembali', null)->count();
+        $pinjam_bl_kembali_null = DB::table('tb_pinjam_berkas')->whereNotNull('tgl_kembali')->count();
 
         $pinjam_bl_kembali = $pinjam_bl_kembali_0000 + $pinjam_bl_kembali_null;
 
         //Pinjam Kembali
-
         $pinjam_kembali = $pinjam - $pinjam_bl_kembali;
-
         //Presentase berkas kembali
-        $pinjam_pinjam =  $arsip - $pinjam_bl_kembali;
-        $pinjam_progres = $pinjam_pinjam / $arsip * 100;
+
+        $pinjam_progres = $pinjam_kembali / $pinjam * 100;
+
         $pinjam_presentase = round($pinjam_progres);
 
         //Surat Masuk
@@ -281,7 +280,7 @@ class HomeController extends Controller
         // $pgd_blm_disposisi = DB::table('tb_pengaduan')->where('status_pgd', 'Disposisi')->count();
 
         //pgd selesai 
-        $pgd_selesai = $pgd_blm_diarsipkan + $pgd_blm_selesai + $pgd_blm_klarifikasi ;
+        $pgd_selesai = $pgd_blm_diarsipkan + $pgd_blm_selesai + $pgd_blm_klarifikasi;
 
         //pgd belum selesai
         $pgd_blm_selesai = $pgd_total - $pgd_selesai;
