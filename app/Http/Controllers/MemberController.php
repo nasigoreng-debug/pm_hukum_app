@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\MemberModel;
-use Illuminate\Support\Facades\Storage;
+
+use Illuminate\Support\Facades\Hash;
 
 class MemberController extends Controller
 {
@@ -21,6 +22,52 @@ class MemberController extends Controller
         ];
         return view('/member/v_member', $data);
     }
+
+    public function add()
+    {
+        $data = [
+            'title' => 'Form Tambah Data'
+        ];
+        return view('/member/v_add_member', $data);
+    }
+
+    //Insert Data
+    public function insert()
+    {
+        Request()->validate([
+            'name' => 'required',
+            'username' => 'required',
+            'password' => 'required|min:6',
+            'level' => 'required',
+            'foto_user' => 'required|mimes:jpg,png|max:1000',
+        ], [
+            'name.required' => 'Nama wajib diisi!!',
+            'username.required' => 'Username wajib diisi!!',
+            'password.required' => 'password wajib diisi!!',
+            'level.required' => 'Role wajib diisi!!',
+            'foto_user.required' => 'Foto wajib diupload!!',
+            'foto_user.mimes' => 'Jenis file harus jpg/png!!',
+            'foto_user.max' => 'Ukuran file max 1Mb!!',
+        ]);
+
+        //jika validasi tidak ada maka lakukan simpan data
+        //upload file
+        $file = Request()->foto_user;
+        $fileName = $file->hashName();
+        $file->move(public_path('img'), $fileName);
+
+        $data = [
+            'name' => Request()->name,
+            'username' => Request()->username,
+            'password' =>  Hash::make(Request()->password),
+            'level' => Request()->level,
+            'foto_user' => $fileName,
+        ];
+
+        $this->MemberModel->addData($data);
+        return redirect()->route('member')->with('pesan', 'User Berhasil Ditambahkan !!');
+    }
+
     public function edit($id)
     {
         if (!$this->MemberModel->detailData($id)) {
@@ -58,6 +105,7 @@ class MemberController extends Controller
             $data = [
                 'name' => Request()->name,
                 'username' => Request()->username,
+                'password' =>  Hash::make(Request()->password),
                 'level' => Request()->level,
                 'foto_user' => $fileName,
             ];
@@ -65,6 +113,7 @@ class MemberController extends Controller
             $data = [
                 'name' => Request()->name,
                 'username' => Request()->username,
+                'password' =>  Hash::make(Request()->password),
                 'level' => Request()->level,
             ];
         }

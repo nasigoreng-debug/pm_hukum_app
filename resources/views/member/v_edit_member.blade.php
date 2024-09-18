@@ -40,17 +40,8 @@
                             </div>
                         </div>
                         <div class="form-group ml-3 mt-2 mb-2 mr-3">
-                            <label>Email</label>
-                            <input type="text" class="form-control @error('email') is-invalid @enderror" value="{{$member->email}}" name="email">
-                            <div id="validationServerUsernameFeedback" class="invalid-feedback text-danger">
-                                @error('email')
-                                {{ $message }}
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="form-group ml-3 mt-2 mb-2 mr-3">
-                            <label>Password</label>
-                            <input type="text" class="form-control @error('password') is-invalid @enderror" value="{{$member->password}}" name="password" readonly>
+                            <label>Ubah Password</label>
+                            <input type="text" class="form-control @error('password') is-invalid @enderror" value="" name="password">
                             <div id="validationServerUsernameFeedback" class="invalid-feedback text-danger">
                                 @error('password')
                                 {{ $message }}
@@ -75,7 +66,7 @@
                             <div class="form-group ml-3 mt-2 mb-2 mr-3">
                                 <label>Foto</label>
                                 <div>
-                                    <img src="{{asset('img/'.$member->foto_user)}}" width="40" height="60" />
+                                    <img src="{{asset('public/img/'.$member->foto_user)}}" width="40" height="60" />
                                 </div>
                                 <div class="">
                                     <div class="form-group ml-3 mt-2 mb-2 mr-3">

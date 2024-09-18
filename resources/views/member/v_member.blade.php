@@ -8,7 +8,13 @@
     <div class="col-md-12">
 
         <ul class="nav nav-tabs">
-        <a href="/register" class="btn btn-sm btn-info mb-2">Tambah Data</a>
+            @if(Auth::user()->level===1)
+            <a href="/member/add" class="btn btn-sm btn-info mb-2">Tambah User</a>
+            @elseif(Auth::user()->level===2)
+            <a href="/member/add" class="btn btn-sm btn-info mb-2">Tambah User</a>
+            @elseif(Auth::user()->level===3)
+
+            @endif
         </ul>
         <div class="tab-content">
             <div class="tab-pane active" id="all">
@@ -19,7 +25,6 @@
                             <th class="hidden-xs hidden-sm"></th>
                             <th>Name</th>
                             <th>Username</th>
-                            <th class="hidden-xs hidden-sm">E-Mail</th>
                             <th>Level</th>
                             <th>Settings</th>
                         </tr>
@@ -49,9 +54,6 @@
                             </td>
                             <td class="hidden-xs hidden-sm">
                                 <span class="email">{{ $data->username }}</span>
-                            </td>
-                            <td class="hidden-xs hidden-sm">
-                                <span class="email">{{ $data->email }}</span>
                             </td>
                             <td class="user-id">
                                 {{ $data->level }}
