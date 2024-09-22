@@ -17,7 +17,7 @@ class SuratmasukModel extends Model
     {
         return DB::table('users')
         ->Where('level', '=', '2')
-        // ->OrWhere('level', '=', '3')
+        ->OrWhere('level', '=', '3')
         ->orderBy('name', 'asc')
         ->get();
     }

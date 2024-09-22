@@ -228,7 +228,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p>Apakah anda ingin menghapus perkara ini?&hellip;</p>
+                <p>Apakah anda ingin menghapus data ini?&hellip;</p>
             </div>
             <div class="modal-footer justify-content-between">
                 <a href="/suratmasuk/delete/{{$data->id_suratmasuk}}" type="button" class="btn btn-xs btn-danger">Ya</a>

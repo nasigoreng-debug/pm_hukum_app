@@ -21,7 +21,7 @@
                 <div class="col">
                     <!-- general form elements -->
                     <div class="card card-primary mt-3 ml-3 mb-3 mr-3">
-                        <div class="form-group ml-3 mt-2 mb-2 mr-3">
+                        <div class="form-group col-md-4">
                             <label>Tanggal Masuk Kepaniteraan</label>
                             <input type="date" class="form-control @error('tgl_masuk_pan') is-invalid @enderror" value="{{old('tgl_masuk_pan')}}" name="tgl_masuk_pan" autofocus>
                             <div id="validationServerUsernameFeedback" class="invalid-feedback text-danger">
@@ -131,7 +131,10 @@
                         <div class="form-group ml-3 mt-2 mb-2 mr-3">
                             <label for="disposisi">Disposisi</label>
                             <select name="disposisi" class="form-control @error('disposisi') is-invalid @enderror">
-        
+                                <option>--Pilih--</option>
+                                @foreach ($user as $data)
+                                <option>{{$data->name}}</option>
+                                @endforeach
                             </select>
                             <div id="validationServerUsernameFeedback" class="invalid-feedback text-danger">
                                 @error('disposisi')
@@ -148,7 +151,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group ml-3 mt-2 mb-2 mr-3 ">
                             <button class="btn btn-success">Simpan</button>
                             <button type="reset" class="btn btn-danger">Reset</button>
                             <a href="/suratmasuk" class="btn btn-sm btn-info mb-2"></i>Kembali</a>

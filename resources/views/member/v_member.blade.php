@@ -18,6 +18,12 @@
         </ul>
         <div class="tab-content">
             <div class="tab-pane active" id="all">
+                @if (session('pesan'))
+                <div class="alert alert-success alert-dismissible mt-2">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    {{ session('pesan') }}
+                </div>
+                @endif
                 <table class="table table-responsive-sm table-small-font table-sm table-hover members-table middle-align">
                     <thead>
                         <tr>
