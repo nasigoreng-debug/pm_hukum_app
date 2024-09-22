@@ -26,7 +26,7 @@
                         "t" +
                         "<'row'<'col-xs-6'i><'col-xs-6'p>>",
                     tableTools: {
-                        sSwfPath: "assets/js/datatables/tabletools/copy_csv_xls_pdf.swf"
+                        sSwfPath: "{{ asset('public/template')}}/assets/js/datatables/tabletools/copy_csv_xls_pdf.swf"
                     }
                 });
             });
@@ -156,7 +156,7 @@
             </div>
             <div class="modal-body">
                 <table class="table table-small-font table-bordered table-hover">
-                   
+
                     <tr class="text-start border">
                         <td>Tanggal Putus Banding</td>
                         <td>{{ date('d-m-Y', strtotime($data->tgl_put_banding)) }}</td>
