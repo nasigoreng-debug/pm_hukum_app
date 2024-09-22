@@ -140,14 +140,9 @@
                             <label for="disposisi">Disposisi</label>
                             <select name="disposisi" class="form-control @error('disposisi') is-invalid @enderror">
                                 <option>{{$suratmasuk->disposisi}}</option>
-                                <option>Ahmad Taufik Senjaya, S.Sy.</option>
-                                <option>Sabrina Vanissa Rizki Hilaihi, S.H</option>
-                                <option>Eva Andari Ramadhina, S.H.</option>
-                                <option>Dede Epul Syaepuloh Rasyid, A.Md.</option>
-                                <option>Irma Yuliani, A.Md.</option>
-                                <option>Farhan Septiansyah, S.Sos.</option>
-                                <option>Adhi Padmayuda, S.H.</option>
-                                <option>Sobari Hidayat, S.Sos.I.</option>
+                                @foreach ($user as $data)
+                                <option>{{$data->name}}</option>
+                                @endforeach
                             </select>
                             <div id="validationServerUsernameFeedback" class="invalid-feedback text-danger">
                                 @error('disposisi')

@@ -121,6 +121,7 @@ class SuratmasukController extends Controller
         $data = [
             'title' => 'Edit',
             'suratmasuk' => $this->SuratmasukModel->detailData($id_suratmasuk),
+            'user' => $this->SuratmasukModel->user(),
         ];
 
         return view('/surat_masuk/v_edit_suratmasuk', $data);
