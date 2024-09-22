@@ -103,9 +103,9 @@
                             <label>Staf yang menyerahkan berkas</label>
                             <select name="penyerah" class="form-control form-control-sm @error('penyerah') is-invalid @enderror">
                                 <option>{{$arsip->penyerah}}</option>
-                                <option>Adhi Padmayuda, S.H.</option>
-                                <option>Sobari Hidayat, S.Sos.I.</option>
-                                <option>Eva Andari Ramadhina, S.H.</option>
+                                @foreach ($user as $data)
+                                <option>{{$data->name}}</option>
+                                @endforeach
                             </select>
                             <div id="validationServerUsernameFeedback" class="invalid-feedback">
                                 @error('penyerah')
@@ -117,11 +117,9 @@
                             <label>Petugas yang menerima berkas</label>
                             <select name="penerima" class="form-control form-control-sm @error('penerima') is-invalid @enderror">
                                 <option>{{$arsip->penerima}}</option>
-                                <option>Farhan Septiansyah, S.Sos.</option>
-                                <!-- <option>Ahmad Taufik Senjaya, S.Sy.</option>
-                                <option>Sabrina Vanissa Rizki Hilaihi, S.H</option> -->
-                                <option>Irma Yuliani, A.Md.</option>
-                                <option>Dede Epul Syaepuloh Rasyid, A.Md.</option>
+                                @foreach ($user as $data)
+                                <option>{{$data->name}}</option>
+                                @endforeach
                             </select>
                             <div id="validationServerUsernameFeedback" class="invalid-feedback">
                                 @error('penerima')

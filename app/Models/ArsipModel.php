@@ -12,6 +12,15 @@ class ArsipModel extends Model
         return DB::table('tb_arsip_perkara')->orderBy('tgl_masuk', 'desc')->get();
     }
 
+    public function user()
+    {
+        return DB::table('users')
+        ->Where('level', '=', '2')
+        ->OrWhere('level', '=', '3')
+        ->orderBy('name', 'asc')
+        ->get();
+    }
+
     public function detailData($id_banding)
     {
         return DB::table('tb_arsip_perkara')->where('id_banding', $id_banding)->first();

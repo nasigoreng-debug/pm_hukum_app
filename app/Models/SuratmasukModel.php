@@ -15,7 +15,11 @@ class SuratmasukModel extends Model
 
     public function user()
     {
-        return DB::table('users')->where('level', '=', '2')->get();
+        return DB::table('users')
+        ->Where('level', '=', '2')
+        // ->OrWhere('level', '=', '3')
+        ->orderBy('name', 'asc')
+        ->get();
     }
 
     public function detailData($id_suratmasuk)

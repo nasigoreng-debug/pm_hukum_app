@@ -131,10 +131,7 @@
                         <div class="form-group ml-3 mt-2 mb-2 mr-3">
                             <label for="disposisi">Disposisi</label>
                             <select name="disposisi" class="form-control @error('disposisi') is-invalid @enderror">
-                                <option>--Pilih--</option>
-                                @foreach ($user as $data)
-                                <option>{{$data->name}}</option>
-                                @endforeach
+        
                             </select>
                             <div id="validationServerUsernameFeedback" class="invalid-feedback text-danger">
                                 @error('disposisi')

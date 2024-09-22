@@ -38,7 +38,8 @@ class ArsipController extends Controller
     public function add()
     {
         $data = [
-            'title' => 'Form Tambah Data'
+            'title' => 'Form Tambah Data',
+            'user' => $this->ArsipModel->user(),
         ];
         return view('/arsip/v_add_arsip', $data);
     }
@@ -112,6 +113,7 @@ class ArsipController extends Controller
         $data = [
             'title' => 'Edit',
             'arsip' => $this->ArsipModel->detailData($id_banding),
+            'user' => $this->ArsipModel->user(),
         ];
         return view('/arsip/v_edit_arsip', $data);
     }

@@ -103,10 +103,10 @@
                         <div class="form-group ml-3 mt-2 mb-2 mr-3">
                             <label>Staf yang menyerahkan berkas</label>
                             <select name="penyerah" class="form-control @error('penyerah') is-invalid @enderror">
-                                <option>{{old('penyerah')}}</option>
-                                <option>Adhi Padmayuda, S.H.</option>
-                                <option>Sobari Hidayat, S.Sos.I.</option>
-                                <option>Eva Andari Ramadhina, S.H.</option>
+                                <option>--Pilih--</option>
+                                @foreach ($user as $data)
+                                <option>{{$data->name}}</option>
+                                @endforeach
                             </select>
                             <div id="validationServerUsernameFeedback" class="invalid-feedback text-danger">
                                 @error('penyerah')
@@ -117,12 +117,10 @@
                         <div class="form-group ml-3 mt-2 mb-2 mr-3">
                             <label>Petugas yang menerima berkas</label>
                             <select name="penerima" class="form-control @error('penerima') is-invalid @enderror">
-                                <option>{{old('penerima')}}</option>
-                                <option>Farhan Septiansyah, S.Sos.</option>
-                                <option>Ahmad Taufik Senjaya, S.Sy.</option>
-                                <option>Sabrina Vanissa Rizki Hilaihi, S.H</option>
-                                <option>Irma Yuliani, A.Md.</option>
-                                <option>Dede Epul Syaepuloh Rasyid, A.Md.</option>
+                                <option>--Pilih--</option>
+                                @foreach ($user as $data)
+                                <option>{{$data->name}}</option>
+                                @endforeach
                             </select>
                             <div id="validationServerUsernameFeedback" class="invalid-feedback text-danger">
                                 @error('penerima')
