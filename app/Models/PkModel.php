@@ -20,12 +20,10 @@ class PkModel extends Model
         //     ->latest('tb_peninjauan_kembali.tgl_masuk')
         //     ->get();
 
-            return  DB::table('tb_reg_pk')
-                    ->join('tb_peninjauan_kembali', function ($join) {
-                    $join->on('tb_reg_pk.no_banding', '=', 'tb_peninjauan_kembali.no_banding')
-                    ->orderByDesc('tb_peninjauan_kembali.tgl_masuk');
-                    })
-                    ->get();
+        return  DB::table('tb_reg_pk')
+            ->Join('tb_peninjauan_kembali', function ($join) {
+                $join->on('tb_reg_pk.no_banding', '=', 'tb_peninjauan_kembali.no_banding');
+            })->orderByDesc('tb_peninjauan_kembali.tgl_masuk')->get();
     }
 
     public function detailData($id_pk)

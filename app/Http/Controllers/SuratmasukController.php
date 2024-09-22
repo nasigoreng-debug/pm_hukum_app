@@ -38,7 +38,8 @@ class SuratmasukController extends Controller
     public function add()
     {
         $data = [
-            'title' => 'Form Tambah Data'
+            'title' => 'Form Tambah Data',
+            'user' => $this->SuratmasukModel->user(),
         ];
         return view('/surat_masuk/v_add_suratmasuk', $data);
     }

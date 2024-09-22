@@ -13,6 +13,11 @@ class SuratmasukModel extends Model
         return DB::table('tb_surat_masuk')->orderBy('tgl_masuk_pan', 'desc')->get();
     }
 
+    public function user()
+    {
+        return DB::table('users')->where('level', '=', '2')->get();
+    }
+
     public function detailData($id_suratmasuk)
     {
         return DB::table('tb_surat_masuk')->where('id_suratmasuk', $id_suratmasuk)->first();
