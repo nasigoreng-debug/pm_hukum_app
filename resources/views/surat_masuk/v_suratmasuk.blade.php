@@ -97,7 +97,7 @@
                     <td class="text-center">
 
                         @if($data->lampiran=="")
-
+                        <span class="badge badge-red">Belum upload lampiran</button>
                         @else
                         <a href="public/surat_masuk/{{$data->lampiran}}" class="text-blue"><i class="fa fa-file-pdf-o"></i></i></a>
                         @endif
