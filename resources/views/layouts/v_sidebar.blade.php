@@ -5,7 +5,7 @@
         <!-- Sidebar User Info Bar - Added in 1.3 -->
         <section class="sidebar-user-info">
             <div class="sidebar-user-info-inner">
-                <a href="#" class="user-profile">
+                <a href="extra-profile.html" class="user-profile">
                     <img src="{{ asset('public/img/'.Auth::user()->foto_user) }}" width="50" height="60" class="img-circle img-corona" />
                     <span class="user-status is-online" style="font-size: 12px;">
                         <h5 class="text-white">{{ Auth::user()->name }}</h5>

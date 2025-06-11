@@ -96,6 +96,7 @@
           <th style="width: 100px;">Tanggal Pelaksanaan</th>
           <th style="width: 100px;">Tanggal Selesai</th>
           <th style="width: 100px;">Keterangan</th>
+          <th style="width: 100px;">Lama</th>
           <th style="width: 50px;">Action</th>
 
         </tr>
@@ -112,6 +113,7 @@
           <th>Tanggal Pelaksanaan</th>
           <th>Tanggal Selesai </th>
           <th>Keterangan</th>
+          <th>Lama</th>
           <th>Action</th>
         </tr>
       </tfoot>
@@ -127,9 +129,9 @@
           <td>{{ $data->proses_terakhir }}</td>
           <td class="text-center">
             @if($data->tgl_eks=="0000-00-00")
-            
+
             @elseif($data->tgl_eks=="")
-            
+
             @else
             {{ date('d-m-Y', strtotime($data->tgl_eks)) }}
             @endif
@@ -144,6 +146,15 @@
             @endif
           </td>
           <td>{{ $data->keterangan }}</td>
+          <td class="text-center">
+                        @if($data->tgl_selesai=="0000-00-00")
+                        <span class="badge badge-danger">{{Carbon\Carbon::parse($data->tgl_permohonan	)->diffIndays($sekarang)}} Hari</span>
+                        @elseif($data->tgl_selesai=="")
+                        <span class="badge badge-danger">{{Carbon\Carbon::parse($data->tgl_permohonan	)->diffIndays($sekarang)}} Hari</span>
+                        @else
+                        <span class="badge badge-success"> {{Carbon\Carbon::parse($data->tgl_permohonan	)->diffIndays($data->tgl_selesai)}} Hari</span>
+                        @endif
+                    </td>
           <td class="text-center" style="font-size: 5px;">
             @if(Auth::user()->level===1)
             <a href="/eks/edit/{{$data->id_eks}}" class="btn btn-warning btn-xs">

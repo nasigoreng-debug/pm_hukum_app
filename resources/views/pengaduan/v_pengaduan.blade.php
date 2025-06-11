@@ -38,38 +38,38 @@
             {{ session('pesan') }}
         </div>
         @endif
-        <table class="table table-bordered table-striped" id="example-4">
+        <table class="table table-responsive table-bordered table-striped " id="example-4">
             <thead class="bg-gray">
                 <tr>
-                    <th style="width: 20px;">No</th>
-                    <th style="width: 80px;">Terima Pengaduan</th>
-                    <th style="width: 130px;">No. Pengaduan</th>
-                    <th style="width: 100px;">Pelapor</th>
-                    <th style="width: 100px;">Terlapor</th>
-                    <th style="width: 150px;">Uraian Pengaduan</th>
-                    <!-- <th style="width: 100px;">Ditangani Oleh</th>
-                    <th style="width: 100px;">Dis PM Hukum</th>
-                    <th style="width: 120px;">Dis Ketua</th>
-                    <th style="width: 120px;">Dis Wakil</th>
-                    <th style="width: 80px;">Dis Hatiwasda</th>
-                    <th style="width: 60px;">Tindak Lanjut</th> -->
-                    <th style="width: 60px;">Status Pengaduan</th>
-                    <th style="width: 60px;">Status Berkas</th>
-                    <!-- <th style="width: 60px;">Tanggal Selesai</th>
-                    <th style="width: 70px;">Tanggal LHP</th> -->
-                    <th style="width: 60px;">Surat Pengaduan</th>
-                    <th style="width: 60px;">Lampiran</th>
-                    <th style="width: 80px;">Action</th>
+                    <th class="text-center" style="width: 20px;">No</th>
+                    <th class="text-center" style="width: 80px;">Tanggal Pengaduan</th>
+                    <th class="text-center" style="width: 130px;">No. Pengaduan</th>
+                    <!-- <th class="text-center" style="width: 100px;">Pelapor</th>
+                    <th class="text-center" style="width: 100px;">Terlapor</th> -->
+                    <th class="text-center" style="width: 150px;">Uraian Pengaduan</th>
+                    <!-- <th class="text-center" style="width: 100px;">Ditangani Oleh</th>
+                    <th class="text-center" style="width: 100px;">Dis PM Hukum</th>
+                    <th class="text-center" style="width: 120px;">Dis Ketua</th>
+                    <th class="text-center" style="width: 120px;">Dis Wakil</th>
+                    <th class="text-center" style="width: 80px;">Dis Hatiwasda</th>
+                    <th class="text-center" style="width: 60px;">Tindak Lanjut</th> -->
+                    <th class="text-center" style="width: 60px;">Status Pengaduan</th>
+                    <th class="text-center" style="width: 60px;">Posisi Berkas</th>
+                    <!-- <th class="text-center" style="width: 60px;">Tanggal Selesai</th>
+                    <th class="text-center" style="width: 70px;">Tanggal LHP</th> -->
+                    <!-- <th class="text-center" style="width: 60px;">Surat Pengaduan</th>
+                    <th class="text-center" style="width: 60px;">Lampiran</th> -->
+                    <th class="text-center" style="width: 80px;">Action</th>
                 </tr>
             </thead>
 
             <tfoot class="bg-gray">
-                <tr>
+                <tr class="text-center">
                     <th>No</th>
-                    <th>Terima Pengaduan</th>
+                    <th>Tanggal Pengaduan</th>
                     <th>No. Pengaduan</th>
-                    <th>Pelapor</th>
-                    <th>Terlpaor</th>
+                    <!-- <th>Pelapor</th>
+                    <th>Terlpaor</th> -->
                     <th>Uraian Pengaduan</th>
                     <!-- <th>Ditangani Oleh</th>
                     <th>Dis PM Hukum</th>
@@ -78,11 +78,11 @@
                     <th>Dis Hatiwasda</th>
                     <th>Tindak Lanjut</th> -->
                     <th>Status Pengaduan</th>
-                    <th>Status Berkas</th>
+                    <th>Posisi Berkas</th>
                     <!-- <th>Tanggal Selesai</th>
                     <th>Tanggal LHP</th> -->
-                    <th>Surat Pengaduan</th>
-                    <th>Lampiran</th>
+                    <!-- <th>Surat Pengaduan</th>
+                    <th>Lampiran</th> -->
                     <th>Action</th>
                 </tr>
             </tfoot>
@@ -90,37 +90,45 @@
             <tbody>
                 @foreach ($pengaduan as $data)
                 <tr>
-                    <td class="text-center">{{$loop->iteration}}</td>
+                    <td>{{$loop->iteration}}</td>
                     <td>{{ date('d-m-Y', strtotime($data->tgl_terima_pgd)) }}</td>
                     <td class="text-start">{{ $data->no_pgd }}</td>
-                    <td class="text-start">{{ $data->pelapor }}</td>
-                    <td class="text-start">{{ $data->terlapor }}</td>
-                    <td class="text-start">{{ $data->uraian_pgd }}</td>
-                    <!-- <td class="text-center">{{ $data->ditangani_oleh }}</td>
-                    <td class="text-center">{{ date('d-m-Y', strtotime($data->dis_pm_hk)) }}</td>
-                    <td class="text-center">{{ date('d-m-Y', strtotime($data->dis_kpta)) }}</td>
-                    <td class="text-center">{{ date('d-m-Y', strtotime($data->dis_wkpta)) }}</td>
-                    <td class="text-center">{{ date('d-m-Y', strtotime($data->dis_hatiwasda)) }}</td>
-                    <td class="text-center">{{ date('d-m-Y', strtotime($data->tgl_tindak_lanjut)) }}</td> -->
-                    <td>{{ $data->status_pgd }}</td>
-                    <td>{{ $data->status_berkas }}</td>
+                    <!-- <td class="text-start">{{ $data->pelapor }}</td>
+                    <td class="text-start">{{ $data->terlapor }}</td> -->
+                    <td class="text-start">
+                        {{ $data->uraian_pgd }}
+                    </td>
+                    <!-- <td>{{ $data->ditangani_oleh }}</td>
+                    <td>{{ date('d-m-Y', strtotime($data->dis_pm_hk)) }}</td>
+                    <td>{{ date('d-m-Y', strtotime($data->dis_kpta)) }}</td>
+                    <td>{{ date('d-m-Y', strtotime($data->dis_wkpta)) }}</td>
+                    <td>{{ date('d-m-Y', strtotime($data->dis_hatiwasda)) }}</td>
+                    <td>{{ date('d-m-Y', strtotime($data->tgl_tindak_lanjut)) }}</td> -->
+                    <td>
+
+                        {{ $data->status_pgd }}
+
+                    </td>
+                    <td>
+                        {{ $data->status_berkas }}
+                    </td>
                     <!-- <td>{{ $data->tgl_selesai_pgd }}</td>
                     <td>{{ $data->tgl_lhp }}</td> -->
-                    <td class="text-center">
+                    <!-- <td>
                         @if($data->surat_pgd=="")
 
                         @else
                         <a href="public/surat_pengaduan/{{$data->surat_pgd}}" class="text-blue" target="_blank"><i class="fa fa-file-pdf-o"></i></a>
                         @endif
                     </td>
-                    <td class="text-center">
+                    <td>
                         @if($data->lampiran=="")
 
                         @else
                         <a href="public/lampiran_pengaduan/{{$data->lampiran}}" class="text-blue" target="_blank"><i class="fa fa-file-pdf-o"></i></a>
                         @endif
-                    </td>
-                    <td class="text-center">
+                    </td> -->
+                    <td>
                         @if(Auth::user()->level===1)
                         <button type="button" class="btn btn-purple btn-xs" data-toggle="modal" data-target="#detail{{ $data->id_pgd }}">
                             <i class="fa fa-eye"></i></a>
@@ -186,68 +194,117 @@
                         <td> Ditangani Oleh</td>
                         <td>{{$data->ditangani_oleh}}</td>
                     </tr>
+
+                    @if($data->dis_pm_hk=="0000-00-00")
+
+                    @elseif($data->dis_pm_hk=="")
+
+                    @else
                     <tr class="text-start border">
-                        <td>Dis Ketua</td>
+                        <td>Disposisi Panitera Muda Hukum</td>
                         <td>
                             @if($data->dis_pm_hk=="0000-00-00")
-
+                            <span class="badge badge-danger">Belum Disposisi</span>
+                            elseif($data->dis_pm_hk=="")
+                            <span class="badge badge-danger">Belum Disposisi</span>
                             @else
                             {{ date('d-m-Y', strtotime($data->dis_pm_hk)) }}
                             @endif
                         </td>
                     </tr>
+                    @endif
+
+                    @if($data->dis_kpta=="0000-00-00")
+
+                    @elseif($data->dis_kpta=="")
+
+                    @else
                     <tr class="text-start border">
-                        <td>Dis Ketua</td>
+                        <td>Disposisi Ketua</td>
                         <td>
                             @if($data->dis_kpta=="0000-00-00")
-
+                            <span class="badge badge-danger">Disposisi terakhir oleh Panitera Muda Hukum</span>
+                            @elseif($data->dis_kpta=="")
+                            <span class="badge badge-danger">Disposisi terakhir oleh Panitera Muda Hukum</span>
                             @else
                             {{ date('d-m-Y', strtotime($data->dis_kpta)) }}
                             @endif
                         </td>
                     </tr>
+                    @endif
+
+                    @if($data->dis_wkpta=="0000-00-00")
+
+                    @elseif($data->dis_wkpta=="")
+
+                    @else
                     <tr class="text-start border">
-                        <td> Dis Wakil</td>
+                        <td>Disposisi Wakil</td>
                         <td>
                             @if($data->dis_wkpta=="0000-00-00")
-
+                            <span class="badge badge-danger">Disposisi terakhir oleh Ketua</span>
+                            @elseif($data->dis_wkpta=="")
+                            <span class="badge badge-danger">Disposisi terakhir oleh Ketua</span>
                             @else
                             {{ date('d-m-Y', strtotime($data->dis_wkpta)) }}
                             @endif
                         </td>
                     </tr>
+                    @endif
+
+                    @if($data->dis_hatiwasda=="0000-00-00")
+
+                    @elseif($data->dis_hatiwasda=="")
+
+                    @else
                     <tr class="text-start border">
-                        <td>Dis Hatiwasda</td>
+                        <td>Disposisi Hatiwasda</td>
                         <td>
                             @if($data->dis_hatiwasda=="0000-00-00")
+
+                            @elseif($data->dis_hatiwasda=="")
 
                             @else
                             {{ date('d-m-Y', strtotime($data->dis_hatiwasda)) }}
                             @endif
                         </td>
                     </tr>
+                    @endif
+
+                    @if($data->tgl_tindak_lanjut=="0000-00-00")
+
+                    @elseif($data->tgl_tindak_lanjut=="")
+
+                    @else
                     <tr class="text-start border">
                         <td>Tindak Lanjut</td>
                         <td>
                             @if($data->tgl_tindak_lanjut=="0000-00-00")
+
+                            @elseif($data->tgl_tindak_lanjut=="")
 
                             @else
                             {{ date('d-m-Y', strtotime($data->tgl_tindak_lanjut)) }}
                             @endif
                         </td>
                     </tr>
+                    @endif
+
                     <tr class="text-start border">
                         <td>Status Pengaduan</td>
                         <td>{{$data->status_pgd}}</td>
                     </tr>
                     <tr class="text-start border">
-                        <td>Status Berkas</td>
+                        <td>Posisi Berkas</td>
                         <td>{{$data->status_berkas}}</td>
                     </tr>
                     <tr class="text-start border">
                         <td>Tanggal Selesai</td>
                         <td>
                             @if($data->tgl_selesai_pgd=="0000-00-00")
+
+                            @elseif($data->tgl_selesai_pgd=="")
+
                             @else
                             {{ date('d-m-Y', strtotime($data->tgl_selesai_pgd)) }}
                             @endif
@@ -257,6 +314,9 @@
                         <td> Tanggal LHP</td>
                         <td>
                             @if($data->tgl_lhp=="0000-00-00")
+
+                            @elseif($data->tgl_lhp=="")
+
                             @else
                             {{ date('d-m-Y', strtotime($data->tgl_lhp)) }}
                             @endif
@@ -268,7 +328,7 @@
                             @if($data->surat_pgd=="")
 
                             @else
-                            <a href="surat_pengaduan/{{$data->surat_pgd}}" class="text-blue" target="_blank"><i class="fa fa-file-pdf-o"></i></a>
+                            <a href="public/surat_pengaduan/{{$data->surat_pgd}}" class="text-blue" target="_blank"><i class="fa fa-file-pdf-o"></i></a>
                             @endif
                         </td>
                     </tr>
@@ -278,7 +338,7 @@
                             @if($data->lampiran=="")
 
                             @else
-                            <a href="lampiran_pengaduan/{{$data->lampiran}}" class="text-blue" target="_blank"><i class="fa fa-file-pdf-o"></i></a>
+                            <a href="public/lampiran_pengaduan/{{$data->lampiran}}" class="text-blue" target="_blank"><i class="fa fa-file-pdf-o"></i></a>
                             @endif
                         </td>
                     </tr>

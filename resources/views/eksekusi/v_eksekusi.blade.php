@@ -19,16 +19,39 @@
     </div>
     <div class="panel-body">
 
-        <script type="text/javascript">
+    <script type="text/javascript">
             jQuery(document).ready(function($) {
-                $("#example-4").dataTable({
-                    dom: "<'row'<'col-sm-5'l><'col-sm-7'Tf>r>" +
-                        "t" +
-                        "<'row'<'col-xs-6'i><'col-xs-6'p>>",
-                    tableTools: {
-                        sSwfPath: "assets/js/datatables/tabletools/copy_csv_xls_pdf.swf"
-                    }
-                });
+                $("#example-3").dataTable().yadcf([{
+                        column_number: 1,
+                    },
+                    {
+                        column_number: 2,
+                        filter_type: 'text'
+                    },
+                    {
+                        column_number: 3,
+                        filter_type: 'text'
+                    },
+                    {
+                        column_number: 4,
+                        filter_type: 'text'
+                    },
+                    {
+                        column_number: 5,
+                    },
+                    {
+                        column_number: 6,
+                        filter_type: 'text'
+                    },
+                    {
+                        column_number: 7,
+                        filter_type: 'text'
+                    },
+                    {
+                        column_number: 8,
+                        filter_type: 'text'
+                    },
+                ]);
             });
         </script>
         <td class="text-center" style="font-size: 5px;">
@@ -49,7 +72,7 @@
             {{ session('pesan') }}
         </div>
         @endif
-        <table class="table table-bordered table-striped" id="example-4">
+        <table class="table table-bordered table-striped" id="example-3">
             <thead class="bg-gray">
                 <tr>
                     <th style="width: 15px;">No</th>

@@ -1,5 +1,5 @@
 @extends('layouts.v_template')
-
+<link rel="shortcut icon" href="{{{ asset('public/favicon/favicon.ico') }}}">
 @section('content')
 @include('layouts.v_deskripsi')
 

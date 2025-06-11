@@ -102,8 +102,8 @@
                         </div>
                         <div class="form-group ml-3 mt-2 mb-2 mr-3">
                             <label>Staf yang menyerahkan berkas</label>
-                            <select name="penyerah" class="form-control @error('penyerah') is-invalid @enderror">
-                                <option>--Pilih--</option>
+                            <select name="penyerah" class="form-control @error('penyerah') is-invalid @enderror" value="{{old('penyerah')}}" >
+                                <option>{{old('penyerah')}}</option>
                                 @foreach ($user as $data)
                                 <option>{{$data->name}}</option>
                                 @endforeach
@@ -116,8 +116,8 @@
                         </div>
                         <div class="form-group ml-3 mt-2 mb-2 mr-3">
                             <label>Petugas yang menerima berkas</label>
-                            <select name="penerima" class="form-control @error('penerima') is-invalid @enderror">
-                                <option>--Pilih--</option>
+                            <select name="penerima" class="form-control @error('penerima') is-invalid @enderror" value="{{old('penerima')}}" >
+                                <option>{{old('penerima')}}</option>
                                 @foreach ($user as $data)
                                 <option>{{$data->name}}</option>
                                 @endforeach

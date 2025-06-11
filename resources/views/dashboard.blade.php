@@ -2,10 +2,16 @@
 
 @section('content')
 
-
-<div class="row">
+<div class="row table-responsive">
 
     <div class="col-sm-12">
+        <blockquote class="blockquote blockquote-success text-center">
+            <h3 class="px-2 bg-light ">
+                <marquee class="py-3" direction="left" onmouseover="this.stop()" onmouseout="this.start()">
+                    <strong>Selamat Datang Di Portal Kepaniteraan Muda Hukum Pengadilan Tinggi Agama Bandung</strong>
+                </marquee>
+            </h3>
+        </blockquote>
 
         <div class="col-sm-3">
 
