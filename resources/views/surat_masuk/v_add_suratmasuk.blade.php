@@ -21,7 +21,7 @@
                 <div class="col">
                     <!-- general form elements -->
                     <div class="card card-primary mt-3 ml-3 mb-3 mr-3">
-                        <div class="form-group col-md-4">
+                        <div class="form-group ml-3 mt-2 mb-2 mr-3">
                             <label>Tanggal Masuk Kepaniteraan</label>
                             <input type="date" class="form-control @error('tgl_masuk_pan') is-invalid @enderror" value="{{old('tgl_masuk_pan')}}" name="tgl_masuk_pan" autofocus>
                             <div id="validationServerUsernameFeedback" class="invalid-feedback text-danger">

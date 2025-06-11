@@ -71,7 +71,7 @@ class JdihController extends Controller
         //jika validasi tidak ada maka lakukan simpan data
         //upload file
         $file = Request()->dokumen;
-        $fileName = str_replace("/", "_",  Request()->jenis_peraturan) . '_' . 'nomor' . '_' . str_replace(" ", "_",  Request()->no_peraturan) . '_' . str_replace(" ", "_",  Request()->tahun) . '_' . date('dmY') . '.' . $file->extension();
+        $fileName = str_replace(" ", "_",  Request()->jenis_peraturan) . '_' . date('YmdHis') . '.' . $file->extension();
         $file->move(public_path('jdih'), $fileName);
 
         $data = [
@@ -127,7 +127,7 @@ class JdihController extends Controller
             //Jika ganti file
             //upload file
             $file = Request()->dokumen;
-            $fileName = str_replace("/", "_",  Request()->jenis_peraturan) . '_' . 'nomor' . '_' . str_replace(" ", "_",  Request()->no_peraturan) . '_' . str_replace(" ", "_",  Request()->tahun) . '_' . date('dmY') . '.' . $file->extension();
+            $fileName = str_replace(" ", "_",  Request()->jenis_peraturan) . '_' . date('YmdHis') . '.' . $file->extension();
             $file->move(public_path('jdih'), $fileName);
 
             $data = [

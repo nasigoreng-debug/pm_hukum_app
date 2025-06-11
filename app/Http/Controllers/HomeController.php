@@ -101,7 +101,7 @@ class HomeController extends Controller
 
         $pinjam_bl_kembali_null = DB::table('tb_pinjam_berkas')->whereNotNull('tgl_kembali')->count();
 
-        $pinjam_bl_kembali = $pinjam_bl_kembali_0000 + $pinjam_bl_kembali_null;
+        $pinjam_bl_kembali = $pinjam_bl_kembali_0000;
 
         //Pinjam Kembali
         $pinjam_kembali = $pinjam - $pinjam_bl_kembali;

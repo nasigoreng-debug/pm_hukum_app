@@ -52,8 +52,8 @@ class PengaduanController extends Controller
             'dis_pm_hk' => 'required',
             'status_pgd' => 'required',
             'status_berkas' => 'required',
-            'surat_pgd' => 'required|mimes:pdf|max:6000',
-            'lampiran' => 'mimes:pdf|max:6000',
+            'surat_pgd' => 'required|mimes:pdf|max:10000',
+            'lampiran' => 'mimes:pdf|max:10000',
         ], [
             'tgl_terima_pgd.required' => 'Satker wajib diisi!!',
             'no_pgd.required' => 'Nomor perkara wajib diisi!!',
@@ -68,7 +68,7 @@ class PengaduanController extends Controller
             'status_berkas.required' => 'Status berkas wajib diisi!!',
             'surat_pgd.required' => 'Surat pengaduan wajib diisi!!',
             'surat_pgd.mimes' => 'Jenis file harus PDF!!',
-            'surat_pgd.max' => 'Ukuran file max 6MB!!',
+            'surat_pgd.max' => 'Ukuran file max 10MB!!',
         ]);
 
         //jika validasi tidak ada maka lakukan simpan data
@@ -138,8 +138,8 @@ class PengaduanController extends Controller
             'dis_pm_hk' => 'required',
             'status_pgd' => 'required',
             'status_berkas' => 'required',
-            'surat_pgd' => 'mimes:pdf|max:6000',
-            'lampiran' => 'mimes:pdf|max:6000',
+            'surat_pgd' => 'mimes:pdf|max:10000',
+            'lampiran' => 'mimes:pdf|max:10000',
         ], [
             'tgl_terima_pgd.required' => 'Satker wajib diisi!!',
             'no_pgd.required' => 'Nomor perkara wajib diisi!!',
@@ -152,9 +152,9 @@ class PengaduanController extends Controller
             'status_pgd.required' => 'Status pengaduan wajib diisi!!',
             'status_berkas.required' => 'Status berkas wajib diisi!!',
             'surat_pgd.mimes' => 'Jenis file harus PDF!!',
-            'surat_pgd.max' => 'Ukuran file max 6MB!!',
+            'surat_pgd.max' => 'Ukuran file max 10MB!!',
             'lampiran.mimes' => 'Jenis file harus PDF!!',
-            'lampiran.max' => 'Ukuran file max 6MB!!',
+            'lampiran.max' => 'Ukuran file max 10MB!!',
         ]);
 
         //jika validasi tidak ada maka lakukan simpan data

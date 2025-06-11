@@ -71,7 +71,7 @@ class SuratkeluarController extends Controller
         if (Request()->surat_pta <> "") {
             //upload file
             $file = Request()->surat_pta;
-            $fileName = 'surat' . '_' . str_replace("/", "_",  Request()->no_surat) . '_' . 'perihal' . '_' . str_replace(" ", "_",  Request()->perihal) . '_' . date('dmY') . '.' . $file->extension();
+            $fileName = 'surat' . '_' . str_replace("/", "_",  Request()->tujuan_surat) . '_' . date('YmdHis') . '.' . $file->extension();
             $file->move(public_path('surat_keluar'), $fileName);
 
             $data = [
@@ -99,7 +99,7 @@ class SuratkeluarController extends Controller
             //upload file
 
             $file = Request()->lampiran;
-            $fileName = 'lampiran' . '_' .  str_replace("/", "_",  Request()->no_surat) . '_' . 'perihal' . '_' . str_replace("/", "_",  Request()->perihal) . '_' . date('dmY') . '.' . $file->extension();
+            $fileName = 'lampiran' . '_' .  str_replace("/", "_",  Request()->tujuan_surat) . '_' . date('YmdHis') . '.' . $file->extension();
             $file->move(public_path('lampiran_surat_keluar'), $fileName);
 
             $data = [
@@ -152,7 +152,7 @@ class SuratkeluarController extends Controller
             //Jika ganti file
             //upload file
             $file = Request()->surat_pta;
-            $fileName = 'surat' . '_' . str_replace("/", "_",  Request()->no_surat) . '_' . 'perihal' . '_' . str_replace("/", "_",  Request()->perihal) . '_' . date('dmY') . '.' . $file->extension();
+            $fileName = 'surat' . '_' . str_replace("/", "_",  Request()->tujuan_surat) . '_' . date('YmdHis') . '.' . $file->extension();
             $file->move(public_path('surat_keluar'), $fileName);
 
             $data = [
@@ -186,7 +186,7 @@ class SuratkeluarController extends Controller
             //upload file
 
             $file = Request()->lampiran;
-            $fileName = 'lampiran' . '_' .  str_replace("/", "_",  Request()->no_surat) . '_' . 'perihal' . '_' . str_replace(" ", "_",  Request()->perihal) . '_' . date('dmY') . '.' . $file->extension();
+            $fileName = 'lampiran' . '_' .  str_replace("/", "_",  Request()->tujuan_surat) . '_' . date('YmdHis') . '.' . $file->extension();
             $file->move(public_path('lampiran_surat_keluar'), $fileName);
 
             $data = [

@@ -54,6 +54,17 @@ class EksekusiController extends Controller
         //Presentase selesai
         $eksekusi_progres = $eksekusi_selesai / $eksekusi_total * 100;
         $eksekusi_presentase = round($eksekusi_progres);
+
+        $eksekusi_riil = DB::table('tb_eksekusi')->where('proses_terakhir', 'Pelaksanaan Eksekusi Riil')->count();
+
+        $eksekusi_lelang = DB::table('tb_eksekusi')->where('proses_terakhir', 'Penyerahan Hasil Eksekusi/Lelang')->count();
+
+        $eksekusi_dicabut = DB::table('tb_eksekusi')->where('proses_terakhir', 'Penetapan Cabut')->count();
+
+        $eksekusi_dicoret = DB::table('tb_eksekusi')->where('proses_terakhir', 'Penetapan Coret')->count();
+
+        $eksekusi_ne = DB::table('tb_eksekusi')->where('proses_terakhir', 'Penetapan Non-Eksekutabel')->count();
+
         return view('/eksekusi/v_dashboard_eksekusi', $data, compact(
             'eksekusi_total',
             'eksekusi_masuk_thn_ini',
@@ -62,6 +73,11 @@ class EksekusiController extends Controller
             'eksekusi_blm_selesai',
             'eksekusi_selesai',
             'eksekusi_presentase',
+            'eksekusi_riil',
+            'eksekusi_lelang',
+            'eksekusi_dicabut',
+            'eksekusi_dicoret',
+            'eksekusi_ne',
 
         ));
     }
@@ -81,7 +97,9 @@ class EksekusiController extends Controller
             'title' => 'Perkara Eksekusi',
             'eksekusi' => $this->EksekusiModel->berjalan_eks(),
         ];
-        return view('/eksekusi/v_eksekusi_berjalan', $data);
+        $sekarang =  date("Y-m-d");
+        return view('/eksekusi/v_eksekusi_berjalan', $data)
+        ->with("sekarang", $sekarang);
     }
 
     public function selesai_eks()

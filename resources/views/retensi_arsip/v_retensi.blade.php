@@ -203,7 +203,7 @@
                         <td>{{$data->status_put}}</td>
                     </tr>
                     <tr class="text-start border">
-                        <td>Nomor Perkara Banding</td>
+                        <td>Nomor Perkara TK.1</td>
                         <td>{{$data->no_pa}}</td>
                     </tr>
                     <tr class="text-start border">
