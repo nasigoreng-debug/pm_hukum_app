@@ -87,13 +87,14 @@
 
                         @if($data->surat_pta=="")
                         @else
-                        <a href="surat_keluar/{{$data->surat_pta}}" class="text-blue"><i class="fa fa-file-pdf-o"></i></i></a>
+                        <a href="public/surat_keluar/{{$data->surat_pta}}" class="text-blue"><i class="fa fa-file-pdf-o"></i></i></a>
                         @endif
 
                     </td>
                     <td class="text-center">
 
                         @if($data->lampiran=="")
+                        -
                         @else
                         <a href="public/lampiran_surat_keluar/{{$data->lampiran}}" class="text-blue"><i class="fa fa-file-pdf-o"></i></i></a>
                         @endif
