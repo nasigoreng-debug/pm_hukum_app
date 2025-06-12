@@ -43,8 +43,4 @@ class LoginController extends Controller
         return view('/login/v_login');
     }
 
-    public function username()
-    {
-        return 'username';
-    }
 }

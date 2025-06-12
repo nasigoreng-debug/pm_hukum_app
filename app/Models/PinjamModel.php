@@ -10,6 +10,9 @@ class PinjamModel extends Model
     public function allData()
     {
         return DB::table('tb_pinjam_berkas')->orderBy('tgl_pinjam', 'desc')->get();
+        // return DB::table('tb_pinjam_berkas')
+        //     ->selectRaw("*, IF(tgl_kembali='0000-00-00', DATEDIFF(NOW(), tgl_pinjam), DATEDIFF(tgl_kembali, tgl_pinjam)) AS selisih")
+        //     ->orderBy('tgl_pinjam', 'desc')->get();
     }
 
     public function detailData($id_pinjam)
