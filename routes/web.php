@@ -60,6 +60,7 @@ Route::get('/eks', [EksekusiController::class, 'index'])->name('eks');
 Route::get('/eks/total', [EksekusiController::class, 'total_eks'])->name('total_eks');
 Route::get('/eks/berjalan', [EksekusiController::class, 'berjalan_eks'])->name('berjalan_eks');
 Route::get('/eks/selesai', [EksekusiController::class, 'selesai_eks'])->name('selesai_eks');
+Route::get('/eks/progres', [EksekusiController::class, 'progres_eks'])->name('progres_eks');
 Route::get('/eks/detail/{id_eks}', [EksekusiController::class, 'detail'])->name('detail');
 Route::get('/eks/add', [EksekusiController::class, 'add'])->name('add');
 Route::post('/eks/insert', [EksekusiController::class, 'insert'])->name('insert');
@@ -146,6 +147,7 @@ Route::get('/suratmasuk/add', [SuratmasukController::class, 'add'])->name('add')
 Route::post('/suratmasuk/insert', [SuratmasukController::class, 'insert'])->name('insert');
 Route::get('/suratmasuk/edit/{id_suratmasuk}', [SuratmasukController::class, 'edit'])->name('edit');
 Route::post('/suratmasuk/update/{id_suratmasuk}', [SuratmasukController::class, 'update'])->name('update');
+Route::get('/search-date-range', [SuratmasukController::class, 'searchByDateRange']);
 // Route::get('/suratmasuk/delete/{id_suratmasuk}', [SuratmasukController::class, 'delete'])->name('delete');
 
 //Surat Keluar

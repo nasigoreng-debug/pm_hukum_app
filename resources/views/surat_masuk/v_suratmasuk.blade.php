@@ -20,35 +20,28 @@
 
         <script type="text/javascript">
             jQuery(document).ready(function($) {
-                $("#example-3").dataTable().yadcf([{
-                        column_number: 1,
-                        filter_type: 'text'
-                    },
-                    {
-                        column_number: 2,
-                        filter_type: 'text'
-                    },
-                    {
-                        column_number: 3
-                    },
-                    {
-                        column_number: 4,
-                        filter_type: 'text'
-                    },
-                    {
-                        column_number: 5,
-                        filter_type: 'text'
-                    },
-                    {
-                        column_number: 6,
-                        filter_type: 'text'
-                    },
-                    {
-                        column_number: 8
-                    },
-                ]);
+                $("#example-4").dataTable({
+                    dom: "<'row'<'col-sm-5'l><'col-sm-7'Tf>r>" +
+                        "t" +
+                        "<'row'<'col-xs-6'i><'col-xs-6'p>>",
+                    tableTools: {
+                        sSwfPath: "{{ asset('public/template')}}/assets/js/datatables/tabletools/copy_csv_xls_pdf.swf"
+                    }
+                });
             });
         </script>
+
+        <div class="text-center">
+            <form method="GET" action="/search-date-range">
+                Dari
+                <input type="date" name="start_date" required>
+                Sampai
+                <input type="date" name="end_date" required>
+                <button type="submit" class="btn btn-sm btn-primary">Tampilkan</button>
+                <a href="/suratmasuk" class="btn btn-sm btn-danger">reload</a>
+            </form>
+        </div>
+
         <td class="text-center" style="font-size: 5px;">
             @if(Auth::user()->level===1)
             <a href="/suratmasuk/add" class="btn btn-sm btn-info mb-2">Tambah Data</a>
@@ -65,7 +58,7 @@
             {{ session('pesan') }}
         </div>
         @endif
-        <table class="table table-striped table-bordered" id="example-3">
+        <table class="table table-striped table-bordered" id="example-4">
             <thead>
                 <tr class="replace-inputs bg-gray">
                     <th style="width: 30px;">No</th>
@@ -98,9 +91,9 @@
 
                         @if($data->lampiran=="")
                         <span class="badge badge-red">Belum upload lampiran</button>
-                        @else
-                        <a href="public/surat_masuk/{{$data->lampiran}}" class="text-blue"><i class="fa fa-file-pdf-o"></i></i></a>
-                        @endif
+                            @else
+                            <a href="public/surat_masuk/{{$data->lampiran}}" class="text-blue"><i class="fa fa-file-pdf-o"></i></i></a>
+                            @endif
 
                     </td>
                     <td>{{ $data->disposisi }}</td>

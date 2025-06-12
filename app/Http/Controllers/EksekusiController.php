@@ -78,7 +78,59 @@ class EksekusiController extends Controller
             'eksekusi_dicabut',
             'eksekusi_dicoret',
             'eksekusi_ne',
+        ));
 
+    }
+
+    public function progres_eks()
+    {
+
+        $data = [
+            'title' => 'Perkara Eksekusi',
+            'eksekusi' => $this->EksekusiModel->allData(),
+
+        ];
+
+        //Function Tahun sekarang
+        $day = Carbon::now()->format('d');
+        $month = Carbon::now()->format('m');
+        $year = Carbon::now()->format('Y');
+
+        //eksekusi
+        $eksekusi_total = DB::table('tb_eksekusi')
+            ->count();
+
+        //eksekusi
+        $eksekusi_masuk_thn_ini = DB::table('tb_eksekusi')
+            ->whereYear('tgl_permohonan', $year)
+            ->count();
+
+        //eksekusi Bulan Ini
+        $eksekusi_bln_ini = DB::table('tb_eksekusi')
+            ->whereDay('tgl_permohonan', $day)
+            ->count();
+
+        //Bandung
+        $badg_eksekusi = DB::table('tb_eksekusi')->where('satker', 'bandung')->count();
+
+        $badg_eksekusi_riil = DB::table('tb_eksekusi')->where('satker', 'bandung')->where('proses_terakhir', 'Pelaksanaan Eksekusi Riil')->count();
+
+        $badg_eksekusi_lelang = DB::table('tb_eksekusi')->where('satker', 'bandung')->where('proses_terakhir', 'Penyerahan Hasil Eksekusi/Lelang')->count();
+
+        $badg_eksekusi_dicabut = DB::table('tb_eksekusi')->where('satker', 'bandung')->where('proses_terakhir', 'Penetapan Cabut')->count();
+
+        $badg_eksekusi_dicoret = DB::table('tb_eksekusi')->where('satker', 'bandung')->where('proses_terakhir', 'Penetapan Coret')->count();
+
+        $badg_eksekusi_ne = DB::table('tb_eksekusi')->where('satker', 'bandung')->where('proses_terakhir', 'Penetapan Non-Eksekutabel')->count();
+
+        //Sumedang
+        return view('/eksekusi/v_eksekusi_progres', $data, compact(
+            'badg_eksekusi',
+            'badg_eksekusi_riil',
+            'badg_eksekusi_lelang',
+            'badg_eksekusi_dicabut',
+            'badg_eksekusi_dicoret',
+            'badg_eksekusi_ne',
         ));
     }
 
@@ -111,8 +163,7 @@ class EksekusiController extends Controller
         return view('/eksekusi/v_eksekusi_selesai', $data);
     }
 
-
-    //Detail
+      //Detail
     public function detail($id_eks)
     {
         if (!$this->EksekusiModel->detailData($id_eks)) {

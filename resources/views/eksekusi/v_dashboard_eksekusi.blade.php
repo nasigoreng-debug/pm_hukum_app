@@ -53,7 +53,7 @@
       <h4>PRESENTASE PENYELESAIAN PERKARA EKSEKUSI</h4>
     </div>
     <div class="xe-icon">
-      <a href="" class="text-white">
+      <a href="/eks/progres" class="text-white">
         <h1 class="num">0,0%</h1>
       </a>
     </div>
@@ -124,4 +124,6 @@
     </div>
   </div>
 </div>
+
+
 @endsection

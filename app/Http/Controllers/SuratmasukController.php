@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\SuratmasukModel;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SuratmasukController extends Controller
 {
@@ -207,4 +209,22 @@ class SuratmasukController extends Controller
         $this->SuratmasukModel->deleteData($id_suratmasuk);
         return redirect()->route('suratmasuk')->with('pesan', 'Data Berhasil Dihapus !!');
     }
+
+    public function searchByDateRange(Request $request)
+{
+    $data = [
+                $startDate = $request->input('start_date'),
+                $endDate = $request->input('end_date'),
+
+                'title' => 'Surat Masuk',
+                
+                'suratmasuk' => DB::table('tb_surat_masuk')
+                ->whereBetween('tgl_masuk_pan', [$startDate, $endDate])
+                ->get(),
+            ];
+
+                    // dd($data);
+    return view('/surat_masuk/v_suratmasuk', $data);
+    
+}
 }
