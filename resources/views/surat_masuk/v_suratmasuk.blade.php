@@ -38,7 +38,7 @@
                 Sampai
                 <input type="date" name="end_date" required>
                 <button type="submit" class="btn btn-sm btn-primary">Tampilkan</button>
-                <a href="/suratmasuk" class="btn btn-sm btn-danger">reload</a>
+                <a href="/suratmasuk" class="btn btn-sm btn-danger">Reload</a>
             </form>
         </div>
 
