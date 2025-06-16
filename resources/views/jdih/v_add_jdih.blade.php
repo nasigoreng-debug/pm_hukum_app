@@ -34,8 +34,9 @@
                                 <option> Surat Keputusan Ketua Mahkamah Agung (SK KMA)</option>
                                 <option> Surat Keputusan Sekretaris Mahkamah Agung (SK SEKMA)</option>
                                 <option> Surat Edaran Direktur Jenderal Badan Peradilan Agama (SE Dirjen Badilag)</option>
-                                <option> Surat Keputusan Ketua Pengadilan Tinggi Agama Bandung (SK KPTA Bandung)</option>
+                                <option> Surat Keputusan Direktur Jenderal Badan Peradilan Agama (SK Dirjen Badilag)</option>
                                 <option> Surat Edaran Ketua Pengadilan Tinggi Agama Bandung (SE KPTA Bandung)</option>
+                                <option> Surat Keputusan Ketua Pengadilan Tinggi Agama Bandung (SK KPTA Bandung)</option>
                                 <option> Peraturan lainnya</option>
                             </select>
                             <div id="validationServerUsernameFeedback" class="invalid-feedback text-danger">

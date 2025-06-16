@@ -34,9 +34,17 @@
         <td class="text-center" style="font-size: 5px;">
             @if(Auth::user()->level===1)
             <a href="/eks/add" class="btn btn-sm btn-info mb-2">Tambah Data</a>
+            <a href="/eks/total" class="btn btn-sm btn-secondary mb-2">Semua</a>
+            <a href="/eks/berjalan" class="btn btn-sm btn-secondary mb-2">Berjalan</a>
+            <a href="/eks/selesai" class="btn btn-sm btn-secondary mb-2">Selesai</a>
+            <a href="/eks/progres" class="btn btn-sm btn-secondary mb-2">Progres Satker</a>
             <a href="/eks" class="btn btn-sm btn-danger mb-2">Kembali</a>
             @elseif(Auth::user()->level===2)
             <a href="/eks/add" class="btn btn-sm btn-info mb-2">Tambah Data</a>
+            <a href="/eks/total" class="btn btn-sm btn-secondary mb-2">Semua</a>
+            <a href="/eks/berjalan" class="btn btn-sm btn-secondary mb-2">Berjalan</a>
+            <a href="/eks/selesai" class="btn btn-sm btn-secondary mb-2">Selesai</a>
+            <a href="/eks/progres" class="btn btn-sm btn-secondary mb-2">Progres Satker</a>
             <a href="/eks" class="btn btn-sm btn-danger mb-2">Kembali</a>
             @elseif(Auth::user()->level===3)
 

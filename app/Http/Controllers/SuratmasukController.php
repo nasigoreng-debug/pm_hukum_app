@@ -13,6 +13,7 @@ class SuratmasukController extends Controller
         $this->SuratmasukModel = new SuratmasukModel();
         $this->middleware('auth');
     }
+    
     public function index()
     {
 
