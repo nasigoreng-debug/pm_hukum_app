@@ -27,7 +27,7 @@ class JdihController extends Controller
         $month = Carbon::now()->format('m');
         $year = Carbon::now()->format('Y');
 
-        $jdih_uu = DB::table('tb_jdih')->where('jenis_peraturan', 'Undang-Undang')->count();
+        $jdih_uu = DB::table('tb_jdih')->where('jenis_peraturan', 'Undang-Undang (UU)')->count();
         $jdih_perpu = DB::table('tb_jdih')->where('jenis_peraturan', 'Peraturan Pemerintah Pengganti Undang-undang (PERPU)')->count();
         $jdih_pp = DB::table('tb_jdih')->where('jenis_peraturan', 'Peraturan Pemerintah (PP)')->count();
         $jdih_inpres = DB::table('tb_jdih')->where('jenis_peraturan', 'Instruksi Presiden (INPRES)')->count();
@@ -57,6 +57,21 @@ class JdihController extends Controller
             'jdih_peraturan_lainnya',
         ));
     }
+
+
+    //Total
+    public function total()
+    {
+        if (!$this->JdihModel->allData()) {
+            abort(404);
+        }
+        $data = [
+            'title' => 'Detail',
+            'jdih' => $this->JdihModel->allData(),
+        ];
+        return view('/jdih/v_jdih', $data);
+    }
+
 
     //Detail
     public function detail($id_jdih)

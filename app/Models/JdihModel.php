@@ -15,7 +15,7 @@ class JdihModel extends Model
     public function undang_undang()
     {
         return DB::table('tb_jdih')
-            ->where('jenis_peraturan', 'Undang-Undang')
+            ->where('jenis_peraturan', 'Undang-Undang (UU)')
             ->orderBy('tgl_peraturan', 'desc')->get();
     }
 

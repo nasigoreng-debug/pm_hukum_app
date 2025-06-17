@@ -2,17 +2,17 @@
 
 @section('content')
 
-<div class="row table-responsive">
-
     <div class="col-sm-12">
-        <blockquote class="blockquote blockquote-success text-center">
-            <h3 class="px-2 bg-light ">
-                <marquee class="py-3" direction="left" onmouseover="this.stop()" onmouseout="this.start()">
-                    <strong>Selamat Datang Di Portal Kepaniteraan Muda Hukum Pengadilan Tinggi Agama Bandung</strong>
-                </marquee>
-            </h3>
-        </blockquote>
-
+        <div class="col-sm-12">
+            <blockquote class="blockquote blockquote-success text-center">
+                <h3 class="px-2 bg-light ">
+                    <marquee class="py-3" direction="left" onmouseover="this.stop()" onmouseout="this.start()">
+                        <strong>Selamat Datang Di Portal Kepaniteraan Muda Hukum Pengadilan Tinggi Agama Bandung</strong>
+                    </marquee>
+                </h3>
+            </blockquote>
+        </div>
+    
         <div class="col-sm-3">
 
             <div class="xe-widget xe-progress-counter xe-progress-counter-orange " data-count=".num" data-from="0" data-to="{{ $arsip_masuk }}" data-duration="2">
@@ -645,151 +645,148 @@
             </div>
 
         </div>
-    </div>
 
-    <div class="col-sm-8">
+        <div class="col-sm-12">
 
-        <div class="xe-widget xe-weather">
-            <div class="xe-background xe-background-animated">
-                <img src="assets/images/clouds.png" />
-            </div>
+            <div class="xe-widget xe-weather">
+                <div class="xe-background xe-background-animated">
+                    <img src="assets/images/clouds.png" />
+                </div>
 
-            <div class="xe-current-day">
-                <div class="xe-now">
-                    <div class="xe-temperature">
-                        <div class="xe-icon">
-                            <i class="meteocons-cloud-moon"></i>
+                <div class="xe-current-day">
+                    <div class="xe-now">
+                        <div class="xe-temperature">
+                            <div class="xe-icon">
+                                <i class="meteocons-cloud-moon"></i>
+                            </div>
+                            <div class="xe-label">
+                                Hari ini
+                                <strong>21&deg;</strong>
+                            </div>
                         </div>
-                        <div class="xe-label">
-                            Hari ini
-                            <strong>21&deg;</strong>
+                        <div class="xe-location">
+                            <h4>Bandung, Indonesia</h4>
+                            <time>{{date('l, j F Y h:i:s A')}}</time>
                         </div>
                     </div>
-                    <div class="xe-location">
-                        <h4>Bandung, Indonesia</h4>
-                        <time>{{date('l, j F Y h:i:s A')}}</time>
+
+                    <div class="xe-forecast">
+                        <ul>
+                            <li>
+                                <div class="xe-forecast-entry">
+                                    <time>11:00</time>
+                                    <div class="xe-icon">
+                                        <i class="meteocons-sunrise"></i>
+                                    </div>
+                                    <strong class="xe-temp">12&deg;</strong>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="xe-forecast-entry">
+                                    <time>12:00</time>
+                                    <div class="xe-icon">
+                                        <i class="meteocons-clouds-flash"></i>
+                                    </div>
+                                    <strong class="xe-temp">13&deg;</strong>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="xe-forecast-entry">
+                                    <time>13:00</time>
+                                    <div class="xe-icon">
+                                        <i class="meteocons-cloud-moon-inv"></i>
+                                    </div>
+                                    <strong class="xe-temp">16&deg;</strong>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="xe-forecast-entry">
+                                    <time>14:00</time>
+                                    <div class="xe-icon">
+                                        <i class="meteocons-eclipse"></i>
+                                    </div>
+                                    <strong class="xe-temp">19&deg;</strong>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="xe-forecast-entry">
+                                    <time>15:00</time>
+                                    <div class="xe-icon">
+                                        <i class="meteocons-rain"></i>
+                                    </div>
+                                    <strong class="xe-temp">21&deg;</strong>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="xe-forecast-entry">
+                                    <time>16:00</time>
+                                    <div class="xe-icon">
+                                        <i class="meteocons-cloud-sun"></i>
+                                    </div>
+                                    <strong class="xe-temp">25&deg;</strong>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
 
-                <div class="xe-forecast">
-                    <ul>
+                <div class="xe-weekdays">
+                    <ul class="list-unstyled">
                         <li>
-                            <div class="xe-forecast-entry">
-                                <time>11:00</time>
+                            <div class="xe-weekday-forecast">
+                                <div class="xe-temp">21&deg;</div>
+                                <div class="xe-day">Senin</div>
                                 <div class="xe-icon">
-                                    <i class="meteocons-sunrise"></i>
+                                    <i class="meteocons-windy-inv"></i>
                                 </div>
-                                <strong class="xe-temp">12&deg;</strong>
                             </div>
                         </li>
                         <li>
-                            <div class="xe-forecast-entry">
-                                <time>12:00</time>
+                            <div class="xe-weekday-forecast">
+                                <div class="xe-temp">23&deg;</div>
+                                <div class="xe-day">Selasa</div>
                                 <div class="xe-icon">
-                                    <i class="meteocons-clouds-flash"></i>
+                                    <i class="meteocons-sun"></i>
                                 </div>
-                                <strong class="xe-temp">13&deg;</strong>
                             </div>
                         </li>
                         <li>
-                            <div class="xe-forecast-entry">
-                                <time>13:00</time>
+                            <div class="xe-weekday-forecast">
+                                <div class="xe-temp">19&deg;</div>
+                                <div class="xe-day">Rabu</div>
                                 <div class="xe-icon">
-                                    <i class="meteocons-cloud-moon-inv"></i>
+                                    <i class="meteocons-na"></i>
                                 </div>
-                                <strong class="xe-temp">16&deg;</strong>
                             </div>
                         </li>
                         <li>
-                            <div class="xe-forecast-entry">
-                                <time>14:00</time>
+                            <div class="xe-weekday-forecast">
+                                <div class="xe-temp">18&deg;</div>
+                                <div class="xe-day">Kamis</div>
                                 <div class="xe-icon">
-                                    <i class="meteocons-eclipse"></i>
+                                    <i class="meteocons-windy"></i>
                                 </div>
-                                <strong class="xe-temp">19&deg;</strong>
                             </div>
                         </li>
                         <li>
-                            <div class="xe-forecast-entry">
-                                <time>15:00</time>
+                            <div class="xe-weekday-forecast">
+                                <div class="xe-temp">20&deg;</div>
+                                <div class="xe-day">Jumat</div>
                                 <div class="xe-icon">
-                                    <i class="meteocons-rain"></i>
+                                    <i class="meteocons-sun"></i>
                                 </div>
-                                <strong class="xe-temp">21&deg;</strong>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="xe-forecast-entry">
-                                <time>16:00</time>
-                                <div class="xe-icon">
-                                    <i class="meteocons-cloud-sun"></i>
-                                </div>
-                                <strong class="xe-temp">25&deg;</strong>
                             </div>
                         </li>
                     </ul>
                 </div>
-            </div>
 
-            <div class="xe-weekdays">
-                <ul class="list-unstyled">
-                    <li>
-                        <div class="xe-weekday-forecast">
-                            <div class="xe-temp">21&deg;</div>
-                            <div class="xe-day">Senin</div>
-                            <div class="xe-icon">
-                                <i class="meteocons-windy-inv"></i>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="xe-weekday-forecast">
-                            <div class="xe-temp">23&deg;</div>
-                            <div class="xe-day">Selasa</div>
-                            <div class="xe-icon">
-                                <i class="meteocons-sun"></i>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="xe-weekday-forecast">
-                            <div class="xe-temp">19&deg;</div>
-                            <div class="xe-day">Rabu</div>
-                            <div class="xe-icon">
-                                <i class="meteocons-na"></i>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="xe-weekday-forecast">
-                            <div class="xe-temp">18&deg;</div>
-                            <div class="xe-day">Kamis</div>
-                            <div class="xe-icon">
-                                <i class="meteocons-windy"></i>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="xe-weekday-forecast">
-                            <div class="xe-temp">20&deg;</div>
-                            <div class="xe-day">Jumat</div>
-                            <div class="xe-icon">
-                                <i class="meteocons-sun"></i>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
             </div>
-
+            
+        </div>
+        <div class="col-sm-12" >
+                <iframe class="col-sm-12" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.596135077041!2d107.69135747890924!3d-6.938775605266532!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68c2b8532be0b3%3A0x558f74ce35b77659!2sPengadilan%20Tinggi%20Agama%20Bandung!5e0!3m2!1sid!2sid!4v1702197661449!5m2!1sid!2sid" width="500" height="285" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
 
-    </div>
-
-    <div>
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.596135077041!2d107.69135747890924!3d-6.938775605266532!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68c2b8532be0b3%3A0x558f74ce35b77659!2sPengadilan%20Tinggi%20Agama%20Bandung!5e0!3m2!1sid!2sid!4v1702197661449!5m2!1sid!2sid" width="500" height="285" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-    </div>
-
 </div>
-<!-- PRESENTASE END-->
 
 @endsection

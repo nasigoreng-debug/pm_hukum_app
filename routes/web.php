@@ -70,24 +70,25 @@ Route::post('/eks/update/{id_eks}', [EksekusiController::class, 'update'])->name
 
 //Jdih
 Route::get('/himper', [JdihController::class, 'index'])->name('himper');
+Route::get('/himper/total', [JdihController::class, 'total'])->name('total');
 Route::get('/himper/detail/{id_jdih}', [JdihController::class, 'detail'])->name('detail');
 Route::get('/himper/add', [JdihController::class, 'add'])->name('add');
 Route::post('/himper/insert', [JdihController::class, 'insert'])->name('insert');
 Route::get('/himper/edit/{id_jdih}', [JdihController::class, 'edit'])->name('edit');
 Route::post('/himper/update/{id_jdih}', [JdihController::class, 'update'])->name('update');
-Route::get('/himper/undang_undang', [JdihController::class, 'undang_undang'])->name('undang_undang');
-Route::get('/himper/perpu', [JdihController::class, 'perpu'])->name('perpu');
-Route::get('/himper/pp', [JdihController::class, 'pp'])->name('pp');
-Route::get('/himper/inpres', [JdihController::class, 'inpres'])->name('inpres');
-Route::get('/himper/perma', [JdihController::class, 'perma'])->name('perma');
-Route::get('/himper/sema', [JdihController::class, 'sema'])->name('sema');
-Route::get('/himper/sk_kma', [JdihController::class, 'sk_kma'])->name('sk_kma');
-Route::get('/himper/sk_sekma', [JdihController::class, 'sk_sekma'])->name('sk_sekma');
-Route::get('/himper/se_dirjen_badilag', [JdihController::class, 'se_dirjen_badilag'])->name('se_dirjen_badilag');
-Route::get('/himper/sk_dirjen_badilag', [JdihController::class, 'sk_dirjen_badilag'])->name('sk_dirjen_badilag');
-Route::get('/himper/se_kpta', [JdihController::class, 'se_kpta'])->name('se_kpta');
-Route::get('/himper/sk_kpta', [JdihController::class, 'sk_kpta'])->name('sk_kpta');
-Route::get('/himper/peraturan_lainnya', [JdihController::class, 'peraturan_lainnya'])->name('peraturan_lainnya');
+Route::get('/undang_undang', [JdihController::class, 'undang_undang'])->name('undang_undang');
+Route::get('/perpu', [JdihController::class, 'perpu'])->name('perpu');
+Route::get('/pp', [JdihController::class, 'pp'])->name('pp');
+Route::get('/inpres', [JdihController::class, 'inpres'])->name('inpres');
+Route::get('/perma', [JdihController::class, 'perma'])->name('perma');
+Route::get('/sema', [JdihController::class, 'sema'])->name('sema');
+Route::get('/sk_kma', [JdihController::class, 'sk_kma'])->name('sk_kma');
+Route::get('/sk_sekma', [JdihController::class, 'sk_sekma'])->name('sk_sekma');
+Route::get('/se_dirjen_badilag', [JdihController::class, 'se_dirjen_badilag'])->name('se_dirjen_badilag');
+Route::get('/sk_dirjen_badilag', [JdihController::class, 'sk_dirjen_badilag'])->name('sk_dirjen_badilag');
+Route::get('/se_kpta', [JdihController::class, 'se_kpta'])->name('se_kpta');
+Route::get('/sk_kpta', [JdihController::class, 'sk_kpta'])->name('sk_kpta');
+Route::get('/peraturan_lainnya', [JdihController::class, 'peraturan_lainnya'])->name('peraturan_lainnya');
 // Route::get('/himper/delete/{id_jdih}', [JdihController::class, 'delete'])->name('delete');
 
 //Kasasi
