@@ -38,6 +38,7 @@
             <a href="/himper" class="btn btn-sm btn-danger mb-2">Kembali</a>
             @elseif(Auth::user()->level===2)
             <a href="/himper/add" class="btn btn-sm btn-info mb-2">Tambah Data</a>
+            <a href="/himper/total" class="btn btn-sm btn-success mb-2">Tampilkan semua data</a>
             <a href="/himper" class="btn btn-sm btn-danger mb-2">Kembali</a>
             @elseif(Auth::user()->level===3)
 

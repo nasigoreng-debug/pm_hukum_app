@@ -143,12 +143,15 @@ Route::get('/retensi/add', [RetensiController::class, 'add'])->name('add');
 Route::post('/retensi/insert', [RetensiController::class, 'insert'])->name('insert');
 Route::get('/retensi/edit/{id_retensi}', [RetensiController::class, 'edit'])->name('edit');
 Route::post('/retensi/update/{id_retensi}', [RetensiController::class, 'update'])->name('update');
+Route::get('/retensi_blm', [RetensiController::class, 'retensi_blm'])->name('retensi_blm');
+Route::get('/retensi_sdh', [RetensiController::class, 'retensi_sdh'])->name('retensi_sdh');
+Route::get('/retensi_total', [RetensiController::class, 'retensi_total'])->name('retensi_total');
 // Route::get('/retensi/delete/{id_retensi}', [RetensiController::class, 'delete'])->name('delete');
 
 //Surat Keputusan
 Route::get('/suratkeputusan', [SkController::class, 'index'])->name('suratkeputusan');
 Route::get('/suratkeputusan/detail/{id_sk}', [SkController::class, 'detail'])->name('detail');
-Route::get('/suratkeputusan/add', [SkController::class, 'add'])->name('add');
+Route::get('/suratkeputusan/retensi_blm', [SkController::class, 'add'])->name('add');
 Route::post('/suratkeputusan/insert', [SkController::class, 'insert'])->name('insert');
 Route::get('/suratkeputusan/edit/{id_sk}', [SkController::class, 'edit'])->name('edit');
 Route::post('/suratkeputusan/update/{id_sk}', [SkController::class, 'update'])->name('update');

@@ -34,8 +34,10 @@
         <td class="text-center" style="font-size: 5px;">
             @if(Auth::user()->level===1)
             <a href="/retensi/add" class="btn btn-sm btn-info mb-2">Tambah Data</a>
+            <a href="/retensi" class="btn btn-sm btn-danger mb-2">Kembali</a>
             @elseif(Auth::user()->level===2)
             <a href="/retensi/add" class="btn btn-sm btn-info mb-2">Tambah Data</a>
+            <a href="/retensi" class="btn btn-sm btn-danger mb-2">Kembali</a>
             @elseif(Auth::user()->level===3)
 
             @endif

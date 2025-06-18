@@ -31,4 +31,24 @@ class RetensiModel extends Model
     {
         DB::table('tb_retensi_arsip')->where('id_retensi', $id_retensi)->delete();
     }
-}
+
+    public function retensi_sdh()
+    {
+        return DB::table('tb_retensi_arsip')
+            ->whereNotNull('putusan')
+            ->orderBy('tgl_put_banding', 'desc')->get();
+    }
+
+    public function retensi_blm()
+    {
+        return DB::table('tb_retensi_arsip')
+            ->whereNull('putusan')
+            ->orderBy('tgl_put_banding', 'desc')->get();
+    }
+
+    public function retensi_total()
+    {
+        return DB::table('tb_retensi_arsip')->orderBy('tgl_put_banding', 'desc')->get();
+    }
+
+    }

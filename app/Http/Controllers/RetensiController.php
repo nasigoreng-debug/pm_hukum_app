@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\RetensiModel;
+use Illuminate\Support\Facades\DB;
 
 class RetensiController extends Controller
 {
@@ -12,12 +13,59 @@ class RetensiController extends Controller
         $this->RetensiModel = new RetensiModel();
         $this->middleware('auth');
     }
+
     public function index()
     {
         $data = [
             'title' => 'Retensi Arsip',
             'retensi' => $this->RetensiModel->allData(),
         ];
+
+        $retensi_total = DB::table('tb_retensi_arsip')->count();
+
+        $retensi_blm_selesai = DB::table('tb_retensi_arsip')->whereNull('putusan')->count();
+
+        $retensi_selesai = DB::table('tb_retensi_arsip')->whereNotNull('putusan')->count();
+
+        $retensi_progres = $retensi_selesai / $retensi_total * 100;
+        $retensi_presentase = round($retensi_progres);
+
+        return view('/retensi_arsip/v_retensi_dashboard', $data, compact(
+            'retensi_total',
+            'retensi_blm_selesai',
+            'retensi_selesai',
+            'retensi_progres',
+            'retensi_presentase',
+        ));
+    }
+
+    public function retensi_sdh()
+    {
+        $data = [
+            'title' => 'Retensi Arsip',
+            'retensi' => $this->RetensiModel->retensi_sdh(),
+        ];
+
+        return view('/retensi_arsip/v_retensi', $data);
+    }
+
+    public function retensi_blm()
+    {
+        $data = [
+            'title' => 'Retensi Arsip',
+            'retensi' => $this->RetensiModel->retensi_blm(),
+        ];
+
+        return view('/retensi_arsip/v_retensi', $data);
+    }
+
+    public function retensi_total()
+    {
+        $data = [
+            'title' => 'Retensi Arsip',
+            'retensi' => $this->RetensiModel->retensi_total(),
+        ];
+
         return view('/retensi_arsip/v_retensi', $data);
     }
 
