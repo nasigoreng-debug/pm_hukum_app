@@ -22,8 +22,6 @@
     <link rel="stylesheet" href="{{ asset('public/template')}}/assets/css/custom.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <link rel="shortcut icon" href="{{{ asset('public/favicon/favicon.ico') }}}">
-    <!-- Imported styles on this page -->
-	<link rel="stylesheet" href="{{ asset('public/template')}}/assets/js/datatables/dataTables.bootstrap.css">
 
     <script src="{{ asset('public/template')}}/assets/js/jquery-1.11.1.min.js"></script>
 
@@ -44,6 +42,10 @@
 
         <!-- Sidebar -->
         @include('layouts.v_sidebar')
+        <!-- /Sidebar -->
+
+        <!-- Sidebar -->
+        {{-- @include('layouts.v_horizontal') --}}
         <!-- /Sidebar -->
 
         <div class="main-content">

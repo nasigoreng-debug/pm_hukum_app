@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ArsipModel;
 
+
 class ArsipController extends Controller
 {
     public function __construct()
@@ -18,6 +19,17 @@ class ArsipController extends Controller
             'title' => 'Arsip Perkara',
             'arsip' => $this->ArsipModel->allData(),
         ];
+        return view('/arsip/v_arsip_perkara', $data);
+    }
+
+    public function arsip_now()
+    {
+        
+        $data = [
+            'title' => 'Arsip Perkara',
+            'arsip' => $this->ArsipModel->arsip_now(),
+        ];
+
         return view('/arsip/v_arsip_perkara', $data);
     }
 

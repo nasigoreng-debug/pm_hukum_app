@@ -31,10 +31,20 @@
                     <span class="title">Dashboard</span>
                 </a>
             </li>
+            <li class="opened {{ ( $title === 'Retensi Arsip') ? 'active' : ''}}">
+                <a href="/retensi">
+                    <i class="fa fa-file-text-o"></i>
+                    <span class="title">Arsip Perkara 1986 s.d 2018</span>
+                </a>
+            </li>
             <li class="opened {{ ( $title === 'Arsip Perkara') ? 'active' : ''}}">
                 <a href="/arsip">
                     <i class="fa fa-file-text-o"></i>
-                    <span class="title">Arsip Perkara</span>
+                    <span class="title">Arsip Perkara 2019 s.d
+                        <?php
+                            echo date("Y")  ;
+                        ?>
+                    </span>
                 </a>
             </li>
             <li class="opened {{ ( $title === 'Bank Putusan') ? 'active' : ''}}">
@@ -105,12 +115,6 @@
                     <span class="title">Register Peninjauan Kembali</span>
                 </a>
             </li>
-            <li class="opened {{ ( $title === 'Retensi Arsip') ? 'active' : ''}}">
-                <a href="/retensi">
-                    <i class="fa fa-file-text-o"></i>
-                    <span class="title">Retensi Arsip Perkara</span>
-                </a>
-            </li>
             <li class="opened {{ ( $title === 'Surat Keputusan') ? 'active' : ''}}">
                 <a href="/suratkeputusan">
                     <i class="fa fa-edit"></i>
@@ -143,10 +147,20 @@
                     <span class="title">Dashboard</span>
                 </a>
             </li>
+            <li class="opened {{ ( $title === 'Retensi Arsip') ? 'active' : ''}}">
+                <a href="/retensi">
+                    <i class="fa fa-file-text-o"></i>
+                    <span class="title">Arsip Perkara 1986 s.d 2018</span>
+                </a>
+            </li>
             <li class="opened {{ ( $title === 'Arsip Perkara') ? 'active' : ''}}">
                 <a href="/arsip">
                     <i class="fa fa-file-text-o"></i>
-                    <span class="title">Arsip Perkara</span>
+                    <span class="title">Arsip Perkara 2019 s.d
+                        <?php
+                            echo date("Y")  ;
+                        ?>
+                    </span>
                 </a>
             </li>
             <li class="opened {{ ( $title === 'Bank Putusan') ? 'active' : ''}}">
@@ -217,12 +231,6 @@
                     <span class="title">Register Peninjauan Kembali</span>
                 </a>
             </li>
-            <li class="opened {{ ( $title === 'Retensi Arsip') ? 'active' : ''}}">
-                <a href="/retensi">
-                    <i class="fa fa-file-text-o"></i>
-                    <span class="title">Retensi Arsip Perkara</span>
-                </a>
-            </li>
             <li class="opened {{ ( $title === 'Surat Keputusan') ? 'active' : ''}}">
                 <a href="/suratkeputusan">
                     <i class="fa fa-edit"></i>
@@ -249,10 +257,20 @@
                     <span class="title">Dashboard</span>
                 </a>
             </li>
+            <li class="opened {{ ( $title === 'Retensi Arsip') ? 'active' : ''}}">
+                <a href="/retensi">
+                    <i class="fa fa-file-text-o"></i>
+                    <span class="title">Arsip Perkara 1986 s.d 2018</span>
+                </a>
+            </li>
             <li class="opened {{ ( $title === 'Arsip Perkara') ? 'active' : ''}}">
                 <a href="/arsip">
                     <i class="fa fa-file-text-o"></i>
-                    <span class="title">Arsip Perkara</span>
+                    <span class="title">Arsip Perkara 2019 s.d
+                        <?php
+                            echo date("Y")  ;
+                        ?>
+                    </span>
                 </a>
             </li>
             <li class="opened {{ ( $title === 'Bank Putusan') ? 'active' : ''}}">
@@ -313,12 +331,6 @@
                 <a href="/reg_pk">
                     <i class="fa fa-edit"></i>
                     <span class="title">Register Peninjauan Kembali</span>
-                </a>
-            </li>
-            <li class="opened {{ ( $title === 'Retensi Arsip') ? 'active' : ''}}">
-                <a href="/retensi">
-                    <i class="fa fa-file-text-o"></i>
-                    <span class="title">Retensi Arsip Perkara</span>
                 </a>
             </li>
             <!-- <li class="opened {{ ( $title === 'Register Upaya Hukum') ? 'active' : ''}}">

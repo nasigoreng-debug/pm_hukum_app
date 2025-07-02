@@ -47,7 +47,7 @@
             {{ session('pesan') }}
         </div>
         @endif
-        <table class="table table-bordered table-striped" id="example-4">
+        <table class="table table-sm table-hover" id="example-4">
             <thead class="bg-gray text-center">
                 <tr>
                     <th style="width: 30px;">No</th>
@@ -79,11 +79,11 @@
                 @foreach ($suratkeluar as $data)
                 <tr>
                     <td class="text-center">{{$loop->iteration}}</td>
-                    <td class="text-center">{{ $data->no_surat }}</td>
-                    <td class="text-center">{{ date('d-m-Y', strtotime($data->tgl_surat)) }}</td>
-                    <td class="text-center">{{ $data->tujuan_surat }}</td>
+                    <td class="text-start">{{ $data->no_surat }}</td>
+                    <td class="text-start">{{ date('d-m-Y', strtotime($data->tgl_surat)) }}</td>
+                    <td class="text-start">{{ $data->tujuan_surat }}</td>
                     <td>{{ $data->perihal }}</td>
-                    <td class="text-center">
+                    <td class="text-start">
 
                         @if($data->surat_pta=="")
                         @else
@@ -91,7 +91,7 @@
                         @endif
 
                     </td>
-                    <td class="text-center">
+                    <td class="text-start">
 
                         @if($data->lampiran=="")
                         -
@@ -100,7 +100,7 @@
                         @endif
 
                     </td>
-                    <td>{{ $data->keterangan }}</td>
+                    <td class="text-center">{{ $data->keterangan }}</td>
                     <td class="text-center" style="font-size: 5px;">
                         @if(Auth::user()->level===1)
                         <button type="button" class="btn btn-purple btn-xs" data-toggle="modal" data-target="#detail{{ $data->id_suratkeluar }}">
@@ -174,8 +174,11 @@
                         <td>Lampiran</td>
                         <td>
 
-
-                            <a href="surat_masuk/{{$data->lampiran}}" class="text-blue"><i class="fa fa-file-pdf-o"></i></i></a>
+                        @if($data->lampiran=="")
+                        -
+                        @else
+                        <a href="public/lampiran_surat_keluar/{{$data->lampiran}}" class="text-blue"><i class="fa fa-file-pdf-o"></i></i></a>
+                        @endif
 
                         </td>
                     </tr>

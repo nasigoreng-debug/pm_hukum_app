@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
-use phpDocumentor\Reflection\Types\Null_;
 
 class HomeController extends Controller
 {

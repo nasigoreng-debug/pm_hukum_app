@@ -39,6 +39,7 @@ Route::get('/', [HomeController::class, 'index']);
 
 //Arsip Perkara
 Route::get('/arsip', [ArsipController::class, 'index'])->name('arsip');
+Route::get('/arsip_now', [ArsipController::class, 'arsip_now'])->name('arsip_now');
 Route::get('/arsip/detail/{id_perkara}', [ArsipController::class, 'detail'])->name('detail');
 Route::get('/arsip/add', [ArsipController::class, 'add'])->name('add');
 Route::post('/arsip/insert', [ArsipController::class, 'insert'])->name('insert');

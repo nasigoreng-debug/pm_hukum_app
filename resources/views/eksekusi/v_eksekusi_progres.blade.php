@@ -44,12 +44,14 @@
 
             @endif
         </td>
-        <table class="table table-bordered table-striped" id="example-4">
+        <table class="table table-sm table-hover" id="example-4">
             <thead>
                 <tr>
                     <th>No</th>
                     <th>Pengadilan Agama</th>
                     <th>Permohonan Eksekusi</th>
+                    <th>Eksekusi Putusan</th>
+                    <th>Eksekusi Hak Tanggungan</th>
                     <th>Eksekusi Rill</th>
                     <th>Eksekusi Lelang</th>
                     <th>Eksekusi dicabut</th>
@@ -67,6 +69,8 @@
                     <th>No</th>
                     <th>Pengadilan Agama</th>
                     <th>Permohonan Eksekusi</th>
+                    <th>Eksekusi Putusan</th>
+                    <th>Eksekusi Hak Tanggungan</th>
                     <th>Eksekusi Rill</th>
                     <th>Eksekusi Lelang</th>
                     <th>Eksekusi dicabut</th>
@@ -84,6 +88,8 @@
                     <td>1</td>
                     <td>Bandung</td>
                     <td>{{$badg_eksekusi}}</td>
+                    <td>{{$badg_eksekusi_putusan}}</td>
+                    <td>{{$badg_eksekusi_ht}}</td>
                     <td>{{$badg_eksekusi_riil}}</td>
                     <td>{{$badg_eksekusi_lelang}}</td>
                     <td>{{$badg_eksekusi_dicabut}}</td>
@@ -98,6 +104,8 @@
                     <td>2</td>
                     <td>Indramayu</td>
                     <td>{{$im_eksekusi}}</td>
+                    <td>{{$im_eksekusi_putusan}}</td>
+                    <td>{{$im_eksekusi_ht}}</td>
                     <td>{{$im_eksekusi_riil}}</td>
                     <td>{{$im_eksekusi_lelang}}</td>
                     <td>{{$im_eksekusi_dicabut}}</td>
@@ -113,6 +121,8 @@
                     <td>3</td>
                     <td>Majalengka</td>
                     <td>{{$mjl_eksekusi}}</td>
+                    <td>{{$mjl_eksekusi_putusan}}</td>
+                    <td>{{$mjl_eksekusi_ht}}</td>
                     <td>{{$mjl_eksekusi_riil}}</td>
                     <td>{{$mjl_eksekusi_lelang}}</td>
                     <td>{{$mjl_eksekusi_dicabut}}</td>
@@ -127,6 +137,8 @@
                     <td>4</td>
                     <td>Sumber</td>
                     <td>{{$sbr_eksekusi}}</td>
+                    <td>{{$sbr_eksekusi_putusan}}</td>
+                    <td>{{$sbr_eksekusi_ht}}</td>
                     <td>{{$sbr_eksekusi_riil}}</td>
                     <td>{{$sbr_eksekusi_lelang}}</td>
                     <td>{{$sbr_eksekusi_dicabut}}</td>
@@ -141,6 +153,8 @@
                     <td>5</td>
                     <td>Ciamis</td>
                     <td>{{$cms_eksekusi}}</td>
+                    <td>{{$cms_eksekusi_putusan}}</td>
+                    <td>{{$cms_eksekusi_ht}}</td>
                     <td>{{$cms_eksekusi_riil}}</td>
                     <td>{{$cms_eksekusi_lelang}}</td>
                     <td>{{$cms_eksekusi_dicabut}}</td>
@@ -155,6 +169,8 @@
                     <td>6</td>
                     <td>Tasikmalaya</td>
                     <td>{{$tsm_eksekusi}}</td>
+                    <td>{{$tsm_eksekusi_putusan}}</td>
+                    <td>{{$tsm_eksekusi_ht}}</td>
                     <td>{{$tsm_eksekusi_riil}}</td>
                     <td>{{$tsm_eksekusi_lelang}}</td>
                     <td>{{$tsm_eksekusi_dicabut}}</td>
@@ -169,6 +185,8 @@
                     <td>7</td>
                     <td>Karawang</td>
                     <td>{{$krw_eksekusi}}</td>
+                    <td>{{$krw_eksekusi_putusan}}</td>
+                    <td>{{$krw_eksekusi_ht}}</td>
                     <td>{{$krw_eksekusi_riil}}</td>
                     <td>{{$krw_eksekusi_lelang}}</td>
                     <td>{{$krw_eksekusi_dicabut}}</td>
@@ -183,6 +201,8 @@
                     <td>8</td>
                     <td>Cimahi</td>
                     <td>{{$cmi_eksekusi}}</td>
+                    <td>{{$cmi_eksekusi_putusan}}</td>
+                    <td>{{$cmi_eksekusi_ht}}</td>
                     <td>{{$cmi_eksekusi_riil}}</td>
                     <td>{{$cmi_eksekusi_lelang}}</td>
                     <td>{{$cmi_eksekusi_dicabut}}</td>
@@ -197,6 +217,8 @@
                     <td>9</td>
                     <td>Subang
                     <td>{{$sbg_eksekusi}}</td>
+                    <td>{{$sbg_eksekusi_putusan}}</td>
+                    <td>{{$sbg_eksekusi_ht}}</td>
                     <td>{{$sbg_eksekusi_riil}}</td>
                     <td>{{$sbg_eksekusi_lelang}}</td>
                     <td>{{$sbg_eksekusi_dicabut}}</td>
@@ -211,6 +233,8 @@
                     <td>10</td>
                     <td>Sumedang
                     <td>{{$smdg_eksekusi}}</td>
+                    <td>{{$smdg_eksekusi_putusan}}</td>
+                    <td>{{$smdg_eksekusi_ht}}</td>
                     <td>{{$smdg_eksekusi_riil}}</td>
                     <td>{{$smdg_eksekusi_lelang}}</td>
                     <td>{{$smdg_eksekusi_dicabut}}</td>
@@ -225,6 +249,8 @@
                     <td>11</td>
                     <td>Purwakarta
                     <td>{{$pwk_eksekusi}}</td>
+                    <td>{{$pwk_eksekusi_putusan}}</td>
+                    <td>{{$pwk_eksekusi_ht}}</td>
                     <td>{{$pwk_eksekusi_riil}}</td>
                     <td>{{$pwk_eksekusi_lelang}}</td>
                     <td>{{$pwk_eksekusi_dicabut}}</td>
@@ -239,6 +265,8 @@
                     <td>12</td>
                     <td>Sukabumi
                     <td>{{$smi_eksekusi}}</td>
+                    <td>{{$smi_eksekusi_putusan}}</td>
+                    <td>{{$smi_eksekusi_ht}}</td>
                     <td>{{$smi_eksekusi_riil}}</td>
                     <td>{{$smi_eksekusi_lelang}}</td>
                     <td>{{$smi_eksekusi_dicabut}}</td>
@@ -253,6 +281,8 @@
                     <td>13</td>
                     <td>Cianjur
                     <td>{{$cjr_eksekusi}}</td>
+                    <td>{{$cjr_eksekusi_putusan}}</td>
+                    <td>{{$cjr_eksekusi_ht}}</td>
                     <td>{{$cjr_eksekusi_riil}}</td>
                     <td>{{$cjr_eksekusi_lelang}}</td>
                     <td>{{$cjr_eksekusi_dicabut}}</td>
@@ -267,6 +297,8 @@
                     <td>14</td>
                     <td>Kuningan
                     <td>{{$kng_eksekusi}}</td>
+                    <td>{{$kng_eksekusi_putusan}}</td>
+                    <td>{{$kng_eksekusi_ht}}</td>
                     <td>{{$kng_eksekusi_riil}}</td>
                     <td>{{$kng_eksekusi_lelang}}</td>
                     <td>{{$kng_eksekusi_dicabut}}</td>
@@ -281,6 +313,8 @@
                     <td>15</td>
                     <td>Cibadak
                     <td>{{$cbd_eksekusi}}</td>
+                    <td>{{$cbd_eksekusi_putusan}}</td>
+                    <td>{{$cbd_eksekusi_ht}}</td>
                     <td>{{$cbd_eksekusi_riil}}</td>
                     <td>{{$cbd_eksekusi_lelang}}</td>
                     <td>{{$cbd_eksekusi_dicabut}}</td>
@@ -295,6 +329,8 @@
                     <td>16</td>
                     <td>Cirebon
                     <td>{{$cn_eksekusi}}</td>
+                    <td>{{$cn_eksekusi_putusan}}</td>
+                    <td>{{$cn_eksekusi_ht}}</td>
                     <td>{{$cn_eksekusi_riil}}</td>
                     <td>{{$cn_eksekusi_lelang}}</td>
                     <td>{{$cn_eksekusi_dicabut}}</td>
@@ -309,6 +345,8 @@
                     <td>17</td>
                     <td>Garut
                     <td>{{$grt_eksekusi}}</td>
+                    <td>{{$grt_eksekusi_putusan}}</td>
+                    <td>{{$grt_eksekusi_ht}}</td>
                     <td>{{$grt_eksekusi_riil}}</td>
                     <td>{{$grt_eksekusi_lelang}}</td>
                     <td>{{$grt_eksekusi_dicabut}}</td>
@@ -323,6 +361,8 @@
                     <td>18</td>
                     <td>Bogor
                     <td>{{$bgr_eksekusi}}</td>
+                    <td>{{$bgr_eksekusi_putusan}}</td>
+                    <td>{{$bgr_eksekusi_ht}}</td>
                     <td>{{$bgr_eksekusi_riil}}</td>
                     <td>{{$bgr_eksekusi_lelang}}</td>
                     <td>{{$bgr_eksekusi_dicabut}}</td>
@@ -337,6 +377,8 @@
                     <td>19</td>
                     <td>Bekasi
                     <td>{{$bks_eksekusi}}</td>
+                    <td>{{$bks_eksekusi_putusan}}</td>
+                    <td>{{$bks_eksekusi_ht}}</td>
                     <td>{{$bks_eksekusi_riil}}</td>
                     <td>{{$bks_eksekusi_lelang}}</td>
                     <td>{{$bks_eksekusi_dicabut}}</td>
@@ -351,6 +393,8 @@
                     <td>20</td>
                     <td>Cibinong
                     <td>{{$cbn_eksekusi}}</td>
+                    <td>{{$cbn_eksekusi_putusan}}</td>
+                    <td>{{$cbn_eksekusi_ht}}</td>
                     <td>{{$cbn_eksekusi_riil}}</td>
                     <td>{{$cbn_eksekusi_lelang}}</td>
                     <td>{{$cbn_eksekusi_dicabut}}</td>
@@ -365,6 +409,8 @@
                     <td>21</td>
                     <td>Cikarang
                     <td>{{$ckr_eksekusi}}</td>
+                    <td>{{$ckr_eksekusi_putusan}}</td>
+                    <td>{{$ckr_eksekusi_ht}}</td>
                     <td>{{$ckr_eksekusi_riil}}</td>
                     <td>{{$ckr_eksekusi_lelang}}</td>
                     <td>{{$ckr_eksekusi_dicabut}}</td>
@@ -379,6 +425,8 @@
                     <td>22</td>
                     <td>Depok
                     <td>{{$dpk_eksekusi}}</td>
+                    <td>{{$dpk_eksekusi_putusan}}</td>
+                    <td>{{$dpk_eksekusi_ht}}</td>
                     <td>{{$dpk_eksekusi_riil}}</td>
                     <td>{{$dpk_eksekusi_lelang}}</td>
                     <td>{{$dpk_eksekusi_dicabut}}</td>
@@ -393,6 +441,8 @@
                     <td>23</td>
                     <td>Kota Tasikmalaya
                     <td>{{$tmk_eksekusi}}</td>
+                    <td>{{$tmk_eksekusi_putusan}}</td>
+                    <td>{{$tmk_eksekusi_ht}}</td>
                     <td>{{$tmk_eksekusi_riil}}</td>
                     <td>{{$tmk_eksekusi_lelang}}</td>
                     <td>{{$tmk_eksekusi_dicabut}}</td>
@@ -407,6 +457,8 @@
                     <td>24</td>
                     <td>Kota Banjar
                     <td>{{$bjr_eksekusi}}</td>
+                    <td>{{$bjr_eksekusi_putusan}}</td>
+                    <td>{{$bjr_eksekusi_ht}}</td>
                     <td>{{$bjr_eksekusi_riil}}</td>
                     <td>{{$bjr_eksekusi_lelang}}</td>
                     <td>{{$bjr_eksekusi_dicabut}}</td>
@@ -421,6 +473,8 @@
                     <td>25</td>
                     <td>Soreang
                     <td>{{$sor_eksekusi}}</td>
+                    <td>{{$sor_eksekusi_putusan}}</td>
+                    <td>{{$sor_eksekusi_ht}}</td>
                     <td>{{$sor_eksekusi_riil}}</td>
                     <td>{{$sor_eksekusi_lelang}}</td>
                     <td>{{$sor_eksekusi_dicabut}}</td>
@@ -435,6 +489,8 @@
                     <td>26</td>
                     <td>Ngamprah
                     <td>{{$nph_eksekusi}}</td>
+                    <td>{{$nph_eksekusi_putusan}}</td>
+                    <td>{{$nph_eksekusi_ht}}</td>
                     <td>{{$nph_eksekusi_riil}}</td>
                     <td>{{$nph_eksekusi_lelang}}</td>
                     <td>{{$nph_eksekusi_dicabut}}</td>

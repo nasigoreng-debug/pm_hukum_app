@@ -55,6 +55,10 @@ class EksekusiController extends Controller
         $eksekusi_progres = $eksekusi_selesai / $eksekusi_total * 100;
         $eksekusi_presentase = round($eksekusi_progres);
 
+        $eksekusi_putusan = DB::table('tb_eksekusi')->whereNotNull('no_put')->count();
+
+        $eksekusi_ht = DB::table('tb_eksekusi')->whereNull('no_put')->count();
+
         $eksekusi_riil = DB::table('tb_eksekusi')->where('proses_terakhir', 'Pelaksanaan Eksekusi Riil')->count();
 
         $eksekusi_lelang = DB::table('tb_eksekusi')->where('proses_terakhir', 'Penyerahan Hasil Eksekusi/Lelang')->count();
@@ -67,6 +71,8 @@ class EksekusiController extends Controller
 
         return view('/eksekusi/v_dashboard_eksekusi', $data, compact(
             'eksekusi_total',
+            'eksekusi_putusan',
+            'eksekusi_ht',
             'eksekusi_masuk_thn_ini',
             'eksekusi_bln_ini',
             'eksekusi_presentase',
@@ -112,6 +118,10 @@ class EksekusiController extends Controller
         //Bandung
         $badg_eksekusi = DB::table('tb_eksekusi')->where('satker', 'bandung')->count();
 
+        $badg_eksekusi_putusan = DB::table('tb_eksekusi')->where('satker', 'bandung')->whereNotNull('no_put')->count();
+
+        $badg_eksekusi_ht = DB::table('tb_eksekusi')->where('satker', 'bandung')->whereNull('no_put')->count();
+
         $badg_eksekusi_riil = DB::table('tb_eksekusi')->where('satker', 'bandung')->where('proses_terakhir', 'Pelaksanaan Eksekusi Riil')->count();
 
         $badg_eksekusi_lelang = DB::table('tb_eksekusi')->where('satker', 'bandung')->where('proses_terakhir', 'Penyerahan Hasil Eksekusi/Lelang')->count();
@@ -150,6 +160,10 @@ class EksekusiController extends Controller
 
         //Sumedang
         $smdg_eksekusi = DB::table('tb_eksekusi')->where('satker', 'sumedang')->count();
+
+        $smdg_eksekusi_putusan = DB::table('tb_eksekusi')->where('satker', 'sumedang')->whereNotNull('no_put')->count();
+
+        $smdg_eksekusi_ht = DB::table('tb_eksekusi')->where('satker', 'sumedang')->whereNull('no_put')->count();
 
         $smdg_eksekusi_riil = DB::table('tb_eksekusi')->where('satker', 'sumedang')->where('proses_terakhir', 'Pelaksanaan Eksekusi Riil')->count();
 
@@ -190,6 +204,10 @@ class EksekusiController extends Controller
         //Indramayu
         $im_eksekusi = DB::table('tb_eksekusi')->where('satker', 'Indramayu')->count();
 
+        $im_eksekusi_putusan = DB::table('tb_eksekusi')->where('satker', 'Indramayu')->whereNotNull('no_put')->count();
+
+        $im_eksekusi_ht = DB::table('tb_eksekusi')->where('satker', 'Indramayu')->whereNull('no_put')->count();
+
         $im_eksekusi_riil = DB::table('tb_eksekusi')->where('satker', 'Indramayu')->where('proses_terakhir', 'Pelaksanaan Eksekusi Riil')->count();
 
         $im_eksekusi_lelang = DB::table('tb_eksekusi')->where('satker', 'Indramayu')->where('proses_terakhir', 'Penyerahan Hasil Eksekusi/Lelang')->count();
@@ -228,6 +246,10 @@ class EksekusiController extends Controller
 
         //Majalengka
         $mjl_eksekusi = DB::table('tb_eksekusi')->where('satker', 'Majalengka')->count();
+
+        $mjl_eksekusi_putusan = DB::table('tb_eksekusi')->where('satker', 'Majalengka')->whereNotNull('no_put')->count();
+
+        $mjl_eksekusi_ht = DB::table('tb_eksekusi')->where('satker', 'Majalengka')->whereNull('no_put')->count();
 
         $mjl_eksekusi_riil = DB::table('tb_eksekusi')->where('satker', 'Majalengka')->where('proses_terakhir', 'Pelaksanaan Eksekusi Riil')->count();
 
@@ -268,6 +290,10 @@ class EksekusiController extends Controller
         //Sumber
         $sbr_eksekusi = DB::table('tb_eksekusi')->where('satker', 'Sumber')->count();
 
+        $sbr_eksekusi_putusan = DB::table('tb_eksekusi')->where('satker', 'Sumber')->whereNotNull('no_put')->count();
+
+        $sbr_eksekusi_ht = DB::table('tb_eksekusi')->where('satker', 'Sumber')->whereNull('no_put')->count();
+
         $sbr_eksekusi_riil = DB::table('tb_eksekusi')->where('satker', 'Sumber')->where('proses_terakhir', 'Pelaksanaan Eksekusi Riil')->count();
 
         $sbr_eksekusi_lelang = DB::table('tb_eksekusi')->where('satker', 'Sumber')->where('proses_terakhir', 'Penyerahan Hasil Eksekusi/Lelang')->count();
@@ -306,6 +332,10 @@ class EksekusiController extends Controller
 
         //Ciamis
         $cms_eksekusi = DB::table('tb_eksekusi')->where('satker', 'Ciamis')->count();
+
+        $cms_eksekusi_putusan = DB::table('tb_eksekusi')->where('satker', 'Ciamis')->whereNotNull('no_put')->count();
+
+        $cms_eksekusi_ht = DB::table('tb_eksekusi')->where('satker', 'Ciamis')->whereNull('no_put')->count();
 
         $cms_eksekusi_riil = DB::table('tb_eksekusi')->where('satker', 'Ciamis')->where('proses_terakhir', 'Pelaksanaan Eksekusi Riil')->count();
 
@@ -346,6 +376,10 @@ class EksekusiController extends Controller
         //Tasikmalaya
         $tsm_eksekusi = DB::table('tb_eksekusi')->where('satker', 'Tasikmalaya')->count();
 
+        $tsm_eksekusi_putusan = DB::table('tb_eksekusi')->where('satker', 'Tasikmalaya')->whereNotNull('no_put')->count();
+
+        $tsm_eksekusi_ht = DB::table('tb_eksekusi')->where('satker', 'Tasikmalaya')->whereNull('no_put')->count();
+
         $tsm_eksekusi_riil = DB::table('tb_eksekusi')->where('satker', 'Tasikmalaya')->where('proses_terakhir', 'Pelaksanaan Eksekusi Riil')->count();
 
         $tsm_eksekusi_lelang = DB::table('tb_eksekusi')->where('satker', 'Tasikmalaya')->where('proses_terakhir', 'Penyerahan Hasil Eksekusi/Lelang')->count();
@@ -384,6 +418,10 @@ class EksekusiController extends Controller
 
         //Karawang
         $krw_eksekusi = DB::table('tb_eksekusi')->where('satker', 'Karawang')->count();
+
+        $krw_eksekusi_putusan = DB::table('tb_eksekusi')->where('satker', 'Karawang')->whereNotNull('no_put')->count();
+
+        $krw_eksekusi_ht = DB::table('tb_eksekusi')->where('satker', 'Karawang')->whereNull('no_put')->count();
 
         $krw_eksekusi_riil = DB::table('tb_eksekusi')->where('satker', 'Karawang')->where('proses_terakhir', 'Pelaksanaan Eksekusi Riil')->count();
 
@@ -424,6 +462,10 @@ class EksekusiController extends Controller
         //Cimahi
         $cmi_eksekusi = DB::table('tb_eksekusi')->where('satker', 'Cimahi')->count();
 
+        $cmi_eksekusi_putusan = DB::table('tb_eksekusi')->where('satker', 'Cimahi')->whereNotNull('no_put')->count();
+
+        $cmi_eksekusi_ht = DB::table('tb_eksekusi')->where('satker', 'Cimahi')->whereNull('no_put')->count();
+
         $cmi_eksekusi_riil = DB::table('tb_eksekusi')->where('satker', 'Cimahi')->where('proses_terakhir', 'Pelaksanaan Eksekusi Riil')->count();
 
         $cmi_eksekusi_lelang = DB::table('tb_eksekusi')->where('satker', 'Cimahi')->where('proses_terakhir', 'Penyerahan Hasil Eksekusi/Lelang')->count();
@@ -463,6 +505,10 @@ class EksekusiController extends Controller
         //Subang
         $sbg_eksekusi = DB::table('tb_eksekusi')->where('satker', 'Subang')->count();
 
+        $sbg_eksekusi_putusan = DB::table('tb_eksekusi')->where('satker', 'Subang')->whereNotNull('no_put')->count();
+
+        $sbg_eksekusi_ht = DB::table('tb_eksekusi')->where('satker', 'Subang')->whereNull('no_put')->count();
+
         $sbg_eksekusi_riil = DB::table('tb_eksekusi')->where('satker', 'Subang')->where('proses_terakhir', 'Pelaksanaan Eksekusi Riil')->count();
 
         $sbg_eksekusi_lelang = DB::table('tb_eksekusi')->where('satker', 'Subang')->where('proses_terakhir', 'Penyerahan Hasil Eksekusi/Lelang')->count();
@@ -498,9 +544,13 @@ class EksekusiController extends Controller
         $sbg_eksekusi_ne_nilai = $sbg_eksekusi_ne * 3;
         $sbg_eksekusi_nilai = $sbg_eksekusi * 1;
         $sbg_eksekusi_bobot_nilai =  $sbg_eksekusi_riil_nilai +  $sbg_eksekusi_lelang_nilai +  $sbg_eksekusi_dicabut_nilai +  $sbg_eksekusi_dicoret_nilai + $sbg_eksekusi_ne_nilai + $sbg_eksekusi_nilai;
-        
+
         //Purwakarta
         $pwk_eksekusi = DB::table('tb_eksekusi')->where('satker', 'Purwakarta')->count();
+
+        $pwk_eksekusi_putusan = DB::table('tb_eksekusi')->where('satker', 'Purwakarta')->whereNotNull('no_put')->count();
+
+        $pwk_eksekusi_ht = DB::table('tb_eksekusi')->where('satker', 'Purwakarta')->whereNull('no_put')->count();
 
         $pwk_eksekusi_riil = DB::table('tb_eksekusi')->where('satker', 'Purwakarta')->where('proses_terakhir', 'Pelaksanaan Eksekusi Riil')->count();
 
@@ -541,6 +591,10 @@ class EksekusiController extends Controller
         //Sukabumi
         $smi_eksekusi = DB::table('tb_eksekusi')->where('satker', 'Sukabumi')->count();
 
+        $smi_eksekusi_putusan = DB::table('tb_eksekusi')->where('satker', 'Sukabumi')->whereNotNull('no_put')->count();
+
+        $smi_eksekusi_ht = DB::table('tb_eksekusi')->where('satker', 'Sukabumi')->whereNull('no_put')->count();
+
         $smi_eksekusi_riil = DB::table('tb_eksekusi')->where('satker', 'Sukabumi')->where('proses_terakhir', 'Pelaksanaan Eksekusi Riil')->count();
 
         $smi_eksekusi_lelang = DB::table('tb_eksekusi')->where('satker', 'Sukabumi')->where('proses_terakhir', 'Penyerahan Hasil Eksekusi/Lelang')->count();
@@ -579,6 +633,10 @@ class EksekusiController extends Controller
 
         //Cianjur
         $cjr_eksekusi = DB::table('tb_eksekusi')->where('satker', 'Cianjur')->count();
+
+        $cjr_eksekusi_putusan = DB::table('tb_eksekusi')->where('satker', 'Cianjur')->whereNotNull('no_put')->count();
+
+        $cjr_eksekusi_ht = DB::table('tb_eksekusi')->where('satker', 'Cianjur')->whereNull('no_put')->count();
 
         $cjr_eksekusi_riil = DB::table('tb_eksekusi')->where('satker', 'Cianjur')->where('proses_terakhir', 'Pelaksanaan Eksekusi Riil')->count();
 
@@ -619,6 +677,10 @@ class EksekusiController extends Controller
         //Kuningan
         $kng_eksekusi = DB::table('tb_eksekusi')->where('satker', 'Kuningan')->count();
 
+        $kng_eksekusi_putusan = DB::table('tb_eksekusi')->where('satker', 'Kuningan')->whereNotNull('no_put')->count();
+
+        $kng_eksekusi_ht = DB::table('tb_eksekusi')->where('satker', 'Kuningan')->whereNull('no_put')->count();
+
         $kng_eksekusi_riil = DB::table('tb_eksekusi')->where('satker', 'Kuningan')->where('proses_terakhir', 'Pelaksanaan Eksekusi Riil')->count();
 
         $kng_eksekusi_lelang = DB::table('tb_eksekusi')->where('satker', 'Kuningan')->where('proses_terakhir', 'Penyerahan Hasil Eksekusi/Lelang')->count();
@@ -658,6 +720,10 @@ class EksekusiController extends Controller
         //Cibadak
         $cbd_eksekusi = DB::table('tb_eksekusi')->where('satker', 'Cibadak')->count();
 
+        $cbd_eksekusi_putusan = DB::table('tb_eksekusi')->where('satker', 'Cibadak')->whereNotNull('no_put')->count();
+
+        $cbd_eksekusi_ht = DB::table('tb_eksekusi')->where('satker', 'Cibadak')->whereNull('no_put')->count();
+
         $cbd_eksekusi_riil = DB::table('tb_eksekusi')->where('satker', 'Cibadak')->where('proses_terakhir', 'Pelaksanaan Eksekusi Riil')->count();
 
         $cbd_eksekusi_lelang = DB::table('tb_eksekusi')->where('satker', 'Cibadak')->where('proses_terakhir', 'Penyerahan Hasil Eksekusi/Lelang')->count();
@@ -693,9 +759,13 @@ class EksekusiController extends Controller
         $cbd_eksekusi_ne_nilai = $cbd_eksekusi_ne * 3;
         $cbd_eksekusi_nilai = $cbd_eksekusi * 1;
         $cbd_eksekusi_bobot_nilai =  $cbd_eksekusi_riil_nilai +  $cbd_eksekusi_lelang_nilai +  $cbd_eksekusi_dicabut_nilai +  $cbd_eksekusi_dicoret_nilai + $cbd_eksekusi_ne_nilai + $cbd_eksekusi_nilai;
-        
+
         //Cirebon
         $cn_eksekusi = DB::table('tb_eksekusi')->where('satker', 'Cirebon')->count();
+
+        $cn_eksekusi_putusan = DB::table('tb_eksekusi')->where('satker', 'Indramayu')->whereNotNull('no_put')->count();
+
+        $cn_eksekusi_ht = DB::table('tb_eksekusi')->where('satker', 'Indramayu')->whereNull('no_put')->count();
 
         $cn_eksekusi_riil = DB::table('tb_eksekusi')->where('satker', 'Cirebon')->where('proses_terakhir', 'Pelaksanaan Eksekusi Riil')->count();
 
@@ -736,6 +806,10 @@ class EksekusiController extends Controller
         //Garut
         $grt_eksekusi = DB::table('tb_eksekusi')->where('satker', 'Garut')->count();
 
+        $grt_eksekusi_putusan = DB::table('tb_eksekusi')->where('satker', 'Cibadak')->whereNotNull('no_put')->count();
+
+        $grt_eksekusi_ht = DB::table('tb_eksekusi')->where('satker', 'Cibadak')->whereNull('no_put')->count();
+
         $grt_eksekusi_riil = DB::table('tb_eksekusi')->where('satker', 'Garut')->where('proses_terakhir', 'Pelaksanaan Eksekusi Riil')->count();
 
         $grt_eksekusi_lelang = DB::table('tb_eksekusi')->where('satker', 'Garut')->where('proses_terakhir', 'Penyerahan Hasil Eksekusi/Lelang')->count();
@@ -774,6 +848,10 @@ class EksekusiController extends Controller
 
         //Bogor
         $bgr_eksekusi = DB::table('tb_eksekusi')->where('satker', 'Bogor')->count();
+
+        $bgr_eksekusi_putusan = DB::table('tb_eksekusi')->where('satker', 'Bogor')->whereNotNull('no_put')->count();
+
+        $bgr_eksekusi_ht = DB::table('tb_eksekusi')->where('satker', 'Bogor')->whereNull('no_put')->count();
 
         $bgr_eksekusi_riil = DB::table('tb_eksekusi')->where('satker', 'Bogor')->where('proses_terakhir', 'Pelaksanaan Eksekusi Riil')->count();
 
@@ -814,6 +892,10 @@ class EksekusiController extends Controller
         //Bekasi
         $bks_eksekusi = DB::table('tb_eksekusi')->where('satker', 'Bekasi')->count();
 
+        $bks_eksekusi_putusan = DB::table('tb_eksekusi')->where('satker', 'Bogor')->whereNotNull('no_put')->count();
+
+        $bks_eksekusi_ht = DB::table('tb_eksekusi')->where('satker', 'Bogor')->whereNull('no_put')->count();
+
         $bks_eksekusi_riil = DB::table('tb_eksekusi')->where('satker', 'Bekasi')->where('proses_terakhir', 'Pelaksanaan Eksekusi Riil')->count();
 
         $bks_eksekusi_lelang = DB::table('tb_eksekusi')->where('satker', 'Bekasi')->where('proses_terakhir', 'Penyerahan Hasil Eksekusi/Lelang')->count();
@@ -852,6 +934,10 @@ class EksekusiController extends Controller
 
         //Cibinong
         $cbn_eksekusi = DB::table('tb_eksekusi')->where('satker', 'Cibinong')->count();
+
+        $cbn_eksekusi_putusan = DB::table('tb_eksekusi')->where('satker', 'Cibinong')->whereNotNull('no_put')->count();
+
+        $cbn_eksekusi_ht = DB::table('tb_eksekusi')->where('satker', 'Cibinong')->whereNull('no_put')->count();
 
         $cbn_eksekusi_riil = DB::table('tb_eksekusi')->where('satker', 'Cibinong')->where('proses_terakhir', 'Pelaksanaan Eksekusi Riil')->count();
 
@@ -892,6 +978,10 @@ class EksekusiController extends Controller
         //Cikarang
         $ckr_eksekusi = DB::table('tb_eksekusi')->where('satker', 'Cikarang')->count();
 
+        $ckr_eksekusi_putusan = DB::table('tb_eksekusi')->where('satker', 'Cikarang')->whereNotNull('no_put')->count();
+
+        $ckr_eksekusi_ht = DB::table('tb_eksekusi')->where('satker', 'Cikarang')->whereNull('no_put')->count();
+
         $ckr_eksekusi_riil = DB::table('tb_eksekusi')->where('satker', 'Cikarang')->where('proses_terakhir', 'Pelaksanaan Eksekusi Riil')->count();
 
         $ckr_eksekusi_lelang = DB::table('tb_eksekusi')->where('satker', 'Cikarang')->where('proses_terakhir', 'Penyerahan Hasil Eksekusi/Lelang')->count();
@@ -930,6 +1020,10 @@ class EksekusiController extends Controller
 
         //Depok
         $dpk_eksekusi = DB::table('tb_eksekusi')->where('satker', 'Depok')->count();
+
+        $dpk_eksekusi_putusan = DB::table('tb_eksekusi')->where('satker', 'Depok')->whereNotNull('no_put')->count();
+
+        $dpk_eksekusi_ht = DB::table('tb_eksekusi')->where('satker', 'Depok')->whereNull('no_put')->count();
 
         $dpk_eksekusi_riil = DB::table('tb_eksekusi')->where('satker', 'Depok')->where('proses_terakhir', 'Pelaksanaan Eksekusi Riil')->count();
 
@@ -970,6 +1064,10 @@ class EksekusiController extends Controller
         //Kota Tasikmalaya
         $tmk_eksekusi = DB::table('tb_eksekusi')->where('satker', 'Kota Tasikmalaya')->count();
 
+        $tmk_eksekusi_putusan = DB::table('tb_eksekusi')->where('satker', 'Kota Tasikmalaya')->whereNotNull('no_put')->count();
+
+        $tmk_eksekusi_ht = DB::table('tb_eksekusi')->where('satker', 'Kota Tasikmalaya')->whereNull('no_put')->count();
+
         $tmk_eksekusi_riil = DB::table('tb_eksekusi')->where('satker', 'Kota Tasikmalaya')->where('proses_terakhir', 'Pelaksanaan Eksekusi Riil')->count();
 
         $tmk_eksekusi_lelang = DB::table('tb_eksekusi')->where('satker', 'Kota Tasikmalaya')->where('proses_terakhir', 'Penyerahan Hasil Eksekusi/Lelang')->count();
@@ -1006,8 +1104,12 @@ class EksekusiController extends Controller
         $tmk_eksekusi_nilai = $tmk_eksekusi * 1;
         $tmk_eksekusi_bobot_nilai =  $tmk_eksekusi_riil_nilai +  $tmk_eksekusi_lelang_nilai +  $tmk_eksekusi_dicabut_nilai +  $tmk_eksekusi_dicoret_nilai + $tmk_eksekusi_ne_nilai + $tmk_eksekusi_nilai;
 
-         //Kota Banjar
+        //Kota Banjar
         $bjr_eksekusi = DB::table('tb_eksekusi')->where('satker', 'Kota Banjar')->count();
+
+        $bjr_eksekusi_putusan = DB::table('tb_eksekusi')->where('satker', 'Kota Banjar')->whereNotNull('no_put')->count();
+
+        $bjr_eksekusi_ht = DB::table('tb_eksekusi')->where('satker', 'Kota Banjar')->whereNull('no_put')->count();
 
         $bjr_eksekusi_riil = DB::table('tb_eksekusi')->where('satker', 'Kota Banjar')->where('proses_terakhir', 'Pelaksanaan Eksekusi Riil')->count();
 
@@ -1048,6 +1150,10 @@ class EksekusiController extends Controller
         //Soreang
         $sor_eksekusi = DB::table('tb_eksekusi')->where('satker', 'Soreang')->count();
 
+        $sor_eksekusi_putusan = DB::table('tb_eksekusi')->where('satker', 'Soreang')->whereNotNull('no_put')->count();
+
+        $sor_eksekusi_ht = DB::table('tb_eksekusi')->where('satker', 'Soreang')->whereNull('no_put')->count();
+
         $sor_eksekusi_riil = DB::table('tb_eksekusi')->where('satker', 'Soreang')->where('proses_terakhir', 'Pelaksanaan Eksekusi Riil')->count();
 
         $sor_eksekusi_lelang = DB::table('tb_eksekusi')->where('satker', 'Soreang')->where('proses_terakhir', 'Penyerahan Hasil Eksekusi/Lelang')->count();
@@ -1087,6 +1193,10 @@ class EksekusiController extends Controller
         //Ngamprah
         $nph_eksekusi = DB::table('tb_eksekusi')->where('satker', 'Ngamprah')->count();
 
+        $nph_eksekusi_putusan = DB::table('tb_eksekusi')->where('satker', 'Ngamprah')->whereNotNull('no_put')->count();
+
+        $nph_eksekusi_ht = DB::table('tb_eksekusi')->where('satker', 'Ngamprah')->whereNull('no_put')->count();
+
         $nph_eksekusi_riil = DB::table('tb_eksekusi')->where('satker', 'Ngamprah')->where('proses_terakhir', 'Pelaksanaan Eksekusi Riil')->count();
 
         $nph_eksekusi_lelang = DB::table('tb_eksekusi')->where('satker', 'Ngamprah')->where('proses_terakhir', 'Penyerahan Hasil Eksekusi/Lelang')->count();
@@ -1125,6 +1235,8 @@ class EksekusiController extends Controller
 
         return view('/eksekusi/v_eksekusi_progres', $data, compact(
             'badg_eksekusi',
+            'badg_eksekusi_putusan',
+            'badg_eksekusi_ht',
             'badg_eksekusi_riil',
             'badg_eksekusi_lelang',
             'badg_eksekusi_dicabut',
@@ -1135,6 +1247,8 @@ class EksekusiController extends Controller
             'badg_eksekusi_progres',
             'badg_eksekusi_bobot_nilai',
             'smdg_eksekusi',
+            'smdg_eksekusi_putusan',
+            'smdg_eksekusi_ht',
             'smdg_eksekusi_riil',
             'smdg_eksekusi_lelang',
             'smdg_eksekusi_dicabut',
@@ -1145,6 +1259,8 @@ class EksekusiController extends Controller
             'smdg_eksekusi_progres',
             'smdg_eksekusi_bobot_nilai',
             'im_eksekusi',
+            'im_eksekusi_putusan',
+            'im_eksekusi_ht',
             'im_eksekusi_riil',
             'im_eksekusi_lelang',
             'im_eksekusi_dicabut',
@@ -1155,6 +1271,8 @@ class EksekusiController extends Controller
             'im_eksekusi_progres',
             'im_eksekusi_bobot_nilai',
             'mjl_eksekusi',
+            'mjl_eksekusi_putusan',
+            'mjl_eksekusi_ht',
             'mjl_eksekusi_riil',
             'mjl_eksekusi_lelang',
             'mjl_eksekusi_dicabut',
@@ -1165,6 +1283,8 @@ class EksekusiController extends Controller
             'mjl_eksekusi_progres',
             'mjl_eksekusi_bobot_nilai',
             'sbr_eksekusi',
+            'sbr_eksekusi_putusan',
+            'sbr_eksekusi_ht',
             'sbr_eksekusi_riil',
             'sbr_eksekusi_lelang',
             'sbr_eksekusi_dicabut',
@@ -1175,6 +1295,8 @@ class EksekusiController extends Controller
             'sbr_eksekusi_progres',
             'sbr_eksekusi_bobot_nilai',
             'cms_eksekusi',
+            'cms_eksekusi_putusan',
+            'cms_eksekusi_ht',
             'cms_eksekusi_riil',
             'cms_eksekusi_lelang',
             'cms_eksekusi_dicabut',
@@ -1185,6 +1307,8 @@ class EksekusiController extends Controller
             'cms_eksekusi_progres',
             'cms_eksekusi_bobot_nilai',
             'tsm_eksekusi',
+            'tsm_eksekusi_putusan',
+            'tsm_eksekusi_ht',
             'tsm_eksekusi_riil',
             'tsm_eksekusi_lelang',
             'tsm_eksekusi_dicabut',
@@ -1195,6 +1319,8 @@ class EksekusiController extends Controller
             'tsm_eksekusi_progres',
             'tsm_eksekusi_bobot_nilai',
             'krw_eksekusi',
+            'krw_eksekusi_putusan',
+            'krw_eksekusi_ht',
             'krw_eksekusi_riil',
             'krw_eksekusi_lelang',
             'krw_eksekusi_dicabut',
@@ -1205,6 +1331,8 @@ class EksekusiController extends Controller
             'krw_eksekusi_progres',
             'krw_eksekusi_bobot_nilai',
             'cmi_eksekusi',
+            'cmi_eksekusi_putusan',
+            'cmi_eksekusi_ht',
             'cmi_eksekusi_riil',
             'cmi_eksekusi_lelang',
             'cmi_eksekusi_dicabut',
@@ -1215,6 +1343,8 @@ class EksekusiController extends Controller
             'cmi_eksekusi_progres',
             'cmi_eksekusi_bobot_nilai',
             'sbg_eksekusi',
+            'sbg_eksekusi_putusan',
+            'sbg_eksekusi_ht',
             'sbg_eksekusi_riil',
             'sbg_eksekusi_lelang',
             'sbg_eksekusi_dicabut',
@@ -1225,6 +1355,8 @@ class EksekusiController extends Controller
             'sbg_eksekusi_progres',
             'sbg_eksekusi_bobot_nilai',
             'pwk_eksekusi',
+            'pwk_eksekusi_putusan',
+            'pwk_eksekusi_ht',
             'pwk_eksekusi_riil',
             'pwk_eksekusi_lelang',
             'pwk_eksekusi_dicabut',
@@ -1235,6 +1367,8 @@ class EksekusiController extends Controller
             'pwk_eksekusi_progres',
             'pwk_eksekusi_bobot_nilai',
             'smi_eksekusi',
+            'smi_eksekusi_putusan',
+            'smi_eksekusi_ht',
             'smi_eksekusi_riil',
             'smi_eksekusi_lelang',
             'smi_eksekusi_dicabut',
@@ -1245,6 +1379,8 @@ class EksekusiController extends Controller
             'smi_eksekusi_progres',
             'smi_eksekusi_bobot_nilai',
             'cjr_eksekusi',
+            'cjr_eksekusi_putusan',
+            'cjr_eksekusi_ht',
             'cjr_eksekusi_riil',
             'cjr_eksekusi_lelang',
             'cjr_eksekusi_dicabut',
@@ -1255,6 +1391,8 @@ class EksekusiController extends Controller
             'cjr_eksekusi_progres',
             'cjr_eksekusi_bobot_nilai',
             'kng_eksekusi',
+            'kng_eksekusi_putusan',
+            'kng_eksekusi_ht',
             'kng_eksekusi_riil',
             'kng_eksekusi_lelang',
             'kng_eksekusi_dicabut',
@@ -1265,6 +1403,8 @@ class EksekusiController extends Controller
             'kng_eksekusi_progres',
             'kng_eksekusi_bobot_nilai',
             'cbd_eksekusi',
+            'cbd_eksekusi_putusan',
+            'cbd_eksekusi_ht',
             'cbd_eksekusi_riil',
             'cbd_eksekusi_lelang',
             'cbd_eksekusi_dicabut',
@@ -1275,6 +1415,8 @@ class EksekusiController extends Controller
             'cbd_eksekusi_progres',
             'cbd_eksekusi_bobot_nilai',
             'cn_eksekusi',
+            'cn_eksekusi_putusan',
+            'cn_eksekusi_ht',
             'cn_eksekusi_riil',
             'cn_eksekusi_lelang',
             'cn_eksekusi_dicabut',
@@ -1285,6 +1427,8 @@ class EksekusiController extends Controller
             'cn_eksekusi_progres',
             'cn_eksekusi_bobot_nilai',
             'grt_eksekusi',
+            'grt_eksekusi_putusan',
+            'grt_eksekusi_ht',
             'grt_eksekusi_riil',
             'grt_eksekusi_lelang',
             'grt_eksekusi_dicabut',
@@ -1295,6 +1439,8 @@ class EksekusiController extends Controller
             'grt_eksekusi_progres',
             'grt_eksekusi_bobot_nilai',
             'bgr_eksekusi',
+            'bgr_eksekusi_putusan',
+            'bgr_eksekusi_ht',
             'bgr_eksekusi_riil',
             'bgr_eksekusi_lelang',
             'bgr_eksekusi_dicabut',
@@ -1305,6 +1451,8 @@ class EksekusiController extends Controller
             'bgr_eksekusi_progres',
             'bgr_eksekusi_bobot_nilai',
             'bks_eksekusi',
+            'bks_eksekusi_putusan',
+            'bks_eksekusi_ht',
             'bks_eksekusi_riil',
             'bks_eksekusi_lelang',
             'bks_eksekusi_dicabut',
@@ -1315,6 +1463,8 @@ class EksekusiController extends Controller
             'bks_eksekusi_progres',
             'bks_eksekusi_bobot_nilai',
             'cbn_eksekusi',
+            'cbn_eksekusi_putusan',
+            'cbn_eksekusi_ht',
             'cbn_eksekusi_riil',
             'cbn_eksekusi_lelang',
             'cbn_eksekusi_dicabut',
@@ -1325,6 +1475,8 @@ class EksekusiController extends Controller
             'cbn_eksekusi_progres',
             'cbn_eksekusi_bobot_nilai',
             'ckr_eksekusi',
+            'ckr_eksekusi_putusan',
+            'ckr_eksekusi_ht',
             'ckr_eksekusi_riil',
             'ckr_eksekusi_lelang',
             'ckr_eksekusi_dicabut',
@@ -1335,6 +1487,8 @@ class EksekusiController extends Controller
             'ckr_eksekusi_progres',
             'ckr_eksekusi_bobot_nilai',
             'dpk_eksekusi',
+            'dpk_eksekusi_putusan',
+            'dpk_eksekusi_ht',
             'dpk_eksekusi_riil',
             'dpk_eksekusi_lelang',
             'dpk_eksekusi_dicabut',
@@ -1345,6 +1499,8 @@ class EksekusiController extends Controller
             'dpk_eksekusi_progres',
             'dpk_eksekusi_bobot_nilai',
             'tmk_eksekusi',
+            'tmk_eksekusi_putusan',
+            'tmk_eksekusi_ht',
             'tmk_eksekusi_riil',
             'tmk_eksekusi_lelang',
             'tmk_eksekusi_dicabut',
@@ -1355,6 +1511,8 @@ class EksekusiController extends Controller
             'tmk_eksekusi_progres',
             'tmk_eksekusi_bobot_nilai',
             'bjr_eksekusi',
+            'bjr_eksekusi_putusan',
+            'bjr_eksekusi_ht',
             'bjr_eksekusi_riil',
             'bjr_eksekusi_lelang',
             'bjr_eksekusi_dicabut',
@@ -1365,6 +1523,8 @@ class EksekusiController extends Controller
             'bjr_eksekusi_progres',
             'bjr_eksekusi_bobot_nilai',
             'sor_eksekusi',
+            'sor_eksekusi_putusan',
+            'sor_eksekusi_ht',
             'sor_eksekusi_riil',
             'sor_eksekusi_lelang',
             'sor_eksekusi_dicabut',
@@ -1375,6 +1535,8 @@ class EksekusiController extends Controller
             'sor_eksekusi_progres',
             'sor_eksekusi_bobot_nilai',
             'nph_eksekusi',
+            'nph_eksekusi_putusan',
+            'nph_eksekusi_ht',
             'nph_eksekusi_riil',
             'nph_eksekusi_lelang',
             'nph_eksekusi_dicabut',

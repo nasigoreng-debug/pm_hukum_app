@@ -49,7 +49,7 @@
             {{ session('pesan') }}
         </div>
         @endif
-        <table class="table table-bordered table-striped" id="example-4">
+        <table class="table table-sm table-hover" id="example-4">
             <thead class="bg-gray">
                 <tr>
                     <th style="width: 20px;">No</th>
@@ -103,19 +103,19 @@
                 @foreach ($retensi as $data)
                 <tr>
                     <td class="text-center">{{$loop->iteration}}</td>
-                    <td class="text-center">{{ $data->pa_pengaju }}</td>
-                    <td class="text-center">{{ $data->no_banding }}</td>
-                    <!-- <td class="text-center">{{ $data->no_pa }}</td>
-                    <td class="text-center">{{ $data->no_kasasi }}</td>
-                    <td class="text-center">{{ $data->no_pk }}</td> -->
-                    <td class="text-center">{{ $data->jenis_perkara }}</td>
+                    <td class="text-start">{{ $data->pa_pengaju }}</td>
+                    <td class="text-start">{{ $data->no_banding }}</td>
+                    <!-- <td class="text-start">{{ $data->no_pa }}</td>
+                    <td class="text-start">{{ $data->no_kasasi }}</td>
+                    <td class="text-start">{{ $data->no_pk }}</td> -->
+                    <td class="text-start">{{ $data->jenis_perkara }}</td>
                     <td>{{ $data->pembanding }}</td>
                     <td>{{ $data->terbanding }}</td>
                     <td>{{ $data->status_put }}</td>
-                    <!-- <td class="text-center">{{ date('d-m-Y', strtotime($data->tgl_put_banding)) }}</td>
-                    <td class="text-center">{{ date('d-m-Y', strtotime($data->tgl_put_pa)) }}</td>
-                    <td class="text-center">{{ date('d-m-Y', strtotime($data->tgl_put_kasasi)) }}</td>
-                    <td class="text-center">{{ date('d-m-Y', strtotime($data->tgl_put_pk)) }}</td>
+                    <!-- <td class="text-start">{{ date('d-m-Y', strtotime($data->tgl_put_banding)) }}</td>
+                    <td class="text-start">{{ date('d-m-Y', strtotime($data->tgl_put_pa)) }}</td>
+                    <td class="text-start">{{ date('d-m-Y', strtotime($data->tgl_put_kasasi)) }}</td>
+                    <td class="text-start">{{ date('d-m-Y', strtotime($data->tgl_put_pk)) }}</td>
                     <td>{{ $data->buku }}</td>
                     <td>{{ $data->tahun }}</td>
                     <td>{{ $data->tahun }}</td> -->
@@ -167,7 +167,7 @@
                 <h4 colspan="2" class="text-white text-center bg-success">Retensi Arsip</h4>
             </div>
             <div class="modal-body">
-                <table class="table table-small-font table-bordered table-hover">
+                <table class="table table-small-font table-hover">
                     <tr class="text-start border">
                         <td style="width: 200px;">Pengadilan Agama Pengaju</td>
                         <td>{{$data->pa_pengaju}}</td>

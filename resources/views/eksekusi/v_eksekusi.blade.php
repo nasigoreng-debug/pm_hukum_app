@@ -19,18 +19,17 @@
     </div>
     <div class="panel-body">
 
-     <script type="text/javascript">
-            jQuery(document).ready(function($) {
-                $("#example-4").dataTable({
-                    dom: "<'row'<'col-sm-5'l><'col-sm-7'Tf>r>" +
-                        "t" +
-                        "<'row'<'col-xs-6'i><'col-xs-6'p>>",
-                    tableTools: {
-                        sSwfPath: "{{ asset('public/template')}}/assets/js/datatables/tabletools/copy_csv_xls_pdf.swf"
-                    }
-                });
-            });
-        </script>
+    <script type="text/javascript">
+					jQuery(document).ready(function($)
+					{
+						$("#example-3").dataTable().yadcf([
+							
+							{column_number : 1},
+                            {column_number : 5},
+						
+						]);
+					});
+					</script>
         <td class="text-center" style="font-size: 5px;">
             @if(Auth::user()->level===1)
             <a href="/eks/add" class="btn btn-sm btn-info mb-2">Tambah Data</a>
@@ -41,10 +40,6 @@
             <a href="/eks" class="btn btn-sm btn-danger mb-2">Kembali</a>
             @elseif(Auth::user()->level===2)
             <a href="/eks/add" class="btn btn-sm btn-info mb-2">Tambah Data</a>
-            <a href="/eks/total" class="btn btn-sm btn-secondary mb-2">Semua</a>
-            <a href="/eks/berjalan" class="btn btn-sm btn-secondary mb-2">Berjalan</a>
-            <a href="/eks/selesai" class="btn btn-sm btn-secondary mb-2">Selesai</a>
-            <a href="/eks/progres" class="btn btn-sm btn-secondary mb-2">Progres Satker</a>
             <a href="/eks" class="btn btn-sm btn-danger mb-2">Kembali</a>
             @elseif(Auth::user()->level===3)
 
@@ -57,7 +52,7 @@
             {{ session('pesan') }}
         </div>
         @endif
-        <table class="table table-bordered table-striped" id="example-4">
+        <table class="table table-sm table-hover" id="example-3">
             <thead class="bg-gray">
                 <tr>
                     <th style="width: 15px;">No</th>

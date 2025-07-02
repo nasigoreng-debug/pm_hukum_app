@@ -47,7 +47,7 @@
             {{ session('pesan') }}
         </div>
         @endif
-        <table class="table table-bordered table-striped" id="example-4">
+        <table class="table table-sm table-hover" id="example-4">
             <thead class="bg-gray text-center">
                 <tr>
                     <th style="width: 30px;">No</th>

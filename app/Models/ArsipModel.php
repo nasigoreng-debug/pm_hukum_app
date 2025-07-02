@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+use Illuminate\Support\Carbon;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -10,6 +11,19 @@ class ArsipModel extends Model
     public function allData()
     {
         return DB::table('tb_arsip_perkara')->orderBy('tgl_masuk', 'desc')->get();
+    }
+
+    public function arsip_now()
+    {
+        //Function Tahun sekarang
+        $day = Carbon::now()->format('d');
+        $month = Carbon::now()->format('m');
+        $year = Carbon::now()->format('Y');
+
+        return DB::table('tb_arsip_perkara')
+        ->whereYear('tgl_masuk', $year)
+        ->orderBy('tgl_masuk', 'desc')
+        ->get();
     }
 
     public function user()
