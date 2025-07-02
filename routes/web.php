@@ -160,6 +160,8 @@ Route::post('/suratkeputusan/update/{id_sk}', [SkController::class, 'update'])->
 
 //Surat Masuk
 Route::get('/suratmasuk', [SuratmasukController::class, 'index'])->name('suratmasuk');
+Route::get('/suratmasuk_berjalan', [SuratmasukController::class, 'suratmasuk_berjalan'])->name('suratmasuk_berjalan');
+Route::get('/suratmasuk_total', [SuratmasukController::class, 'suratmasuk_total'])->name('suratmasuk_total');
 Route::get('/suratmasuk/detail/{id_suratmasuk}', [SuratmasukController::class, 'detail'])->name('detail');
 Route::get('/suratmasuk/add', [SuratmasukController::class, 'add'])->name('add');
 Route::post('/suratmasuk/insert', [SuratmasukController::class, 'insert'])->name('insert');

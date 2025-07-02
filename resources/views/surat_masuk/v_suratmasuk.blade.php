@@ -33,9 +33,8 @@
 
         <div class="text-center">
             <form method="GET" action="/search-date-range">
-                Dari
                 <input type="date" name="start_date" required>
-                Sampai
+                s.d
                 <input type="date" name="end_date" required>
                 <button type="submit" class="btn btn-sm btn-primary">Tampilkan</button>
                 <a href="/suratmasuk" class="btn btn-sm btn-danger">Reload</a>
@@ -45,8 +44,12 @@
         <td class="text-center" style="font-size: 5px;">
             @if(Auth::user()->level===1)
             <a href="/suratmasuk/add" class="btn btn-sm btn-info mb-2">Tambah Data</a>
+            <a href="/suratmasuk_total" class="btn btn-sm btn-success mb-2">All Data</a>
+            <a href="/suratmasuk" class="btn btn-sm btn-danger mb-2">Kembali</a>
             @elseif(Auth::user()->level===2)
             <a href="/suratmasuk/add" class="btn btn-sm btn-info mb-2">Tambah Data</a>
+            <a href="/suratmasuk_total" class="btn btn-sm btn-success mb-2">All Data</a>
+            <a href="/suratmasuk" class="btn btn-sm btn-danger mb-2">Kembali</a>
             @elseif(Auth::user()->level===3)
 
             @endif

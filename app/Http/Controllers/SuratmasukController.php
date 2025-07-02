@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\SuratmasukModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 
 class SuratmasukController extends Controller
 {
@@ -16,10 +17,46 @@ class SuratmasukController extends Controller
     
     public function index()
     {
+        //Function Tahun sekarang
+        $day = Carbon::now()->format('d');
+        $month = Carbon::now()->format('m');
+        $year = Carbon::now()->format('Y');
 
         $data = [
             'title' => 'Surat Masuk',
             'suratmasuk' => $this->SuratmasukModel->allData(),
+        ];
+
+        $suratmasuk_total = DB::table('tb_surat_masuk')->count();
+
+        $suratmasuk_berjalan = DB::table('tb_surat_masuk')
+                                ->whereYear('tgl_masuk_pan', $year)
+                                ->count();
+
+        return view('/surat_masuk/v_dashboard_suratmasuk', $data, compact(
+            'suratmasuk_total',
+            'suratmasuk_berjalan',
+        ));
+    }
+
+    public function suratmasuk_berjalan()
+    {
+
+        $data = [
+            'title' => 'Surat Masuk',
+            'suratmasuk' => $this->SuratmasukModel->suratmasuk_berjalan(),
+        ];
+        
+        return view('/surat_masuk/v_suratmasuk', $data);
+
+    }
+
+    public function suratmasuk_total()
+    {
+
+        $data = [
+            'title' => 'Surat Masuk',
+            'suratmasuk' => $this->SuratmasukModel->suratmasuk_total(),
         ];
         return view('/surat_masuk/v_suratmasuk', $data);
     }

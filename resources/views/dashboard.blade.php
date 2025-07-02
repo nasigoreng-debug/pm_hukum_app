@@ -11,7 +11,7 @@
                     </marquee>
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <img src="{{ asset('public/template')}}/assets/image-gallery/1.jpg" width="1600" height="200" class="img-fluid" alt="">
+                            <img src="{{ asset('public/template')}}/assets/image-gallery/1.jpg" width="1300" height="170" class="img-fluid" alt="">
                             <div class="carousel-caption">
                     
                             </div>
@@ -35,10 +35,7 @@
                     </div>
                     <div class="xe-label">
                         <span>Arsip perkara {{date('Y')}}</span>
-                        <a href="/arsip_now">
-                         <strong class="num">0</strong>
-                        </a>
-                       
+                        <strong class="num">0</strong>
                     </div>
                 </div>
 
@@ -798,6 +795,6 @@
                 <iframe class="col-sm-12" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.596135077041!2d107.69135747890924!3d-6.938775605266532!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68c2b8532be0b3%3A0x558f74ce35b77659!2sPengadilan%20Tinggi%20Agama%20Bandung!5e0!3m2!1sid!2sid!4v1702197661449!5m2!1sid!2sid" width="500" height="285" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
 
-    </div>
+</div>
 
 @endsection

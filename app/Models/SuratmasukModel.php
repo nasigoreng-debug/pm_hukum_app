@@ -13,6 +13,26 @@ class SuratmasukModel extends Model
         return DB::table('tb_surat_masuk')->orderBy('tgl_masuk_pan', 'desc')->get();
     }
 
+    public function suratmasuk_berjalan()
+    {
+
+        //Function Tahun sekarang
+        $day = Carbon::now()->format('d');
+        $month = Carbon::now()->format('m');
+        $year = Carbon::now()->format('Y');
+        $datenow = Carbon::now()->format('Y-m-d');
+
+        return DB::table('tb_surat_masuk')
+        ->whereYear('tgl_masuk_pan', $year)
+        ->orderBy('tgl_masuk_pan', 'desc')->get();
+    }
+
+    public function suratmasuk_total()
+    {
+        return DB::table('tb_surat_masuk')->orderBy('tgl_masuk_pan', 'desc')->get();
+    }
+
+
     public function user()
     {
         return DB::table('users')

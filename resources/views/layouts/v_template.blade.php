@@ -44,10 +44,6 @@
         @include('layouts.v_sidebar')
         <!-- /Sidebar -->
 
-        <!-- Sidebar -->
-        {{-- @include('layouts.v_horizontal') --}}
-        <!-- /Sidebar -->
-
         <div class="main-content">
 
             <!-- Navbar -->

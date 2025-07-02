@@ -167,7 +167,7 @@
                 <h4 colspan="2" class="text-white text-center bg-success">Retensi Arsip</h4>
             </div>
             <div class="modal-body">
-                <table class="table table-small-font table-hover">
+                <table class="table table-small-font table-bordered table-hover">
                     <tr class="text-start border">
                         <td style="width: 200px;">Pengadilan Agama Pengaju</td>
                         <td>{{$data->pa_pengaju}}</td>

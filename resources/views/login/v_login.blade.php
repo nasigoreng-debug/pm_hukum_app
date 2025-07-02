@@ -138,7 +138,7 @@
                     @csrf
                     <div class="login-header text-white">
                         <h4>Login | Panitera Muda Hukum</h4>
-                        <p>Dear user, log in to access the admin area!</p>
+                        <p>Hai, selamat berkerja!</p>
                     </div>
                     <div class="form-group">
                         <label class="control-label" for="username">Username</label>
@@ -168,13 +168,13 @@
                     </div>
 
                     <div class="login-footer">
-                        <a href="#">Forgot your password?</a><br>
-                        <a href="{{ route('register') }}">Sign in</a>
+                        <a href="#">Lupa password? hubungi Panitera Muda Hukum ya. Terimakasih.</a><br>
+                        <!-- <a href="{{ route('register') }}">Sign in</a> -->
 
-                        <div class=" info-links">
+                        <!-- <div class=" info-links">
                             <a href="#">ToS</a> -
                             <a href="#">Privacy Policy</a>
-                        </div>
+                        </div> -->
 
                     </div>
 
