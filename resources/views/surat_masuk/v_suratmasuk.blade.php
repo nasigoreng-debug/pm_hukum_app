@@ -30,6 +30,7 @@
                 });
             });
         </script>
+        
 
         <div class="text-center">
             <form method="GET" action="/search-date-range">
@@ -37,7 +38,7 @@
                 s.d
                 <input type="date" name="end_date" required>
                 <button type="submit" class="btn btn-sm btn-primary">Tampilkan</button>
-                <a href="/suratmasuk" class="btn btn-sm btn-danger">Reload</a>
+                <a href="/suratmasuk" class="btn btn-sm btn-danger"><i class="fa fa-repeat"></i></a>
             </form>
         </div>
 
@@ -49,7 +50,7 @@
             @elseif(Auth::user()->level===2)
             <a href="/suratmasuk/add" class="btn btn-sm btn-info mb-2">Tambah Data</a>
             <a href="/suratmasuk_total" class="btn btn-sm btn-success mb-2">All Data</a>
-            <a href="/suratmasuk" class="btn btn-sm btn-danger mb-2">Kembali</a>
+            <a href="/suratmasuk" class="btn btn-sm btn-success mb-2">Kembali</a>
             @elseif(Auth::user()->level===3)
 
             @endif
@@ -93,10 +94,10 @@
                     <td class="text-center">
 
                         @if($data->lampiran=="")
-                        <span class="badge badge-red">Belum upload lampiran</button>
-                            @else
+                            <span class="badge badge-red">Belum upload lampiran</button>
+                        @else
                             <a href="public/surat_masuk/{{$data->lampiran}}" class="text-blue"><i class="fa fa-file-pdf-o"></i></i></a>
-                            @endif
+                        @endif
 
                     </td>
                     <td>{{ $data->disposisi }}</td>

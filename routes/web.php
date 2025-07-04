@@ -112,6 +112,9 @@ Route::post('/pbt/update/{id_pbt}', [PbtController::class, 'update'])->name('upd
 
 //pengaduan
 Route::get('/pgd', [PengaduanController::class, 'index'])->name('pgd');
+Route::get('/pgd_berjalan', [PengaduanController::class, 'pgd_berjalan'])->name('pgd_berjalan');
+Route::get('/pgd_total', [PengaduanController::class, 'pgd_total'])->name('pgd_total');
+Route::get('/pengaduan_blm_selesai', [PengaduanController::class, 'pengaduan_blm_selesai'])->name('pengaduan_blm_selesai');
 Route::get('/pgd/detail/{id_pgd}', [PengaduanController::class, 'detail'])->name('detail');
 Route::get('/pgd/add', [PengaduanController::class, 'add'])->name('add');
 Route::post('/pgd/insert', [PengaduanController::class, 'insert'])->name('insert');
@@ -172,6 +175,8 @@ Route::get('/search-date-range', [SuratmasukController::class, 'searchByDateRang
 
 //Surat Keluar
 Route::get('/suratkeluar', [SuratkeluarController::class, 'index'])->name('suratkeluar');
+Route::get('/suratkeluar_berjalan', [SuratkeluarController::class, 'suratkeluar_berjalan'])->name('suratkeluar_berjalan');
+Route::get('/suratkeluar_total', [SuratkeluarController::class, 'suratkeluar_total'])->name('suratkeluar_total');
 Route::get('/suratkeluar/detail/{id_suratkeluar}', [SuratkeluarController::class, 'detail'])->name('detail');
 Route::get('/suratkeluar/add', [SuratkeluarController::class, 'add'])->name('add');
 Route::post('/suratkeluar/insert', [SuratkeluarController::class, 'insert'])->name('insert');

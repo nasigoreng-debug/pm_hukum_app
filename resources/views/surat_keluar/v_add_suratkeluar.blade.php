@@ -99,11 +99,20 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="form-group ml-3 mt-2 mb-2 mr-3">
+                        {{-- <div class="form-group ml-3 mt-2 mb-2 mr-3">
                             <label>Lampiran</label>
                             <input type="file" class="form-control @error('lampiran') is-invalid @enderror" value="{{old('lampiran')}}" name="lampiran">
                             <div id="validationServerUsernameFeedback" class="invalid-feedback text-danger">
                                 @error('lampiran')
+                                {{ $message }}
+                                @enderror
+                            </div>
+                        </div> --}}
+                        <div class="form-group ml-3 mt-2 mb-2 mr-3">
+                            <label>Konsep Surat</label>
+                            <input type="file" class="form-control @error('konsep_surat') is-invalid @enderror" value="{{old('konsep_surat')}}" name="konsep_surat">
+                            <div id="validationServerUsernameFeedback" class="invalid-feedback text-danger">
+                                @error('konsep_surat')
                                 {{ $message }}
                                 @enderror
                             </div>
@@ -120,7 +129,7 @@
                         <div class="form-group">
                             <button class="btn btn-success">Simpan</button>
                             <button type="reset" class="btn btn-danger">Reset</button>
-                            <a href="/suratkeluar" class="btn btn-sm btn-info mb-2"></i>Kembali</a>
+                            <a href="/suratkeluar_berjalan" class="btn btn-sm btn-info mb-2"></i>Kembali</a>
                         </div>
                     </div>
                 </div>

@@ -95,7 +95,7 @@
                                 <label>Surat PTA</label>
                                 <div>{{ $suratkeluar->surat_pta }}</div>
                             </div>
-                            <div class="">
+                            <div class="form-group ml-3 mt-2 mb-2 mr-3">
                                 <div class="form-group ml-3 mt-2 mb-2 mr-3">
                                     <label>Ganti Surat Keluar</label>
                                     <input type="file" class="form-control form-control-sm @error('surat_pta') is-invalid @enderror" value="{{$suratkeluar->surat_pta}}" name="surat_pta">
@@ -107,7 +107,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group ml-3 mt-2 mb-2 mr-3">
+                        {{-- <div class="form-group ml-3 mt-2 mb-2 mr-3">
                             <div class="form-group ml-3 mt-2 mb-2 mr-3">
                                 <label>Lampiran</label>
                                 <div>{{ $suratkeluar->lampiran }}</div>
@@ -118,6 +118,23 @@
                                     <input type="file" class="form-control form-control-sm @error('lampiran') is-invalid @enderror" value="{{$suratkeluar->lampiran}}" name="lampiran">
                                     <div id="validationServerUsernameFeedback" class="invalid-feedback">
                                         @error('lampiran')
+                                        {{ $message }}
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div> --}}
+                        </div>
+                        <div class="form-group ml-3 mt-2 mb-2 mr-3">
+                            <div class="form-group ml-3 mt-2 mb-2 mr-3">
+                                <label>Konsep Surat</label>
+                                <div>{{ $suratkeluar->konsep_surat }}</div>
+                            </div>
+                            <div class="">
+                                <div class="form-group ml-3 mt-2 mb-2 mr-3">
+                                    <label>Ganti konsep_surat</label>
+                                    <input type="file" class="form-control form-control-sm @error('konsep_surat') is-invalid @enderror" value="{{$suratkeluar->konsep_surat}}" name="konsep_surat">
+                                    <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                                        @error('konsep_surat')
                                         {{ $message }}
                                         @enderror
                                     </div>
@@ -135,7 +152,7 @@
                         </div>
                         <div class="form-group">
                             <button class="btn btn-sm btn-success">Simpan</button>
-                            <a href="/suratkeluar" class="btn btn-sm btn-info mb-2"></i>Kembali</a>
+                            <a href="/suratkeluar_berjalan" class="btn btn-sm btn-info mb-2"></i>Kembali</a>
                         </div>
                     </div>
                 </div>

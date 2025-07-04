@@ -34,8 +34,12 @@
         <td class="text-center" style="font-size: 5px;">
             @if(Auth::user()->level===1)
             <a href="/suratkeluar/add" class="btn btn-sm btn-info mb-2">Tambah Data</a>
+            <a href="/suratkeluar_total" class="btn btn-sm btn-success mb-2">All Data</a>
+            <a href="/suratkeluar" class="btn btn-sm btn-danger mb-2">Kembali</a>
             @elseif(Auth::user()->level===2)
             <a href="/suratkeluar/add" class="btn btn-sm btn-info mb-2">Tambah Data</a>
+            <a href="/suratkeluar_total" class="btn btn-sm btn-success mb-2">All Data</a>
+            <a href="/suratkeluar" class="btn btn-sm btn-danger mb-2">Kembali</a>
             @elseif(Auth::user()->level===3)
 
             @endif
@@ -56,7 +60,8 @@
                     <th style="width: 60px;">Tujuan Surat</th>
                     <th style="width: 200px;">Perihal</th>
                     <th style="width: 40px;">Surat PTA</th>
-                    <th style="width: 40px;">Lampiran</th>
+                    {{-- <th style="width: 40px;">Lampiran</th> --}}
+                    <th style="width: 40px;">Konsep Surat</th>
                     <th style="width: 50px;">Keterangan</th>
                     <th style="width: 60px;">Action</th>
                 </tr>
@@ -70,7 +75,8 @@
                     <th>Tujuan Surat</th>
                     <th>Perihal</th>
                     <th>Surat PTA</th>
-                    <th>Lampiran</th>
+                    {{-- <th>Lampiran</th> --}}
+                    <th>Konsep Surat</th>
                     <th>Keterangan</th>
                     <th>Action</th>
                 </tr>
@@ -83,7 +89,7 @@
                     <td class="text-start">{{ date('d-m-Y', strtotime($data->tgl_surat)) }}</td>
                     <td class="text-start">{{ $data->tujuan_surat }}</td>
                     <td>{{ $data->perihal }}</td>
-                    <td class="text-start">
+                    <td class="text-center">
 
                         @if($data->surat_pta=="")
                         @else
@@ -91,12 +97,21 @@
                         @endif
 
                     </td>
-                    <td class="text-start">
+                    {{-- <td class="text-start">
 
                         @if($data->lampiran=="")
                         -
                         @else
                         <a href="public/lampiran_surat_keluar/{{$data->lampiran}}" class="text-blue"><i class="fa fa-file-pdf-o"></i></i></a>
+                        @endif
+
+                    </td> --}}
+                    <td class="text-center">
+
+                        @if($data->konsep_surat=="")
+                        -
+                        @else
+                        <a href="public/konsep_surat_keluar/{{$data->konsep_surat}}" class="text-blue"><i class="fa fa-file-pdf-o"></i></i></a>
                         @endif
 
                     </td>

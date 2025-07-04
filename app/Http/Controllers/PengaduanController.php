@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\PengaduanModel;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 
 class PengaduanController extends Controller
 {
@@ -13,9 +15,61 @@ class PengaduanController extends Controller
     }
     public function index()
     {
+        //Function Tahun sekarang
+        $day = Carbon::now()->format('d');
+        $month = Carbon::now()->format('m');
+        $year = Carbon::now()->format('Y');
+
         $data = [
             'title' => 'Pengaduan',
             'pengaduan' => $this->PengaduanModel->allData(),
+        ];
+
+        $pengaduan_total = DB::table('tb_pengaduan')->count();
+
+        $pengaduan_berjalan = DB::table('tb_pengaduan')
+                                ->whereYear('tgl_terima_pgd', $year)
+                                ->count();
+
+        $pengaduan_blm_selesai = DB::table('tb_pengaduan')
+                                ->whereNull('tgl_selesai_pgd')
+                                ->orderBy('tgl_terima_pgd', 'desc')->count();
+
+        return view('/pengaduan/v_dashboard_pengaduan', $data, compact(
+            'pengaduan_total',
+            'pengaduan_berjalan',
+            'pengaduan_blm_selesai',
+        ));
+    }
+
+    public function pgd_berjalan()
+    {
+
+        $data = [
+            'title' => 'Pengaduan',
+            'pengaduan' => $this->PengaduanModel->pgd_berjalan(),
+        ];
+        
+        return view('/pengaduan/v_pengaduan', $data);
+
+    }
+
+    public function pgd_total()
+    {
+
+        $data = [
+            'title' => 'Pengaduan',
+            'pengaduan' => $this->PengaduanModel->pgd_total(),
+        ];
+        return view('/pengaduan/v_pengaduan', $data);
+    }
+
+    public function pengaduan_blm_selesai()
+    {
+
+        $data = [
+            'title' => 'Pengaduan',
+            'pengaduan' => $this->PengaduanModel->pengaduan_blm_selesai(),
         ];
         return view('/pengaduan/v_pengaduan', $data);
     }

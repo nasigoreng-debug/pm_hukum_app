@@ -32,6 +32,8 @@
             });
         </script>
         <a href="/pgd/add" class="btn btn-sm btn-info mb-2">Tambah Data</a>
+        <a href="/pgd_total" class="btn btn-sm btn-success mb-2">All Data</a>
+        <a href="/pgd" class="btn btn-sm btn-danger mb-2">Kembali</a>
         @if (session('pesan'))
         <div class="alert alert-success alert-dismissible mt-2">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -109,25 +111,10 @@
                         {{ $data->status_pgd }}
 
                     </td>
+                    
                     <td>
                         {{ $data->status_berkas }}
                     </td>
-                    <!-- <td>{{ $data->tgl_selesai_pgd }}</td>
-                    <td>{{ $data->tgl_lhp }}</td> -->
-                    <!-- <td>
-                        @if($data->surat_pgd=="")
-
-                        @else
-                        <a href="public/surat_pengaduan/{{$data->surat_pgd}}" class="text-blue" target="_blank"><i class="fa fa-file-pdf-o"></i></a>
-                        @endif
-                    </td>
-                    <td>
-                        @if($data->lampiran=="")
-
-                        @else
-                        <a href="public/lampiran_pengaduan/{{$data->lampiran}}" class="text-blue" target="_blank"><i class="fa fa-file-pdf-o"></i></a>
-                        @endif
-                    </td> -->
                     <td>
                         @if(Auth::user()->level===1)
                         <button type="button" class="btn btn-purple btn-xs" data-toggle="modal" data-target="#detail{{ $data->id_pgd }}">
