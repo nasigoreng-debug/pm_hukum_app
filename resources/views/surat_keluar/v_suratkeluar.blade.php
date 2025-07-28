@@ -55,13 +55,13 @@
             <thead class="bg-gray text-center">
                 <tr>
                     <th style="width: 30px;">No</th>
-                    <th style="width: 100px;">Nomor Surat</th>
-                    <th style="width: 80px;">Tanggal Surat</th>
-                    <th style="width: 60px;">Tujuan Surat</th>
+                    <th style="width: 150px;">Nomor </th>
+                    <th style="width: 80px;">Tanggal </th>
+                    <th style="width: 60px;">Tujuan </th>
                     <th style="width: 200px;">Perihal</th>
-                    <th style="width: 40px;">Surat PTA</th>
+                    <th style="width: 40px;">Dokumen</th>
                     {{-- <th style="width: 40px;">Lampiran</th> --}}
-                    <th style="width: 40px;">Konsep Surat</th>
+                    <th style="width: 40px;">Konsep </th>
                     <th style="width: 50px;">Keterangan</th>
                     <th style="width: 60px;">Action</th>
                 </tr>
@@ -70,13 +70,13 @@
             <tfoot class="bg-gray text-center">
                 <tr>
                     <th>No</th>
-                    <th>Nomor Surat</th>
-                    <th>Tanggal Surat</th>
-                    <th>Tujuan Surat</th>
+                    <th>Nomor </th>
+                    <th>Tanggal </th>
+                    <th>Tujuan </th>
                     <th>Perihal</th>
-                    <th>Surat PTA</th>
+                    <th>Dokumen</th>
                     {{-- <th>Lampiran</th> --}}
-                    <th>Konsep Surat</th>
+                    <th>Konsep </th>
                     <th>Keterangan</th>
                     <th>Action</th>
                 </tr>
@@ -115,7 +115,7 @@
                         @endif
 
                     </td>
-                    <td class="text-center">{{ $data->keterangan }}</td>
+                    <td class="text-start">{{ $data->keterangan }}</td>
                     <td class="text-center" style="font-size: 5px;">
                         @if(Auth::user()->level===1)
                         <button type="button" class="btn btn-purple btn-xs" data-toggle="modal" data-target="#detail{{ $data->id_suratkeluar }}">
@@ -179,6 +179,7 @@
                         <td>
 
                             @if($data->surat_pta=="")
+                            -
                             @else
                             <a href="surat_masuk/{{$data->surat_pta}}" class="text-blue"><i class="fa fa-file-pdf-o"></i></i></a>
                             @endif
@@ -186,20 +187,25 @@
                         </td>
                     </tr>
                     <tr class="text-start border">
-                        <td>Lampiran</td>
+                        <td>Konsep Surat</td>
                         <td>
 
-                        @if($data->lampiran=="")
+                        @if($data->konsep_surat=="")
                         -
                         @else
-                        <a href="public/lampiran_surat_keluar/{{$data->lampiran}}" class="text-blue"><i class="fa fa-file-pdf-o"></i></i></a>
+                        <a href="public/konsep_surat_keluar/{{$data->konsep_surat}}" class="text-blue"><i class="fa fa-file-pdf-o"></i></i></a>
                         @endif
 
                         </td>
                     </tr>
                     <tr class="text-start border">
                         <td>Keterangan</td>
-                        <td>{{$data->keterangan}}</td>
+
+                        @if($data->keterangan=="")
+                        -
+                        @else
+                        {{$data->keterangan}}
+                        @endif
                     </tr>
                 </table>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">

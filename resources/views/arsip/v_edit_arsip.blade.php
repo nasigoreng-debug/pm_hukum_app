@@ -14,7 +14,7 @@
 
     <div class="panel-body">
 
-        <form action="/arsip/update/{{$arsip->id_banding}}" method="POST" enctype="multipart/form-data">
+        <form action="/arsip/update/{{$arsip_perkara->id_banding}}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="row">
                 <!-- left column -->
@@ -23,7 +23,7 @@
                     <div class="card card-primary mt-3 ml-3 mb-3 mr-3">
                         <div class="form-group ml-3 mt-2 mb-2 mr-3">
                             <label>Tanggal Masuk</label>
-                            <input type="date" class="form-control form-control-sm @error('tgl_masuk') is-invalid @enderror" value="{{$arsip->tgl_masuk}}" name="tgl_masuk" autofocus>
+                            <input type="date" class="form-control form-control-sm @error('tgl_masuk') is-invalid @enderror" value="{{$arsip_perkara->tgl_masuk}}" name="tgl_masuk" autofocus>
                             <div id="validationServerUsernameFeedback" class="invalid-feedback">
                                 @error('tgl_masuk')
                                 {{ $message }}
@@ -32,7 +32,7 @@
                         </div>
                         <div class="form-group ml-3 mt-2 mb-2 mr-3">
                             <label>Nomor Perkara</label>
-                            <input type="text" class="form-control form-control-sm @error('no_banding') is-invalid @enderror" value="{{$arsip->no_banding}}" name="no_banding" readonly>
+                            <input type="text" class="form-control form-control-sm @error('no_banding') is-invalid @enderror" value="{{$arsip_perkara->no_banding}}" name="no_banding" readonly>
                             <div id="validationServerUsernameFeedback" class="invalid-feedback">
                                 @error('no_banding')
                                 {{ $message }}
@@ -41,7 +41,7 @@
                         </div>
                         <div class="form-group ml-3 mt-2 mb-2 mr-3">
                             <label>Nomor Perkara Tk.I</label>
-                            <input type="text" class="form-control form-control-sm @error('no_pa') is-invalid @enderror" value="{{$arsip->no_pa}}" name="no_pa">
+                            <input type="text" class="form-control form-control-sm @error('no_pa') is-invalid @enderror" value="{{$arsip_perkara->no_pa}}" name="no_pa">
                             <div id="validationServerUsernameFeedback" class="invalid-feedback">
                                 @error('no_pa')
                                 {{ $message }}
@@ -51,7 +51,7 @@
                         <div class="form-group ml-3 mt-2 mb-2 mr-3">
                             <label for="jenis_perkara">Jenis Perkara</label>
                             <select name="jenis_perkara" class="form-control form-control-sm @error('jenis_perkara') is-invalid @enderror">
-                                <option>{{$arsip->jenis_perkara}}</option>
+                                <option>{{$arsip_perkara->jenis_perkara}}</option>
                                 <option> Asal Usul Anak </option>
                                 <option> Cerai Gugat </option>
                                 <option> Cerai Talak </option>
@@ -92,7 +92,7 @@
                         </div>
                         <div class="form-group ml-3 mt-2 mb-2 mr-3">
                             <label>Tanggal Putus</label>
-                            <input type="date" class="form-control form-control-sm @error('tgl_put_banding') is-invalid @enderror" value="{{$arsip->tgl_put_banding}}" name="tgl_put_banding">
+                            <input type="date" class="form-control form-control-sm @error('tgl_put_banding') is-invalid @enderror" value="{{$arsip_perkara->tgl_put_banding}}" name="tgl_put_banding">
                             <div id="validationServerUsernameFeedback" class="invalid-feedback">
                                 @error('tgl_put_banding')
                                 {{ $message }}
@@ -102,7 +102,7 @@
                         <div class="form-group ml-3 mt-2 mb-2 mr-3">
                             <label>Staf yang menyerahkan berkas</label>
                             <select name="penyerah" class="form-control form-control-sm @error('penyerah') is-invalid @enderror">
-                                <option>{{$arsip->penyerah}}</option>
+                                <option>{{$arsip_perkara->penyerah}}</option>
                                 @foreach ($user as $data)
                                 <option>{{$data->name}}</option>
                                 @endforeach
@@ -116,7 +116,7 @@
                         <div class="form-group ml-3 mt-2 mb-2 mr-3">
                             <label>Petugas yang menerima berkas</label>
                             <select name="penerima" class="form-control form-control-sm @error('penerima') is-invalid @enderror">
-                                <option>{{$arsip->penerima}}</option>
+                                <option>{{$arsip_perkara->penerima}}</option>
                                 @foreach ($user as $data)
                                 <option>{{$data->name}}</option>
                                 @endforeach
@@ -130,7 +130,7 @@
                         <div class="form-group ml-3 mt-2 mb-2 mr-3">
                             <label>No. Lemari</label>
                             <select name="no_lemari" class="form-control form-control-sm @error('no_lemari') is-invalid @enderror" id="no_lemari">
-                                <option>{{$arsip->no_lemari}}</option>
+                                <option>{{$arsip_perkara->no_lemari}}</option>
                                 <option>1</option>
                                 <option>2</option>
                                 <option>3</option>
@@ -143,7 +143,7 @@
                         </div>
                         <div class="form-group ml-3 mt-2 mb-2 mr-3">
                             <label>No. Tingkat/Laci</label>
-                            <input type="text" class="form-control form-control-sm @error('no_laci') is-invalid @enderror" value="{{$arsip->no_laci}}" name="no_laci">
+                            <input type="text" class="form-control form-control-sm @error('no_laci') is-invalid @enderror" value="{{$arsip_perkara->no_laci}}" name="no_laci">
                             <div id="validationServerUsernameFeedback" class="invalid-feedback">
                                 @error('no_laci')
                                 {{ $message }}
@@ -152,7 +152,7 @@
                         </div>
                         <div class="form-group ml-3 mt-2 mb-2 mr-3">
                             <label>No. Box</label>
-                            <input type="text" class="form-control form-control-sm @error('no_box') is-invalid @enderror" value="{{$arsip->no_box}}" name="no_box">
+                            <input type="text" class="form-control form-control-sm @error('no_box') is-invalid @enderror" value="{{$arsip_perkara->no_box}}" name="no_box">
                             <div id="validationServerUsernameFeedback" class="invalid-feedback">
                                 @error('no_box')
                                 {{ $message }}
@@ -161,7 +161,7 @@
                         </div>
                         <div class="form-group ml-3 mt-2 mb-2 mr-3">
                             <label>Tanggal alih media</label>
-                            <input type="date" class="form-control form-control-sm @error('tgl_alih_media') is-invalid @enderror" value="{{$arsip->tgl_alih_media}}" name="tgl_alih_media">
+                            <input type="date" class="form-control form-control-sm @error('tgl_alih_media') is-invalid @enderror" value="{{$arsip_perkara->tgl_alih_media}}" name="tgl_alih_media">
                             <div id="validationServerUsernameFeedback" class="invalid-feedback">
                                 @error('tgl_alih_media')
                                 {{ $message }}
@@ -171,14 +171,31 @@
                         <div class="form-group ml-3 mt-2 mb-2 mr-3">
                             <div class="form-group ml-3 mt-2 mb-2 mr-3">
                                 <label>Putusan</label>
-                                <div>{{ $arsip->putusan }}</div>
+                                <div>{{ $arsip_perkara->putusan }}</div>
                             </div>
                             <div class="">
                                 <div class="form-group ml-3 mt-2 mb-2 mr-3">
                                     <label>Ganti Putusan</label>
-                                    <input type="file" class="form-control form-control-sm @error('putusan') is-invalid @enderror" value="{{$arsip->putusan}}" name="putusan">
+                                    <input type="file" class="form-control form-control-sm @error('putusan') is-invalid @enderror" value="{{$arsip_perkara->putusan}}" name="putusan">
                                     <div id="validationServerUsernameFeedback" class="invalid-feedback">
                                         @error('putusan')
+                                        {{ $message }}
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group ml-3 mt-2 mb-2 mr-3">
+                            <div class="form-group ml-3 mt-2 mb-2 mr-3">
+                                <label>Bundel B</label>
+                                <div>{{ $arsip_perkara->bundle_b }}</div>
+                            </div>
+                            <div class="">
+                                <div class="form-group ml-3 mt-2 mb-2 mr-3">
+                                    <label>Ganti Bundel B</label>
+                                    <input type="file" class="form-control form-control-sm @error('bundle_b') is-invalid @enderror" value="{{$arsip_perkara->bundle_b}}" name="bundle_b">
+                                    <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                                        @error('bundle_b')
                                         {{ $message }}
                                         @enderror
                                     </div>

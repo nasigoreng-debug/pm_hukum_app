@@ -66,6 +66,15 @@
                                 @enderror
                             </div>
                         </div>
+                        <div class="form-group ml-3 mt-2 mb-2 mr-3">
+                            <label>Konsep</label>
+                            <input type="file" class="form-control @error('dokumen') is-invalid @enderror" value="{{old('konsep_sk')}}" name="konsep_sk">
+                            <div id="validationServerUsernameFeedback" class="invalid-feedback text-danger">
+                                @error('konsep_sk')
+                                {{ $message }}
+                                @enderror
+                            </div>
+                        </div>
                         <div class="form-group">
                             <button class="btn btn-success">Simpan</button>
                             <button type="reset" class="btn btn-danger">Reset</button>

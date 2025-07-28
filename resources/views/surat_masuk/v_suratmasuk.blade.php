@@ -66,41 +66,57 @@
             <thead>
                 <tr class="replace-inputs bg-gray">
                     <th style="width: 30px;">No</th>
-                    <th style="width: 80px;">Masuk</th>
+                    {{-- <th style="width: 80px;">Masuk</th> --}}
                     <!-- <th style="width: 100px;">Masuk Kesekretariatan</th> -->
-                    <th style="width: 50px;">Index</th>
-                    <th style="width: 80px;">Asal Surat</th>
-                    <th style="width: 150px;">No. Surat</th>
-                    <th style="width: 80px;">Tanggal Surat</th>
-                    <th style="width: 150px;">Perihal</th>
-                    <th style="width: 50px;">Lampiran</th>
-                    <th style="width: 100px;">Disposisi</th>
+                    {{-- <th style="width: 50px;">Index</th> --}}
+                    <th style="width: 50px;">Asal</th>
+                    <th style="width: 150px;">Nomor</th>
+                    <th style="width: 50px;">Tanggal</th>
+                    <th style="width: 200px;">Perihal</th>
+                    <th style="width: 20px;">Lampiran</th>
+                    {{-- <th style="width: 100px;">Disposisi</th> --}}
                     <!-- <th style="width: 70px;">Keterangan</th> -->
-                    <th style="width: 100px;">Action</th>
+                    <th class="text-center" style="width: 100px;">Action</th>
                 </tr>
             </thead>
+            <tfoot>
+                <tr class="bg-gray">
+                    <th>No</th>
+                    {{-- <th>Masuk</th> --}}
+                    <!-- <th>Masuk Kesekretariatan</th> -->
+                    {{-- <th>Index</th> --}}
+                    <th>Asal</th>
+                    <th>Nomor</th>
+                    <th>Tanggal</th>
+                    <th>Perihal</th>
+                    <th>Lampiran</th>
+                    {{-- <th>Disposisi</th> --}}
+                    <!-- <th>Keterangan</th> -->
+                    <th class="text-center">Action</th>
+                </tr>
+            </tfoot>
             <tbody>
                 @foreach ($suratmasuk as $data)
                 <tr>
                     <td class="text-center">{{$loop->iteration}}</td>
-                    <td class="text-center">{{ date('d-m-Y', strtotime($data->tgl_masuk_pan)) }}</td>
-                    <!-- <td class="text-center">{{ date('d-m-Y', strtotime($data->tgl_masuk_umum)) }}</td> -->
-                    <td class="text-center">{{ $data->no_indeks }}</td>
-                    <td>{{ $data->asal_surat }}</td>
-                    <td>{{ $data->no_surat }}</td>
-                    <td class="text-center">{{ date('d-m-Y', strtotime($data->tgl_surat)) }}</td>
-                    <td>{{ $data->perihal }}</td>
+                    {{-- <td class="text-start">{{ date('d-m-Y', strtotime($data->tgl_masuk_pan)) }}</td> --}}
+                    <!-- <td class="text-start">{{ date('d-m-Y', strtotime($data->tgl_masuk_umum)) }}</td> -->
+                    {{-- <td class="text-start">{{ $data->no_indeks }}</td> --}}
+                    <td class="text-start">{{ $data->asal_surat }}</td>
+                    <td class="text-start">{{ $data->no_surat }}</td>
+                    <td class="text-start">{{ date('d-m-Y', strtotime($data->tgl_surat)) }}</td>
+                    <td class="text-start">{{ $data->perihal }}</td>
 
-                    <td class="text-center">
+                    <td class="text-start">
 
                         @if($data->lampiran=="")
-                            <span class="badge badge-red">Belum upload lampiran</button>
+                            <span class="badge badge-red">Belum upload</button>
                         @else
                             <a href="public/surat_masuk/{{$data->lampiran}}" class="text-blue"><i class="fa fa-file-pdf-o"></i></i></a>
                         @endif
 
                     </td>
-                    <td>{{ $data->disposisi }}</td>
+                    {{-- <td>{{ $data->disposisi }}</td> --}}
                     <!-- <td>{{ $data->keterangan }}</td> -->
                     <td class="text-center" style="font-size: 5px;">
                         @if(Auth::user()->level===1)
@@ -129,22 +145,6 @@
                 </tr>
                 @endforeach
             </tbody>
-            <tfoot>
-                <tr class="bg-gray">
-                    <th>No</th>
-                    <th>Masuk</th>
-                    <!-- <th>Masuk Kesekretariatan</th> -->
-                    <th>Index</th>
-                    <th>Asal Surat</th>
-                    <th>No. Surat</th>
-                    <th>Tanggal Surat</th>
-                    <th>Perihal</th>
-                    <th>Lampiran</th>
-                    <th>Disposisi</th>
-                    <!-- <th>Keterangan</th> -->
-                    <th>Action</th>
-                </tr>
-            </tfoot>
         </table>
 
     </div>

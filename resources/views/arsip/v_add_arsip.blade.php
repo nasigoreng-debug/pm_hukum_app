@@ -178,6 +178,15 @@
                                 @enderror
                             </div>
                         </div>
+                        <div class="form-group ml-3 mt-2 mb-2 mr-3">
+                            <label>Bundel B</label>
+                            <input type="file" class="form-control @error('bundle_b') is-invalid @enderror" value="{{old('bundle_b')}}" name="bundle_b">
+                            <div id="validationServerUsernameFeedback" class="invalid-feedback text-danger">
+                                @error('bundle_b')
+                                {{ $message }}
+                                @enderror
+                            </div>
+                        </div>
                         <div class="form-group">
                             <button class="btn btn-success">Simpan</button>
                             <button type="reset" class="btn btn-danger">Reset</button>

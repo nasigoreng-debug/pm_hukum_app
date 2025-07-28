@@ -52,7 +52,8 @@ class SkController extends Controller
             'tgl_sk' => 'required',
             'tentang' => 'required',
             'dokumen' => 'required|mimes:pdf|max:1024',
-            'dokumen' => 'mimes:pdf|max:1024',
+            'konsep_sk' => 'required|mimes:docx,rtf|max:1024',
+
         ], [
             'no_sk.required' => 'Nomor SK wajib diisi!!',
             'no_sk.unique' => 'Nomor SK sudah ada!!',
@@ -63,24 +64,85 @@ class SkController extends Controller
             'dokumen.required' => 'SK wajib diupload!!',
             'dokumen.mimes' => 'Jenis file harus pdf!!',
             'dokumen.max' => 'Ukuran file max 1Mb!!',
+            'konsep_sk.required' => 'Konsep SK wajib diupload!!',
+            'konsep_sk.mimes' => 'Jenis file harus docx/rtf!!',
+            'konsep_sk.max' => 'Ukuran file max 1Mb!!',
         ]);
 
         //jika validasi tidak ada maka lakukan simpan data
         //upload file
-        $file = Request()->dokumen;
-        $fileName = str_replace("/", "_",  Request()->no_sk) . '_' .  str_replace(" ", "_",  Request()->tahun) . '_' . date('dmY') . '.' . $file->extension();
-        $file->move(public_path('surat_keputusan'), $fileName);
+        // $file = Request()->dokumen;
+        // $fileName = str_replace("/", "_",  Request()->tahun) . '_' . date('YmdHis') . '.' . $file->extension();
+        // $file->move(public_path('surat_keputusan'), $fileName);
 
-        $data = [
-            'no_sk' => Request()->no_sk,
-            'tahun' => Request()->tahun,
-            'tgl_sk' => Request()->tgl_sk,
-            'tentang' => Request()->tentang,
-            'dokumen' => $fileName,
-        ];
+        // $data = [
+        //     'no_sk' => Request()->no_sk,
+        //     'tahun' => Request()->tahun,
+        //     'tgl_sk' => Request()->tgl_sk,
+        //     'tentang' => Request()->tentang,
+        //     'dokumen' => $fileName,
+        // ];
 
-        $this->SkModel->addData($data);
-        return redirect()->route('suratkeputusan')->with('pesan', 'Data Berhasil Ditambahkan !!');
+        // $this->SkModel->addData($data);
+        // return redirect()->route('suratkeputusan')->with('pesan', 'Data Berhasil Ditambahkan !!');
+
+        if (Request()->dokumen <> "" && Request()->konsep_sk <> "") {
+            //upload file
+
+            $file = Request()->dokumen;
+            $fileName = 'dokumen' . '_' . str_replace("/", "_",  Request()->tahun) . '_' . date('YmdHis') . '.' . $file->extension();
+            $file->move(public_path('surat_keputusan'), $fileName);
+
+            $file = Request()->konsep_sk;
+            $fileNameRtf = 'konsep_sk' . '_' .  str_replace("/", "_",  Request()->tahun) . '_' . date('YmdHis') . '.' . $file->extension();
+            $file->move(public_path('konsep_sk'), $fileNameRtf);
+
+            // $file = Request()->lampiran;
+            // $fileNamePdf = 'lampiran' . '_' .  str_replace("/", "_",  Request()->tujuan_surat) . '_' . date('YmdHisu') . '.' . $file->extension();
+            // $file->move(public_path('lampiran_surat_keluar'), $fileNamePdf);
+
+            $data = [
+                'no_sk' => Request()->no_sk,
+                'tahun' => Request()->tahun,
+                'tgl_sk' => Request()->tgl_sk,
+                'tentang' => Request()->tentang,
+                'dokumen' => $fileName,
+                'konsep_sk' => $fileNameRtf,
+            ];
+
+            $this->SkModel->addData($data);
+            return redirect()->route('suratkeputusan')->with('pesan', 'Data Berhasil Ditambahkan !!');
+        } elseif (Request()->dokumen <> "") {
+            $file = Request()->dokumen;
+            $fileName = 'dokumen' . '_' . str_replace("/", "_",  Request()->tahun) . '_' . date('YmdHis') . '.' . $file->extension();
+            $file->move(public_path('surat_keputusan'), $fileName);
+
+            $data = [
+                'no_sk' => Request()->no_sk,
+                'tahun' => Request()->tahun,
+                'tgl_sk' => Request()->tgl_sk,
+                'tentang' => Request()->tentang,
+                'dokumen' => $fileName,
+            ];
+
+            $this->SkModel->addData($data);
+            return redirect()->route('suratkeputusan')->with('pesan', 'Data Berhasil Ditambahkan !!');
+        } elseif (Request()->konsep_sk <> "") {
+            $file = Request()->konsep_sk;
+            $fileNameRtf = 'konsep_sk' . '_' .  str_replace("/", "_",  Request()->tahun) . '_' . date('YmdHis') . '.' . $file->extension();
+            $file->move(public_path('konsep_sk'), $fileNameRtf);
+
+            $data = [
+                'no_sk' => Request()->no_sk,
+                'tahun' => Request()->tahun,
+                'tgl_sk' => Request()->tgl_sk,
+                'tentang' => Request()->tentang,
+                'konsep_sk' => $fileNameRtf,
+            ];
+
+            $this->SkModel->addData($data);
+            return redirect()->route('suratkeputusan')->with('pesan', 'Data Berhasil Ditambahkan !!');
+        }
     }
 
     //Edit Data
@@ -105,21 +167,45 @@ class SkController extends Controller
             'tgl_sk' => 'required',
             'tentang' => 'required|max:255',
             'dokumen' => 'mimes:pdf|max:1024',
+            'konsep_sk' => 'mimes:docx,rtf|max:1024',
         ], [
             'no_sk.required' => 'Nomor SK wajib diisi!!',
             'tahun.required' => 'Tahun wajib diisi!!',
             'tgl_sk.required' => 'Tanggal wajib diisi!!',
-            'dokumen.required' => 'Dokumen wajib diupload!!',
             'dokumen.mimes' => 'Jenis file harus pdf!!',
             'dokumen.max' => 'Ukuran file max 1Mb!!',
+            'konsep_sk.mimes' => 'Jenis file harus docx/rtf!!',
+            'konsep_sk.max' => 'Ukuran file max 1Mb!!',
         ]);
 
-        //jika validasi tidak ada maka lakukan simpan data
-        if (Request()->dokumen <> "") {
+        if (Request()->dokumen <> "" && Request()->konsep_sk <> "") {
+            //Jika ganti file
+
+            //upload file
+            $file = Request()->dokumen;
+            $fileName = 'dokumen' . '_' . str_replace("/", "_",  Request()->tahun) . '_' . date('YmdHis') . '.' . $file->extension();
+            $file->move(public_path('surat_keputusan'), $fileName);
+
+            $file = Request()->konsep_sk;
+            $fileNameRtf = 'konsep_sk' . '_' .  str_replace("/", "_",  Request()->tahun) . '_' . date('YmdHisu') . '.' . $file->extension();
+            $file->move(public_path('konsep_sk'), $fileNameRtf);
+
+            $data = [
+                'no_sk' => Request()->no_sk,
+                'tahun' => Request()->tahun,
+                'tgl_sk' => Request()->tgl_sk,
+                'tentang' => Request()->tentang,
+                'dokumen' => $fileName,
+                'konsep_sk' => $fileNameRtf,
+            ];
+
+            $this->SkModel->editData($id_sk, $data);
+            return redirect()->route('suratkeputusan')->with('pesan', 'Data Berhasil Diupdate !!');
+        } elseif (Request()->dokumen <> "") {
             //Jika ganti file
             //upload file
             $file = Request()->dokumen;
-            $fileName = str_replace("/", "_",  Request()->no_sk) . '_' . str_replace(" ", "_",  Request()->tahun) . '_' . date('dmY') . '.' . $file->extension();
+            $fileName = 'dokumen' . '_' . str_replace("/", "_",  Request()->tahun) . '_' . date('YmdHis') . '.' . $file->extension();
             $file->move(public_path('surat_keputusan'), $fileName);
 
             $data = [
@@ -128,33 +214,98 @@ class SkController extends Controller
                 'tgl_sk' => Request()->tgl_sk,
                 'tentang' => Request()->tentang,
                 'dokumen' => $fileName,
+
             ];
 
             $this->SkModel->editData($id_sk, $data);
-        } else {
+            return redirect()->route('suratkeputusan')->with('pesan', 'Data Berhasil Diupdate !!');
+        } elseif (Request()->konsep_sk <> "") {
             //Jika tidak ganti file
             //upload file
+
+            $file = Request()->konsep_sk;
+            $fileNameRtf = 'konsep_sk' . '_' .  str_replace("/", "_",  Request()->tahun) . '_' . date('YmdHis') . '.' . $file->extension();
+            $file->move(public_path('konsep_sk'), $fileNameRtf);
 
             $data = [
                 'no_sk' => Request()->no_sk,
                 'tahun' => Request()->tahun,
                 'tgl_sk' => Request()->tgl_sk,
                 'tentang' => Request()->tentang,
+                'konsep_sk' => $fileNameRtf,
             ];
 
             $this->SkModel->editData($id_sk, $data);
+            return redirect()->route('suratkeputusan')->with('pesan', 'Data Berhasil Diupdate !!');
+        } else {
+
+            $data = [
+                'no_sk' => Request()->no_sk,
+                'tahun' => Request()->tahun,
+                'tgl_sk' => Request()->tgl_sk,
+                'tentang' => Request()->tentang,
+
+            ];
+
+            $this->SkModel->editData($id_sk, $data);
+            return redirect()->route('suratkeputusan')->with('pesan', 'Data Berhasil Diupdate !!');
         }
-        return redirect()->route('suratkeputusan')->with('pesan', 'Data Berhasil Diupdate !!');
     }
 
     public function delete($id_sk)
     {
         //hapus Data
-        $sk = $this->SkModel->detailData($id_sk);
-        if ($sk->dokumen <> "") {
-            unlink(public_path('surat_keputusan') . '/' . $sk->dokumen);
+        // $sk = $this->SkModel->detailData($id_sk);
+        // if ($sk->dokumen <> "") {
+        //     unlink(public_path('surat_keputusan') . '/' . $sk->dokumen);
+        // }
+        // $this->SkModel->deleteData($id_sk);
+        // return redirect()->route('suratkeputusan')->with('pesan', 'Data Berhasil Dihapus !!');
+
+        try {
+            // Ambil data surat keluar
+            $suratkeputusan = $this->SkModel->detailData($id_sk);
+
+            if (!$suratkeputusan) {
+                return redirect()->route('suratkeputusan')->with('pesan', 'Data Berhasil Dihapus !!');
+            }
+
+            // Hapus file-file terkait
+            $this->deleteRelatedFiles($suratkeputusan);
+
+            // Hapus data dari database
+            $this->SkModel->deleteData($id_sk);
+
+            return redirect()->route('suratkeputusan')->with('pesan', 'Data berhasil dihapus!');
+        } catch (\Exception $e) {
+            return redirect()->route('suratkeputusan')->with('pesan', 'Gagal menghapus data: ' . $e->getMessage());
         }
-        $this->SkModel->deleteData($id_sk);
-        return redirect()->route('suratkeputusan')->with('pesan', 'Data Berhasil Dihapus !!');
+    }
+
+    protected function deleteRelatedFiles($suratkeputusan)
+    {
+
+        if (!empty($suratkeputusan-> dokumen && $suratkeputusan->konsep_sk)) {
+            $dokumenPath = public_path('surat_keputusan') . '/' . $suratkeputusan->dokumen;
+            if (file_exists($dokumenPath)) {
+                unlink($dokumenPath);
+            }
+
+            $konsepPath = public_path('konsep_sk') . '/' . $suratkeputusan->konsep_sk;
+            if (file_exists($konsepPath)) {
+                unlink($konsepPath);
+            }
+            // Hapus file surat PTA jika ada
+        } elseif (!empty($suratkeputusan->dokumen)) {
+            $dokumenPath = public_path('surat_keputusan') . '/' . $suratkeputusan->dokumen;
+            if (file_exists($dokumenPath)) {
+                unlink($dokumenPath);
+            }
+        } elseif (!empty($sk->konsep_sk)) {
+            $konsepPath = public_path('konsep_sk') . '/' . $suratkeputusan->konsep_sk;
+            if (file_exists($konsepPath)) {
+                unlink($konsepPath);
+            }
+        }
     }
 }

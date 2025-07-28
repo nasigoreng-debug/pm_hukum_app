@@ -74,9 +74,26 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group ml-3 mt-2 mb-2 mr-3">
+                            <div class="form-group ml-3 mt-2 mb-2 mr-3">
+                                <label>Konsep</label>
+                                <div>{{ $sk->konsep_sk }}</div>
+                            </div>
+                            <div class="">
+                                <div class="form-group ml-3 mt-2 mb-2 mr-3">
+                                    <label>Ganti Konsep</label>
+                                    <input type="file" class="form-control form-control-sm @error('konsep_sk') is-invalid @enderror" value="{{$sk->konsep_sk}}" name="konsep_sk">
+                                    <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                                        @error('konsep_sk')
+                                        {{ $message }}
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <button class="btn btn-sm btn-success">Simpan</button>
-                            <a href="/himper" class="btn btn-sm btn-info mb-2"></i>Kembali</a>
+                            <a href="/suratkeputusan" class="btn btn-sm btn-info mb-2"></i>Kembali</a>
                         </div>
                     </div>
                 </div>

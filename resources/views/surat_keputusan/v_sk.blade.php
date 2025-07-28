@@ -51,24 +51,26 @@
             <thead class="bg-gray text-center">
                 <tr>
                     <th style="width: 20px;">No</th>
-                    <th style="width: 60px;">Nomor SK</th>
+                    <th style="width: 60px;">Nomor</th>
                     <th style="width: 30px;">Tahun</th>
                     <th style="width: 50px;">Tanggal</th>
                     <th style="width: 200px;">Tentang</th>
                     <th style="width: 30px;">Dokumen</th>
-                    <th style="width: 60px;">Action</th>
+                    <th style="width: 30px;">Konsep</th>
+                    <th class="text-center" style="width: 60px;">Action</th>
                 </tr>
             </thead>
 
             <tfoot class="bg-gray text-center">
                 <tr>
                     <th>No</th>
-                    <th>Nomor SK</th>
+                    <th>Nomor</th>
                     <th>Tahun</th>
                     <th>Tanggal</th>
                     <th>Tentang</th>
                     <th>Dokumen</th>
-                    <th>Action</th>
+                    <th>Konsep</th>
+                    <th class="text-center">Action</th>
                 </tr>
             </tfoot>
             <tbody>
@@ -76,9 +78,9 @@
                 <tr>
                     <td class="text-center">{{$loop->iteration}}</td>
                     <td class="text-start">{{ $data->no_sk }}</td>
-                    <td class="text-center">{{ $data->tahun }}</td>
+                    <td class="text-start">{{ $data->tahun }}</td>
 
-                    <td class="text-center">{{ date('d-m-Y', strtotime($data->tgl_sk)) }}</td>
+                    <td class="text-start">{{ date('d-m-Y', strtotime($data->tgl_sk)) }}</td>
                     <td>{{ $data->tentang }}</td>
 
                     <td class="text-center">
@@ -87,6 +89,15 @@
 
                         @else
                         <a href="public/surat_keputusan/{{$data->dokumen}}" class="text-blue"><i class="fa fa-file-pdf-o"></i></i></a>
+                        @endif
+
+                    </td>
+                    <td class="text-center">
+
+                        @if($data->konsep_sk=="")
+
+                        @else
+                        <a href="public/konsep_sk/{{$data->konsep_sk}}" class="text-blue"><i class="fa fa-file-pdf-o"></i></i></a>
                         @endif
 
                     </td>
@@ -156,6 +167,18 @@
 
                             @else
                             <a href="surat_keputusan/{{$data->dokumen}}" class="text-blue" target="_blank"><i class="fa fa-file-pdf-o"></i></i></a>
+                            @endif
+
+                        </td>
+                    </tr>
+                    <tr class="text-start border">
+                        <td>Konsep</td>
+                        <td>
+
+                            @if($data->konsep_sk=="")
+
+                            @else
+                            <a href="surat_keputusan/{{$data->konsep_sk}}" class="text-blue" target="_blank"><i class="fa fa-file-pdf-o"></i></i></a>
                             @endif
 
                         </td>

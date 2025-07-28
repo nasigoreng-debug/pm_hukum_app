@@ -92,7 +92,7 @@ class HomeController extends Controller
         $bankput_presentase = round($bankput_progres);
 
         //Jumlah Peminjam
-        $pinjam = DB::table('tb_arsip_perkara')->count();
+        $pinjam = DB::table('tb_pinjam_berkas')->count();
 
         //Belum kembali
 
@@ -328,11 +328,11 @@ class HomeController extends Controller
             ->count();
 
         //retensi belum upload
-        $retensi_blm_upload = DB::table('tb_retensi_arsip')->where('putusan', '')->count();
+        $retensi_blm_upload = DB::table('tb_retensi_arsip')->whereNull('putusan')->count();
 
 
         //retensi upload
-        $retensi_up = $retensi - $retensi_blm_upload;
+        $retensi_up = DB::table('tb_retensi_arsip')->whereNotNull('putusan')->count();
         $retensi_upload = number_format($retensi_up, 0, ",", ".");
 
         //Presentase retensi upload

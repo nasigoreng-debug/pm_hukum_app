@@ -83,7 +83,7 @@
 
         </div>
 
-        <div class="col-sm-3">
+        <div class="col-sm-3 img-responsive">
 
             <div class="xe-widget xe-progress-counter xe-progress-counter-red " data-count=".num" data-from="0" data-to="{{$suratmasuk_number}}" data-duration="2">
 
@@ -158,18 +158,18 @@
                         <i class="fa fa-user"></i>
                     </div>
                     <div class="xe-label">
-                        <span>Peminjam Berkas {{date('Y')}}</span>
-                        <strong class="num">0</strong>
+                        <span>Belum Kembali {{date('Y')}}</span>
+                        <strong>{{ $pinjam_bl_kembali }}</strong>
                     </div>
                 </div>
 
                 <div class="xe-progress">
-                    <span class="xe-progress-fill" data-fill-from="0" data-fill-to="{{ $arsip_presentase }}" data-fill-unit="%" data-fill-property="width" data-fill-duration="2" data-fill-easing="true"></span>
+                    <span class="xe-progress-fill" data-fill-from="0" data-fill-to="{{ $pinjam_presentase }}" data-fill-unit="%" data-fill-property="width" data-fill-duration="2" data-fill-easing="true"></span>
                 </div>
 
                 <div class="xe-lower">
-                    <span>Belum Kembali {{date('Y')}}</span>
-                    <strong>{{ $pinjam_bl_kembali }}</strong>
+                    <span>Peminjam Berkas {{date('Y')}}</span>
+                    <strong class="num">0</strong>
                 </div>
 
             </div>

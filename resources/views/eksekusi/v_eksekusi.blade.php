@@ -40,6 +40,10 @@
             <a href="/eks" class="btn btn-sm btn-danger mb-2">Kembali</a>
             @elseif(Auth::user()->level===2)
             <a href="/eks/add" class="btn btn-sm btn-info mb-2">Tambah Data</a>
+            <a href="/eks/total" class="btn btn-sm btn-secondary mb-2">Semua</a>
+            <a href="/eks/berjalan" class="btn btn-sm btn-secondary mb-2">Berjalan</a>
+            <a href="/eks/selesai" class="btn btn-sm btn-secondary mb-2">Selesai</a>
+            <a href="/eks/progres" class="btn btn-sm btn-secondary mb-2">Progres Satker</a>
             <a href="/eks" class="btn btn-sm btn-danger mb-2">Kembali</a>
             @elseif(Auth::user()->level===3)
 
@@ -63,6 +67,7 @@
                     <th style="width: 100px;">Proses Terakhir</th>
                     <th style="width: 100px;">Tanggal Pelaksanaan</th>
                     <th style="width: 100px;">Tanggal Selesai</th>
+                    <th style="width: 100px;">Usia Perkara</th>
                     <th style="width: 100px;">Keterangan</th>
                     <th style="width: 50px;">Action</th>
 
@@ -79,6 +84,7 @@
                     <th>Proses Terakhir</th>
                     <th>Tanggal Pelaksanaan</th>
                     <th>Tanggal Selesai </th>
+                    <th>Usia Perkara</th>
                     <th>Keterangan</th>
                     <th>Action</th>
                 </tr>
@@ -109,6 +115,15 @@
 
                         @else
                         {{ date('d-m-Y', strtotime($data->tgl_selesai)) }}
+                        @endif
+                    </td>
+                    <td class="text-center">
+                        @if($data->tgl_selesai=="0000-00-00")
+                        <span class="badge badge-danger">{{Carbon\Carbon::parse($data->tgl_permohonan)->diffIndays($sekarang)}} Hari</span>
+                        @elseif($data->tgl_selesai=="")
+                        <span class="badge badge-danger">{{Carbon\Carbon::parse($data->tgl_permohonan)->diffIndays($sekarang)}} Hari</span>
+                        @else
+                        <span class="badge badge-success"> {{Carbon\Carbon::parse($data->tgl_permohonan)->diffIndays($data->tgl_selesai)}} Hari</span>
                         @endif
                     </td>
                     <td>{{ $data->keterangan }}</td>

@@ -40,6 +40,9 @@ Route::get('/', [HomeController::class, 'index']);
 //Arsip Perkara
 Route::get('/arsip', [ArsipController::class, 'index'])->name('arsip');
 Route::get('/arsip_now', [ArsipController::class, 'arsip_now'])->name('arsip_now');
+Route::get('/arsip_perkara_blm_upload', [ArsipController::class, 'arsip_perkara_blm_upload'])->name('arsip_perkara_blm_upload');
+Route::get('/arsip_perkara_upload', [ArsipController::class, 'arsip_perkara_upload'])->name('arsip_perkara_upload');
+Route::get('/arsip_perkara_total', [ArsipController::class, 'arsip_perkara_total'])->name('arsip_perkara_total');
 Route::get('/arsip/detail/{id_perkara}', [ArsipController::class, 'detail'])->name('detail');
 Route::get('/arsip/add', [ArsipController::class, 'add'])->name('add');
 Route::post('/arsip/insert', [ArsipController::class, 'insert'])->name('insert');
@@ -155,7 +158,7 @@ Route::get('/retensi_total', [RetensiController::class, 'retensi_total'])->name(
 //Surat Keputusan
 Route::get('/suratkeputusan', [SkController::class, 'index'])->name('suratkeputusan');
 Route::get('/suratkeputusan/detail/{id_sk}', [SkController::class, 'detail'])->name('detail');
-Route::get('/suratkeputusan/retensi_blm', [SkController::class, 'add'])->name('add');
+Route::get('/suratkeputusan/add', [SkController::class, 'add'])->name('add');
 Route::post('/suratkeputusan/insert', [SkController::class, 'insert'])->name('insert');
 Route::get('/suratkeputusan/edit/{id_sk}', [SkController::class, 'edit'])->name('edit');
 Route::post('/suratkeputusan/update/{id_sk}', [SkController::class, 'update'])->name('update');

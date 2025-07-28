@@ -20,10 +20,7 @@
 
         <script type="text/javascript">
             jQuery(document).ready(function($) {
-                $("#example-3").dataTable().yadcf([{
-                        column_number: 1,
-                        filter_type: 'text'
-                    },
+                $("#example-3").dataTable().yadcf([
                     {
                         column_number: 2,
                         filter_type: 'text'
@@ -32,22 +29,7 @@
                         column_number: 3,
                         filter_type: 'text'
                     },
-                    {
-                        column_number: 4,
-                        filter_type: 'text'
-                    },
-                    {
-                        column_number: 5,
-                        filter_type: 'text'
-                    },
-                    {
-                        column_number: 6,
-                        filter_type: 'text'
-                    },
-                    {
-                        column_number: 7,
-                        filter_type: 'text'
-                    },
+                    {column_number : 4},
 
                 ]);
             });
@@ -55,8 +37,10 @@
         <td class="text-center" style="font-size: 5px;">
             @if(Auth::user()->level===1)
             <a href="/arsip/add" class="btn btn-sm btn-info mb-2">Tambah Data</a>
+            <a href="/arsip" class="btn btn-sm btn-danger mb-2">Kembali</a>
             @elseif(Auth::user()->level===2)
             <a href="/arsip/add" class="btn btn-sm btn-info mb-2">Tambah Data</a>
+            <a href="/arsip" class="btn btn-sm btn-danger mb-2">Kembali</a>
             @elseif(Auth::user()->level===3)
 
             @endif
@@ -78,12 +62,27 @@
                     <th style="width: 50px;">Jenis Perkara</th>
                     <th style="width: 30px;">Putus</th>
                     <th style="width: 20px;">Putusan</th>
+                    <th style="width: 20px;">Bundle B</th>
                     <th style="width: 30px;">Alih Media</th>
                     <th style="width: 30px;">Action</th>
                 </tr>
             </thead>
+            <tfoot>
+                <tr class="bg-gray">
+                    <th>No</th>
+                    <th>Masuk</th>
+                    <th>Nomor Perkara</th>
+                    <th>Nomor PA</th>
+                    <th>Jenis Perkara</th>
+                    <th>Putus</th>
+                    <th>Putusan</th>
+                    <th>Bundle B</th>
+                    <th>Alih Media</th>
+                    <th>Action</th>
+                </tr>
+            </tfoot>
             <tbody>
-                @foreach ($arsip as $data)
+                @foreach ($arsip_perkara as $data)
                 <tr>
                     <td class="text-center">{{$loop->iteration}}</td>
                     <td class="text-center">{{ date('d-m-Y', strtotime($data->tgl_masuk)) }}</td>
@@ -92,11 +91,20 @@
                     <td>{{ $data->jenis_perkara }}</td>
                     <td class="text-center">{{ date('d-m-Y', strtotime($data->tgl_put_banding)) }}</td>
                     <td class="text-center">
-
-                        @if($data->putusan=="")
+                        
+                        @if(is_null($data->putusan))
 
                         @else
                         <a href="public/arsip_perkara_putusan/{{$data->putusan}}" class="text-blue" target="_blank"><i class="fa fa-file-pdf-o"></i></i></a>
+                        @endif
+
+                    </td>
+                        <td class="text-center">
+
+                        @if(is_null($data->bundle_b))
+
+                        @else
+                        <a href="public/bundle_b_arsip_perkara/{{$data->bundle_b}}" class="text-blue" target="_blank"><i class="fa fa-file-archive-o"></i></a>
                         @endif
 
                     </td>
@@ -128,24 +136,12 @@
                 </tr>
                 @endforeach
             </tbody>
-            <tfoot>
-                <tr class="bg-gray">
-                    <th>No</th>
-                    <th>Masuk</th>
-                    <th>Nomor Perkara</th>
-                    <th>Nomor PA</th>
-                    <th>Jenis Perkara</th>
-                    <th>Putus</th>
-                    <th>Putusan</th>
-                    <th>Alih Media</th>
-                    <th>Action</th>
-                </tr>
-            </tfoot>
+
         </table>
 
     </div>
         </div >
-@foreach ($arsip as $data)
+@foreach ($arsip_perkara as $data)
 <!-- Modal Detail -->
 <div class="modal fade" id="detail{{ $data->id_banding }}" tabindex="-1">
     <div class="modal-dialog modal-lg">
