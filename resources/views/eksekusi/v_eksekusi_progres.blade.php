@@ -1,509 +1,427 @@
-@extends('layouts.v_template')
-
-@section('content')
-@include('layouts.v_deskripsi')
-<!-- Table exporting -->
-
-<!-- Table exporting -->
-<div class="panel panel-default">
-    <div class="panel-heading text-center">
-        <h3 class="panel-title ">Progres Penyelesaian Perkara EKsekusi Pengadilan Agama Di Wilayah Pengadilan Tinggi Agama Bandung</h3>
-
-        <div class="panel-options">
-            <a href="#" data-toggle="panel">
-                <span class="collapse-icon">&ndash;</span>
-                <span class="expand-icon">+</span>
-            </a>
-            <a href="#" data-toggle="remove">
-                &times;
-            </a>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progres Penyelesaian Perkara Eksekusi</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .dashboard-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .panel-heading {
+            background: linear-gradient(90deg, #1a2a6c 0%, #3a5ec0 100%);
+            color: white;
+            padding: 20px;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+        }
+        
+        .panel-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0;
+        }
+        
+        .panel-options {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        
+        .panel-options a {
+            color: white;
+            margin-left: 10px;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+        
+        .panel-body {
+            padding: 25px;
+            background: #f8f9fa;
+        }
+        
+        .btn-back {
+            background: linear-gradient(90deg, #FF416C 0%, #FF4B2B 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 75, 43, 0.3);
+        }
+        
+        .btn-back:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 75, 43, 0.4);
+        }
+        
+        .table-container {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+        
+        thead th {
+            background: linear-gradient(90deg, #4A00E0 0%, #8E2DE2 100%);
+            color: white;
+            padding: 15px 10px;
+            text-align: center;
+            font-weight: 500;
+            font-size: 0.9rem;
+            position: sticky;
+            top: 0;
+        }
+        
+        tbody td {
+            padding: 12px 10px;
+            text-align: center;
+            border-bottom: 1px solid #e9ecef;
+            font-size: 0.9rem;
+            transition: background-color 0.2s ease;
+        }
+        
+        tbody tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        tbody tr:hover {
+            background-color: #e9f7ff;
+        }
+        
+        tfoot th {
+            background: #e3f2fd;
+            padding: 10px;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .progress-cell {
+            min-width: 120px;
+        }
+        
+        .progress-container {
+            background: #e9ecef;
+            border-radius: 10px;
+            height: 8px;
+            overflow: hidden;
+            margin-top: 5px;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 1s ease-in-out;
+        }
+        
+        .high-progress {
+            background: linear-gradient(90deg, #00b09b 0%, #96c93d 100%);
+        }
+        
+        .medium-progress {
+            background: linear-gradient(90deg, #ff9a00 0%, #ffcc00 100%);
+        }
+        
+        .low-progress {
+            background: linear-gradient(90deg, #FF416C 0%, #FF4B2B 100%);
+        }
+        
+        .badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .badge-success {
+            background: rgba(0, 176, 155, 0.15);
+            color: #00b09b;
+        }
+        
+        .badge-warning {
+            background: rgba(255, 154, 0, 0.15);
+            color: #ff9a00;
+        }
+        
+        .badge-danger {
+            background: rgba(255, 65, 108, 0.15);
+            color: #FF416C;
+        }
+        
+        .pagination {
+            margin-top: 20px;
+            justify-content: center;
+        }
+        
+        .page-item.active .page-link {
+            background: linear-gradient(90deg, #4A00E0 0%, #8E2DE2 100%);
+            border-color: #4A00E0;
+        }
+        
+        .page-link {
+            color: #4A00E0;
+        }
+        
+        /* Responsivitas */
+        @media (max-width: 1200px) {
+            .table-container {
+                overflow-x: auto;
+            }
+            
+            table {
+                min-width: 1000px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .panel-title {
+                font-size: 1.2rem;
+            }
+            
+            .panel-heading {
+                padding: 15px;
+            }
+            
+            .panel-body {
+                padding: 15px;
+            }
+            
+            thead th, tbody td {
+                padding: 10px 5px;
+                font-size: 0.8rem;
+            }
+        }
+        
+        /* Animasi */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideIn {
+            from { 
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.8s ease;
+        }
+        
+        .slide-in {
+            animation: slideIn 0.6s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container fade-in">
+        <div class="panel-heading text-center position-relative">
+            <h3 class="panel-title">Progres Penyelesaian Perkara Eksekusi Pengadilan Agama Di Wilayah Pengadilan Tinggi Agama Bandung</h3>
+            <div class="panel-options">
+                <a href="#" data-toggle="panel">
+                    <span class="collapse-icon">&ndash;</span>
+                    <span class="expand-icon">+</span>
+                </a>
+                <a href="#" data-toggle="remove">
+                    &times;
+                </a>
+            </div>
+        </div>
+        
+        <div class="panel-body">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <a href="/eks" class="btn btn-back">
+                    <i class="fas fa-arrow-left me-2"></i>Kembali ke Dashboard
+                </a>
+                
+                <div class="d-flex">
+                    <button class="btn btn-sm btn-outline-primary me-2">
+                        <i class="fas fa-download me-1"></i> Export PDF
+                    </button>
+                    <button class="btn btn-sm btn-outline-success">
+                        <i class="fas fa-file-excel me-1"></i> Export Excel
+                    </button>
+                </div>
+            </div>
+            
+            <div class="table-container slide-in">
+                <table id="example-4" class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Pengadilan Agama</th>
+                            <th>Permohonan Eksekusi</th>
+                            <th>Eksekusi Putusan</th>
+                            <th>Eksekusi HT</th>
+                            <th>Eksekusi Riil</th>
+                            <th>Eksekusi Lelang</th>
+                            <th>Dicabut</th>
+                            <th>Dicoret</th>
+                            <th>Non-Eksekutable</th>
+                            <th>Total Selesai</th>
+                            <th>Sisa</th>
+                            <th class="progress-cell">Presentase</th>
+                            <th>Bobot Nilai</th>
+                        </tr>
+                    </thead>
+                    
+                    <tfoot>
+                        <tr>
+                            <th>No</th>
+                            <th>Pengadilan Agama</th>
+                            <th>Permohonan Eksekusi</th>
+                            <th>Eksekusi Putusan</th>
+                            <th>Eksekusi HT</th>
+                            <th>Eksekusi Riil</th>
+                            <th>Eksekusi Lelang</th>
+                            <th>Dicabut</th>
+                            <th>Dicoret</th>
+                            <th>Non-Eksekutable</th>
+                            <th>Total Selesai</th>
+                            <th>Sisa</th>
+                            <th>Presentase</th>
+                            <th>Bobot Nilai</th>
+                        </tr>
+                    </tfoot>
+                    
+                    <tbody>
+                        @foreach($results as $satker => $data)
+                        <tr>
+                            <td class="text-center">{{ $loop->iteration }}</td>
+                            <td class="text-start">{{ ucfirst($satker) }}</td>
+                            <td>{{ $data['total'] }}</td>
+                            <td>{{ $data['putusan'] }}</td>
+                            <td>{{ $data['ht'] }}</td>
+                            <td>{{ $data['riil'] }}</td>
+                            <td>{{ $data['lelang'] }}</td>
+                            <td>{{ $data['dicabut'] }}</td>
+                            <td>{{ $data['dicoret'] }}</td>
+                            <td>{{ $data['ne'] }}</td>
+                            <td><span class="badge badge-success">{{ $data['selesai'] }}</span></td>
+                            <td><span class="badge badge-danger">{{ $data['sisa'] }}</span></td>
+                            <td class="progress-cell">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span>{{ $data['presentase'] }}%</span>
+                                    @if($data['presentase'] >= 70)
+                                    <span class="badge badge-success">Tinggi</span>
+                                    @elseif($data['presentase'] >= 40)
+                                    <span class="badge badge-warning">Sedang</span>
+                                    @else
+                                    <span class="badge badge-danger">Rendah</span>
+                                    @endif
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-bar 
+                                        @if($data['presentase'] >= 70) high-progress
+                                        @elseif($data['presentase'] >= 40) medium-progress
+                                        @else low-progress
+                                        @endif" 
+                                        style="width: {{ $data['presentase'] }}%">
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                @if($data['bobot_nilai'] >= 85)
+                                <span class="badge badge-success">A</span>
+                                @elseif($data['bobot_nilai'] >= 70)
+                                <span class="badge badge-warning">B</span>
+                                @else
+                                <span class="badge badge-danger">C</span>
+                                @endif
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+            </div>
         </div>
     </div>
-    <div class="panel-body">
 
-        <script type="text/javascript">
-            jQuery(document).ready(function($) {
-                $("#example-4").dataTable({
-                    dom: "<'row'<'col-sm-5'l><'col-sm-7'Tf>r>" +
-                        "t" +
-                        "<'row'<'col-xs-6'i><'col-xs-6'p>>",
-                    tableTools: {
-                        sSwfPath: "{{ asset('public/template')}}/assets/js/datatables/tabletools/copy_csv_xls_pdf.swf"
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    
+    <script>
+        $(document).ready(function() {
+            // Inisialisasi DataTable
+            $('#example-4').DataTable({
+                dom: "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
+                     "<'row'<'col-sm-12'tr>>" +
+                     "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+                language: {
+                    search: "Cari:",
+                    lengthMenu: "Tampilkan _MENU_ entri",
+                    info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ entri",
+                    infoEmpty: "Menampilkan 0 sampai 0 dari 0 entri",
+                    infoFiltered: "(disaring dari _MAX_ total entri)",
+                    paginate: {
+                        first: "Pertama",
+                        last: "Terakhir",
+                        next: "Selanjutnya",
+                        previous: "Sebelumnya"
                     }
-                });
+                },
+                responsive: true,
+                pageLength: 10,
+                order: [[12, 'desc']] // Urutkan berdasarkan Presentase secara descending
             });
-        </script>
-        <td class="text-center" style="font-size: 5px;">
-            @if(Auth::user()->level===1)
             
-            <a href="/eks" class="btn btn-sm btn-danger mb-2">Kembali</a>
-            @elseif(Auth::user()->level===2)
+            // Animasi progress bar setelah tabel dimuat
+            setTimeout(function() {
+                $('.progress-bar').each(function() {
+                    $(this).css('width', $(this).attr('style').split('width: ')[1]);
+                });
+            }, 500);
             
-            <a href="/eks" class="btn btn-sm btn-danger mb-2">Kembali</a>
-            @elseif(Auth::user()->level===3)
-
-            @endif
-        </td>
-        <table class="table table-sm table-hover" id="example-4">
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th>Pengadilan Agama</th>
-                    <th>Permohonan Eksekusi</th>
-                    <th>Eksekusi Putusan</th>
-                    <th>Eksekusi Hak Tanggungan</th>
-                    <th>Eksekusi Rill</th>
-                    <th>Eksekusi Lelang</th>
-                    <th>Eksekusi dicabut</th>
-                    <th>Eksekusi dicoret</th>
-                    <th>Eksekusi Ne</th>
-                    <th>Total Selesai</th>
-                    <th>Sisa</th>
-                    <th>Presentase</th>
-                    <th>Bobot Nilai</th>
-                </tr>
-            </thead>
-
-            <tfoot>
-                <tr>
-                    <th>No</th>
-                    <th>Pengadilan Agama</th>
-                    <th>Permohonan Eksekusi</th>
-                    <th>Eksekusi Putusan</th>
-                    <th>Eksekusi Hak Tanggungan</th>
-                    <th>Eksekusi Rill</th>
-                    <th>Eksekusi Lelang</th>
-                    <th>Eksekusi dicabut</th>
-                    <th>Eksekusi dicoret</th>
-                    <th>Eksekusi Ne</th>
-                    <th>Total Selesai</th>
-                    <th>Sisa</th>
-                    <th>Presentase</th>
-                    <th>Bobot Nilai</th>
-                </tr>
-            </tfoot>
-
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Bandung</td>
-                    <td>{{$badg_eksekusi}}</td>
-                    <td>{{$badg_eksekusi_putusan}}</td>
-                    <td>{{$badg_eksekusi_ht}}</td>
-                    <td>{{$badg_eksekusi_riil}}</td>
-                    <td>{{$badg_eksekusi_lelang}}</td>
-                    <td>{{$badg_eksekusi_dicabut}}</td>
-                    <td>{{$badg_eksekusi_dicoret}}</td>
-                    <td>{{$badg_eksekusi_ne}}</td>
-                    <td>{{$badg_eksekusi_selesai}}</td>
-                    <td>{{$badg_eksekusi_sisa}}</td>
-                    <td>{{$badg_eksekusi_progres}}</td>
-                    <td>{{$badg_eksekusi_bobot_nilai}}</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Indramayu</td>
-                    <td>{{$im_eksekusi}}</td>
-                    <td>{{$im_eksekusi_putusan}}</td>
-                    <td>{{$im_eksekusi_ht}}</td>
-                    <td>{{$im_eksekusi_riil}}</td>
-                    <td>{{$im_eksekusi_lelang}}</td>
-                    <td>{{$im_eksekusi_dicabut}}</td>
-                    <td>{{$im_eksekusi_dicoret}}</td>
-                    <td>{{$im_eksekusi_ne}}</td>
-                    <td>{{$im_eksekusi_selesai}}</td>
-                    <td>{{$im_eksekusi_sisa}}</td>
-                    <td>{{$im_eksekusi_progres}}</td>
-                    <td>{{$im_eksekusi_bobot_nilai}}</td>
-                </tr>
-
-                <tr>
-                    <td>3</td>
-                    <td>Majalengka</td>
-                    <td>{{$mjl_eksekusi}}</td>
-                    <td>{{$mjl_eksekusi_putusan}}</td>
-                    <td>{{$mjl_eksekusi_ht}}</td>
-                    <td>{{$mjl_eksekusi_riil}}</td>
-                    <td>{{$mjl_eksekusi_lelang}}</td>
-                    <td>{{$mjl_eksekusi_dicabut}}</td>
-                    <td>{{$mjl_eksekusi_dicoret}}</td>
-                    <td>{{$mjl_eksekusi_ne}}</td>
-                    <td>{{$mjl_eksekusi_selesai}}</td>
-                    <td>{{$mjl_eksekusi_sisa}}</td>
-                    <td>{{$mjl_eksekusi_progres}}</td>
-                    <td>{{$mjl_eksekusi_bobot_nilai}}</td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>Sumber</td>
-                    <td>{{$sbr_eksekusi}}</td>
-                    <td>{{$sbr_eksekusi_putusan}}</td>
-                    <td>{{$sbr_eksekusi_ht}}</td>
-                    <td>{{$sbr_eksekusi_riil}}</td>
-                    <td>{{$sbr_eksekusi_lelang}}</td>
-                    <td>{{$sbr_eksekusi_dicabut}}</td>
-                    <td>{{$sbr_eksekusi_dicoret}}</td>
-                    <td>{{$sbr_eksekusi_ne}}</td>
-                    <td>{{$sbr_eksekusi_selesai}}</td>
-                    <td>{{$sbr_eksekusi_sisa}}</td>
-                    <td>{{$sbr_eksekusi_progres}}</td>
-                    <td>{{$sbr_eksekusi_bobot_nilai}}</td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>Ciamis</td>
-                    <td>{{$cms_eksekusi}}</td>
-                    <td>{{$cms_eksekusi_putusan}}</td>
-                    <td>{{$cms_eksekusi_ht}}</td>
-                    <td>{{$cms_eksekusi_riil}}</td>
-                    <td>{{$cms_eksekusi_lelang}}</td>
-                    <td>{{$cms_eksekusi_dicabut}}</td>
-                    <td>{{$cms_eksekusi_dicoret}}</td>
-                    <td>{{$cms_eksekusi_ne}}</td>
-                    <td>{{$cms_eksekusi_selesai}}</td>
-                    <td>{{$cms_eksekusi_sisa}}</td>
-                    <td>{{$cms_eksekusi_progres}}</td>
-                    <td>{{$cms_eksekusi_bobot_nilai}}</td>
-                </tr>
-                <tr>
-                    <td>6</td>
-                    <td>Tasikmalaya</td>
-                    <td>{{$tsm_eksekusi}}</td>
-                    <td>{{$tsm_eksekusi_putusan}}</td>
-                    <td>{{$tsm_eksekusi_ht}}</td>
-                    <td>{{$tsm_eksekusi_riil}}</td>
-                    <td>{{$tsm_eksekusi_lelang}}</td>
-                    <td>{{$tsm_eksekusi_dicabut}}</td>
-                    <td>{{$tsm_eksekusi_dicoret}}</td>
-                    <td>{{$tsm_eksekusi_ne}}</td>
-                    <td>{{$tsm_eksekusi_selesai}}</td>
-                    <td>{{$tsm_eksekusi_sisa}}</td>
-                    <td>{{$tsm_eksekusi_progres}}</td>
-                    <td>{{$tsm_eksekusi_bobot_nilai}}</td>
-                </tr>
-                <tr>
-                    <td>7</td>
-                    <td>Karawang</td>
-                    <td>{{$krw_eksekusi}}</td>
-                    <td>{{$krw_eksekusi_putusan}}</td>
-                    <td>{{$krw_eksekusi_ht}}</td>
-                    <td>{{$krw_eksekusi_riil}}</td>
-                    <td>{{$krw_eksekusi_lelang}}</td>
-                    <td>{{$krw_eksekusi_dicabut}}</td>
-                    <td>{{$krw_eksekusi_dicoret}}</td>
-                    <td>{{$krw_eksekusi_ne}}</td>
-                    <td>{{$krw_eksekusi_selesai}}</td>
-                    <td>{{$krw_eksekusi_sisa}}</td>
-                    <td>{{$krw_eksekusi_progres}}</td>
-                    <td>{{$krw_eksekusi_bobot_nilai}}</td>
-                </tr>
-                <tr>
-                    <td>8</td>
-                    <td>Cimahi</td>
-                    <td>{{$cmi_eksekusi}}</td>
-                    <td>{{$cmi_eksekusi_putusan}}</td>
-                    <td>{{$cmi_eksekusi_ht}}</td>
-                    <td>{{$cmi_eksekusi_riil}}</td>
-                    <td>{{$cmi_eksekusi_lelang}}</td>
-                    <td>{{$cmi_eksekusi_dicabut}}</td>
-                    <td>{{$cmi_eksekusi_dicoret}}</td>
-                    <td>{{$cmi_eksekusi_ne}}</td>
-                    <td>{{$cmi_eksekusi_selesai}}</td>
-                    <td>{{$cmi_eksekusi_sisa}}</td>
-                    <td>{{$cmi_eksekusi_progres}}</td>
-                    <td>{{$cmi_eksekusi_bobot_nilai}}</td>
-                </tr>
-                <tr>
-                    <td>9</td>
-                    <td>Subang
-                    <td>{{$sbg_eksekusi}}</td>
-                    <td>{{$sbg_eksekusi_putusan}}</td>
-                    <td>{{$sbg_eksekusi_ht}}</td>
-                    <td>{{$sbg_eksekusi_riil}}</td>
-                    <td>{{$sbg_eksekusi_lelang}}</td>
-                    <td>{{$sbg_eksekusi_dicabut}}</td>
-                    <td>{{$sbg_eksekusi_dicoret}}</td>
-                    <td>{{$sbg_eksekusi_ne}}</td>
-                    <td>{{$sbg_eksekusi_selesai}}</td>
-                    <td>{{$sbg_eksekusi_sisa}}</td>
-                    <td>{{$sbg_eksekusi_progres}}</td>
-                    <td>{{$sbg_eksekusi_bobot_nilai}}</td>
-                </tr>
-                    <tr>
-                    <td>10</td>
-                    <td>Sumedang
-                    <td>{{$smdg_eksekusi}}</td>
-                    <td>{{$smdg_eksekusi_putusan}}</td>
-                    <td>{{$smdg_eksekusi_ht}}</td>
-                    <td>{{$smdg_eksekusi_riil}}</td>
-                    <td>{{$smdg_eksekusi_lelang}}</td>
-                    <td>{{$smdg_eksekusi_dicabut}}</td>
-                    <td>{{$smdg_eksekusi_dicoret}}</td>
-                    <td>{{$smdg_eksekusi_ne}}</td>
-                    <td>{{$smdg_eksekusi_selesai}}</td>
-                    <td>{{$smdg_eksekusi_sisa}}</td>
-                    <td>{{$smdg_eksekusi_progres}}</td>
-                    <td>{{$smdg_eksekusi_bobot_nilai}}</td>
-                </tr> 
-                <tr>
-                    <td>11</td>
-                    <td>Purwakarta
-                    <td>{{$pwk_eksekusi}}</td>
-                    <td>{{$pwk_eksekusi_putusan}}</td>
-                    <td>{{$pwk_eksekusi_ht}}</td>
-                    <td>{{$pwk_eksekusi_riil}}</td>
-                    <td>{{$pwk_eksekusi_lelang}}</td>
-                    <td>{{$pwk_eksekusi_dicabut}}</td>
-                    <td>{{$pwk_eksekusi_dicoret}}</td>
-                    <td>{{$pwk_eksekusi_ne}}</td>
-                    <td>{{$pwk_eksekusi_selesai}}</td>
-                    <td>{{$pwk_eksekusi_sisa}}</td>
-                    <td>{{$pwk_eksekusi_progres}}</td>
-                    <td>{{$pwk_eksekusi_bobot_nilai}}</td>
-                </tr>
-                <tr>
-                    <td>12</td>
-                    <td>Sukabumi
-                    <td>{{$smi_eksekusi}}</td>
-                    <td>{{$smi_eksekusi_putusan}}</td>
-                    <td>{{$smi_eksekusi_ht}}</td>
-                    <td>{{$smi_eksekusi_riil}}</td>
-                    <td>{{$smi_eksekusi_lelang}}</td>
-                    <td>{{$smi_eksekusi_dicabut}}</td>
-                    <td>{{$smi_eksekusi_dicoret}}</td>
-                    <td>{{$smi_eksekusi_ne}}</td>
-                    <td>{{$smi_eksekusi_selesai}}</td>
-                    <td>{{$smi_eksekusi_sisa}}</td>
-                    <td>{{$smi_eksekusi_progres}}</td>
-                    <td>{{$smi_eksekusi_bobot_nilai}}</td>
-                </tr>
-                <tr>
-                    <td>13</td>
-                    <td>Cianjur
-                    <td>{{$cjr_eksekusi}}</td>
-                    <td>{{$cjr_eksekusi_putusan}}</td>
-                    <td>{{$cjr_eksekusi_ht}}</td>
-                    <td>{{$cjr_eksekusi_riil}}</td>
-                    <td>{{$cjr_eksekusi_lelang}}</td>
-                    <td>{{$cjr_eksekusi_dicabut}}</td>
-                    <td>{{$cjr_eksekusi_dicoret}}</td>
-                    <td>{{$cjr_eksekusi_ne}}</td>
-                    <td>{{$cjr_eksekusi_selesai}}</td>
-                    <td>{{$cjr_eksekusi_sisa}}</td>
-                    <td>{{$cjr_eksekusi_progres}}</td>
-                    <td>{{$cjr_eksekusi_bobot_nilai}}</td>
-                </tr>
-                <tr>
-                    <td>14</td>
-                    <td>Kuningan
-                    <td>{{$kng_eksekusi}}</td>
-                    <td>{{$kng_eksekusi_putusan}}</td>
-                    <td>{{$kng_eksekusi_ht}}</td>
-                    <td>{{$kng_eksekusi_riil}}</td>
-                    <td>{{$kng_eksekusi_lelang}}</td>
-                    <td>{{$kng_eksekusi_dicabut}}</td>
-                    <td>{{$kng_eksekusi_dicoret}}</td>
-                    <td>{{$kng_eksekusi_ne}}</td>
-                    <td>{{$kng_eksekusi_selesai}}</td>
-                    <td>{{$kng_eksekusi_sisa}}</td>
-                    <td>{{$kng_eksekusi_progres}}</td>
-                    <td>{{$kng_eksekusi_bobot_nilai}}</td>
-                </tr>
-                <tr>
-                    <td>15</td>
-                    <td>Cibadak
-                    <td>{{$cbd_eksekusi}}</td>
-                    <td>{{$cbd_eksekusi_putusan}}</td>
-                    <td>{{$cbd_eksekusi_ht}}</td>
-                    <td>{{$cbd_eksekusi_riil}}</td>
-                    <td>{{$cbd_eksekusi_lelang}}</td>
-                    <td>{{$cbd_eksekusi_dicabut}}</td>
-                    <td>{{$cbd_eksekusi_dicoret}}</td>
-                    <td>{{$cbd_eksekusi_ne}}</td>
-                    <td>{{$cbd_eksekusi_selesai}}</td>
-                    <td>{{$cbd_eksekusi_sisa}}</td>
-                    <td>{{$cbd_eksekusi_progres}}</td>
-                    <td>{{$cbd_eksekusi_bobot_nilai}}</td>
-                </tr>
-                <tr>
-                    <td>16</td>
-                    <td>Cirebon
-                    <td>{{$cn_eksekusi}}</td>
-                    <td>{{$cn_eksekusi_putusan}}</td>
-                    <td>{{$cn_eksekusi_ht}}</td>
-                    <td>{{$cn_eksekusi_riil}}</td>
-                    <td>{{$cn_eksekusi_lelang}}</td>
-                    <td>{{$cn_eksekusi_dicabut}}</td>
-                    <td>{{$cn_eksekusi_dicoret}}</td>
-                    <td>{{$cn_eksekusi_ne}}</td>
-                    <td>{{$cn_eksekusi_selesai}}</td>
-                    <td>{{$cn_eksekusi_sisa}}</td>
-                    <td>{{$cn_eksekusi_progres}}</td>
-                    <td>{{$cn_eksekusi_bobot_nilai}}</td>
-                </tr>
-                <tr>
-                    <td>17</td>
-                    <td>Garut
-                    <td>{{$grt_eksekusi}}</td>
-                    <td>{{$grt_eksekusi_putusan}}</td>
-                    <td>{{$grt_eksekusi_ht}}</td>
-                    <td>{{$grt_eksekusi_riil}}</td>
-                    <td>{{$grt_eksekusi_lelang}}</td>
-                    <td>{{$grt_eksekusi_dicabut}}</td>
-                    <td>{{$grt_eksekusi_dicoret}}</td>
-                    <td>{{$grt_eksekusi_ne}}</td>
-                    <td>{{$grt_eksekusi_selesai}}</td>
-                    <td>{{$grt_eksekusi_sisa}}</td>
-                    <td>{{$grt_eksekusi_progres}}</td>
-                    <td>{{$grt_eksekusi_bobot_nilai}}</td>
-                </tr>
-                <tr>
-                    <td>18</td>
-                    <td>Bogor
-                    <td>{{$bgr_eksekusi}}</td>
-                    <td>{{$bgr_eksekusi_putusan}}</td>
-                    <td>{{$bgr_eksekusi_ht}}</td>
-                    <td>{{$bgr_eksekusi_riil}}</td>
-                    <td>{{$bgr_eksekusi_lelang}}</td>
-                    <td>{{$bgr_eksekusi_dicabut}}</td>
-                    <td>{{$bgr_eksekusi_dicoret}}</td>
-                    <td>{{$bgr_eksekusi_ne}}</td>
-                    <td>{{$bgr_eksekusi_selesai}}</td>
-                    <td>{{$bgr_eksekusi_sisa}}</td>
-                    <td>{{$bgr_eksekusi_progres}}</td>
-                    <td>{{$bgr_eksekusi_bobot_nilai}}</td>
-                </tr>
-                    <tr>
-                    <td>19</td>
-                    <td>Bekasi
-                    <td>{{$bks_eksekusi}}</td>
-                    <td>{{$bks_eksekusi_putusan}}</td>
-                    <td>{{$bks_eksekusi_ht}}</td>
-                    <td>{{$bks_eksekusi_riil}}</td>
-                    <td>{{$bks_eksekusi_lelang}}</td>
-                    <td>{{$bks_eksekusi_dicabut}}</td>
-                    <td>{{$bks_eksekusi_dicoret}}</td>
-                    <td>{{$bks_eksekusi_ne}}</td>
-                    <td>{{$bks_eksekusi_selesai}}</td>
-                    <td>{{$bks_eksekusi_sisa}}</td>
-                    <td>{{$bks_eksekusi_progres}}</td>
-                    <td>{{$bks_eksekusi_bobot_nilai}}</td>
-                </tr>
-                <tr>
-                    <td>20</td>
-                    <td>Cibinong
-                    <td>{{$cbn_eksekusi}}</td>
-                    <td>{{$cbn_eksekusi_putusan}}</td>
-                    <td>{{$cbn_eksekusi_ht}}</td>
-                    <td>{{$cbn_eksekusi_riil}}</td>
-                    <td>{{$cbn_eksekusi_lelang}}</td>
-                    <td>{{$cbn_eksekusi_dicabut}}</td>
-                    <td>{{$cbn_eksekusi_dicoret}}</td>
-                    <td>{{$cbn_eksekusi_ne}}</td>
-                    <td>{{$cbn_eksekusi_selesai}}</td>
-                    <td>{{$cbn_eksekusi_sisa}}</td>
-                    <td>{{$cbn_eksekusi_progres}}</td>
-                    <td>{{$cbn_eksekusi_bobot_nilai}}</td>
-                </tr>
-                <tr>
-                    <td>21</td>
-                    <td>Cikarang
-                    <td>{{$ckr_eksekusi}}</td>
-                    <td>{{$ckr_eksekusi_putusan}}</td>
-                    <td>{{$ckr_eksekusi_ht}}</td>
-                    <td>{{$ckr_eksekusi_riil}}</td>
-                    <td>{{$ckr_eksekusi_lelang}}</td>
-                    <td>{{$ckr_eksekusi_dicabut}}</td>
-                    <td>{{$ckr_eksekusi_dicoret}}</td>
-                    <td>{{$ckr_eksekusi_ne}}</td>
-                    <td>{{$ckr_eksekusi_selesai}}</td>
-                    <td>{{$ckr_eksekusi_sisa}}</td>
-                    <td>{{$ckr_eksekusi_progres}}</td>
-                    <td>{{$ckr_eksekusi_bobot_nilai}}</td>
-                </tr>
-                <tr>
-                    <td>22</td>
-                    <td>Depok
-                    <td>{{$dpk_eksekusi}}</td>
-                    <td>{{$dpk_eksekusi_putusan}}</td>
-                    <td>{{$dpk_eksekusi_ht}}</td>
-                    <td>{{$dpk_eksekusi_riil}}</td>
-                    <td>{{$dpk_eksekusi_lelang}}</td>
-                    <td>{{$dpk_eksekusi_dicabut}}</td>
-                    <td>{{$dpk_eksekusi_dicoret}}</td>
-                    <td>{{$dpk_eksekusi_ne}}</td>
-                    <td>{{$dpk_eksekusi_selesai}}</td>
-                    <td>{{$dpk_eksekusi_sisa}}</td>
-                    <td>{{$dpk_eksekusi_progres}}</td>
-                    <td>{{$dpk_eksekusi_bobot_nilai}}</td>
-                </tr>
-                <tr>
-                    <td>23</td>
-                    <td>Kota Tasikmalaya
-                    <td>{{$tmk_eksekusi}}</td>
-                    <td>{{$tmk_eksekusi_putusan}}</td>
-                    <td>{{$tmk_eksekusi_ht}}</td>
-                    <td>{{$tmk_eksekusi_riil}}</td>
-                    <td>{{$tmk_eksekusi_lelang}}</td>
-                    <td>{{$tmk_eksekusi_dicabut}}</td>
-                    <td>{{$tmk_eksekusi_dicoret}}</td>
-                    <td>{{$tmk_eksekusi_ne}}</td>
-                    <td>{{$tmk_eksekusi_selesai}}</td>
-                    <td>{{$tmk_eksekusi_sisa}}</td>
-                    <td>{{$tmk_eksekusi_progres}}</td>
-                    <td>{{$tmk_eksekusi_bobot_nilai}}</td>
-                </tr>
-                <tr>
-                    <td>24</td>
-                    <td>Kota Banjar
-                    <td>{{$bjr_eksekusi}}</td>
-                    <td>{{$bjr_eksekusi_putusan}}</td>
-                    <td>{{$bjr_eksekusi_ht}}</td>
-                    <td>{{$bjr_eksekusi_riil}}</td>
-                    <td>{{$bjr_eksekusi_lelang}}</td>
-                    <td>{{$bjr_eksekusi_dicabut}}</td>
-                    <td>{{$bjr_eksekusi_dicoret}}</td>
-                    <td>{{$bjr_eksekusi_ne}}</td>
-                    <td>{{$bjr_eksekusi_selesai}}</td>
-                    <td>{{$bjr_eksekusi_sisa}}</td>
-                    <td>{{$bjr_eksekusi_progres}}</td>
-                    <td>{{$bjr_eksekusi_bobot_nilai}}</td>
-                </tr>
-                <tr>
-                    <td>25</td>
-                    <td>Soreang
-                    <td>{{$sor_eksekusi}}</td>
-                    <td>{{$sor_eksekusi_putusan}}</td>
-                    <td>{{$sor_eksekusi_ht}}</td>
-                    <td>{{$sor_eksekusi_riil}}</td>
-                    <td>{{$sor_eksekusi_lelang}}</td>
-                    <td>{{$sor_eksekusi_dicabut}}</td>
-                    <td>{{$sor_eksekusi_dicoret}}</td>
-                    <td>{{$sor_eksekusi_ne}}</td>
-                    <td>{{$sor_eksekusi_selesai}}</td>
-                    <td>{{$sor_eksekusi_sisa}}</td>
-                    <td>{{$sor_eksekusi_progres}}</td>
-                    <td>{{$sor_eksekusi_bobot_nilai}}</td>
-                </tr>
-                <tr>
-                    <td>26</td>
-                    <td>Ngamprah
-                    <td>{{$nph_eksekusi}}</td>
-                    <td>{{$nph_eksekusi_putusan}}</td>
-                    <td>{{$nph_eksekusi_ht}}</td>
-                    <td>{{$nph_eksekusi_riil}}</td>
-                    <td>{{$nph_eksekusi_lelang}}</td>
-                    <td>{{$nph_eksekusi_dicabut}}</td>
-                    <td>{{$nph_eksekusi_dicoret}}</td>
-                    <td>{{$nph_eksekusi_ne}}</td>
-                    <td>{{$nph_eksekusi_selesai}}</td>
-                    <td>{{$nph_eksekusi_sisa}}</td>
-                    <td>{{$nph_eksekusi_progres}}</td>
-                    <td>{{$nph_eksekusi_bobot_nilai}}</td>
-                </tr>
-            </tbody>
-            </tbody>
-        </table>
-    </div>
-</div>
-@endsection
+            // Efek hover pada baris tabel
+            $('tbody tr').hover(
+                function() {
+                    $(this).css('transform', 'translateY(-2px)');
+                    $(this).css('box-shadow', '0 4px 10px rgba(0,0,0,0.1)');
+                },
+                function() {
+                    $(this).css('transform', 'translateY(0)');
+                    $(this).css('box-shadow', 'none');
+                }
+            );
+        });
+    </script>
+</body>
+</html>

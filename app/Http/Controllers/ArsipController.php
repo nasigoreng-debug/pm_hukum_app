@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\ArsipModel;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 
 
@@ -33,9 +35,9 @@ class ArsipController extends Controller
 
         $arsip_perkara_total = DB::table('tb_arsip_perkara')->count();
 
-        $arsip_perkara_blm_upload = DB::table('tb_arsip_perkara')->whereNull('bundle_b')->count();
+        $arsip_perkara_blm_upload = DB::table('tb_arsip_perkara')->whereNull('bundel_b')->count();
 
-        $arsip_perkara_upload = DB::table('tb_arsip_perkara')->whereNotNull('bundle_b')->count();
+        $arsip_perkara_upload = DB::table('tb_arsip_perkara')->whereNotNull('bundel_b')->count();
 
         $arsip_perkara_progres = $arsip_perkara_upload / $arsip_perkara_total * 100;
         $arsip_perkara_presentase = round($arsip_perkara_progres);
@@ -129,7 +131,7 @@ class ArsipController extends Controller
             'no_box' => 'required',
             'tgl_alih_media' => 'required',
             'putusan' => 'required|mimes:pdf|max:10000',
-            'bundle_b' => 'required|mimes:rar,zip|max:10000',
+            'bundel_b' => 'mimes:rar,zip|max:10000',
         ], [
             'no_banding.required' => 'Nomor perkara banding wajib diisi!!',
             'no_banding.unique' => 'Nomor perkara sudah ada!!',
@@ -147,22 +149,22 @@ class ArsipController extends Controller
             'putusan.required' => 'Putusan wajib diupload!!',
             'putusan.mimes' => 'Jenis file harus pdf!!',
             'putusan.max' => 'Ukuran file max 10Mb!!',
-            'bundle_b.required' => 'Putusan wajib diupload!!',
-            'bundle_b.mimes' => 'Jenis file harus Rar/Zip!!',
-            'bundle_b.max' => 'Ukuran file max 10Mb!!',
+            'bundel_b.required' => 'Putusan wajib diupload!!',
+            'bundel_b.mimes' => 'Jenis file harus Rar/Zip!!',
+            'bundel_b.max' => 'Ukuran file max 10Mb!!',
         ]);
 
 
-        if (Request()->putusan <> "" && Request()->bundle_b <> "") {
+        if (Request()->putusan <> "" && Request()->bundel_b <> "") {
             //jika validasi tidak ada maka lakukan simpan data
             //upload file
             $file = Request()->putusan;
             $fileName = str_replace("/", "_",  Request()->no_banding) . '_' . 'Jo' . '_' . str_replace("/", "_",  Request()->no_pa) . '_' . date('dmYHis') . '.' . $file->extension();
             $file->move(public_path('arsip_perkara_putusan'), $fileName);
 
-            $file = Request()->bundle_b;
+            $file = Request()->bundel_b;
             $fileNameZip = str_replace("/", "_",  Request()->no_banding) . '_' . 'Jo' . '_' . str_replace("/", "_",  Request()->no_pa) . '_' . date('dmYHis') . '.' . $file->extension();
-            $file->move(public_path('bundle_b_arsip_perkara'), $fileNameZip);
+            $file->move(public_path('bundel_b_arsip_perkara'), $fileNameZip);
 
             $data = [
                 'tgl_masuk' => Request()->tgl_masuk,
@@ -177,7 +179,7 @@ class ArsipController extends Controller
                 'no_box' => Request()->no_box,
                 'tgl_alih_media' => Request()->tgl_alih_media,
                 'putusan' => $fileName,
-                'bundle_b' => $fileNameZip,
+                'bundel_b' => $fileNameZip,
             ];
 
             $this->ArsipModel->addData($data);
@@ -204,10 +206,10 @@ class ArsipController extends Controller
 
             $this->ArsipModel->addData($data);
             return redirect()->route('arsip')->with('pesan', 'Data Berhasil Ditambahkan !!');
-        } elseif (Request()->bundle_b <> "") {
-            $file = Request()->bundle_b;
+        } elseif (Request()->bundel_b <> "") {
+            $file = Request()->bundel_b;
             $fileNameZip = str_replace("/", "_",  Request()->no_banding) . '_' . 'Jo' . '_' . str_replace("/", "_",  Request()->no_pa) . '_' . date('dmYHis') . '.' . $file->extension();
-            $file->move(public_path('bundle_b_arsip_perkara'), $fileNameZip);
+            $file->move(public_path('bundel_b_arsip_perkara'), $fileNameZip);
 
             $data = [
                 'tgl_masuk' => Request()->tgl_masuk,
@@ -221,7 +223,7 @@ class ArsipController extends Controller
                 'no_laci' => Request()->no_laci,
                 'no_box' => Request()->no_box,
                 'tgl_alih_media' => Request()->tgl_alih_media,
-                'bundle_b' => $fileNameZip,
+                'bundel_b' => $fileNameZip,
             ];
 
             $this->ArsipModel->addData($data);
@@ -259,7 +261,7 @@ class ArsipController extends Controller
             'no_box' => 'required',
             'tgl_alih_media' => 'required',
             'putusan' => 'mimes:pdf|max:10000',
-            'bundle_b' => 'mimes:rar,zip|max:10000',
+            'bundel_b' => 'mimes:rar,zip|max:10000',
         ], [
             'no_banding.required' => 'Nomor perkara banding wajib diisi!!',
             'no_banding.max' => 'Max 255 Karakter!!',
@@ -275,11 +277,11 @@ class ArsipController extends Controller
             'tgl_alih_media.required' => 'Tanggal alih media wajib diisi!!',
             'putusan.mimes' => 'Jenis file harus pdf!!',
             'putusan.max' => 'Ukuran file max 10Mb!!',
-            'bundle_b.mimes' => 'Jenis file harus Rar/Zip!!',
-            'bundle_b.max' => 'Ukuran file max 10Mb!!',
+            'bundel_b.mimes' => 'Jenis file harus Rar/Zip!!',
+            'bundel_b.max' => 'Ukuran file max 10Mb!!',
         ]);
 
-        if (Request()->putusan <> "" && Request()->bundle_b <> "") {
+        if (Request()->putusan <> "" && Request()->bundel_b <> "") {
             //jika validasi tidak ada maka lakukan hapus file surat PTA dan kosnep jika ada
             // $arsip_perkara = $this->ArsipModel->detailData($id_banding);
 
@@ -288,18 +290,18 @@ class ArsipController extends Controller
             //     unlink($putusanPath);
             // }
 
-            // $bundle_bPath = public_path('bundle_b_arsip_perkara') . '/' . $suratkeluar->bundle_b_surat;
-            // if (file_exists($bundle_bPath)) {
-            //     unlink($bundle_bPath);
+            // $bundel_bPath = public_path('bundel_b_arsip_perkara') . '/' . $suratkeluar->bundel_b_surat;
+            // if (file_exists($bundel_bPath)) {
+            //     unlink($bundel_bPath);
             // }
 
             $file = Request()->putusan;
             $fileName = str_replace("/", "_",  Request()->no_banding) . '_' . 'Jo' . '_' . str_replace("/", "_",  Request()->no_pa) . '_' . date('dmYHis') . '.' . $file->extension();
             $file->move(public_path('arsip_perkara_putusan'), $fileName);
 
-            $file = Request()->bundle_b;
+            $file = Request()->bundel_b;
             $fileNameZip = str_replace("/", "_",  Request()->no_banding) . '_' . 'Jo' . '_' . str_replace("/", "_",  Request()->no_pa) . '_' . date('dmYHis') . '.' . $file->extension();
-            $file->move(public_path('bundle_b_arsip_perkara'), $fileNameZip);
+            $file->move(public_path('bundel_b_arsip_perkara'), $fileNameZip);
 
 
             $data = [
@@ -315,7 +317,7 @@ class ArsipController extends Controller
                 'no_box' => Request()->no_box,
                 'tgl_alih_media' => Request()->tgl_alih_media,
                 'putusan' => $fileName,
-                'bundle_b' => $fileNameZip,
+                'bundel_b' => $fileNameZip,
             ];
 
             $this->ArsipModel->editData($id_banding, $data);
@@ -342,10 +344,10 @@ class ArsipController extends Controller
 
             $this->ArsipModel->editData($id_banding, $data);
             return redirect()->route('arsip')->with('pesan', 'Data Berhasil Diupdate !!');
-        } elseif (Request()->bundle_b <> "") {
-            $file = Request()->bundle_b;
+        } elseif (Request()->bundel_b <> "") {
+            $file = Request()->bundel_b;
             $fileNameZip = str_replace("/", "_",  Request()->no_banding) . '_' . 'Jo' . '_' . str_replace("/", "_",  Request()->no_pa) . '_' . date('dmYHis') . '.' . $file->extension();
-            $file->move(public_path('bundle_b_arsip_perkara'), $fileNameZip);
+            $file->move(public_path('bundel_b_arsip_perkara'), $fileNameZip);
 
             $data = [
                 'tgl_masuk' => Request()->tgl_masuk,
@@ -359,7 +361,7 @@ class ArsipController extends Controller
                 'no_laci' => Request()->no_laci,
                 'no_box' => Request()->no_box,
                 'tgl_alih_media' => Request()->tgl_alih_media,
-                'bundle_b' => $fileNameZip,
+                'bundel_b' => $fileNameZip,
             ];
 
             $this->ArsipModel->editData($id_banding, $data);
@@ -410,15 +412,15 @@ class ArsipController extends Controller
     protected function deleteRelatedFiles($arsip_perkara)
     {
 
-        if (!empty($arsip_perkara->putusan && $arsip_perkara->bundle_b)) {
+        if (!empty($arsip_perkara->putusan && $arsip_perkara->bundel_b)) {
             $putusanPath = public_path('arsip_perkara_putusan') . '/' . $arsip_perkara->putusan;
             if (file_exists($putusanPath)) {
                 unlink($putusanPath);
             }
 
-            $bundle_bPath = public_path('bundle_b_arsip_perkara') . '/' . $arsip_perkara->bundle_b;
-            if (file_exists($bundle_bPath)) {
-                unlink($bundle_bPath);
+            $bundel_bPath = public_path('bundel_b_arsip_perkara') . '/' . $arsip_perkara->bundel_b;
+            if (file_exists($bundel_bPath)) {
+                unlink($bundel_bPath);
             }
             // Hapus file surat PTA jika ada
         } elseif (!empty($arsip_perkara->putusan)) {
@@ -426,11 +428,29 @@ class ArsipController extends Controller
             if (file_exists($putusanPath)) {
                 unlink($putusanPath);
             }
-        } elseif (!empty($sk->bundle_b)) {
-            $bundle_bPath = public_path('bundle_b_arsip_perkara') . '/' . $arsip_perkara->bundle_b;
-            if (file_exists($bundle_bPath)) {
-                unlink($bundle_bPath);
+        } elseif (!empty($sk->bundel_b)) {
+            $bundel_bPath = public_path('bundel_b_arsip_perkara') . '/' . $arsip_perkara->bundel_b;
+            if (file_exists($bundel_bPath)) {
+                unlink($bundel_bPath);
             }
         }
+    }
+
+    public function searchByDateRangeArsipPerkara(Request $request)
+    {
+        $data = [
+            $startDate = $request->input('start_date'),
+            $endDate = $request->input('end_date'),
+
+            'title' => 'Arsip Perkara',
+
+            'arsip_perkara' => DB::table('tb_arsip_perkara')
+                ->whereBetween('tgl_masuk', [$startDate, $endDate])
+                ->get(),
+        ];
+
+        // dd($data);
+
+        return view('/arsip/v_arsip_perkara', $data);
     }
 }

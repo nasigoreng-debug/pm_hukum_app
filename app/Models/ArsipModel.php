@@ -59,14 +59,14 @@ class ArsipModel extends Model
     public function arsip_perkara_upload()
     {
         return DB::table('tb_arsip_perkara')
-            ->whereNotNull('bundle_b')
+            ->whereNotNull('bundel_b')
             ->orderBy('tgl_put_banding', 'desc')->get();
     }
 
     public function arsip_perkara_blm_upload()
     {
         return DB::table('tb_arsip_perkara')
-            ->whereNull('bundle_b')
+            ->whereNull('bundel_b')
             ->orderBy('tgl_put_banding', 'desc')->get();
     }
 

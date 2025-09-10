@@ -48,6 +48,7 @@ Route::get('/arsip/add', [ArsipController::class, 'add'])->name('add');
 Route::post('/arsip/insert', [ArsipController::class, 'insert'])->name('insert');
 Route::get('/arsip/edit/{id_perkara}', [ArsipController::class, 'edit'])->name('edit');
 Route::post('/arsip/update/{id_perkara}', [ArsipController::class, 'update'])->name('update');
+Route::get('/search-date-range-arsip-perkara', [ArsipController::class, 'searchByDateRangeArsipPerkara']);
 // Route::get('/arsip/delete/{id_perkara}', [ArsipController::class, 'delete'])->name('delete');
 
 //Bank Putusan
@@ -173,7 +174,7 @@ Route::get('/suratmasuk/add', [SuratmasukController::class, 'add'])->name('add')
 Route::post('/suratmasuk/insert', [SuratmasukController::class, 'insert'])->name('insert');
 Route::get('/suratmasuk/edit/{id_suratmasuk}', [SuratmasukController::class, 'edit'])->name('edit');
 Route::post('/suratmasuk/update/{id_suratmasuk}', [SuratmasukController::class, 'update'])->name('update');
-Route::get('/search-date-range', [SuratmasukController::class, 'searchByDateRange']);
+Route::get('/search-date-range-surat-masuk', [SuratmasukController::class, 'searchByDateRangeSuratMasuk']);
 // Route::get('/suratmasuk/delete/{id_suratmasuk}', [SuratmasukController::class, 'delete'])->name('delete');
 
 //Surat Keluar

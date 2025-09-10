@@ -188,14 +188,14 @@
                         <div class="form-group ml-3 mt-2 mb-2 mr-3">
                             <div class="form-group ml-3 mt-2 mb-2 mr-3">
                                 <label>Bundel B</label>
-                                <div>{{ $arsip_perkara->bundle_b }}</div>
+                                <div>{{ $arsip_perkara->bundel_b }}</div>
                             </div>
                             <div class="">
                                 <div class="form-group ml-3 mt-2 mb-2 mr-3">
                                     <label>Ganti Bundel B</label>
-                                    <input type="file" class="form-control form-control-sm @error('bundle_b') is-invalid @enderror" value="{{$arsip_perkara->bundle_b}}" name="bundle_b">
+                                    <input type="file" class="form-control form-control-sm @error('bundel_b') is-invalid @enderror" value="{{$arsip_perkara->bundel_b}}" name="bundel_b">
                                     <div id="validationServerUsernameFeedback" class="invalid-feedback">
-                                        @error('bundle_b')
+                                        @error('bundel_b')
                                         {{ $message }}
                                         @enderror
                                     </div>

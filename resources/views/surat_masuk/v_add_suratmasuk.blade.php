@@ -154,7 +154,7 @@
                         <div class="form-group ml-3 mt-2 mb-2 mr-3 ">
                             <button class="btn btn-success">Simpan</button>
                             <button type="reset" class="btn btn-danger">Reset</button>
-                            <a href="/suratmasuk" class="btn btn-sm btn-info mb-2"></i>Kembali</a>
+                            <a href="/suratmasuk_berjalan" class="btn btn-sm btn-info mb-2"></i>Kembali</a>
                         </div>
                     </div>
                 </div>

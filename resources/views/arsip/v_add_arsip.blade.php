@@ -180,9 +180,9 @@
                         </div>
                         <div class="form-group ml-3 mt-2 mb-2 mr-3">
                             <label>Bundel B</label>
-                            <input type="file" class="form-control @error('bundle_b') is-invalid @enderror" value="{{old('bundle_b')}}" name="bundle_b">
+                            <input type="file" class="form-control @error('bundel_b') is-invalid @enderror" value="{{old('bundel_b')}}" name="bundel_b">
                             <div id="validationServerUsernameFeedback" class="invalid-feedback text-danger">
-                                @error('bundle_b')
+                                @error('bundel_b')
                                 {{ $message }}
                                 @enderror
                             </div>
