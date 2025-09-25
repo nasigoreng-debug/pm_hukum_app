@@ -60,7 +60,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="form-group col-xs-4">
+                        <!-- <div class="form-group col-xs-4">
                             <label>Tanggal Masuk</label>
                             <input type="date" class="form-control @error('tgl_masuk') is-invalid @enderror" value="{{old('tgl_masuk')}}" name="tgl_masuk">
                             <div id="validationServerUsernameFeedback" class="invalid-feedback text-danger">
@@ -68,7 +68,7 @@
                                 {{ $message }}
                                 @enderror
                             </div>
-                        </div>
+                        </div> -->
                         <div class="form-group col-xs-4">
                             <label>Tanggal Register</label>
                             <input type="date" class="form-control @error('tgl_register') is-invalid @enderror" value="{{old('tgl_register')}}" name="tgl_register">
@@ -96,7 +96,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="form-group col-xs-4">
+                        <!-- <div class="form-group col-xs-4">
                             <label>Nama Pemohon Kasasi</label>
                             <input type="text" class="form-control @error('pemohon_kasasi') is-invalid @enderror" value="{{old('pemohon_kasasi')}}" name="pemohon_kasasi">
                             <div id="validationServerUsernameFeedback" class="invalid-feedback text-danger">
@@ -113,7 +113,7 @@
                                 {{ $message }}
                                 @enderror
                             </div>
-                        </div>
+                        </div> -->
                         <div class="form-group col-xs-4">
                             <label>Nomor Perkara Banding</label>
                             <input type="text" class="form-control @error('no_banding') is-invalid @enderror" value="{{old('no_banding')}}" name="no_banding">
@@ -123,7 +123,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="form-group col-xs-4">
+                        <!-- <div class="form-group col-xs-4">
                             <label>Tanggal Putus Banding</label>
                             <input type="date" class="form-control @error('tgl_put_banding') is-invalid @enderror" value="{{old('tgl_put_banding')}}" name="tgl_put_banding">
                             <div id="validationServerUsernameFeedback" class="invalid-feedback text-danger">
@@ -131,7 +131,7 @@
                                 {{ $message }}
                                 @enderror
                             </div>
-                        </div>
+                        </div> -->
                         <div class="form-group col-xs-4">
                             <label>Nomor Perkara PA</label>
                             <input type="text" class="form-control @error('no_pa') is-invalid @enderror" value="{{old('no_pa')}}" name="no_pa">
@@ -141,7 +141,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="form-group col-xs-4">
+                        <!-- <div class="form-group col-xs-4">
                             <label>Tanggal Putus PA</label>
                             <input type="date" class="form-control @error('tgl_put_pa') is-invalid @enderror" value="{{old('tgl_put_pa')}}" name="tgl_put_pa">
                             <div id="validationServerUsernameFeedback" class="invalid-feedback text-danger">
@@ -149,8 +149,8 @@
                                 {{ $message }}
                                 @enderror
                             </div>
-                        </div>
-                        <div class="form-group col-xs-4">
+                        </div> -->
+                        <!-- <div class="form-group col-xs-4">
                             <label>Nomor Box</label> <label class="text-red">(Diisi petugas arsip!!!)</label>
                             <select name="no_box" class="form-control @error('no_box') is-invalid @enderror">
                                 <option>{{old('no_box')}}</option>
@@ -209,7 +209,7 @@
                                 {{ $message }}
                                 @enderror
                             </div>
-                        </div>
+                        </div> -->
                         <div class="form-group col-xs-4">
                             <button class="btn btn-success">Simpan</button>
                             <button type="reset" class="btn btn-danger">Reset</button>

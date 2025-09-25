@@ -169,7 +169,7 @@ class SuratkeluarController extends Controller
 
             $this->SuratkeluarModel->addData($data);
             return redirect()->route('suratkeluar_berjalan')->with('pesan', 'Data Berhasil Ditambahkan !!');
-        }
+        } 
     }
 
     //Edit Data
@@ -240,22 +240,9 @@ class SuratkeluarController extends Controller
 
         //Jika surat & 
         if (Request()->surat_pta <> "" && Request()->konsep_surat <> "") {
+            //Jika ganti file
 
-            //jika validasi tidak ada maka lakukan hapus file surat PTA dan kosnep jika ada
-            // $suratkeluar = $this->SuratkeluarModel->detailData($id_suratkeluar);
-
-            // $surat_ptaPath = public_path('surat_keluar') . '/' . $suratkeluar->surat_pta;
-            // if (file_exists($surat_ptaPath)) {
-            //     unlink($surat_ptaPath);
-            // }
-
-            // $konsepPath = public_path('konsep_surat_keluar') . '/' . $suratkeluar->konsep_surat;
-            // if (file_exists($konsepPath)) {
-            //     unlink($konsepPath);
-            // }
-
-
-            //jika validasi tidak ada maka lakukan ganti data
+            //upload file
             $file = Request()->surat_pta;
             $fileName = 'surat' . '_' . str_replace("/", "_",  Request()->tujuan_surat) . '_' . date('YmdHisu') . '.' . $file->extension();
             $file->move(public_path('surat_keluar'), $fileName);
@@ -263,6 +250,10 @@ class SuratkeluarController extends Controller
             $file = Request()->konsep_surat;
             $fileNameRtf = 'konsep_surat' . '_' .  str_replace("/", "_",  Request()->tujuan_surat) . '_' . date('YmdHisu') . '.' . $file->extension();
             $file->move(public_path('konsep_surat_keluar'), $fileNameRtf);
+
+            // $file = Request()->lampiran;
+            // $fileNamePdf = 'lampiran' . '_' .  str_replace("/", "_",  Request()->tujuan_surat) . '_' . date('YmdHisu') . '.' . $file->extension();
+            // $file->move(public_path('lampiran_surat_keluar'), $fileNamePdf);
 
             $data = [
                 'no_surat' => Request()->no_surat,
@@ -278,14 +269,27 @@ class SuratkeluarController extends Controller
 
             return redirect()->route('suratkeluar_berjalan')->with('pesan', 'Data Berhasil Diupdate !!');
         } elseif (Request()->surat_pta <> "") {
+            //Jika ganti file
+            //upload file
+            $file = Request()->surat_pta;
+            $fileName = 'surat' . '_' . str_replace("/", "_",  Request()->tujuan_surat) . '_' . date('YmdHisu') . '.' . $file->extension();
+            $file->move(public_path('surat_keluar'), $fileName);
 
-            //jika validasi tidak ada maka lakukan hapus file surat PTA jika ada
-            // $suratkeluar = $this->SuratkeluarModel->detailData($id_suratkeluar);
+            $data = [
+                'no_surat' => Request()->no_surat,
+                'tgl_surat' => Request()->tgl_surat,
+                'tujuan_surat' => Request()->tujuan_surat,
+                'perihal' => Request()->perihal,
+                'surat_pta' => $fileName,
+                'keterangan' => Request()->keterangan,
+            ];
 
-            // $surat_ptaPath = public_path('surat_keluar') . '/' . $suratkeluar->surat_pta;
-            // if (file_exists($surat_ptaPath)) {
-            //     unlink($surat_ptaPath);
-            // }
+            $this->SuratkeluarModel->editData($id_suratkeluar, $data);
+
+            return redirect()->route('suratkeluar_berjalan')->with('pesan', 'Data Berhasil Diupdate !!');
+        } elseif (Request()->surat_pta <> "") {
+            //Jika tidak ganti file
+            //upload file
 
             $file = Request()->surat_pta;
             $fileName = 'surat' . '_' . str_replace("/", "_",  Request()->tujuan_surat) . '_' . date('YmdHisu') . '.' . $file->extension();
@@ -305,14 +309,6 @@ class SuratkeluarController extends Controller
             return redirect()->route('suratkeluar_berjalan')->with('pesan', 'Data Berhasil Diupdate !!');
         } elseif (Request()->konsep_surat <> "") {
 
-            //jika validasi tidak ada maka lakukan hapus file surat PTA jika ada
-            // $suratkeluar = $this->SuratkeluarModel->detailData($id_suratkeluar);
-
-            // $konsepPath = public_path('konsep_surat_keluar') . '/' . $suratkeluar->konsep_surat;
-            // if (file_exists($konsepPath)) {
-            //     unlink($konsepPath);
-            // }
-
             $file = Request()->konsep_surat;
             $fileNameRtf = 'konsep_surat' . '_' .  str_replace("/", "_",  Request()->tujuan_surat) . '_' . date('YmdHisu') . '.' . $file->extension();
             $file->move(public_path('konsep_surat_keluar'), $fileNameRtf);
@@ -327,9 +323,10 @@ class SuratkeluarController extends Controller
             ];
 
             $this->SuratkeluarModel->editData($id_suratkeluar, $data);
-            return redirect()->route('suratkeluar_berjalan')->with('pesan', 'Data Berhasil Diupdate !!');
-        } else {
 
+            return redirect()->route('suratkeluar_berjalan')->with('pesan', 'Data Berhasil Diupdate !!');
+        }else{
+           
             $data = [
                 'no_surat' => Request()->no_surat,
                 'tgl_surat' => Request()->tgl_surat,

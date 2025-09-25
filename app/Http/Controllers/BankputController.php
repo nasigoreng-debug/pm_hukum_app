@@ -81,7 +81,7 @@ class BankputController extends Controller
         $file->move(public_path('bank_putusan_rtf'), $fileNameRtf);
 
         $file = Request()->put_anonim;
-        $fileNameAnonim = str_replace("/", "_",  Request()->no_banding) . '_' . str_replace("/", "_",  Request()->jenis_perkara) . '_' . str_replace("/", "_",  Request()->tgl_put_banding) . '_' . str_replace("/", "_",  Request()->status_putus) . '_' .  str_replace("/", "_",  Request()->keterangan) . '_' . 'anonimasi' . '.' . $file->extension();
+        $fileNameAnonim = str_replace("/", "_",  Request()->no_banding) . '_' . str_replace("/", "_",  Request()->jenis_perkara) . '_' . str_replace("/", "_",  Request()->tgl_put_banding) . '_' . str_replace("/", "_",  Request()->status_putus) . '_'.  str_replace("/", "_",  Request()->keterangan) . '_' . 'anonimasi' . '.' . $file->extension();
         $file->move(public_path('bank_putusan_anonim'), $fileNameAnonim);
 
         $data = [
@@ -188,7 +188,7 @@ class BankputController extends Controller
             //upload file
 
             $file = Request()->put_anonim;
-            $fileNameAnonim = str_replace("/", "_",  Request()->no_banding) . '_' . str_replace("/", "_",  Request()->jenis_perkara) . '_' . str_replace("/", "_",  Request()->tgl_put_banding) . '_' . str_replace("/", "_",  Request()->status_putus) . '_' . str_replace("/", "_",  Request()->keterangan) . '_' . 'anonimasi' . '.' . $file->extension();
+            $fileNameAnonim = str_replace("/", "_",  Request()->no_banding) . '_' . str_replace("/", "_",  Request()->jenis_perkara) . '_' . str_replace("/", "_",  Request()->tgl_put_banding) . '_' . str_replace("/", "_",  Request()->status_putus) . '_'. str_replace("/", "_",  Request()->keterangan) . '_' . 'anonimasi' . '.' . $file->extension();
             $file->move(public_path('bank_putusan_anonim'), $fileNameAnonim);
 
             $data = [

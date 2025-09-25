@@ -161,7 +161,7 @@
                         </div>
                         <div class="form-group">
                             <button class="btn btn-sm btn-success">Simpan</button>
-                            <a href="/suratmasuk_berjalan" class="btn btn-sm btn-info mb-2"></i>Kembali</a>
+                            <a href="/suratmasuk" class="btn btn-sm btn-info mb-2"></i>Kembali</a>
                         </div>
                     </div>
                 </div>

@@ -52,12 +52,12 @@
             <thead class="bg-gray">
                 <tr>
                     <th class="text-center" style="width: 10px;">No</th>
-                    <th class="text-center" style="width: 50px;">Satker</th>
+                    {{-- <th class="text-center" style="width: 50px;">Satker</th> --}}
                     <th class="text-center" style="width: 60px;">Tanggal Masuk</th>
                     <!-- <th style="width: 100px;">Pemohon</th>
                     <th style="width: 100px;">Termohon</th> -->
                     <th class="text-center" style="width: 70px;">Nomor Kasasi</th>
-                    <th class="text-center" style="width: 50px;">Putus Kasasi</th>
+                    {{-- <th class="text-center" style="width: 50px;">Putus Kasasi</th> --}}
                     <th class="text-center" style="width: 70px;">Nomor Banding</th>
                     <th class="text-center" style="width: 70px;">Status Putusan</th>
                     <th class="text-center" style="width: 30px;">Putusan</th>
@@ -68,12 +68,12 @@
             <tfoot class="bg-gray">
                 <tr>
                     <th>No</th>
-                    <th>Satker</th>
+                    {{-- <th>Satker</th> --}}
                     <th>Tanggal Masuk</th>
                     <!-- <th>Pemohon</th>
                     <th>Termohon</th> -->
                     <th>Nomor Kasasi</th>
-                    <th>Putus Kasasi</th>
+                    {{-- <th>Putus Kasasi</th> --}}
                     <th>Nomor Banding</th>
                     <th>Status Putusan</th>
                     <th>Putusan</th>
@@ -85,13 +85,13 @@
                 @foreach ($kasasi as $data)
                 <tr>
                     <td class="text-center">{{$loop->iteration}}</td>
-                    <td class="text-center">{{ $data->pa_pengaju }}</td>
+                    {{-- <td class="text-center">{{ $data->pa_pengaju }}</td> --}}
                     <td class="text-center">{{ date('d-m-Y', strtotime($data->tgl_masuk)) }}</td>
-                    <!-- <td>{{ $data->pemohon_kasasi }}</td>
-                    <td>{{ $data->termohon_kasasi }}</td> -->
+                    {{-- <!-- <td>{{ $data->pemohon_kasasi }}</td>
+                    <td>{{ $data->termohon_kasasi }}</td> --> --}}
                     <td class="text-center">{{ $data->no_kasasi }}</td>
-                    <!-- <td class="text-center">{{ date('d-m-Y', strtotime($data->tgl_put_kasasi)) }}</td> -->
-                    <td class="text-center">
+                    {{-- <!-- <td class="text-center">{{ date('d-m-Y', strtotime($data->tgl_put_kasasi)) }}</td> -->
+                    {{-- <td class="text-center">
                         @if($data->tgl_put_kasasi=="0000-00-00")
                         <span class="badge badge-danger">Belum diinput!!!</span>
                         @elseif($data->tgl_put_kasasi=="")
@@ -99,7 +99,7 @@
                         @else
                         {{ date('d-m-Y', strtotime($data->tgl_put_kasasi)) }}
                         @endif
-                    </td>
+                    </td> --}}
                     <td class="text-center">{{ $data->no_banding }}</td>
                     <td class="text-center">{{ $data->status_put }}</td>
                     <!-- <td class="text-center">
@@ -161,23 +161,23 @@
             </div>
             <div class="modal-body">
                 <table class="table table-small-font table-bordered table-hover">
-                    <tr class="text-start border">
+                    {{-- <tr class="text-start border">
                         <td style="width: 200px;">Pengadilan Agama Pengaju</td>
                         <td>{{$data->pa_pengaju}}</td>
-                    </tr>
+                    </tr> --}}
                     <tr class="text-start border">
                         <td>Tanggal Masuk Arsip</td>
                         <td>{{ date('d-m-Y', strtotime($data->tgl_masuk)) }}</td>
                     </tr>
-                    <tr class="text-start border">
+                    {{-- <tr class="text-start border">
                         <td>Pemohon Kasasi</td>
                         <td>{{$data->pemohon_kasasi}}</td>
                     </tr>
                     <tr class="text-start border">
                         <td>Termohon kasasi</td>
                         <td>{{$data->termohon_kasasi}}</td>
-                    </tr>
-                    <tr class="text-start border">
+                    </tr> --}}
+                    {{-- <tr class="text-start border">
                         <td>Nomor Perkara PA</td>
                         <td>{{$data->no_pa}}</td>
                     </tr>
@@ -191,13 +191,13 @@
                             @else
                             {{ date('d-m-Y', strtotime($data->tgl_put_pa)) }}
                             @endif
-                        </td>
+                        </td> --}}
                     </tr>
                     <tr class="text-start border">
                         <td>Nomor Perkara Banding</td>
                         <td>{{$data->no_banding}}</td>
                     </tr>
-                    <tr class="text-start border">
+                    {{-- <tr class="text-start border">
                         <td>Tanggal Putus Banding</td>
                         <td>
                             @if($data->tgl_put_banding=="0000-00-00")
@@ -208,12 +208,12 @@
                             {{ date('d-m-Y', strtotime($data->tgl_put_banding)) }}
                             @endif
                         </td>
-                    </tr>
+                    </tr> --}}
                     <tr class="text-start border">
                         <td>Nomor Kasasi</td>
                         <td>{{$data->no_kasasi}}</td>
                     </tr>
-                    <tr class="text-start border">
+                    {{-- <tr class="text-start border">
                         <td>Tanggal Putus Kasasi</td>
                         <td class="text-start">
                             @if($data->tgl_put_kasasi=="0000-00-00")
@@ -224,7 +224,7 @@
                             {{ date('d-m-Y', strtotime($data->tgl_put_kasasi)) }}
                             @endif
                         </td>
-                    </tr>
+                    </tr> --}}
 
                     <tr class="text-start border">
                         <td>Status Putusan</td>

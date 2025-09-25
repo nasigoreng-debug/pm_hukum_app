@@ -9,7 +9,7 @@
 
         <ol class="breadcrumb bc-1">
             <li>
-                <a href="/"><i class="fa-home"></i>Home</a>
+                <a href="dashboard-1.html"><i class="fa-home"></i>Home</a>
             </li>
             <li>
 

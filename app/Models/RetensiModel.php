@@ -50,4 +50,5 @@ class RetensiModel extends Model
     {
         return DB::table('tb_retensi_arsip')->orderBy('tgl_put_banding', 'desc')->get();
     }
-}
+
+    }

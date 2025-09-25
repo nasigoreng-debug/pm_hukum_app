@@ -31,24 +31,30 @@
             });
         </script>
         
-        <!-- Date Range Filter -->
-            <div class="text-center">
-                <form method="GET" action="/search-date-range-arsip-perkara" class="form-inline justify-content-center">
-                    <input type="date" name="start_date" class="form-control form-control-sm" required>
-                    <span>s.d</span>
-                    <input type="date" name="end_date" class="form-control form-control-sm" required>
-                    <button type="submit" class="btn btn-sm btn-primary">Tampilkan</button>
-                    <a href="/suratmasuk_total" class="btn btn-sm btn-danger"><i class="fa fa-repeat"></i></a>
-                </form>
-            </div>
 
-            <!-- Action Buttons -->
-            <div class="" style="font-size: 14px;">
-                @if(in_array(Auth::user()->level, [1, 2]))
-                    <a href="/suratmasuk/add" class="btn btn-sm btn-info mb-2">Tambah Data</a>
-                    <a href="/suratmasuk" class="btn btn-sm btn-danger mb-2">Kembali</a>
-                @endif
-            </div>
+        <div class="text-center">
+            <form method="GET" action="/search-date-range-surat-masuk">
+                <input type="date" name="start_date" required>
+                s.d
+                <input type="date" name="end_date" required>
+                <button type="submit" class="btn btn-sm btn-primary">Tampilkan</button>
+                <a href="/suratmasuk" class="btn btn-sm btn-danger"><i class="fa fa-repeat"></i></a>
+            </form>
+        </div>
+
+        <td class="text-center" style="font-size: 5px;">
+            @if(Auth::user()->level===1)
+            <a href="/suratmasuk/add" class="btn btn-sm btn-info mb-2">Tambah Data</a>
+            <a href="/suratmasuk_total" class="btn btn-sm btn-success mb-2">All Data</a>
+            <a href="/suratmasuk" class="btn btn-sm btn-danger mb-2">Kembali</a>
+            @elseif(Auth::user()->level===2)
+            <a href="/suratmasuk/add" class="btn btn-sm btn-info mb-2">Tambah Data</a>
+            <a href="/suratmasuk_total" class="btn btn-sm btn-success mb-2">All Data</a>
+            <a href="/suratmasuk" class="btn btn-sm btn-success mb-2">Kembali</a>
+            @elseif(Auth::user()->level===3)
+
+            @endif
+        </td>
 
         @if (session('pesan'))
         <div class="alert alert-success alert-dismissible mt-2">

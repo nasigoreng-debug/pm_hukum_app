@@ -169,7 +169,7 @@ class RetensiController extends Controller
             'terbanding' => 'required',
             'tgl_put_banding' => 'required',
             'status_put' => 'required',
-            'putusan' => 'mimes:pdf|max:6000',
+            'putusan' => 'mimes:pdf|max:100000',
         ], [
             'pa_pengaju.required' => 'Satker wajib diisi!!',
             'no_banding.required' => 'Nomor perkara wajib diisi!!',

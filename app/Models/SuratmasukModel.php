@@ -23,8 +23,8 @@ class SuratmasukModel extends Model
         $datenow = Carbon::now()->format('Y-m-d');
 
         return DB::table('tb_surat_masuk')
-        ->whereYear('tgl_masuk_pan', $year)
-        ->orderBy('tgl_masuk_pan', 'desc')->get();
+        ->whereYear('tgl_surat', $year)
+        ->orderBy('tgl_surat', 'desc')->get();
     }
 
     public function suratmasuk_total()
