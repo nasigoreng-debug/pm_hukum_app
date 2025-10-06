@@ -27,17 +27,24 @@
                 });
             </script>
 
-            <!-- Action Buttons -->
-            <div class="text-center mb-3" style="font-size: 14px;">
-                @if(in_array(Auth::user()->level, [1, 2]))
-                    <a href="/eks/add" class="btn btn-sm btn-info mb-2">Tambah Data</a>
-                    <a href="/eks/total" class="btn btn-sm btn-secondary mb-2">Semua</a>
-                    <a href="/eks/berjalan" class="btn btn-sm btn-secondary mb-2">Berjalan</a>
-                    <a href="/eks/selesai" class="btn btn-sm btn-secondary mb-2">Selesai</a>
-                    <a href="/eks/progres" class="btn btn-sm btn-secondary mb-2">Progres Satker</a>
-                    <a href="/eks" class="btn btn-sm btn-danger mb-2">Kembali</a>
-                @endif
-            </div>
+                        <!-- Action Buttons -->
+                <div class="text-center mb-3" style="font-size: 14px;">
+                    @if(in_array(Auth::user()->level, [1, 2]))
+                        <a href="/eks/add" class="btn btn-sm btn-info mb-2">Tambah Data</a>
+                        <a href="/eks/total" class="btn btn-sm btn-secondary mb-2">Semua</a>
+                        <a href="/eks/berjalan" class="btn btn-sm btn-secondary mb-2">Berjalan</a>
+                        <a href="/eks/selesai" class="btn btn-sm btn-secondary mb-2">Selesai</a>
+                        <a href="/eks/progres" class="btn btn-sm btn-secondary mb-2">Progres Satker</a>
+                        
+                        <!-- TAMBAHKAN TOMBOL PRINT DI SINI -->
+                        <button onclick="printTable()" class="btn btn-sm btn-success mb-2">
+                            <i class="fa fa-print"></i> Print Table
+                        </button>
+                        <!-- END TOMBOL PRINT -->
+                        
+                        <a href="/eks" class="btn btn-sm btn-danger mb-2">Kembali</a>
+                    @endif
+                </div>
 
             <!-- Success Message -->
             @if (session('pesan'))
@@ -46,6 +53,7 @@
                     {{ session('pesan') }}
                 </div>
             @endif
+            
             
             <!-- Data Table -->
             <table class="table table-sm table-hover" id="example-3">
@@ -165,4 +173,136 @@
             </div>
         </div>
     @endforeach
+
+    <!-- Data Table -->
+    <table class="table table-sm table-hover" id="example-3">
+        <!-- ... existing table code ... -->
+    </table>
+
+    <!-- TAMBAHKAN SCRIPT PRINT DI SINI -->
+    <script>
+    function printTable() {
+        // Clone table asli
+        var originalTable = document.getElementById('example-3');
+        var printContent = originalTable.cloneNode(true);
+        
+        // Hapus kolom Action (kolom terakhir)
+        var rows = printContent.getElementsByTagName('tr');
+        for (var i = 0; i < rows.length; i++) {
+            var cells = rows[i].getElementsByTagName('td');
+            var thCells = rows[i].getElementsByTagName('th');
+            
+            // Hapus td terakhir (kolom Action)
+            if (cells.length > 0) {
+                cells[cells.length - 1].remove();
+            }
+            
+            // Hapus th terakhir (header Action)
+            if (thCells.length > 0) {
+                thCells[thCells.length - 1].remove();
+            }
+        }
+        
+        // Buat window print
+        var printWindow = window.open('', '_blank', 'width=1000,height=600');
+        printWindow.document.write(`
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>Laporan Data Perkara Eksekusi</title>
+                <style>
+                    body { 
+                        font-family: Arial, sans-serif; 
+                        margin: 20px; 
+                        font-size: 12px;
+                    }
+                    .header {
+                        text-align: center;
+                        margin-bottom: 20px;
+                        border-bottom: 2px solid #333;
+                        padding-bottom: 10px;
+                    }
+                    .header h2 {
+                        margin: 0;
+                        color: #333;
+                    }
+                    .info {
+                        margin: 10px 0;
+                        padding: 10px;
+                        background: #f5f5f5;
+                        border-radius: 5px;
+                    }
+                    table {
+                        width: 100%;
+                        border-collapse: collapse;
+                        margin-top: 15px;
+                    }
+                    th, td {
+                        border: 1px solid #000;
+                        padding: 6px;
+                        text-align: left;
+                        font-size: 11px;
+                    }
+                    th {
+                        background-color: #e9ecef;
+                        font-weight: bold;
+                    }
+                    .text-center {
+                        text-align: center;
+                    }
+                    .badge {
+                        padding: 2px 6px;
+                        border-radius: 3px;
+                        font-size: 10px;
+                        border: 1px solid #000;
+                    }
+                    .badge-warning { background-color: #ffc107; }
+                    .badge-danger { background-color: #dc3545; color: white; }
+                    .badge-success { background-color: #28a745; color: white; }
+                    .badge-primary { background-color: #007bff; color: white; }
+                    @media print {
+                        body { margin: 0; }
+                        .no-print { display: none; }
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="header">
+                    <h2>LAPORAN DATA PERKARA EKSEKUSI</h2>
+                    <p>Tanggal Cetak: ${new Date().toLocaleDateString('id-ID', { 
+                        weekday: 'long', 
+                        year: 'numeric', 
+                        month: 'long', 
+                        day: 'numeric' 
+                    })}</p>
+                </div>
+                
+                <div class="info">
+                    <strong>Total Data:</strong> ${originalTable.rows.length - 1} Perkara<br>
+                    <strong>User:</strong> {{ Auth::user()->name }}
+                </div>
+                
+                ${printContent.outerHTML}
+                
+                <div class="no-print" style="margin-top: 20px; text-align: center;">
+                    <button onclick="window.print()" style="padding: 8px 15px; background: #28a745; color: white; border: none; border-radius: 3px; cursor: pointer;">
+                        🖨️ Print Halaman
+                    </button>
+                    <button onclick="window.close()" style="padding: 8px 15px; background: #dc3545; color: white; border: none; border-radius: 3px; cursor: pointer;">
+                        ❌ Tutup
+                    </button>
+                </div>
+                
+                <script>
+                    window.onload = function() {
+                        // Auto print setelah window terbuka (opsional)
+                        // window.print();
+                    };
+                <\/script>
+            </body>
+            </html>
+        `);
+        printWindow.document.close();
+    }
+    </script>
 @endsection

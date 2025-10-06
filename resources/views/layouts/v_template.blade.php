@@ -128,5 +128,7 @@
 
     <!-- JavaScripts initializations and stuff -->
     <script src="{{ asset('public/template') }}/assets/js/xenon-custom.js"></script>
+
+ 
 </body>
 </html>
