@@ -29,6 +29,7 @@
     <link rel="shortcut icon" href="{{ asset('public/favicon/favicon.ico') }}">
 
     <script src="{{ asset('public/template') }}/assets/js/jquery-1.11.1.min.js"></script>
+    
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -129,6 +130,37 @@
     <!-- JavaScripts initializations and stuff -->
     <script src="{{ asset('public/template') }}/assets/js/xenon-custom.js"></script>
 
- 
+    <script>
+    // Additional JavaScript for enhanced animations
+    document.addEventListener('DOMContentLoaded', function() {
+        const widgets = document.querySelectorAll('.animated-widget');
+        
+        widgets.forEach(widget => {
+            // Add click animation
+            widget.addEventListener('click', function() {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+            });
+            
+            // Intersection Observer for scroll animations
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            widget.style.opacity = '0';
+            widget.style.transform = 'translateY(20px)';
+            widget.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            
+            observer.observe(widget);
+        });
+    });
+    </script>
 </body>
 </html>
