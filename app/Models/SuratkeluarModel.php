@@ -33,9 +33,9 @@ class SuratkeluarModel extends Model
         return DB::table('tb_surat_keluar')->orderBy('tgl_surat', 'desc')->get();
     }
 
-    public function detailData($id_suratkeluar)
+    public function detailData($id)
     {
-        return DB::table('tb_surat_keluar')->where('id_suratkeluar', $id_suratkeluar)->first();
+        return DB::table('tb_surat_keluar')->where('id', $id)->first();
     }
 
     public function addData($data)
@@ -43,13 +43,13 @@ class SuratkeluarModel extends Model
         DB::table('tb_surat_keluar')->insert($data);
     }
 
-    public function editData($id_suratkeluar, $data)
+    public function editData($id, $data)
     {
-        DB::table('tb_surat_keluar')->where('id_suratkeluar', $id_suratkeluar)->update($data);
+        DB::table('tb_surat_keluar')->where('id', $id)->update($data);
     }
 
-    public function deleteData($id_suratkeluar)
+    public function deleteData($id)
     {
-        DB::table('tb_surat_keluar')->where('id_suratkeluar', $id_suratkeluar)->delete();
+        DB::table('tb_surat_keluar')->where('id', $id)->delete();
     }
 }

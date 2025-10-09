@@ -15,9 +15,9 @@ class BankputModel extends Model
             ->orderBy('tgl_put_banding', 'desc')->get();
     }
 
-    public function detailData($id_bankput)
+    public function detailData($id)
     {
-        return DB::table('tb_bank_putusan')->where('id_bankput', $id_bankput)->first();
+        return DB::table('tb_bank_putusan')->where('id', $id)->first();
     }
 
     public function addData($data)
@@ -25,13 +25,13 @@ class BankputModel extends Model
         DB::table('tb_bank_putusan')->insert($data);
     }
 
-    public function editData($id_bankput, $data)
+    public function editData($id, $data)
     {
-        DB::table('tb_bank_putusan')->where('id_bankput', $id_bankput)->update($data);
+        DB::table('tb_bank_putusan')->where('id', $id)->update($data);
     }
 
-    public function deleteData($id_bankput)
+    public function deleteData($id)
     {
-        DB::table('tb_bank_putusan')->where('id_bankput', $id_bankput)->delete();
+        DB::table('tb_bank_putusan')->where('id', $id)->delete();
     }
 }

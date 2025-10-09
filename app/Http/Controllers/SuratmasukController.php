@@ -61,14 +61,14 @@ class SuratmasukController extends Controller
     }
 
     //Detail
-    public function detail($id_suratmasuk)
+    public function detail($id)
     {
-        if (!$this->SuratmasukModel->detailData($id_suratmasuk)) {
+        if (!$this->SuratmasukModel->detailData($id)) {
             abort(404);
         }
         $data = [
             'title' => 'Detail',
-            'suratmasuk' => $this->SuratmasukModel->detailData($id_suratmasuk),
+            'suratmasuk' => $this->SuratmasukModel->detailData($id),
         ];
         return view('/surat_masuk/v_detail_suratmasuk', $data);
     }
@@ -155,9 +155,9 @@ class SuratmasukController extends Controller
         return redirect()->route('suratmasuk_berjalan')->with('pesan', 'Data Berhasil Ditambahkan !!');
     }
 
-    public function edit($id_suratmasuk)
+    public function edit($id)
     {
-        $suratmasuk = $this->SuratmasukModel->detailData($id_suratmasuk);
+        $suratmasuk = $this->SuratmasukModel->detailData($id);
 
         if (!$suratmasuk) {
             abort(404, 'Data surat masuk tidak ditemukan');
@@ -173,7 +173,7 @@ class SuratmasukController extends Controller
     }
 
     // Update Data
-    public function update($id_suratmasuk)
+    public function update($id)
     {
         // Validasi data input
         Request()->validate([
@@ -182,7 +182,7 @@ class SuratmasukController extends Controller
             'tgl_surat' => 'required|date|before_or_equal:today',
             'no_indeks' => 'required|integer|digits_between:1,11',
             'asal_surat' => 'required',
-            'no_surat' => 'required|max:255|unique:tb_surat_masuk,no_surat,' . $id_suratmasuk . ',id_suratmasuk',
+            'no_surat' => 'required|max:255|unique:tb_surat_masuk,no_surat,' . $id . ',id',
             'perihal' => 'required',
             'lampiran' => 'nullable|mimes:pdf|max:1024',
             'disposisi' => 'required',
@@ -207,7 +207,7 @@ class SuratmasukController extends Controller
         ]);
 
         // Ambil data surat masuk yang akan diupdate
-        $suratmasuk = $this->SuratmasukModel->detailData($id_suratmasuk);
+        $suratmasuk = $this->SuratmasukModel->detailData($id);
 
         if (!$suratmasuk) {
             return back()->with('error', 'Data surat masuk tidak ditemukan!');
@@ -253,15 +253,15 @@ class SuratmasukController extends Controller
         }
 
         // Update data
-        $this->SuratmasukModel->editData($id_suratmasuk, $data);
+        $this->SuratmasukModel->editData($id, $data);
 
         return redirect()->route('suratmasuk_berjalan')->with('pesan', 'Data Berhasil Diupdate !!');
     }
 
-    public function delete($id_suratmasuk)
+    public function delete($id)
     {
         // Cari data surat masuk
-        $suratmasuk = $this->SuratmasukModel->detailData($id_suratmasuk);
+        $suratmasuk = $this->SuratmasukModel->detailData($id);
 
         if (!$suratmasuk) {
             return back()->with('error', 'Data surat masuk tidak ditemukan!');
@@ -273,7 +273,7 @@ class SuratmasukController extends Controller
         }
 
         // Hapus data dari database
-        $this->SuratmasukModel->deleteData($id_suratmasuk);
+        $this->SuratmasukModel->deleteData($id);
 
         return redirect()->route('suratmasuk_berjalan')->with('pesan', 'Data Berhasil Dihapus !!');
     }

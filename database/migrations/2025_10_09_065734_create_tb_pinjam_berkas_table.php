@@ -15,6 +15,13 @@ class CreateTbPinjamBerkasTable extends Migration
     {
         Schema::create('tb_pinjam_berkas', function (Blueprint $table) {
             $table->id();
+            $table->string('nama_peminjam', 255);
+            $table->string('no_banding', 255);
+            $table->date('tgl_pinjam');
+            $table->date('tgl_kembali')->nullable();
+            $table->string('bkt_pinjam', 1000)->nullable();
+            $table->string('bkt_kembali', 1000)->nullable();
+            $table->string('keterangan', 255)->nullable();
             $table->timestamps();
         });
     }

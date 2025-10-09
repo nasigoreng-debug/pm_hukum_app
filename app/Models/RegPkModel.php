@@ -18,9 +18,9 @@ class RegPkModel extends Model
             
     }
 
-    public function detailData($id_reg_pk)
+    public function detailData($id)
     {
-        return DB::table('tb_reg_pk')->where('id_reg_pk', $id_reg_pk)->first();
+        return DB::table('tb_reg_pk')->where('id', $id)->first();
     }
 
     public function addData($data)
@@ -28,13 +28,13 @@ class RegPkModel extends Model
         DB::table('tb_reg_pk')->insert($data);
     }
 
-    public function editData($id_reg_pk, $data)
+    public function editData($id, $data)
     {
-        DB::table('tb_reg_pk')->where('id_reg_pk', $id_reg_pk)->update($data);
+        DB::table('tb_reg_pk')->where('id', $id)->update($data);
     }
 
-    public function deleteData($id_reg_pk)
+    public function deleteData($id)
     {
-        DB::table('tb_reg_pk')->where('id_reg_pk', $id_reg_pk)->delete();
+        DB::table('tb_reg_pk')->where('id', $id)->delete();
     }
 }

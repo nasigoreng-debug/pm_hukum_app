@@ -15,9 +15,9 @@ class RegKasasiModel extends Model
         //     ->orderBy('tgl_masuk', 'desc')->get();
     }
 
-    public function detailData($id_reg_kasasi)
+    public function detailData($id)
     {
-        return DB::table('tb_reg_kasasi')->where('id_reg_kasasi', $id_reg_kasasi)->first();
+        return DB::table('tb_reg_kasasi')->where('id', $id)->first();
     }
 
     public function addData($data)
@@ -25,13 +25,13 @@ class RegKasasiModel extends Model
         DB::table('tb_reg_kasasi')->insert($data);
     }
 
-    public function editData($id_reg_kasasi, $data)
+    public function editData($id, $data)
     {
-        DB::table('tb_reg_kasasi')->where('id_reg_kasasi', $id_reg_kasasi)->update($data);
+        DB::table('tb_reg_kasasi')->where('id', $id)->update($data);
     }
 
-    public function deleteData($id_reg_kasasi)
+    public function deleteData($id)
     {
-        DB::table('tb_reg_kasasi')->where('id_reg_kasasi', $id_reg_kasasi)->delete();
+        DB::table('tb_reg_kasasi')->where('id', $id)->delete();
     }
 }

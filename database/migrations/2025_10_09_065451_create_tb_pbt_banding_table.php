@@ -15,6 +15,12 @@ class CreateTbPbtBandingTable extends Migration
     {
         Schema::create('tb_pbt_banding', function (Blueprint $table) {
             $table->id();
+            $table->date('tgl_masuk');
+            $table->string('no_banding', 255);
+            $table->string('no_pa', 255);
+            $table->date('tgl_pbt_p')->nullable();
+            $table->date('tgl_pbt_t')->nullable();
+            $table->string('pbt_put', 1000)->nullable();
             $table->timestamps();
         });
     }

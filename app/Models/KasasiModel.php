@@ -24,9 +24,9 @@ class KasasiModel extends Model
         //     ->get();
     }
 
-    public function detailData($id_kasasi)
+    public function detailData($id)
     {
-        return DB::table('tb_kasasi')->where('id_kasasi', $id_kasasi)->first();
+        return DB::table('tb_kasasi')->where('id', $id)->first();
     }
 
     public function addData($data)
@@ -34,13 +34,13 @@ class KasasiModel extends Model
         DB::table('tb_kasasi')->insert($data);
     }
 
-    public function editData($id_kasasi, $data)
+    public function editData($id, $data)
     {
-        DB::table('tb_kasasi')->where('id_kasasi', $id_kasasi)->update($data);
+        DB::table('tb_kasasi')->where('id', $id)->update($data);
     }
 
-    public function deleteData($id_kasasi)
+    public function deleteData($id)
     {
-        DB::table('tb_kasasi')->where('id_kasasi', $id_kasasi)->delete();
+        DB::table('tb_kasasi')->where('id', $id)->delete();
     }
 }

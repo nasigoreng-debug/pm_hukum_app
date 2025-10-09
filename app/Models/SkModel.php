@@ -12,9 +12,9 @@ class SkModel extends Model
         return DB::table('tb_sk')->orderBy('tgl_sk', 'desc')->get();
     }
 
-    public function detailData($id_sk)
+    public function detailData($id)
     {
-        return DB::table('tb_sk')->where('id_sk', $id_sk)->first();
+        return DB::table('tb_sk')->where('id', $id)->first();
     }
 
     public function addData($data)
@@ -22,13 +22,13 @@ class SkModel extends Model
         DB::table('tb_sk')->insert($data);
     }
 
-    public function editData($id_sk, $data)
+    public function editData($id, $data)
     {
-        DB::table('tb_sk')->where('id_sk', $id_sk)->update($data);
+        DB::table('tb_sk')->where('id', $id)->update($data);
     }
 
-    public function deleteData($id_sk)
+    public function deleteData($id)
     {
-        DB::table('tb_sk')->where('id_sk', $id_sk)->delete();
+        DB::table('tb_sk')->where('id', $id)->delete();
     }
 }

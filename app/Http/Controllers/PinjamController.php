@@ -25,14 +25,14 @@ class PinjamController extends Controller
             ->with("sekarang", $sekarang);
     }
 
-    public function detail($id_pinjam)
+    public function detail($id)
     {
-        if (!$this->PinjamModel->detailData($id_pinjam)) {
+        if (!$this->PinjamModel->detailData($id)) {
             abort(404);
         }
         $data = [
             'title' => 'Detail',
-            'pinjam' => $this->PinjamModel->detailData($id_pinjam),
+            'pinjam' => $this->PinjamModel->detailData($id),
         ];
         return view('/pinjam_berkas/v_detail_pinjam', $data);
     }
@@ -90,19 +90,19 @@ class PinjamController extends Controller
         return redirect()->route('pinjam')->with('pesan', 'Data Berhasil Ditambahkan !!');
     }
 
-    public function edit($id_pinjam)
+    public function edit($id)
     {
-        if (!$this->PinjamModel->detailData($id_pinjam)) {
+        if (!$this->PinjamModel->detailData($id)) {
             abort(404);
         }
         $data = [
             'title' => 'Edit',
-            'pinjam' => $this->PinjamModel->detailData($id_pinjam),
+            'pinjam' => $this->PinjamModel->detailData($id),
         ];
         return view('/pinjam_berkas/v_edit_pinjam', $data);
     }
 
-    public function update($id_pinjam)
+    public function update($id)
     {
         Request()->validate([
             'nama_peminjam' => 'required',
@@ -159,24 +159,24 @@ class PinjamController extends Controller
                 'keterangan' => Request()->keterangan,
             ];
         }
-        $this->PinjamModel->editData($id_pinjam, $data);
+        $this->PinjamModel->editData($id, $data);
         return redirect()->route('pinjam')->with('pesan', 'Data Berhasil Diupdate !!');
     }
 
-    public function delete($id_pinjam)
+    public function delete($id)
     {
         //hapus file
-        $pinjam = $this->PinjamModel->detailData($id_pinjam);
+        $pinjam = $this->PinjamModel->detailData($id);
         if ($pinjam->bkt_pinjam <> "") {
             unlink(public_path('dokumen_pinjam/bkt_pinjam') . '/' . $pinjam->bkt_pinjam);
         }
 
-        $pinjam = $this->PinjamModel->detailData($id_pinjam);
+        $pinjam = $this->PinjamModel->detailData($id);
         if ($pinjam->bkt_kembali <> "") {
             unlink(public_path('dokumen_pinjam/bkt_kembali') . '/' . $pinjam->bkt_kembali);
         }
 
-        $this->PinjamModel->deleteData($id_pinjam);
+        $this->PinjamModel->deleteData($id);
         return redirect()->route('pinjam')->with('pesan', 'Data Berhasil Dihapus !!');
     }
 }

@@ -14,7 +14,7 @@
 
     <div class="panel-body">
 
-        <form action="/arsip/update/{{$arsip_perkara->id_banding}}" method="POST" enctype="multipart/form-data">
+        <form action="/arsip/update/{{$arsip_perkara->id}}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="row">
                 <!-- left column -->

@@ -22,14 +22,14 @@ class KasasiController extends Controller
         return view('/kasasi/v_kasasi', $data);
     }
 
-    public function detail($id_kasasi)
+    public function detail($id)
     {
-        if (!$this->KasasiModel->detailData($id_kasasi)) {
+        if (!$this->KasasiModel->detailData($id)) {
             abort(404);
         }
         $data = [
             'title' => 'Detail',
-            'kasasi' => $this->KasasiModel->detailData($id_kasasi),
+            'kasasi' => $this->KasasiModel->detailData($id),
         ];
         return view('/kasasi/v_detail_kasasi', $data);
     }
@@ -101,19 +101,19 @@ class KasasiController extends Controller
         return redirect()->route('kasasi')->with('pesan', 'Data Berhasil Ditambahkan !!');
     }
 
-    public function edit($id_kasasi)
+    public function edit($id)
     {
-        if (!$this->KasasiModel->detailData($id_kasasi)) {
+        if (!$this->KasasiModel->detailData($id)) {
             abort(404);
         }
         $data = [
             'title' => 'Edit',
-            'kasasi' => $this->KasasiModel->detailData($id_kasasi),
+            'kasasi' => $this->KasasiModel->detailData($id),
         ];
         return view('/kasasi/v_edit_kasasi', $data);
     }
 
-    public function update($id_kasasi)
+    public function update($id)
     {
         Request()->validate([
             // 'pa_pengaju' => 'required',
@@ -168,7 +168,7 @@ class KasasiController extends Controller
                 'salput_kasasi' => $fileName,
             ];
 
-            $this->KasasiModel->editData($id_kasasi, $data);
+            $this->KasasiModel->editData($id, $data);
         } else {
             //Jika tidak ganti file
             //upload file
@@ -186,20 +186,20 @@ class KasasiController extends Controller
                 'status_put' => Request()->status_put,
             ];
 
-            $this->KasasiModel->editData($id_kasasi, $data);
+            $this->KasasiModel->editData($id, $data);
         }
         return redirect()->route('kasasi')->with('pesan', 'Data Berhasil Diupdate !!');
     }
 
-    public function delete($id_kasasi)
+    public function delete($id)
     {
         //hapus file
-        $kasasi = $this->KasasiModel->detailData($id_kasasi);
+        $kasasi = $this->KasasiModel->detailData($id);
         if ($kasasi->salput_kasasi <> "") {
             unlink(public_path('kasasi_perkara_putusan') . '/' . $kasasi->salput_kasasi);
         }
 
-        $this->KasasiModel->deleteData($id_kasasi);
+        $this->KasasiModel->deleteData($id);
         return redirect()->route('kasasi')->with('pesan', 'Data Berhasil Dihapus !!');
     }
 }

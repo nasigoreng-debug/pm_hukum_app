@@ -21,14 +21,14 @@ class UpayahukumController extends Controller
         return view('/upaya_hukum/v_uphukum', $data);
     }
 
-    public function detail($id_uphukum)
+    public function detail($id)
     {
-        if (!$this->UpayahukumModel->detailData($id_uphukum)) {
+        if (!$this->UpayahukumModel->detailData($id)) {
             abort(404);
         }
         $data = [
             'title' => 'Detail',
-            'uphukum' => $this->UpayahukumModel->detailData($id_uphukum),
+            'uphukum' => $this->UpayahukumModel->detailData($id),
         ];
         return view('/upaya_hukum/v_detail_uphukum', $data);
     }
@@ -94,19 +94,19 @@ class UpayahukumController extends Controller
         return redirect()->route('uphukum')->with('pesan', 'Data Berhasil Ditambahkan !!');
     }
 
-    public function edit($id_uphukum)
+    public function edit($id)
     {
-        if (!$this->UpayahukumModel->detailData($id_uphukum)) {
+        if (!$this->UpayahukumModel->detailData($id)) {
             abort(404);
         }
         $data = [
             'title' => 'Edit',
-            'uphukum' => $this->UpayahukumModel->detailData($id_uphukum),
+            'uphukum' => $this->UpayahukumModel->detailData($id),
         ];
         return view('/upaya_hukum/v_edit_uphukum', $data);
     }
 
-    public function update($id_uphukum)
+    public function update($id)
     {
         Request()->validate([
             'pa_pengaju' => 'required',
@@ -152,15 +152,15 @@ class UpayahukumController extends Controller
             'keterangan' => Request()->keterangan,
         ];
 
-        $this->UpayahukumModel->editData($id_uphukum, $data);
+        $this->UpayahukumModel->editData($id, $data);
         return redirect()->route('uphukum')->with('pesan', 'Data Berhasil Diupdate !!');
     }
 
-    public function delete($id_uphukum)
+    public function delete($id)
     {
         //hapus file
 
-        $this->UpayahukumModel->deleteData($id_uphukum);
+        $this->UpayahukumModel->deleteData($id);
         return redirect()->route('uphukum')->with('pesan', 'Data Berhasil Dihapus !!');
     }
 }

@@ -42,9 +42,9 @@ class SuratmasukModel extends Model
         ->get();
     }
 
-    public function detailData($id_suratmasuk)
+    public function detailData($id)
     {
-        return DB::table('tb_surat_masuk')->where('id_suratmasuk', $id_suratmasuk)->first();
+        return DB::table('tb_surat_masuk')->where('id', $id)->first();
     }
 
     public function addData($data)
@@ -52,14 +52,14 @@ class SuratmasukModel extends Model
         DB::table('tb_surat_masuk')->insert($data);
     }
 
-    public function editData($id_suratmasuk, $data)
+    public function editData($id, $data)
     {
-        DB::table('tb_surat_masuk')->where('id_suratmasuk', $id_suratmasuk)->update($data);
+        DB::table('tb_surat_masuk')->where('id', $id)->update($data);
     }
 
-    public function deleteData($id_suratmasuk)
+    public function deleteData($id)
     {
-        DB::table('tb_surat_masuk')->where('id_suratmasuk', $id_suratmasuk)->delete();
+        DB::table('tb_surat_masuk')->where('id', $id)->delete();
     }
 
     public function getCreatedAtAttribute()

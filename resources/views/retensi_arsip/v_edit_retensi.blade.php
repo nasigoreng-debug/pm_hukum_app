@@ -14,7 +14,7 @@
 
     <div class="panel-body">
 
-        <form action="/retensi/update/{{$retensi->id_retensi}}" method="POST" enctype="multipart/form-data">
+        <form action="/retensi/update/{{$retensi->id}}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="row">
                 <!-- left column -->

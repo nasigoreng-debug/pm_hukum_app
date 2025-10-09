@@ -59,14 +59,14 @@ class SuratkeluarController extends Controller
     }
 
     //Detail
-    public function detail($id_suratkeluar)
+    public function detail($id)
     {
-        if (!$this->SuratkeluarModel->detailData($id_suratkeluar)) {
+        if (!$this->SuratkeluarModel->detailData($id)) {
             abort(404);
         }
         $data = [
             'title' => 'Detail',
-            'suratkeluar' => $this->SuratkeluarModel->detailData($id_suratkeluar),
+            'suratkeluar' => $this->SuratkeluarModel->detailData($id),
         ];
         return view('/surat_keluar/v_detail_suratkeluar', $data);
     }
@@ -173,20 +173,20 @@ class SuratkeluarController extends Controller
     }
 
     //Edit Data
-    public function edit($id_suratkeluar)
+    public function edit($id)
     {
-        if (!$this->SuratkeluarModel->detailData($id_suratkeluar)) {
+        if (!$this->SuratkeluarModel->detailData($id)) {
             abort(404);
         }
         $data = [
             'title' => 'Edit',
-            'suratkeluar' => $this->SuratkeluarModel->detailData($id_suratkeluar),
+            'suratkeluar' => $this->SuratkeluarModel->detailData($id),
         ];
         return view('/surat_keluar/v_edit_suratkeluar', $data);
     }
 
     //Update Data
-    public function update($id_suratkeluar)
+    public function update($id)
     {
         Request()->validate([
             'no_surat' => 'required',
@@ -211,7 +211,7 @@ class SuratkeluarController extends Controller
         ]);
 
         //jika validasi tidak ada maka lakukan simpan data
-        // $suratkeluar = $this->SuratkeluarModel->detailData($id_suratkeluar);
+        // $suratkeluar = $this->SuratkeluarModel->detailData($id);
 
         // if (Request()->surat_pta <> "" && Request()->konsep_surat <> "") {
         //     $surat_ptaPath = public_path('surat_keluar') . '/' . $suratkeluar->surat_pta;
@@ -265,7 +265,7 @@ class SuratkeluarController extends Controller
                 'keterangan' => Request()->keterangan,
             ];
 
-            $this->SuratkeluarModel->editData($id_suratkeluar, $data);
+            $this->SuratkeluarModel->editData($id, $data);
 
             return redirect()->route('suratkeluar_berjalan')->with('pesan', 'Data Berhasil Diupdate !!');
         } elseif (Request()->surat_pta <> "") {
@@ -284,7 +284,7 @@ class SuratkeluarController extends Controller
                 'keterangan' => Request()->keterangan,
             ];
 
-            $this->SuratkeluarModel->editData($id_suratkeluar, $data);
+            $this->SuratkeluarModel->editData($id, $data);
 
             return redirect()->route('suratkeluar_berjalan')->with('pesan', 'Data Berhasil Diupdate !!');
         } elseif (Request()->surat_pta <> "") {
@@ -304,7 +304,7 @@ class SuratkeluarController extends Controller
                 'keterangan' => Request()->keterangan,
             ];
 
-            $this->SuratkeluarModel->editData($id_suratkeluar, $data);
+            $this->SuratkeluarModel->editData($id, $data);
 
             return redirect()->route('suratkeluar_berjalan')->with('pesan', 'Data Berhasil Diupdate !!');
         } elseif (Request()->konsep_surat <> "") {
@@ -322,7 +322,7 @@ class SuratkeluarController extends Controller
                 'keterangan' => Request()->keterangan,
             ];
 
-            $this->SuratkeluarModel->editData($id_suratkeluar, $data);
+            $this->SuratkeluarModel->editData($id, $data);
 
             return redirect()->route('suratkeluar_berjalan')->with('pesan', 'Data Berhasil Diupdate !!');
         }else{
@@ -335,16 +335,16 @@ class SuratkeluarController extends Controller
                 'keterangan' => Request()->keterangan,
             ];
 
-            $this->SuratkeluarModel->editData($id_suratkeluar, $data);
+            $this->SuratkeluarModel->editData($id, $data);
             return redirect()->route('suratkeluar_berjalan')->with('pesan', 'Data Berhasil Diupdate !!');
         }
     }
 
-    public function delete($id_suratkeluar)
+    public function delete($id)
     {
         try {
             // Ambil data surat keluar
-            $suratkeluar = $this->SuratkeluarModel->detailData($id_suratkeluar);
+            $suratkeluar = $this->SuratkeluarModel->detailData($id);
 
             if (!$suratkeluar) {
                 return redirect()->route('suratkeluar_berjalan')->with('pesan', 'Data tidak ditemukan!');
@@ -354,7 +354,7 @@ class SuratkeluarController extends Controller
             $this->deleteRelatedFiles($suratkeluar);
 
             // Hapus data dari database
-            $this->SuratkeluarModel->deleteData($id_suratkeluar);
+            $this->SuratkeluarModel->deleteData($id);
 
             return redirect()->route('suratkeluar_berjalan')->with('pesan', 'Data berhasil dihapus!');
         } catch (\Exception $e) {

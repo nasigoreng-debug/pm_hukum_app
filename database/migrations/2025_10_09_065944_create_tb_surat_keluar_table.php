@@ -15,6 +15,14 @@ class CreateTbSuratKeluarTable extends Migration
     {
         Schema::create('tb_surat_keluar', function (Blueprint $table) {
             $table->id();
+            $table->string('no_surat', 255);
+            $table->date('tgl_surat');
+            $table->string('tujuan_surat', 100);
+            $table->string('perihal', 1000);
+            $table->string('surat_pta', 1000)->nullable();
+            $table->string('konsep_surat', 1000)->nullable();
+            $table->string('lampiran', 1000)->nullable();
+            $table->string('keterangan', 100)->nullable();
             $table->timestamps();
         });
     }

@@ -128,18 +128,10 @@
                         <span class="title">Surat Masuk</span>
                     </a>
                 </li>
-                <li class="opened {{ ( $title === 'Surat Masuk') ? 'active' : ''}}">
-                    <a href="#">
+                <li class="opened {{ ( $title === 'Laporan') ? 'active' : ''}}">
+                    <a href="/laporan">
                         <i class="fa fa-file-text-o"></i>
-                        <span class="title">Laporan Tahunan</span>
-                        <span class="title">Coming Soon....</span>
-                    </a>
-                </li>
-                <li class="opened {{ ( $title === 'Surat Masuk') ? 'active' : ''}}">
-                    <a href="#">
-                        <i class="fa fa-file-text-o"></i>
-                        <span class="title">LKJIP</span>
-                        <span class="title">Coming Soon....</span>
+                        <span class="title">Laporan</span>
                     </a>
                 </li>
                 <li class="opened {{ ( $title === 'Member') ? 'active' : ''}}">
@@ -247,18 +239,10 @@
                         <span class="title">Surat Keluar</span>
                     </a>
                 </li>
-                <li class="opened {{ ( $title === 'Surat Masuk') ? 'active' : ''}}">
-                    <a href="#">
+                <li class="opened {{ ( $title === 'Laporan') ? 'active' : ''}}">
+                    <a href="/laporan">
                         <i class="fa fa-file-text-o"></i>
-                        <span class="title">Laporan Tahunan</span>
-                        <span class="title">Coming Soon....</span>
-                    </a>
-                </li>
-                <li class="opened {{ ( $title === 'Surat Masuk') ? 'active' : ''}}">
-                    <a href="#">
-                        <i class="fa fa-file-text-o"></i>
-                        <span class="title">LKJIP</span>
-                        <span class="title">Coming Soon....</span>
+                        <span class="title">Laporan</span>
                     </a>
                 </li>
                 
@@ -348,18 +332,10 @@
                         <span class="title">Surat Keluar</span>
                     </a>
                 </li>
-                <li class="opened {{ ( $title === 'Surat Masuk') ? 'active' : ''}}">
-                    <a href="#">
+                <li class="opened {{ ( $title === 'Laporan') ? 'active' : ''}}">
+                    <a href="/laporan">
                         <i class="fa fa-file-text-o"></i>
-                        <span class="title">Laporan Tahunan</span>
-                        <span class="title">Coming Soon....</span>
-                    </a>
-                </li>
-                <li class="opened {{ ( $title === 'Surat Masuk') ? 'active' : ''}}">
-                    <a href="#">
-                        <i class="fa fa-file-text-o"></i>
-                        <span class="title">LKJIP</span>
-                        <span class="title">Coming Soon....</span>
+                        <span class="title">Laporan</span>
                     </a>
                 </li>
             @endif

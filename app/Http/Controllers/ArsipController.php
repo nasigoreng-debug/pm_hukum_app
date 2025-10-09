@@ -7,8 +7,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
-
-
 class ArsipController extends Controller
 {
     public function __construct()
@@ -16,15 +14,6 @@ class ArsipController extends Controller
         $this->ArsipModel = new ArsipModel();
         $this->middleware('auth');
     }
-    // public function index()
-    // {
-
-    //     $data = [
-    //         'title' => 'Arsip Perkara',
-    //         'arsip' => $this->ArsipModel->allData(),
-    //     ];
-    //     return view('/arsip/v_arsip_perkara', $data);
-    // }
 
     public function index()
     {
@@ -34,12 +23,11 @@ class ArsipController extends Controller
         ];
 
         $arsip_perkara_total = DB::table('tb_arsip_perkara')->count();
-
         $arsip_perkara_blm_upload = DB::table('tb_arsip_perkara')->whereNull('bundel_b')->count();
-
         $arsip_perkara_upload = DB::table('tb_arsip_perkara')->whereNotNull('bundel_b')->count();
 
-        $arsip_perkara_progres = $arsip_perkara_upload / $arsip_perkara_total * 100;
+        // Hindari division by zero dengan ternary operator
+        $arsip_perkara_progres = $arsip_perkara_total > 0 ? ($arsip_perkara_upload / $arsip_perkara_total * 100) : 0;
         $arsip_perkara_presentase = round($arsip_perkara_progres);
 
         return view('/arsip/v_dashboard_arsip_perkara', $data, compact(
@@ -83,7 +71,6 @@ class ArsipController extends Controller
 
     public function arsip_now()
     {
-
         $data = [
             'title' => 'Arsip Perkara',
             'arsip_perkara' => $this->ArsipModel->arsip_now(),
@@ -93,14 +80,14 @@ class ArsipController extends Controller
     }
 
     //Detail
-    public function detail($id_banding)
+    public function detail($id)
     {
-        if (!$this->ArsipModel->detailData($id_banding)) {
+        if (!$this->ArsipModel->detailData($id)) {
             abort(404);
         }
         $data = [
             'title' => 'Detail',
-            'arsip_perkara' => $this->ArsipModel->detailData($id_banding),
+            'arsip_perkara' => $this->ArsipModel->detailData($id),
         ];
         return view('/arsip/v_detail_arsip', $data);
     }
@@ -153,7 +140,6 @@ class ArsipController extends Controller
             'bundel_b.mimes' => 'Jenis file harus Rar/Zip!!',
             'bundel_b.max' => 'Ukuran file max 10Mb!!',
         ]);
-
 
         if (Request()->putusan <> "" && Request()->bundel_b <> "") {
             //jika validasi tidak ada maka lakukan simpan data
@@ -232,21 +218,21 @@ class ArsipController extends Controller
     }
 
     //Edit Data
-    public function edit($id_banding)
+    public function edit($id)
     {
-        if (!$this->ArsipModel->detailData($id_banding)) {
+        if (!$this->ArsipModel->detailData($id)) {
             abort(404);
         }
         $data = [
             'title' => 'Edit',
-            'arsip_perkara' => $this->ArsipModel->detailData($id_banding),
+            'arsip_perkara' => $this->ArsipModel->detailData($id),
             'user' => $this->ArsipModel->user(),
         ];
         return view('/arsip/v_edit_arsip', $data);
     }
 
     //Update Data
-    public function update($id_banding)
+    public function update($id)
     {
         Request()->validate([
             'no_banding' => 'required|max:255',
@@ -282,19 +268,6 @@ class ArsipController extends Controller
         ]);
 
         if (Request()->putusan <> "" && Request()->bundel_b <> "") {
-            //jika validasi tidak ada maka lakukan hapus file surat PTA dan kosnep jika ada
-            // $arsip_perkara = $this->ArsipModel->detailData($id_banding);
-
-            // $putusanPath = public_path('arsip_perkara_putusan') . '/' . $suratkeluar->putusan;
-            // if (file_exists($putusanPath)) {
-            //     unlink($putusanPath);
-            // }
-
-            // $bundel_bPath = public_path('bundel_b_arsip_perkara') . '/' . $suratkeluar->bundel_b_surat;
-            // if (file_exists($bundel_bPath)) {
-            //     unlink($bundel_bPath);
-            // }
-
             $file = Request()->putusan;
             $fileName = str_replace("/", "_",  Request()->no_banding) . '_' . 'Jo' . '_' . str_replace("/", "_",  Request()->no_pa) . '_' . date('dmYHis') . '.' . $file->extension();
             $file->move(public_path('arsip_perkara_putusan'), $fileName);
@@ -302,7 +275,6 @@ class ArsipController extends Controller
             $file = Request()->bundel_b;
             $fileNameZip = str_replace("/", "_",  Request()->no_banding) . '_' . 'Jo' . '_' . str_replace("/", "_",  Request()->no_pa) . '_' . date('dmYHis') . '.' . $file->extension();
             $file->move(public_path('bundel_b_arsip_perkara'), $fileNameZip);
-
 
             $data = [
                 'tgl_masuk' => Request()->tgl_masuk,
@@ -320,7 +292,7 @@ class ArsipController extends Controller
                 'bundel_b' => $fileNameZip,
             ];
 
-            $this->ArsipModel->editData($id_banding, $data);
+            $this->ArsipModel->editData($id, $data);
             return redirect()->route('arsip')->with('pesan', 'Data Berhasil Diupdate !!');
         } elseif (Request()->putusan <> "") {
             $file = Request()->putusan;
@@ -342,7 +314,7 @@ class ArsipController extends Controller
                 'putusan' => $fileName,
             ];
 
-            $this->ArsipModel->editData($id_banding, $data);
+            $this->ArsipModel->editData($id, $data);
             return redirect()->route('arsip')->with('pesan', 'Data Berhasil Diupdate !!');
         } elseif (Request()->bundel_b <> "") {
             $file = Request()->bundel_b;
@@ -364,7 +336,7 @@ class ArsipController extends Controller
                 'bundel_b' => $fileNameZip,
             ];
 
-            $this->ArsipModel->editData($id_banding, $data);
+            $this->ArsipModel->editData($id, $data);
             return redirect()->route('arsip')->with('pesan', 'Data Berhasil Diupdate !!');
         } else {
             $data = [
@@ -381,17 +353,17 @@ class ArsipController extends Controller
                 'tgl_alih_media' => Request()->tgl_alih_media,
             ];
 
-            $this->ArsipModel->editData($id_banding, $data);
+            $this->ArsipModel->editData($id, $data);
             return redirect()->route('arsip')->with('pesan', 'Data Berhasil Diupdate !!');
         }
     }
 
-    public function delete($id_banding)
+    public function delete($id)
     {
         //hapus Data
         try {
             // Ambil data surat keluar
-            $arsip_perkara = $this->ArsipModel->detailData($id_banding);
+            $arsip_perkara = $this->ArsipModel->detailData($id);
 
             if (!$arsip_perkara) {
                 return redirect()->route('arsip')->with('pesan', 'Data Berhasil Dihapus !!');
@@ -401,7 +373,7 @@ class ArsipController extends Controller
             $this->deleteRelatedFiles($arsip_perkara);
 
             // Hapus data dari database
-            $this->ArsipModel->deleteData($id_banding);
+            $this->ArsipModel->deleteData($id);
 
             return redirect()->route('arsip')->with('pesan', 'Data berhasil dihapus!');
         } catch (\Exception $e) {
@@ -411,7 +383,6 @@ class ArsipController extends Controller
 
     protected function deleteRelatedFiles($arsip_perkara)
     {
-
         if (!empty($arsip_perkara->putusan && $arsip_perkara->bundel_b)) {
             $putusanPath = public_path('arsip_perkara_putusan') . '/' . $arsip_perkara->putusan;
             if (file_exists($putusanPath)) {

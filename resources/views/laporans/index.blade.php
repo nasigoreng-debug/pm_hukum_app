@@ -5,7 +5,7 @@
 <!-- Basic Setup -->
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3 class="panel-title">Data Bank Putusan</h3>
+        <h3 class="panel-title">Data Laporan</h3>
 
         <div class="panel-options">
             <a href="#" data-toggle="panel">
@@ -33,9 +33,11 @@
         </script>
         <td class="text-center" style="font-size: 5px;">
             @if(Auth::user()->level===1)
-            <a href="/bankput/add" class="btn btn-sm btn-info mb-2">Tambah Data</a>
+            <a href="/laporan/create" class="btn btn-sm btn-info mb-2">Tambah Data</a>
+            <a href="/laporan" class="btn btn-sm btn-danger mb-2">Kembali</a>
             @elseif(Auth::user()->level===2)
-            <a href="/bankput/add" class="btn btn-sm btn-info mb-2">Tambah Data</a>
+            <a href="/laporan/create" class="btn btn-sm btn-info mb-2">Tambah Data</a>
+            <a href="/laporan" class="btn btn-sm btn-danger mb-2">Kembali</a>
             @elseif(Auth::user()->level===3)
 
             @endif
@@ -48,77 +50,53 @@
         </div>
         @endif
         <table class="table table-sm table-hover" id="example-4">
-            <thead class="bg-gray">
+            <thead class="bg-gray text-center">
                 <tr>
-                    <th style="width: 5px;">No</th>
-                    <!-- <th style="width: 30px;">Tanggal Register</th> -->
-                    <th style="width: 70px;">Nomor Banding</th>
-                    <th style="width: 30px;">Jenis Perkara</th>
-                    <!-- <th style="width: 70px;">Pembanding</th>
-                    <th style="width: 70px;">Terbanding</th> -->
-                    <th style="width: 30px;">Putus</th>
-                    <th style="width: 30px;">Status</th>
-                    <th style="width: 20px;">Putusan</th>
-                    <th style="width: 30px;">Anonimasi</th>
-                    <th style="width: 30px;">Keterangan</th>
-                    <th style="width: 50px;">Action</th>
+                    <th style="width: 20px;">No</th>
+                    <th style="width: 60px;">Jenis Laporan</th>
+                    <th style="width: 30px;">Tahun</th>
+                    <th style="width: 50px;">Tanggal</th>
+                    <th style="width: 200px;">Judul</th>
+                    <th style="width: 30px;">Dokumen</th>
+                    <th style="width: 60px;">Action</th>
                 </tr>
             </thead>
 
-            <tfoot class="bg-gray">
+            <tfoot class="bg-gray text-center">
                 <tr>
                     <th>No</th>
-                    <!-- <th>Tanggal Register</th> -->
-                    <th>Nomor Banding</thyle=>
-                    <th>Jenis Perkara</th>
-                    <!-- <th>Pembanding</th>
-                    <th>Terbanding</th> -->
-                    <th>Putus</th>
-                    <th>Status</th>
-                    <th>Putusan</th>
-                    <th>Anonimasi</th>
-                    <th>Keterangan</th>
+                    <th>Jenis Laporan</th>
+                    <th>Tahun</th>
+                    <th>Tanggal</th>
+                    <th>Judul</th>
+                    <th>Dokumen</th>
                     <th>Action</th>
                 </tr>
             </tfoot>
-
             <tbody>
-                @foreach ($bankput as $data)
+                @foreach ($laporans as $data)
                 <tr>
                     <td class="text-center">{{$loop->iteration}}</td>
+                    <td class="text-start">{{ $data->jenis_laporan }}</td>
+                    <td class="text-center">{{ $data->tahun }}</td>
+                    <td class="text-center">{{ date('d-m-Y', strtotime($data->tgl_laporan)) }}</td>
+                    <td>{{ $data->judul }}</td>
 
-                    <td>{{ $data->no_banding }}</td>
-                    <td>{{ $data->jenis_perkara }}</td>
                     <td class="text-center">
-                        @if($data->tgl_put_banding=="")
-                        "-"
-                        @else
-                        {{ date('d-m-Y', strtotime($data->tgl_put_banding)) }}
-                        @endif
-                    </td>
-                    <td>{{ $data->status_putus }}</td>
-                    <td class="text-center">
-                        @if($data->put_rtf=="")
+
+                        @if($data->dokumen=="")
 
                         @else
-                        <a href="public/bank_putusan_rtf/{{$data->put_rtf}}" class="text-blue" target="_blank"><i class="fa fa-file-pdf-o"></i></a>
+                        <a href="public/storage/laporans/{{$data->dokumen}}" class="text-blue"><i class="fa fa-file-pdf-o"></i></i></a>
                         @endif
-                    </td>
-                    <td class="text-center">
-                        @if($data->put_anonim=="")
 
-                        @else
-                        <a href="public/bank_putusan_anonim/{{$data->put_anonim}}" class="text-blue" target="_blank"><i class="fa fa-file-pdf-o"></i></a>
-                        @endif
                     </td>
-                    <td>{{ $data->keterangan }}</td>
-                    <!-- <td class="text-center"></td> -->
                     <td class="text-center" style="font-size: 5px;">
                         @if(Auth::user()->level===1)
                         <button type="button" class="btn btn-purple btn-xs" data-toggle="modal" data-target="#detail{{ $data->id }}">
-                            <i class="fa fa-eye"></i></a>
+                            <i class="fa fa-eye"></i>
                         </button>
-                        <a href="/bankput/edit/{{$data->id}}" class="btn btn-warning btn-xs">
+                        <a href="/laporan/edit/{{$data->id}}" class="btn btn-warning btn-xs">
                             <i class="fa fa-edit"></i>
                         </a>
                         <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#delete{{ $data->id }}">
@@ -126,57 +104,57 @@
                         </button>
                         @elseif(Auth::user()->level===2)
                         <button type="button" class="btn btn-purple btn-xs" data-toggle="modal" data-target="#detail{{ $data->id }}">
-                            <i class="fa fa-eye"></i></a>
+                            <i class="fa fa-eye"></i>
                         </button>
-                        <a href="/bankput/edit/{{$data->id}}" class="btn btn-warning btn-xs">
+                        <a href="/laporan/edit/{{$data->id}}" class="btn btn-warning btn-xs">
                             <i class="fa fa-edit"></i>
                         </a>
                         @elseif(Auth::user()->level===3)
                         <button type="button" class="btn btn-purple btn-xs" data-toggle="modal" data-target="#detail{{ $data->id }}">
-                            <i class="fa fa-eye"></i></a>
+                            <i class="fa fa-eye"></i>
                         </button>
                         @endif
                     </td>
                 </tr>
                 @endforeach
             </tbody>
-
         </table>
 
     </div>
 </div>
-@foreach ($bankput as $data)
+@foreach ($laporans as $data)
 
 <!-- Modal Detail -->
 <div class="modal fade" id="detail{{ $data->id }}" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 colspan="2" class="text-white text-center bg-success">Detail Bank Putusan</h4>
+                <h4 colspan="2" class="text-white text-center bg-success">Detail Laporan</h4>
             </div>
             <div class="modal-body">
                 <table class="table table-small-font table-bordered table-hover">
-                   
                     <tr class="text-start border">
-                        <td>Tanggal Putus Banding</td>
-                        <td>{{ date('d-m-Y', strtotime($data->tgl_put_banding)) }}</td>
+                        <td style="width: 200px;">Jenis Peraturan</td>
+                        <td>{{$data->jenis_laporan}}</td>
                     </tr>
                     <tr class="text-start border">
-                        <td>Putusan Akhir</td>
-                        <td>@if($data->put_rtf=="")
-                            ""
-                            @else
-                            <a href="bank_putusan_rtf/{{$data->put_rtf}}" class="text-blue" target="_blank"><i class="fa fa-file-pdf-o"></i></a>
-                            @endif
-                        </td>
+                        <td>Tanggal</td>
+                        <td>{{ date('d-m-Y', strtotime($data->tgl_laporan)) }}</td>
                     </tr>
                     <tr class="text-start border">
-                        <td>Putusan Anonimasi</td>
-                        <td> @if($data->put_anonim=="")
-                            ""
+                        <td>judul</td>
+                        <td>{{$data->judul}}</td>
+                    </tr>
+                    <tr class="text-start border">
+                        <td>Dokumen</td>
+                        <td>
+
+                            @if($data->dokumen=="")
+
                             @else
-                            <a href="bank_putusan_anonim/{{$data->put_anonim}}" class="text-blue" target="_blank"><i class="fa fa-file-pdf-o"></i></a>
+                            <a href="public/laporans/{{$data->dokumen}}" class="text-blue" target="_blank"><i class="fa fa-file-pdf-o"></i></i></a>
                             @endif
+
                         </td>
                     </tr>
                 </table>
@@ -194,17 +172,17 @@
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header">
-                <h6 class="modal-title">{{ $data->no_banding }} </h6>
+                <h6 class="modal-title">{{ $data->jenis_laporan }} judul {{ $data->judul }} </h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <p>Apakah anda ingin menghapus perkara ini?&hellip;</p>
+                <p>Apakah anda ingin menghapus laporan ini?&hellip;</p>
             </div>
             <div class="modal-footer justify-content-between">
-                <a href="/bankput/delete/{{$data->id}}" type="button" class="btn btn-sm btn-danger">Ya</a>
-                <button type="button" class="btn btn-sm btn-white" data-dismiss="modal">Tidak</button>
+                <a href="/laporan/destroy/{{$data->id}}" type="button" class="btn btn-xs btn-danger">Ya</a>
+                <button type="button" class="btn btn-xs btn-white" data-dismiss="modal">Tidak</button>
             </div>
         </div>
         <!-- /.modal-content -->

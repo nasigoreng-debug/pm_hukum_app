@@ -62,14 +62,14 @@ class SuratmasukController extends Controller
     }
 
     //Detail
-    public function detail($id_suratmasuk)
+    public function detail($id)
     {
-        if (!$this->SuratmasukModel->detailData($id_suratmasuk)) {
+        if (!$this->SuratmasukModel->detailData($id)) {
             abort(404);
         }
         $data = [
             'title' => 'Detail',
-            'suratmasuk' => $this->SuratmasukModel->detailData($id_suratmasuk),
+            'suratmasuk' => $this->SuratmasukModel->detailData($id),
         ];
         return view('/surat_masuk/v_detail_suratmasuk', $data);
     }
@@ -153,14 +153,14 @@ class SuratmasukController extends Controller
     }
 
     //Edit Data
-    public function edit($id_suratmasuk)
+    public function edit($id)
     {
-        if (!$this->SuratmasukModel->detailData($id_suratmasuk)) {
+        if (!$this->SuratmasukModel->detailData($id)) {
             abort(404);
         }
         $data = [
             'title' => 'Edit',
-            'suratmasuk' => $this->SuratmasukModel->detailData($id_suratmasuk),
+            'suratmasuk' => $this->SuratmasukModel->detailData($id),
             'user' => $this->SuratmasukModel->user(),
         ];
 
@@ -168,7 +168,7 @@ class SuratmasukController extends Controller
     }
 
     //Update Data
-    public function update($id_suratmasuk)
+    public function update($id)
     {
         Request()->validate([
             'tgl_masuk_pan' => 'required',
@@ -214,7 +214,7 @@ class SuratmasukController extends Controller
                 'keterangan' => Request()->keterangan,
             ];
 
-            $this->SuratmasukModel->editData($id_suratmasuk, $data);
+            $this->SuratmasukModel->editData($id, $data);
         } else {
             //Jika tidak ganti file
             //upload file
@@ -231,20 +231,20 @@ class SuratmasukController extends Controller
                 'keterangan' => Request()->keterangan,
             ];
 
-            $this->SuratmasukModel->editData($id_suratmasuk, $data);
+            $this->SuratmasukModel->editData($id, $data);
         }
         return redirect()->route('suratmasuk')->with('pesan', 'Data Berhasil Diupdate !!');
     }
 
-    public function delete($id_suratmasuk)
+    public function delete($id)
     {
         //hapus Data
-        $suratmasuk = $this->SuratmasukModel->detailData($id_suratmasuk);
+        $suratmasuk = $this->SuratmasukModel->detailData($id);
         if ($suratmasuk->lampiran <> "") {
             unlink(public_path('surat_masuk') . '/' . $suratmasuk->lampiran);
         }
 
-        $this->SuratmasukModel->deleteData($id_suratmasuk);
+        $this->SuratmasukModel->deleteData($id);
         return redirect()->route('suratmasuk')->with('pesan', 'Data Berhasil Dihapus !!');
     }
 

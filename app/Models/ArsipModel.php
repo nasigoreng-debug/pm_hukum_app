@@ -36,9 +36,9 @@ class ArsipModel extends Model
             ->get();
     }
 
-    public function detailData($id_banding)
+    public function detailData($id)
     {
-        return DB::table('tb_arsip_perkara')->where('id_banding', $id_banding)->first();
+        return DB::table('tb_arsip_perkara')->where('id', $id)->first();
     }
 
     public function addData($data)
@@ -46,14 +46,14 @@ class ArsipModel extends Model
         DB::table('tb_arsip_perkara')->insert($data);
     }
 
-    public function editData($id_banding, $data)
+    public function editData($id, $data)
     {
-        DB::table('tb_arsip_perkara')->where('id_banding', $id_banding)->update($data);
+        DB::table('tb_arsip_perkara')->where('id', $id)->update($data);
     }
 
-    public function deleteData($id_banding)
+    public function deleteData($id)
     {
-        DB::table('tb_arsip_perkara')->where('id_banding', $id_banding)->delete();
+        DB::table('tb_arsip_perkara')->where('id', $id)->delete();
     }
 
     public function arsip_perkara_upload()

@@ -15,9 +15,9 @@ class PinjamModel extends Model
         //     ->orderBy('tgl_pinjam', 'desc')->get();
     }
 
-    public function detailData($id_pinjam)
+    public function detailData($id)
     {
-        return DB::table('tb_pinjam_berkas')->where('id_pinjam', $id_pinjam)->first();
+        return DB::table('tb_pinjam_berkas')->where('id', $id)->first();
     }
 
     public function addData($data)
@@ -25,13 +25,13 @@ class PinjamModel extends Model
         DB::table('tb_pinjam_berkas')->insert($data);
     }
 
-    public function editData($id_pinjam, $data)
+    public function editData($id, $data)
     {
-        DB::table('tb_pinjam_berkas')->where('id_pinjam', $id_pinjam)->update($data);
+        DB::table('tb_pinjam_berkas')->where('id', $id)->update($data);
     }
 
-    public function deleteData($id_pinjam)
+    public function deleteData($id)
     {
-        DB::table('tb_pinjam_berkas')->where('id_pinjam', $id_pinjam)->delete();
+        DB::table('tb_pinjam_berkas')->where('id', $id)->delete();
     }
 }

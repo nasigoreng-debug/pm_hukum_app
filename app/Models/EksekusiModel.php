@@ -32,9 +32,9 @@ class EksekusiModel extends Model
             ->orderBy('tgl_permohonan', 'desc')->get();
     }
 
-    public function detailData($id_eks)
+    public function detailData($id)
     {
-        return DB::table('tb_eksekusi')->where('id_eks', $id_eks)->first();
+        return DB::table('tb_eksekusi')->where('id', $id)->first();
     }
 
     public function addData($data)
@@ -42,13 +42,13 @@ class EksekusiModel extends Model
         DB::table('tb_eksekusi')->insert($data);
     }
 
-    public function editData($id_eks, $data)
+    public function editData($id, $data)
     {
-        DB::table('tb_eksekusi')->where('id_eks', $id_eks)->update($data);
+        DB::table('tb_eksekusi')->where('id', $id)->update($data);
     }
 
-    public function deleteData($id_eks)
+    public function deleteData($id)
     {
-        DB::table('tb_eksekusi')->where('id_eks', $id_eks)->delete();
+        DB::table('tb_eksekusi')->where('id', $id)->delete();
     }
 }

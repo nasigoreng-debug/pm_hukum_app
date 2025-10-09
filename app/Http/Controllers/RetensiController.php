@@ -22,12 +22,11 @@ class RetensiController extends Controller
         ];
 
         $retensi_total = DB::table('tb_retensi_arsip')->count();
-
         $retensi_blm_selesai = DB::table('tb_retensi_arsip')->whereNull('putusan')->count();
-
         $retensi_selesai = DB::table('tb_retensi_arsip')->whereNotNull('putusan')->count();
 
-        $retensi_progres = $retensi_selesai / $retensi_total * 100;
+        // Hindari division by zero dengan ternary operator
+        $retensi_progres = $retensi_total > 0 ? ($retensi_selesai / $retensi_total * 100) : 0;
         $retensi_presentase = round($retensi_progres);
 
         return view('/retensi_arsip/v_retensi_dashboard', $data, compact(
@@ -69,14 +68,14 @@ class RetensiController extends Controller
         return view('/retensi_arsip/v_retensi', $data);
     }
 
-    public function detail($id_retensi)
+    public function detail($id)
     {
-        if (!$this->RetensiModel->detailData($id_retensi)) {
+        if (!$this->RetensiModel->detailData($id)) {
             abort(404);
         }
         $data = [
             'title' => 'Detail',
-            'retensi' => $this->RetensiModel->detailData($id_retensi),
+            'retensi' => $this->RetensiModel->detailData($id),
         ];
         return view('/retensi_arsip/v_detail_retensi', $data);
     }
@@ -147,19 +146,19 @@ class RetensiController extends Controller
         return redirect()->route('retensi')->with('pesan', 'Data Berhasil Ditambahkan !!');
     }
 
-    public function edit($id_retensi)
+    public function edit($id)
     {
-        if (!$this->RetensiModel->detailData($id_retensi)) {
+        if (!$this->RetensiModel->detailData($id)) {
             abort(404);
         }
         $data = [
             'title' => 'Edit',
-            'retensi' => $this->RetensiModel->detailData($id_retensi),
+            'retensi' => $this->RetensiModel->detailData($id),
         ];
         return view('/retensi_arsip/v_edit_retensi', $data);
     }
 
-    public function update($id_retensi)
+    public function update($id)
     {
         Request()->validate([
             'pa_pengaju' => 'required',
@@ -215,7 +214,7 @@ class RetensiController extends Controller
                 'putusan' => $fileName,
             ];
 
-            $this->RetensiModel->editData($id_retensi, $data);
+            $this->RetensiModel->editData($id, $data);
         } else {
             //Jika tidak ganti file
             //upload file
@@ -240,20 +239,20 @@ class RetensiController extends Controller
                 'tahun' => Request()->tahun,
             ];
 
-            $this->RetensiModel->editData($id_retensi, $data);
+            $this->RetensiModel->editData($id, $data);
         }
         return redirect()->route('retensi')->with('pesan', 'Data Berhasil Diupdate !!');
     }
 
-    public function delete($id_retensi)
+    public function delete($id)
     {
         //hapus file
-        $retensi = $this->RetensiModel->detailData($id_retensi);
+        $retensi = $this->RetensiModel->detailData($id);
         if ($retensi->putusan <> "") {
             unlink(public_path('retensi_arsip_perkara') . '/' . $retensi->putusan);
         }
 
-        $this->RetensiModel->deleteData($id_retensi);
+        $this->RetensiModel->deleteData($id);
         return redirect()->route('retensi')->with('pesan', 'Data Berhasil Dihapus !!');
     }
 }

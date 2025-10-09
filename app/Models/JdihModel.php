@@ -103,9 +103,9 @@ class JdihModel extends Model
             ->orderBy('tgl_peraturan', 'desc')->get();
     }
 
-    public function detailData($id_jdih)
+    public function detailData($id)
     {
-        return DB::table('tb_jdih')->where('id_jdih', $id_jdih)->first();
+        return DB::table('tb_jdih')->where('id', $id)->first();
     }
 
     public function addData($data)
@@ -113,13 +113,13 @@ class JdihModel extends Model
         DB::table('tb_jdih')->insert($data);
     }
 
-    public function editData($id_jdih, $data)
+    public function editData($id, $data)
     {
-        DB::table('tb_jdih')->where('id_jdih', $id_jdih)->update($data);
+        DB::table('tb_jdih')->where('id', $id)->update($data);
     }
 
-    public function deleteData($id_jdih)
+    public function deleteData($id)
     {
-        DB::table('tb_jdih')->where('id_jdih', $id_jdih)->delete();
+        DB::table('tb_jdih')->where('id', $id)->delete();
     }
 }

@@ -16,9 +16,9 @@ class UpayahukumModel extends Model
             ->get();
     }
 
-    public function detailData($id_uphukum)
+    public function detailData($id)
     {
-        return DB::table('tb_upy_hk')->where('id_uphukum', $id_uphukum)->first();
+        return DB::table('tb_upy_hk')->where('id', $id)->first();
     }
 
     public function addData($data)
@@ -26,13 +26,13 @@ class UpayahukumModel extends Model
         DB::table('tb_upy_hk')->insert($data);
     }
 
-    public function editData($id_uphukum, $data)
+    public function editData($id, $data)
     {
-        DB::table('tb_upy_hk')->where('id_uphukum', $id_uphukum)->update($data);
+        DB::table('tb_upy_hk')->where('id', $id)->update($data);
     }
 
-    public function deleteData($id_uphukum)
+    public function deleteData($id)
     {
-        DB::table('tb_upy_hk')->where('id_uphukum', $id_uphukum)->delete();
+        DB::table('tb_upy_hk')->where('id', $id)->delete();
     }
 }

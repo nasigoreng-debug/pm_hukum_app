@@ -25,14 +25,14 @@ class BankputController extends Controller
     }
 
     //Detail
-    public function detail($id_bankput)
+    public function detail($id)
     {
-        if (!$this->BankputModel->detailData($id_bankput)) {
+        if (!$this->BankputModel->detailData($id)) {
             abort(404);
         }
         $data = [
             'title' => 'Detail',
-            'bankput' => $this->BankputModel->detailData($id_bankput),
+            'bankput' => $this->BankputModel->detailData($id),
         ];
         return view('/bank_putusan/v_detail_bankput', $data);
     }
@@ -99,20 +99,20 @@ class BankputController extends Controller
     }
 
     //Edit Data
-    public function edit($id_bankput)
+    public function edit($id)
     {
-        if (!$this->BankputModel->detailData($id_bankput)) {
+        if (!$this->BankputModel->detailData($id)) {
             abort(404);
         }
         $data = [
             'title' => 'Edit',
-            'bankput' => $this->BankputModel->detailData($id_bankput),
+            'bankput' => $this->BankputModel->detailData($id),
         ];
         return view('/bank_putusan/v_edit_bankput', $data);
     }
 
     //Update Data
-    public function update($id_bankput)
+    public function update($id)
     {
         Request()->validate([
             'no_banding' => 'required|max:255',
@@ -162,7 +162,7 @@ class BankputController extends Controller
 
 
             ];
-            $this->BankputModel->editData($id_bankput, $data);
+            $this->BankputModel->editData($id, $data);
         } else {
             //Jika tidak ganti file
             //upload file
@@ -180,7 +180,7 @@ class BankputController extends Controller
 
             ];
 
-            $this->BankputModel->editData($id_bankput, $data);
+            $this->BankputModel->editData($id, $data);
         }
 
         if (Request()->put_anonim <> "") {
@@ -196,23 +196,23 @@ class BankputController extends Controller
                 'put_anonim' => $fileNameAnonim,
 
             ];
-            $this->BankputModel->editData($id_bankput, $data);
+            $this->BankputModel->editData($id, $data);
         }
         return redirect()->route('bankput')->with('pesan', 'Data Berhasil Diupdate !!');
     }
 
-    public function delete($id_bankput)
+    public function delete($id)
     {
         //hapus Data
-        $bankput = $this->BankputModel->detailData($id_bankput);
+        $bankput = $this->BankputModel->detailData($id);
 
         if ($bankput->put_rtf <> "") {
             unlink(public_path('bank_putusan_rtf') . '/' . $bankput->put_rtf);
-            $this->BankputModel->deleteData($id_bankput);
+            $this->BankputModel->deleteData($id);
         }
         if ($bankput->put_anonim <> "") {
             unlink(public_path('bank_putusan_anonim') . '/' . $bankput->put_anonim);
-            $this->BankputModel->deleteData($id_bankput);
+            $this->BankputModel->deleteData($id);
         }
         return redirect()->route('bankput')->with('pesan', 'Data Berhasil Dihapus !!');
     }

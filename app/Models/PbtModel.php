@@ -13,9 +13,9 @@ class PbtModel extends Model
         return DB::table('tb_pbt_banding')->orderBy('tgl_masuk', 'desc')->get();
     }
 
-    public function detailData($id_pbt)
+    public function detailData($id)
     {
-        return DB::table('tb_pbt_banding')->where('id_pbt', $id_pbt)->first();
+        return DB::table('tb_pbt_banding')->where('id', $id)->first();
     }
 
     public function addData($data)
@@ -23,13 +23,13 @@ class PbtModel extends Model
         DB::table('tb_pbt_banding')->insert($data);
     }
 
-    public function editData($id_pbt, $data)
+    public function editData($id, $data)
     {
-        DB::table('tb_pbt_banding')->where('id_pbt', $id_pbt)->update($data);
+        DB::table('tb_pbt_banding')->where('id', $id)->update($data);
     }
 
-    public function deleteData($id_pbt)
+    public function deleteData($id)
     {
-        DB::table('tb_pbt_banding')->where('id_pbt', $id_pbt)->delete();
+        DB::table('tb_pbt_banding')->where('id', $id)->delete();
     }
 }

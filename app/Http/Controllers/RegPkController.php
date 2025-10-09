@@ -24,14 +24,14 @@ class RegPkController extends Controller
             ->with("sekarang", $sekarang);
     }
 
-    public function detail($id_reg_pk)
+    public function detail($id)
     {
-        if (!$this->RegPkModel->detailData($id_reg_pk)) {
+        if (!$this->RegPkModel->detailData($id)) {
             abort(404);
         }
         $data = [
             'title' => 'Detail',
-            'reg_pk' => $this->RegPkModel->detailData($id_reg_pk),
+            'reg_pk' => $this->RegPkModel->detailData($id),
         ];
         return view('/reg_pk/v_detail_reg_pk', $data);
     }
@@ -97,19 +97,19 @@ class RegPkController extends Controller
         return redirect()->route('reg_pk')->with('pesan', 'Data Berhasil Ditambahkan !!');
     }
 
-    public function edit($id_reg_pk)
+    public function edit($id)
     {
-        if (!$this->RegPkModel->detailData($id_reg_pk)) {
+        if (!$this->RegPkModel->detailData($id)) {
             abort(404);
         }
         $data = [
             'title' => 'Edit',
-            'reg_pk' => $this->RegPkModel->detailData($id_reg_pk),
+            'reg_pk' => $this->RegPkModel->detailData($id),
         ];
         return view('/reg_pk/v_edit_reg_pk', $data);
     }
 
-    public function update($id_reg_pk)
+    public function update($id)
     {
         Request()->validate([
             'pa_pengaju' => 'required',
@@ -155,15 +155,15 @@ class RegPkController extends Controller
             'keterangan' => Request()->keterangan,
         ];
 
-        $this->RegPkModel->editData($id_reg_pk, $data);
+        $this->RegPkModel->editData($id, $data);
         return redirect()->route('reg_pk')->with('pesan', 'Data Berhasil Diupdate !!');
     }
 
-    public function delete($id_reg_pk)
+    public function delete($id)
     {
         //hapus file
 
-        $this->RegPkModel->deleteData($id_reg_pk);
+        $this->RegPkModel->deleteData($id);
         return redirect()->route('reg_pk')->with('pesan', 'Data Berhasil Dihapus !!');
     }
 }

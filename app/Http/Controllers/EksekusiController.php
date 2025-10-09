@@ -271,14 +271,14 @@ class EksekusiController extends Controller
     }
 
     //Detail
-    public function detail($id_eks)
+    public function detail($id)
     {
-        if (!$this->EksekusiModel->detailData($id_eks)) {
+        if (!$this->EksekusiModel->detailData($id)) {
             abort(404);
         }
         $data = [
             'title' => 'Detail',
-            'eksekusi' => $this->EksekusiModel->detailData($id_eks),
+            'eksekusi' => $this->EksekusiModel->detailData($id),
         ];
         return view('/eksekusi/v_detail_eksekusi', $data);
     }
@@ -327,20 +327,20 @@ class EksekusiController extends Controller
     }
 
     //Edit Data
-    public function edit($id_eks)
+    public function edit($id)
     {
-        if (!$this->EksekusiModel->detailData($id_eks)) {
+        if (!$this->EksekusiModel->detailData($id)) {
             abort(404);
         }
         $data = [
             'title' => 'Edit',
-            'eksekusi' => $this->EksekusiModel->detailData($id_eks),
+            'eksekusi' => $this->EksekusiModel->detailData($id),
         ];
         return view('/eksekusi/v_edit_eksekusi', $data);
     }
 
     //Update Data
-    public function update($id_eks)
+    public function update($id)
     {
         Request()->validate([
             'satker' => 'required',
@@ -369,17 +369,17 @@ class EksekusiController extends Controller
             'keterangan' => Request()->keterangan,
         ];
 
-        $this->EksekusiModel->editData($id_eks, $data);
+        $this->EksekusiModel->editData($id, $data);
 
         return redirect()->route('berjalan_eks')->with('pesan', 'Data Berhasil Diupdate !!');
     }
 
 
-    public function delete($id_eks)
+    public function delete($id)
     {
         //hapus file
 
-        $this->EksekusiModel->deleteData($id_eks);
+        $this->EksekusiModel->deleteData($id);
         return redirect()->route('eks')->with('pesan', 'Data Berhasil Dihapus !!');
     }
 }

@@ -21,14 +21,14 @@ class PkController extends Controller
         return view('/peninjauan_kembali/v_pk', $data);
     }
 
-    public function detail($id_pk)
+    public function detail($id)
     {
-        if (!$this->PkModel->detailData($id_pk)) {
+        if (!$this->PkModel->detailData($id)) {
             abort(404);
         }
         $data = [
             'title' => 'Detail',
-            'pk' => $this->PkModel->detailData($id_pk),
+            'pk' => $this->PkModel->detailData($id),
         ];
         return view('/peninjauan_kembali/v_detail_pk', $data);
     }
@@ -106,19 +106,19 @@ class PkController extends Controller
         return redirect()->route('pk')->with('pesan', 'Data Berhasil Ditambahkan !!');
     }
 
-    public function edit($id_pk)
+    public function edit($id)
     {
-        if (!$this->PkModel->detailData($id_pk)) {
+        if (!$this->PkModel->detailData($id)) {
             abort(404);
         }
         $data = [
             'title' => 'Edit',
-            'pk' => $this->PkModel->detailData($id_pk),
+            'pk' => $this->PkModel->detailData($id),
         ];
         return view('/peninjauan_kembali/v_edit_pk', $data);
     }
 
-    public function update($id_pk)
+    public function update($id)
     {
         Request()->validate([
             // 'pa_pengaju' => 'required',
@@ -193,21 +193,21 @@ class PkController extends Controller
                 // 'tgl_put_kasasi' => Request()->tgl_put_kasasi,
                 'status_put' => Request()->status_put,
             ];
-            $this->PkModel->editData($id_pk, $data);
+            $this->PkModel->editData($id, $data);
         }
 
         return redirect()->route('pk')->with('pesan', 'Data Berhasil Diupdate !!');
     }
 
-    public function delete($id_pk)
+    public function delete($id)
     {
         //hapus file
-        $pk = $this->PkModel->detailData($id_pk);
+        $pk = $this->PkModel->detailData($id);
         if ($pk->salput_pk <> "") {
             unlink(public_path('peninjauan_kembali') . '/' . $pk->salput_pk);
         }
 
-        $this->PkModel->deleteData($id_pk);
+        $this->PkModel->deleteData($id);
         return redirect()->route('pk')->with('pesan', 'Data Berhasil Dihapus !!');
     }
 }

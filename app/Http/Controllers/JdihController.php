@@ -74,14 +74,14 @@ class JdihController extends Controller
 
 
     //Detail
-    public function detail($id_jdih)
+    public function detail($id)
     {
-        if (!$this->JdihModel->detailData($id_jdih)) {
+        if (!$this->JdihModel->detailData($id)) {
             abort(404);
         }
         $data = [
             'title' => 'Detail',
-            'jdih' => $this->JdihModel->detailData($id_jdih),
+            'jdih' => $this->JdihModel->detailData($id),
         ];
         return view('/jdih/v_detail_jdih', $data);
     }
@@ -138,20 +138,20 @@ class JdihController extends Controller
     }
 
     //Edit Data
-    public function edit($id_jdih)
+    public function edit($id)
     {
-        if (!$this->JdihModel->detailData($id_jdih)) {
+        if (!$this->JdihModel->detailData($id)) {
             abort(404);
         }
         $data = [
             'title' => 'Edit',
-            'jdih' => $this->JdihModel->detailData($id_jdih),
+            'jdih' => $this->JdihModel->detailData($id),
         ];
         return view('/jdih/v_edit_jdih', $data);
     }
 
     //Update Data
-    public function update($id_jdih)
+    public function update($id)
     {
         Request()->validate([
             'jenis_peraturan' => 'required',
@@ -189,7 +189,7 @@ class JdihController extends Controller
                 'dokumen' => $fileName,
             ];
 
-            $this->JdihModel->editData($id_jdih, $data);
+            $this->JdihModel->editData($id, $data);
         } else {
             //Jika tidak ganti file
             //upload file
@@ -202,20 +202,20 @@ class JdihController extends Controller
                 'tentang' => Request()->tentang,
             ];
 
-            $this->JdihModel->editData($id_jdih, $data);
+            $this->JdihModel->editData($id, $data);
         }
         return redirect()->route('himper')->with('pesan', 'Data Berhasil Diupdate !!');
     }
 
-    public function delete($id_jdih)
+    public function delete($id)
     {
         //hapus Data
-        $jdih = $this->JdihModel->detailData($id_jdih);
+        $jdih = $this->JdihModel->detailData($id);
         if ($jdih->dokumen <> "") {
             unlink(public_path('jdih') . '/' . $jdih->dokumen);
         }
 
-        $this->JdihModel->deleteData($id_jdih);
+        $this->JdihModel->deleteData($id);
         return redirect()->route('himper')->with('pesan', 'Data Berhasil Dihapus !!');
     }
 

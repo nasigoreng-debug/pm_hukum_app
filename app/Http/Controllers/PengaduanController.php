@@ -74,14 +74,14 @@ class PengaduanController extends Controller
         return view('/pengaduan/v_pengaduan', $data);
     }
 
-    public function detail($id_pgd)
+    public function detail($id)
     {
-        if (!$this->PengaduanModel->detailData($id_pgd)) {
+        if (!$this->PengaduanModel->detailData($id)) {
             abort(404);
         }
         $data = [
             'title' => 'Detail',
-            'pengaduan' => $this->PengaduanModel->detailData($id_pgd),
+            'pengaduan' => $this->PengaduanModel->detailData($id),
         ];
         return view('/pengaduan/v_detail_pengaduan', $data);
     }
@@ -168,19 +168,19 @@ class PengaduanController extends Controller
         return redirect()->route('pgd')->with('pesan', 'Data Berhasil Ditambahkan !!');
     }
 
-    public function edit($id_pgd)
+    public function edit($id)
     {
-        if (!$this->PengaduanModel->detailData($id_pgd)) {
+        if (!$this->PengaduanModel->detailData($id)) {
             abort(404);
         }
         $data = [
             'title' => 'Edit',
-            'pengaduan' => $this->PengaduanModel->detailData($id_pgd),
+            'pengaduan' => $this->PengaduanModel->detailData($id),
         ];
         return view('/pengaduan/v_edit_pengaduan', $data);
     }
 
-    public function update($id_pgd)
+    public function update($id)
     {
         Request()->validate([
             'tgl_terima_pgd' => 'required',
@@ -237,7 +237,7 @@ class PengaduanController extends Controller
                 'surat_pgd' => $fileName,
             ];
 
-            $this->PengaduanModel->editData($id_pgd, $data);
+            $this->PengaduanModel->editData($id, $data);
         } else {
             $data = [
                 'tgl_terima_pgd' => Request()->tgl_terima_pgd,
@@ -256,7 +256,7 @@ class PengaduanController extends Controller
                 'tgl_selesai_pgd' => Request()->tgl_selesai_pgd,
                 'tgl_lhp' => Request()->tgl_lhp,
             ];
-            $this->PengaduanModel->editData($id_pgd, $data);
+            $this->PengaduanModel->editData($id, $data);
         }
 
         if (Request()->lampiran <> "") {
@@ -268,15 +268,15 @@ class PengaduanController extends Controller
             $data = [
                 'lampiran' => $fileName,
             ];
-            $this->PengaduanModel->editData($id_pgd, $data);
+            $this->PengaduanModel->editData($id, $data);
         }
         return redirect()->route('pgd')->with('pesan', 'Data Berhasil Diupdate !!');
     }
 
-    public function delete($id_pgd)
+    public function delete($id)
     {
         //hapus file
-        $pengaduan = $this->PengaduanModel->detailData($id_pgd);
+        $pengaduan = $this->PengaduanModel->detailData($id);
         if ($pengaduan->surat_pgd <> "") {
             unlink(public_path('surat_pengaduan') . '/' . $pengaduan->surat_pgd);
         }
@@ -284,7 +284,7 @@ class PengaduanController extends Controller
             unlink(public_path('lampiran_pengaduan') . '/' . $pengaduan->lampiran);
         }
 
-        $this->PengaduanModel->deleteData($id_pgd);
+        $this->PengaduanModel->deleteData($id);
         return redirect()->route('pgd')->with('pesan', 'Data Berhasil Dihapus !!');
     }
 }

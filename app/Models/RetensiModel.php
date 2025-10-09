@@ -12,9 +12,9 @@ class RetensiModel extends Model
         return DB::table('tb_retensi_arsip')->orderBy('tgl_put_banding', 'desc')->get();
     }
 
-    public function detailData($id_retensi)
+    public function detailData($id)
     {
-        return DB::table('tb_retensi_arsip')->where('id_retensi', $id_retensi)->first();
+        return DB::table('tb_retensi_arsip')->where('id', $id)->first();
     }
 
     public function addData($data)
@@ -22,14 +22,14 @@ class RetensiModel extends Model
         DB::table('tb_retensi_arsip')->insert($data);
     }
 
-    public function editData($id_retensi, $data)
+    public function editData($id, $data)
     {
-        DB::table('tb_retensi_arsip')->where('id_retensi', $id_retensi)->update($data);
+        DB::table('tb_retensi_arsip')->where('id', $id)->update($data);
     }
 
-    public function deleteData($id_retensi)
+    public function deleteData($id)
     {
-        DB::table('tb_retensi_arsip')->where('id_retensi', $id_retensi)->delete();
+        DB::table('tb_retensi_arsip')->where('id', $id)->delete();
     }
 
     public function retensi_sdh()

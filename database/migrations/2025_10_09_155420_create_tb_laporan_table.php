@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTbJdihTable extends Migration
+class CreateTbLaporanTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreateTbJdihTable extends Migration
      */
     public function up()
     {
-        Schema::create('tb_jdih', function (Blueprint $table) {
+        Schema::create('tb_laporan', function (Blueprint $table) {
             $table->id();
-            $table->string('jenis_peraturan', 255);
-            $table->string('no_peraturan', 255);
-            $table->integer('tahun');
-            $table->date('tgl_peraturan');
-            $table->string('tentang', 255);
-            $table->string('dokumen', 1000)->nullable();
+            $table->string('jenis_laporan');
+            $table->year('tahun');
+            $table->date('tgl_laporan');
+            $table->string('judul');
+            $table->string('dokumen')->nullable();
             $table->timestamps();
         });
     }
@@ -32,6 +31,6 @@ class CreateTbJdihTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tb_jdih');
+        Schema::dropIfExists('tb_laporan');
     }
 }

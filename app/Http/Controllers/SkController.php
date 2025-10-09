@@ -22,14 +22,14 @@ class SkController extends Controller
     }
 
     //Detail
-    public function detail($id_sk)
+    public function detail($id)
     {
-        if (!$this->SkModel->detailData($id_sk)) {
+        if (!$this->SkModel->detailData($id)) {
             abort(404);
         }
         $data = [
             'title' => 'Detail',
-            'sk' => $this->SkModel->detailData($id_sk),
+            'sk' => $this->SkModel->detailData($id),
         ];
         return view('/surat_keputusan/v_detail_sk', $data);
     }
@@ -146,20 +146,20 @@ class SkController extends Controller
     }
 
     //Edit Data
-    public function edit($id_sk)
+    public function edit($id)
     {
-        if (!$this->SkModel->detailData($id_sk)) {
+        if (!$this->SkModel->detailData($id)) {
             abort(404);
         }
         $data = [
             'title' => 'Edit',
-            'sk' => $this->SkModel->detailData($id_sk),
+            'sk' => $this->SkModel->detailData($id),
         ];
         return view('/surat_keputusan/v_edit_sk', $data);
     }
 
     //Update Data
-    public function update($id_sk)
+    public function update($id)
     {
         Request()->validate([
             'no_sk' => 'required',
@@ -199,7 +199,7 @@ class SkController extends Controller
                 'konsep_sk' => $fileNameRtf,
             ];
 
-            $this->SkModel->editData($id_sk, $data);
+            $this->SkModel->editData($id, $data);
             return redirect()->route('suratkeputusan')->with('pesan', 'Data Berhasil Diupdate !!');
         } elseif (Request()->dokumen <> "") {
             //Jika ganti file
@@ -217,7 +217,7 @@ class SkController extends Controller
 
             ];
 
-            $this->SkModel->editData($id_sk, $data);
+            $this->SkModel->editData($id, $data);
             return redirect()->route('suratkeputusan')->with('pesan', 'Data Berhasil Diupdate !!');
         } elseif (Request()->konsep_sk <> "") {
             //Jika tidak ganti file
@@ -235,7 +235,7 @@ class SkController extends Controller
                 'konsep_sk' => $fileNameRtf,
             ];
 
-            $this->SkModel->editData($id_sk, $data);
+            $this->SkModel->editData($id, $data);
             return redirect()->route('suratkeputusan')->with('pesan', 'Data Berhasil Diupdate !!');
         } else {
 
@@ -247,24 +247,24 @@ class SkController extends Controller
 
             ];
 
-            $this->SkModel->editData($id_sk, $data);
+            $this->SkModel->editData($id, $data);
             return redirect()->route('suratkeputusan')->with('pesan', 'Data Berhasil Diupdate !!');
         }
     }
 
-    public function delete($id_sk)
+    public function delete($id)
     {
         //hapus Data
-        // $sk = $this->SkModel->detailData($id_sk);
+        // $sk = $this->SkModel->detailData($id);
         // if ($sk->dokumen <> "") {
         //     unlink(public_path('surat_keputusan') . '/' . $sk->dokumen);
         // }
-        // $this->SkModel->deleteData($id_sk);
+        // $this->SkModel->deleteData($id);
         // return redirect()->route('suratkeputusan')->with('pesan', 'Data Berhasil Dihapus !!');
 
         try {
             // Ambil data surat keluar
-            $suratkeputusan = $this->SkModel->detailData($id_sk);
+            $suratkeputusan = $this->SkModel->detailData($id);
 
             if (!$suratkeputusan) {
                 return redirect()->route('suratkeputusan')->with('pesan', 'Data Berhasil Dihapus !!');
@@ -274,7 +274,7 @@ class SkController extends Controller
             $this->deleteRelatedFiles($suratkeputusan);
 
             // Hapus data dari database
-            $this->SkModel->deleteData($id_sk);
+            $this->SkModel->deleteData($id);
 
             return redirect()->route('suratkeputusan')->with('pesan', 'Data berhasil dihapus!');
         } catch (\Exception $e) {

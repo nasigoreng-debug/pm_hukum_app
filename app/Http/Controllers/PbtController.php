@@ -22,14 +22,14 @@ class PbtController extends Controller
     }
 
     //Detail
-    public function detail($id_pbt)
+    public function detail($id)
     {
-        if (!$this->PbtModel->detailData($id_pbt)) {
+        if (!$this->PbtModel->detailData($id)) {
             abort(404);
         }
         $data = [
             'title' => 'Detail',
-            'pbt' => $this->PbtModel->detailData($id_pbt),
+            'pbt' => $this->PbtModel->detailData($id),
         ];
         return view('/pbt_banding/v_detail_pbt', $data);
     }
@@ -87,20 +87,20 @@ class PbtController extends Controller
     }
 
     //Edit Data
-    public function edit($id_pbt)
+    public function edit($id)
     {
-        if (!$this->PbtModel->detailData($id_pbt)) {
+        if (!$this->PbtModel->detailData($id)) {
             abort(404);
         }
         $data = [
             'title' => 'Edit',
-            'pbt' => $this->PbtModel->detailData($id_pbt),
+            'pbt' => $this->PbtModel->detailData($id),
         ];
         return view('/pbt_banding/v_edit_pbt', $data);
     }
 
     //Update Data
-    public function update($id_pbt)
+    public function update($id)
     {
         Request()->validate([
             'tgl_masuk' => 'required',
@@ -138,7 +138,7 @@ class PbtController extends Controller
                 'keterangan' => Request()->keterangan,
             ];
 
-            $this->PbtModel->editData($id_pbt, $data);
+            $this->PbtModel->editData($id, $data);
         } else {
             //Jika tidak ganti file
             //upload file
@@ -152,20 +152,20 @@ class PbtController extends Controller
                 'keterangan' => Request()->keterangan,
             ];
 
-            $this->PbtModel->editData($id_pbt, $data);
+            $this->PbtModel->editData($id, $data);
         }
         return redirect()->route('pbt')->with('pesan', 'Data Berhasil Diupdate !!');
     }
 
-    public function delete($id_pbt)
+    public function delete($id)
     {
         //hapus Data
-        $pbt = $this->PbtModel->detailData($id_pbt);
+        $pbt = $this->PbtModel->detailData($id);
         if ($pbt->pbt_put <> "") {
             unlink(public_path('pbt_putusan') . '/' . $pbt->pbt_put);
         }
 
-        $this->PbtModel->deleteData($id_pbt);
+        $this->PbtModel->deleteData($id);
         return redirect()->route('pbt')->with('pesan', 'Data Berhasil Dihapus !!');
     }
 }

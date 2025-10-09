@@ -26,9 +26,9 @@ class PkModel extends Model
     //         })->orderByDesc('tb_peninjauan_kembali.tgl_masuk')->get();
     }
 
-    public function detailData($id_pk)
+    public function detailData($id)
     {
-        return DB::table('tb_peninjauan_kembali')->where('id_pk', $id_pk)->first();
+        return DB::table('tb_peninjauan_kembali')->where('id', $id)->first();
     }
 
     public function addData($data)
@@ -36,13 +36,13 @@ class PkModel extends Model
         DB::table('tb_peninjauan_kembali')->insert($data);
     }
 
-    public function editData($id_pk, $data)
+    public function editData($id, $data)
     {
-        DB::table('tb_peninjauan_kembali')->where('id_pk', $id_pk)->update($data);
+        DB::table('tb_peninjauan_kembali')->where('id', $id)->update($data);
     }
 
-    public function deleteData($id_pk)
+    public function deleteData($id)
     {
-        DB::table('tb_peninjauan_kembali')->where('id_pk', $id_pk)->delete();
+        DB::table('tb_peninjauan_kembali')->where('id', $id)->delete();
     }
 }

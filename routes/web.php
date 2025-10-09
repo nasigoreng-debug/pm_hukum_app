@@ -21,6 +21,7 @@ use App\Http\Controllers\EksekusiController;
 use App\Http\Controllers\SkController;
 use App\Http\Controllers\RegKasasiController;
 use App\Http\Controllers\RegPkController;
+use App\Http\Controllers\LaporanController;
 
 
 /*
@@ -43,13 +44,13 @@ Route::get('/arsip_now', [ArsipController::class, 'arsip_now'])->name('arsip_now
 Route::get('/arsip_perkara_blm_upload', [ArsipController::class, 'arsip_perkara_blm_upload'])->name('arsip_perkara_blm_upload');
 Route::get('/arsip_perkara_upload', [ArsipController::class, 'arsip_perkara_upload'])->name('arsip_perkara_upload');
 Route::get('/arsip_perkara_total', [ArsipController::class, 'arsip_perkara_total'])->name('arsip_perkara_total');
-Route::get('/arsip/detail/{id_perkara}', [ArsipController::class, 'detail'])->name('detail');
+Route::get('/arsip/detail/{id_banding}', [ArsipController::class, 'detail'])->name('detail');
 Route::get('/arsip/add', [ArsipController::class, 'add'])->name('add');
 Route::post('/arsip/insert', [ArsipController::class, 'insert'])->name('insert');
-Route::get('/arsip/edit/{id_perkara}', [ArsipController::class, 'edit'])->name('edit');
-Route::post('/arsip/update/{id_perkara}', [ArsipController::class, 'update'])->name('update');
+Route::get('/arsip/edit/{id_banding}', [ArsipController::class, 'edit'])->name('edit');
+Route::post('/arsip/update/{id_banding}', [ArsipController::class, 'update'])->name('update');
 Route::get('/search-date-range-arsip-perkara', [ArsipController::class, 'searchByDateRangeArsipPerkara']);
-// Route::get('/arsip/delete/{id_perkara}', [ArsipController::class, 'delete'])->name('delete');
+// Route::get('/arsip/delete/{id_banding}', [ArsipController::class, 'delete'])->name('delete');
 
 //Bank Putusan
 Route::get('/bankput', [BankputController::class, 'index'])->name('bankput');
@@ -215,6 +216,15 @@ Route::get('/reg_pk/edit/{id_reg_pk}', [RegPkController::class, 'edit'])->name('
 Route::post('/reg_pk/update/{id_reg_pk}', [RegPkController::class, 'update'])->name('update');
 // Route::get('/reg_pk/delete/{id_reg_pk}', [RegPkController::class, 'delete'])->name('delete');
 
+//Laporan
+Route::get('/laporan', [LaporanController::class, 'index'])->name('laporans.index');
+Route::get('/laporan/total', [LaporanController::class, 'total'])->name('laporans.total');
+Route::get('/laporan/show/{id}', [LaporanController::class, 'show'])->name('laporans.show');
+Route::get('/laporan/create', [LaporanController::class, 'create'])->name('laporans.create');
+Route::post('/laporan/store', [LaporanController::class, 'store'])->name('laporans.store');
+Route::get('/laporan/edit/{id}', [LaporanController::class, 'edit'])->name('laporans.edit');
+Route::post('/laporan/update/{id}', [LaporanController::class, 'update'])->name('laporans.update');
+
 Auth::routes();
 
 //Home
@@ -238,7 +248,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('/member/delete/{id}', [MemberController::class, 'delete'])->name('delete');
 
     //Delete Data
-    Route::get('/arsip/delete/{id_perkara}', [ArsipController::class, 'delete'])->name('delete');
+    Route::get('/arsip/delete/{id_banding}', [ArsipController::class, 'delete'])->name('delete');
     Route::get('/kasasi/delete/{id_kasasi}', [KasasiController::class, 'delete'])->name('delete');
     Route::get('/bankput/delete/{id_bankput}', [BankputController::class, 'delete'])->name('delete');
     Route::get('/pinjam/delete/{id_pinjam}', [PinjamController::class, 'delete'])->name('delete');
@@ -254,4 +264,5 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('/reg_kasasi/delete/{id_reg_kasasi}', [RegKasasiController::class, 'delete'])->name('delete');
     Route::get('/reg_pk/delete/{id_reg_pk}', [RegPkController::class, 'delete'])->name('delete');
     Route::get('/retensi/delete/{id_retensi}', [RetensiController::class, 'delete'])->name('delete');
+    Route::get('/laporan/destroy/{id}', [LaporanController::class, 'destroy'])->name('destroy');
 });

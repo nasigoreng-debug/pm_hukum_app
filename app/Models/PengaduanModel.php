@@ -42,9 +42,9 @@ class PengaduanModel extends Model
         return DB::table('tb_pengaduan')->orderBy('tgl_terima_pgd', 'desc')->get();
     }
 
-    public function detailData($id_pgd)
+    public function detailData($id)
     {
-        return DB::table('tb_pengaduan')->where('id_pgd', $id_pgd)->first();
+        return DB::table('tb_pengaduan')->where('id', $id)->first();
     }
 
     public function addData($data)
@@ -52,13 +52,13 @@ class PengaduanModel extends Model
         DB::table('tb_pengaduan')->insert($data);
     }
 
-    public function editData($id_pgd, $data)
+    public function editData($id, $data)
     {
-        DB::table('tb_pengaduan')->where('id_pgd', $id_pgd)->update($data);
+        DB::table('tb_pengaduan')->where('id', $id)->update($data);
     }
 
-    public function deleteData($id_pgd)
+    public function deleteData($id)
     {
-        DB::table('tb_pengaduan')->where('id_pgd', $id_pgd)->delete();
+        DB::table('tb_pengaduan')->where('id', $id)->delete();
     }
 }

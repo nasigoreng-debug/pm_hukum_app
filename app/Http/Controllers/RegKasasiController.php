@@ -24,14 +24,14 @@ class RegKasasiController extends Controller
             ->with("sekarang", $sekarang);
     }
 
-    public function detail($id_reg_kasasi)
+    public function detail($id)
     {
-        if (!$this->RegKasasiModel->detailData($id_reg_kasasi)) {
+        if (!$this->RegKasasiModel->detailData($id)) {
             abort(404);
         }
         $data = [
             'title' => 'Detail',
-            'reg_kasasi' => $this->RegKasasiModel->detailData($id_reg_kasasi),
+            'reg_kasasi' => $this->RegKasasiModel->detailData($id),
         ];
         return view('/reg_kasasi/v_detail_reg_kasasi', $data);
     }
@@ -97,19 +97,19 @@ class RegKasasiController extends Controller
         return redirect()->route('reg_kasasi')->with('pesan', 'Data Berhasil Ditambahkan !!');
     }
 
-    public function edit($id_reg_kasasi)
+    public function edit($id)
     {
-        if (!$this->RegKasasiModel->detailData($id_reg_kasasi)) {
+        if (!$this->RegKasasiModel->detailData($id)) {
             abort(404);
         }
         $data = [
             'title' => 'Edit',
-            'reg_kasasi' => $this->RegKasasiModel->detailData($id_reg_kasasi),
+            'reg_kasasi' => $this->RegKasasiModel->detailData($id),
         ];
         return view('/reg_kasasi/v_edit_reg_kasasi', $data);
     }
 
-    public function update($id_reg_kasasi)
+    public function update($id)
     {
         Request()->validate([
             'pa_pengaju' => 'required',
@@ -155,15 +155,15 @@ class RegKasasiController extends Controller
             'keterangan' => Request()->keterangan,
         ];
 
-        $this->RegKasasiModel->editData($id_reg_kasasi, $data);
+        $this->RegKasasiModel->editData($id, $data);
         return redirect()->route('reg_kasasi')->with('pesan', 'Data Berhasil Diupdate !!');
     }
 
-    public function delete($id_reg_kasasi)
+    public function delete($id)
     {
         //hapus file
 
-        $this->RegKasasiModel->deleteData($id_reg_kasasi);
+        $this->RegKasasiModel->deleteData($id);
         return redirect()->route('reg_kasasi')->with('pesan', 'Data Berhasil Dihapus !!');
     }
 }
