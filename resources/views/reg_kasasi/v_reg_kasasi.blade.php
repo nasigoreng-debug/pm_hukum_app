@@ -52,13 +52,13 @@
                 <tr>
                     <th class="text-center" style="width: 30px;">No</th>
                     <th class="text-center" style="width: 70px;">Satker</th>
-                    <th class="text-center" style="width: 80px;">Masuk</th>
+                    {{-- <th class="text-center" style="width: 80px;">Masuk</th> --}}
                     <th class="text-center" style="width: 100px;">Tanggal Reg</th>
                     <th class="text-center" style="width: 110px;">No. Reg Kasasi</th>
                     <!-- <th class="text-center" style="width: 100px;">Pemohon</th>
                     <th class="text-center" style="width: 100px;">Termohon</th> -->
                     <th class="text-center" style="width: 140px;">No. Banding</th>
-                    <th class="text-center" style="width: 80px;">Putus Banding</th>
+                    {{-- <th class="text-center" style="width: 80px;">Putus Banding</th> --}}
                     <!-- <th class="text-center" style="width: 70px;">No. PA</th>
                     <th class="text-center" style="width: 60px;">Putus PA</th> -->
                     <th class="text-center" style="width: 80px;">No. Box</th>
@@ -74,17 +74,17 @@
                 <tr>
                     <th class="text-center">No</th>
                     <th class="text-center">Satker</th>
-                    <th class="text-center">Masuk</th>
+                    {{-- <th class="text-center">Masuk</th> --}}
                     <th class="text-center">Tanggal Reg</th>
                     <th class="text-center">No. Reg Kasasi</th>
                     <!-- <th class="text-center">Pemohon</th>
                     <th class="text-center">Termohon</th> -->
                     <th class="text-center">No. Banding</th>
-                    <th class="text-center">Putus Banding</th>
+                    {{-- <th class="text-center">Putus Banding</th> --}}
                     <!-- <th class="text-center">No. PA</th>
                     <th class="text-center">Putus PA</th> -->
                     <th class="text-center">No. Box</th>
-                    <th class="text-center">Upaya Hukum</th>
+                    <th class="text-center">Putus Kasasi</th>
                     <th class="text-center">Lama Proses</th>
                     <th class="text-center">Keterangan</th>
                     <th class="text-center">Action</th>
@@ -96,7 +96,6 @@
                 <tr>
                     <td class="text-center">{{$loop->iteration}}</td>
                     <td class="text-center">{{ $data->pa_pengaju }}</td>
-                    <td class="text-center">{{ date('d-m-Y', strtotime($data->tgl_masuk)) }}</td>
                     <td class="text-center">
                         @if($data->tgl_register=="")
                         <span class="badge badge-danger">Data Not Available</span>
@@ -107,12 +106,8 @@
                         @endif
                     </td>
                     <td>{{ $data->no_kasasi }}</td>
-                    <!-- <td>{{ $data->pemohon_kasasi }}</td>
-                    <td>{{ $data->termohon_kasasi }}</td> -->
                     <td class="text-start">{{ $data->no_banding }}</td>
-                    <td class="text-center">{{ date('d-m-Y', strtotime($data->tgl_put_banding)) }}</td>
-                    <!-- <td class="text-center">{{ $data->no_pa }}</td>
-                    <td class="text-center">{{ date('d-m-Y', strtotime($data->tgl_put_pa)) }}</td> -->
+              
                     <td class="text-center">
                         @if($data->no_box=="")
                         <span class="badge badge-orange">Belum diinput</button>

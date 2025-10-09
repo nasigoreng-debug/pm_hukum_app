@@ -128,6 +128,20 @@
                         <span class="title">Surat Masuk</span>
                     </a>
                 </li>
+                <li class="opened {{ ( $title === 'Surat Masuk') ? 'active' : ''}}">
+                    <a href="#">
+                        <i class="fa fa-file-text-o"></i>
+                        <span class="title">Laporan Tahunan</span>
+                        <span class="title">Coming Soon....</span>
+                    </a>
+                </li>
+                <li class="opened {{ ( $title === 'Surat Masuk') ? 'active' : ''}}">
+                    <a href="#">
+                        <i class="fa fa-file-text-o"></i>
+                        <span class="title">LKJIP</span>
+                        <span class="title">Coming Soon....</span>
+                    </a>
+                </li>
                 <li class="opened {{ ( $title === 'Member') ? 'active' : ''}}">
                     <a href="/member">
                         <i class="fa fa-user"></i>
@@ -233,6 +247,20 @@
                         <span class="title">Surat Keluar</span>
                     </a>
                 </li>
+                <li class="opened {{ ( $title === 'Surat Masuk') ? 'active' : ''}}">
+                    <a href="#">
+                        <i class="fa fa-file-text-o"></i>
+                        <span class="title">Laporan Tahunan</span>
+                        <span class="title">Coming Soon....</span>
+                    </a>
+                </li>
+                <li class="opened {{ ( $title === 'Surat Masuk') ? 'active' : ''}}">
+                    <a href="#">
+                        <i class="fa fa-file-text-o"></i>
+                        <span class="title">LKJIP</span>
+                        <span class="title">Coming Soon....</span>
+                    </a>
+                </li>
                 
             @elseif(Auth::user()->level===3)
                 <!-- Menu User -->
@@ -318,6 +346,20 @@
                     <a href="/suratkeluar">
                         <i class="fa fa-paper-plane-o"></i>
                         <span class="title">Surat Keluar</span>
+                    </a>
+                </li>
+                <li class="opened {{ ( $title === 'Surat Masuk') ? 'active' : ''}}">
+                    <a href="#">
+                        <i class="fa fa-file-text-o"></i>
+                        <span class="title">Laporan Tahunan</span>
+                        <span class="title">Coming Soon....</span>
+                    </a>
+                </li>
+                <li class="opened {{ ( $title === 'Surat Masuk') ? 'active' : ''}}">
+                    <a href="#">
+                        <i class="fa fa-file-text-o"></i>
+                        <span class="title">LKJIP</span>
+                        <span class="title">Coming Soon....</span>
                     </a>
                 </li>
             @endif
