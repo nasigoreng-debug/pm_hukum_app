@@ -14,7 +14,7 @@
 
     <div class="panel-body">
 
-        <form action="/himper/update/{{$jdih->id_jdih}}" method="POST" enctype="multipart/form-data">
+        <form action="/himper/update/{{$jdih->id}}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="row">
                 <!-- left column -->

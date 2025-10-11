@@ -13,7 +13,7 @@ class CreateTbArsipPerkaraTable extends Migration
      */
     public function up()
     {
-        Schema::create('tb_arsip_perkara', function (Blueprint $table) {
+        Schema::create('arsips', function (Blueprint $table) {
             $table->id();
             $table->string('no_banding', 60);
             $table->string('no_pa', 100);
@@ -39,6 +39,6 @@ class CreateTbArsipPerkaraTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tb_arsip_perkara');
+        Schema::dropIfExists('arsips');
     }
 }

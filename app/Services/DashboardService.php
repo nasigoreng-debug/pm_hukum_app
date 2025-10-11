@@ -131,20 +131,20 @@ class DashboardService
     // ==================== ARSIP PERKARA ====================
     private function getArsipMasukTahunIni($year)
     {
-        return DB::table('tb_arsip_perkara')
+        return DB::table('arsips')
             ->whereYear('tgl_masuk', $year)
             ->count();
     }
 
     private function getTotalArsipFormatted()
     {
-        $total = DB::table('tb_arsip_perkara')->count();
+        $total = DB::table('arsips')->count();
         return number_format($total, 0, ",", ".");
     }
 
     private function getArsipAlihMedia()
     {
-        return DB::table('tb_arsip_perkara')
+        return DB::table('arsips')
             ->whereNotNull('putusan')
             ->where('putusan', '!=', '')
             ->where('putusan', '>', '1000-01-01')
@@ -153,7 +153,7 @@ class DashboardService
 
     private function getArsipPresentase()
     {
-        $total = DB::table('tb_arsip_perkara')->count();
+        $total = DB::table('arsips')->count();
         $alihmedia = $this->getArsipAlihMedia();
         return $total > 0 ? round(($alihmedia / $total) * 100) : 0;
     }

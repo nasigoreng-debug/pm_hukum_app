@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\Storage;
 
 class LaporanController extends Controller
 {
+    public function __construct()
+    {
+
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,6 +20,7 @@ class LaporanController extends Controller
      */
     public function index()
     {
+        
         $laporans = Laporan::latest()->get();
         $title = 'Laporan';
         return view('laporans.index', compact(
@@ -49,7 +55,8 @@ class LaporanController extends Controller
             'tahun' => 'required|integer|min:2000|max:' . (date('Y') + 1),
             'tgl_laporan' => 'required|date',
             'judul' => 'required|string|max:255',
-            'dokumen' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx|max:2048'
+            'dokumen' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx|max:2048',
+            'konsep' => 'nullable|file|mimes:doc,docx,rtf|max:2048'
         ]);
 
         $data = $request->all();
@@ -58,8 +65,16 @@ class LaporanController extends Controller
         if ($request->hasFile('dokumen')) {
             $file = $request->file('dokumen');
             $fileName = time() . '_' . $file->getClientOriginalName();
-            $filePath = $file->storeAs('laporans', $fileName, 'public');
+            $filePath = $file->storeAs('laporans/dokumen/', $fileName, 'public');
             $data['dokumen'] = $fileName;
+        }
+
+        // Upload konsep jika ada
+        if ($request->hasFile('konsep')) {
+            $file = $request->file('konsep');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $filePath = $file->storeAs('laporans/konsep/', $fileName, 'public');
+            $data['konsep'] = $fileName;
         }
 
         Laporan::create($data);
@@ -74,10 +89,14 @@ class LaporanController extends Controller
      * @param  \App\Models\Laporan  $laporan
      * @return \Illuminate\Http\Response
      */
-    public function show(Laporan $laporan)
+    // Ubah method show, edit, update, destroy untuk konsistensi
+    public function show($id)
     {
+        $laporan = Laporan::findOrFail($id);
         return view('laporans.show', compact('laporan'));
     }
+
+// atau gunakan route model binding secara konsisten
 
     /**
      * Show the form for editing the specified resource.
@@ -112,7 +131,8 @@ class LaporanController extends Controller
             'tahun' => 'required|integer|min:2000|max:' . (date('Y') + 1),
             'tgl_laporan' => 'required|date',
             'judul' => 'required|string|max:255',
-            'dokumen' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx|max:2048'
+            'dokumen' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx|max:2048',
+            'konsep' => 'nullable|file|mimes:doc,docx,rtf|max:2048'
         ]);
 
         $data = $request->all();
@@ -121,13 +141,26 @@ class LaporanController extends Controller
         if ($request->hasFile('dokumen')) {
             // Hapus dokumen lama jika ada
             if ($laporan->dokumen) {
-                Storage::disk('public')->delete('laporans/' . $laporan->dokumen);
+                Storage::disk('public')->delete('laporans/dokumen/' . $laporan->dokumen);
             }
 
             $file = $request->file('dokumen');
             $fileName = time() . '_' . $file->getClientOriginalName();
-            $filePath = $file->storeAs('laporans', $fileName, 'public');
+            $filePath = $file->storeAs('laporans/dokumen/', $fileName, 'public');
             $data['dokumen'] = $fileName;
+        }
+
+          // Upload konsep baru jika ada
+        if ($request->hasFile('konsep')) {
+            // Hapus konsep lama jika ada
+            if ($laporan->konsep) {
+                Storage::disk('public')->delete('laporans/konsep/' . $laporan->konsep);
+            }
+
+            $file = $request->file('konsep');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $filePath = $file->storeAs('laporans/konsep/', $fileName, 'public');
+            $data['konsep'] = $fileName;
         }
 
         $laporan->update($data);
@@ -149,12 +182,21 @@ class LaporanController extends Controller
             
             \Log::info('Deleting laporan', [
                 'id' => $laporan->id,
-                'dokumen' => $laporan->dokumen
+                'dokumen' => $laporan->dokumen,
+                'konsep' => $laporan->konsep
             ]);
 
             // Hapus file dokumen jika ada
             if ($laporan->dokumen) {
-                $filePath = 'laporans/' . $laporan->dokumen;
+                $filePath = 'laporans/dokumen/' . $laporan->dokumen;
+                if (Storage::disk('public')->exists($filePath)) {
+                    Storage::disk('public')->delete($filePath);
+                }
+            }
+            
+            // Hapus file konsep jika ada
+            if ($laporan->konsep) {
+                $filePath = 'laporans/konsep/' . $laporan->konsep;
                 if (Storage::disk('public')->exists($filePath)) {
                     Storage::disk('public')->delete($filePath);
                 }
@@ -168,7 +210,7 @@ class LaporanController extends Controller
         } catch (\Exception $e) {
             \Log::error('Delete error: ' . $e->getMessage());
             return redirect()->route('laporans.index')
-                ->with('error', 'Gagal menghapus laporan: ' . $e->getMessage());
+                ->with('pesan', 'Gagal menghapus laporan: ' . $e->getMessage());
         }
     }
 

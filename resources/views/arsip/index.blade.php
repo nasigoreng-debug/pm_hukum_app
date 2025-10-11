@@ -35,30 +35,45 @@
 
             <!-- Date Range Filter -->
             <div class="text-center">
-                <form method="GET" action="/search-date-range-arsip-perkara" class="form-inline justify-content-center">
-                    <input type="date" name="start_date" class="form-control form-control-sm" required>
-                    <span>s.d</span>
-                    <input type="date" name="end_date" class="form-control form-control-sm" required>
-                    <button type="submit" class="btn btn-sm btn-primary">Tampilkan</button>
-                    <a href="/arsip_perkara_total" class="btn btn-sm btn-danger"><i class="fa fa-repeat"></i></a>
+                <form method="GET" action="/search-date-range-arsip-perkara" class="form-inline justify-content-center align-items-start">
+                    <div class="input-group input-group-sm mr-2">
+                        <input type="date" name="start_date" id="start_date" class="form-control" required>
+                    </div>
+                    <span class="mx-2 align-self-center">s.d</span>
+                    <div class="input-group input-group-sm mr-2">
+                        <input type="date" name="end_date" id="end_date" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-sm btn-primary mr-2">Tampilkan</button>
+                    <a href="{{ route('arsip.index') }}" class="btn btn-sm btn-danger">
+                        <i class="fa fa-repeat"></i> Reset
+                    </a>
                 </form>
             </div>
 
             <!-- Action Buttons -->
             <div class="" style="font-size: 14px;">
                 @if(in_array(Auth::user()->level, [1, 2]))
-                    <a href="/arsip/add" class="btn btn-sm btn-info mb-2">Tambah Data</a>
+                    <a href="{{ route('arsip.create') }}" class="btn btn-sm btn-info mb-2">Tambah Data</a>
                     <a href="/arsip" class="btn btn-sm btn-danger mb-2">Kembali</a>
                 @endif
             </div>
 
             <!-- Success Message -->
-            @if (session('pesan'))
-                <div class="alert alert-success alert-dismissible mt-2">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    {{ session('pesan') }}
-                </div>
-            @endif
+                @if (session('pesan'))
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Sukses!',
+                            text: '{{ session('pesan') }}',
+                            timer: 3000,
+                            showConfirmButton: true,
+                            confirmButtonText: 'OK',
+                            timerProgressBar: true
+                        });
+                    });
+                </script>
+                @endif
             
             <!-- Data Table -->
             <table class="table table-sm table-hover" id="example-3">
@@ -125,17 +140,22 @@
                                     <button type="button" class="btn btn-purple btn-xs" data-toggle="modal" data-target="#detail{{ $data->id }}">
                                         <i class="fa fa-eye"></i>
                                     </button>
-                                    <a href="/arsip/edit/{{ $data->id }}" class="btn btn-warning btn-xs">
+                                    <a href="{{ route('arsip.edit', $data->id) }}" class="btn btn-warning btn-xs">
                                         <i class="fa fa-edit"></i>
                                     </a>
-                                    <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#delete{{ $data->id }}">
-                                        <i class="fa fa-trash-o"></i>
-                                    </button>
+                                   
+                                    <form id="deleteForm" action="{{ route('arsip.destroy', $data->id) }}" method="POST" style="display: inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="button" onclick="confirmDelete(this)" class="btn btn-danger btn-xs">
+                                            <i class="fa fa-trash-o"></i>
+                                        </button>
+                                    </form>
                                 @elseif(Auth::user()->level == 2)
                                     <button type="button" class="btn btn-purple btn-xs" data-toggle="modal" data-target="#detail{{ $data->id }}">
                                         <i class="fa fa-eye"></i>
                                     </button>
-                                    <a href="/arsip/edit/{{ $data->id }}" class="btn btn-warning btn-xs">
+                                    <a href="{{ route('arsip.edit', $data->id) }}" class="btn btn-warning btn-xs">
                                         <i class="fa fa-edit"></i>
                                     </a>
                                 @elseif(Auth::user()->level == 3)

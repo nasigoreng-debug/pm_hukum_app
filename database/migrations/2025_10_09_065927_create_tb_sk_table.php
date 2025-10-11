@@ -19,7 +19,7 @@ class CreateTbSkTable extends Migration
             $table->integer('tahun');
             $table->date('tgl_sk');
             $table->string('tentang', 225);
-            $table->string('dokumen', 2000)->nullable();
+            $table->string('dokumen', 1000)->nullable();
             $table->string('konsep_sk', 1000)->nullable();
             $table->timestamps();
         });

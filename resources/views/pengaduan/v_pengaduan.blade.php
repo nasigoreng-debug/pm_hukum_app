@@ -117,24 +117,24 @@
                     </td>
                     <td>
                         @if(Auth::user()->level===1)
-                        <button type="button" class="btn btn-purple btn-xs" data-toggle="modal" data-target="#detail{{ $data->id_pgd }}">
+                        <button type="button" class="btn btn-purple btn-xs" data-toggle="modal" data-target="#detail{{ $data->id }}">
                             <i class="fa fa-eye"></i></a>
                         </button>
-                        <a href="/pgd/edit/{{$data->id_pgd}}" class="btn btn-warning btn-xs">
+                        <a href="/pgd/edit/{{$data->id}}" class="btn btn-warning btn-xs">
                             <i class="fa fa-edit"></i>
                         </a>
-                        <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#delete{{ $data->id_pgd }}">
+                        <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#delete{{ $data->id }}">
                             <i class="fa fa-trash-o"></i>
                         </button>
                         @elseif(Auth::user()->level===2)
-                        <button type="button" class="btn btn-purple btn-xs" data-toggle="modal" data-target="#detail{{ $data->id_pgd }}">
+                        <button type="button" class="btn btn-purple btn-xs" data-toggle="modal" data-target="#detail{{ $data->id }}">
                             <i class="fa fa-eye"></i></a>
                         </button>
-                        <a href="/pgd/edit/{{$data->id_pgd}}" class="btn btn-warning btn-xs">
+                        <a href="/pgd/edit/{{$data->id}}" class="btn btn-warning btn-xs">
                             <i class="fa fa-edit"></i>
                         </a>
                         @elseif(Auth::user()->level===3)
-                        <button type="button" class="btn btn-purple btn-xs" data-toggle="modal" data-target="#detail{{ $data->id_pgd }}">
+                        <button type="button" class="btn btn-purple btn-xs" data-toggle="modal" data-target="#detail{{ $data->id }}">
                             <i class="fa fa-eye"></i></a>
                         </button>
                         @endif
@@ -149,7 +149,7 @@
 @foreach ($pengaduan as $data)
 
 <!-- Modal Detail -->
-<div class="modal fade" id="detail{{ $data->id_pgd }}" tabindex="-1">
+<div class="modal fade" id="detail{{ $data->id }}" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -340,7 +340,7 @@
 <!-- /.modal -->
 
 <!-- Modal Hapus -->
-<div class="modal fade" id="delete{{ $data->id_pgd }}">
+<div class="modal fade" id="delete{{ $data->id }}">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header">
@@ -353,7 +353,7 @@
                 <p>Apakah anda ingin menghapus perkara ini?&hellip;</p>
             </div>
             <div class="modal-footer justify-content-between">
-                <a href="/pgd/delete/{{$data->id_pgd}}" type="button" class="btn btn-sm btn-danger">Ya</a>
+                <a href="/pgd/delete/{{$data->id}}" type="button" class="btn btn-sm btn-danger">Ya</a>
                 <button type="button" class="btn btn-sm btn-white" data-dismiss="modal">Tidak</button>
             </div>
         </div>

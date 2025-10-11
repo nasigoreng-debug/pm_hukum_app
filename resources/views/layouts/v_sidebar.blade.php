@@ -5,7 +5,7 @@
         <section class="sidebar-user-info">
             <div class="sidebar-user-info-inner">
                 <a href="extra-profile.html" class="user-profile">
-                    <img src="{{ asset('public/img/'.Auth::user()->foto_user) }}" width="50" height="60" class="img-circle img-corona" />
+                    <img src="{{ asset('public/storage/users/'.Auth::user()->foto_user) }}" width="50" height="60" class="img-circle img-corona" />
                     <span class="user-status is-online" style="font-size: 12px;">
                         <h5 class="text-white">{{ Auth::user()->name }}</h5>
                         <p class="text-yellow">
@@ -129,13 +129,13 @@
                     </a>
                 </li>
                 <li class="opened {{ ( $title === 'Laporan') ? 'active' : ''}}">
-                    <a href="/laporan">
+                    <a href="{{ route('laporans.index') }}">
                         <i class="fa fa-file-text-o"></i>
                         <span class="title">Laporan</span>
                     </a>
                 </li>
-                <li class="opened {{ ( $title === 'Member') ? 'active' : ''}}">
-                    <a href="/member">
+                <li class="opened {{ ( $title === 'User') ? 'active' : ''}}">
+                    <a href="{{ route('users.index') }}">
                         <i class="fa fa-user"></i>
                         <span class="title">Data User</span>
                     </a>
@@ -240,7 +240,7 @@
                     </a>
                 </li>
                 <li class="opened {{ ( $title === 'Laporan') ? 'active' : ''}}">
-                    <a href="/laporan">
+                    <a href="{{ route('laporans.index') }}">
                         <i class="fa fa-file-text-o"></i>
                         <span class="title">Laporan</span>
                     </a>
@@ -333,7 +333,7 @@
                     </a>
                 </li>
                 <li class="opened {{ ( $title === 'Laporan') ? 'active' : ''}}">
-                    <a href="/laporan">
+                    <a href="{{ route('laporans.index') }}">
                         <i class="fa fa-file-text-o"></i>
                         <span class="title">Laporan</span>
                     </a>

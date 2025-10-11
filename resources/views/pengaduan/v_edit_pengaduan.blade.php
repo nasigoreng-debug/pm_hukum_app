@@ -14,7 +14,7 @@
 
     <div class="panel-body">
 
-        <form action="/pgd/update/{{$pengaduan->id_pgd}}" method="POST" enctype="multipart/form-data">
+        <form action="/pgd/update/{{$pengaduan->id}}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="row">
                 <!-- left column -->

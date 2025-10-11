@@ -17,7 +17,7 @@
                     <h4 class="widget-title">TOTAL ARSIP PERKARA</h4>
                 </div>
                 <div class="xe-label">
-                    <a href="/arsip_perkara_total" class="text-white">
+                    <a href="{{ route('arsip.filter', 'total') }}" class="text-white">
                         <h1 class="num">0</h1>
                     </a>
                 </div>
@@ -35,7 +35,7 @@
                     <h4 class="widget-title">SUDAH UPLOAD BUNDEL B</h4>
                 </div>
                 <div class="xe-label">
-                    <a href="/arsip_perkara_upload" class="text-white">
+                    <a href="{{ route('arsip.filter', 'sudah-upload') }}" class="text-white">
                         <h1 class="num">0</h1>
                     </a>
                 </div>
@@ -53,7 +53,7 @@
                     <h4 class="widget-title">BELUM UPLOAD BUNDEL B</h4>
                 </div>
                 <div class="xe-label">
-                    <a href="/arsip_perkara_blm_upload" class="text-white">
+                    <a href="{{ route('arsip.filter', 'belum-upload') }}" class="text-white">
                         <h1 class="num">0</h1>
                     </a>
                 </div>

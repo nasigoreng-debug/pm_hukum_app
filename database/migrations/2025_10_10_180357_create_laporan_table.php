@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTbLaporanTable extends Migration
+class CreateLaporanTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,14 @@ class CreateTbLaporanTable extends Migration
      */
     public function up()
     {
-        Schema::create('tb_laporan', function (Blueprint $table) {
+        Schema::create('laporans', function (Blueprint $table) {
             $table->id();
             $table->string('jenis_laporan');
             $table->year('tahun');
             $table->date('tgl_laporan');
             $table->string('judul');
-            $table->string('dokumen')->nullable();
+            $table->string('document_path', 1000)->nullable();
+            $table->string('konsep_path', 1000)->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +32,6 @@ class CreateTbLaporanTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tb_laporan');
+        Schema::dropIfExists('laporans');
     }
 }

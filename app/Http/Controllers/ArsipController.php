@@ -2,123 +2,117 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ArsipModel;
-use Illuminate\Support\Facades\DB;
+use App\Models\Arsip;
+use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 class ArsipController extends Controller
 {
     public function __construct()
     {
-        $this->ArsipModel = new ArsipModel();
         $this->middleware('auth');
     }
 
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
+        // Gunakan aggregate query untuk performa lebih baik
+        $stats = Arsip::selectRaw('
+            COUNT(*) as total,
+            COUNT(bundel_b) as uploaded,
+            COUNT(*) - COUNT(bundel_b) as not_uploaded
+        ')->first();
+
         $data = [
             'title' => 'Arsip Perkara',
-            'arsip_perkara' => $this->ArsipModel->allData(),
+            'arsip_perkara' => Arsip::orderBy('tgl_masuk', 'desc')->get(),
+            'arsip_perkara_total' => $stats->total,
+            'arsip_perkara_blm_upload' => $stats->not_uploaded,
+            'arsip_perkara_upload' => $stats->uploaded,
+            'arsip_perkara_progres' => $stats->total > 0 ? ($stats->uploaded / $stats->total * 100) : 0,
+            'arsip_perkara_presentase' => round($stats->total > 0 ? ($stats->uploaded / $stats->total * 100) : 0),
         ];
 
-        $arsip_perkara_total = DB::table('tb_arsip_perkara')->count();
-        $arsip_perkara_blm_upload = DB::table('tb_arsip_perkara')->whereNull('bundel_b')->count();
-        $arsip_perkara_upload = DB::table('tb_arsip_perkara')->whereNotNull('bundel_b')->count();
-
-        // Hindari division by zero dengan ternary operator
-        $arsip_perkara_progres = $arsip_perkara_total > 0 ? ($arsip_perkara_upload / $arsip_perkara_total * 100) : 0;
-        $arsip_perkara_presentase = round($arsip_perkara_progres);
-
-        return view('/arsip/v_dashboard_arsip_perkara', $data, compact(
-            'arsip_perkara_total',
-            'arsip_perkara_blm_upload',
-            'arsip_perkara_upload',
-            'arsip_perkara_progres',
-            'arsip_perkara_presentase',
-        ));
+        return view('arsip.v_dashboard_arsip_perkara', $data);
     }
 
-    public function arsip_perkara_blm_upload()
+    /**
+     * Display arsip perkara berdasarkan filter
+     *
+     * @param string $filter
+     * @return \Illuminate\Http\Response
+     */
+    public function filter($filter)
     {
-        $data = [
-            'title' => 'Arsip Perkara',
-            'arsip_perkara' => $this->ArsipModel->arsip_perkara_blm_upload(),
-        ];
+        $query = Arsip::query();
+        $title = 'Arsip Perkara';
 
-        return view('/arsip/v_arsip_perkara', $data);
-    }
-
-    public function arsip_perkara_upload()
-    {
-        $data = [
-            'title' => 'Arsip Perkara',
-            'arsip_perkara' => $this->ArsipModel->arsip_perkara_upload(),
-        ];
-
-        return view('/arsip/v_arsip_perkara', $data);
-    }
-
-    public function arsip_perkara_total()
-    {
-        $data = [
-            'title' => 'Arsip Perkara',
-            'arsip_perkara' => $this->ArsipModel->arsip_perkara_total(),
-        ];
-
-        return view('/arsip/v_arsip_perkara', $data);
-    }
-
-    public function arsip_now()
-    {
-        $data = [
-            'title' => 'Arsip Perkara',
-            'arsip_perkara' => $this->ArsipModel->arsip_now(),
-        ];
-
-        return view('/arsip/v_arsip_perkara', $data);
-    }
-
-    //Detail
-    public function detail($id)
-    {
-        if (!$this->ArsipModel->detailData($id)) {
-            abort(404);
+        switch ($filter) {
+            case 'belum-upload':
+                $query->whereNull('bundel_b');
+                $title .= ' - Belum Upload';
+                break;
+            case 'sudah-upload':
+                $query->whereNotNull('bundel_b');
+                $title .= ' - Sudah Upload';
+                break;
+            case 'tahun-ini':
+                $query->whereYear('tgl_masuk', now()->year);
+                $title .= ' - Tahun Ini';
+                break;
+            case 'total':
+            default:
+                $title .= ' - Total';
+                break;
         }
-        $data = [
-            'title' => 'Detail',
-            'arsip_perkara' => $this->ArsipModel->detailData($id),
-        ];
-        return view('/arsip/v_detail_arsip', $data);
+
+        $arsip_perkara = $filter === 'tahun-ini' 
+            ? $query->orderBy('tgl_masuk', 'desc')->get()
+            : $query->orderBy('tgl_put_banding', 'desc')->get();
+
+        return view('arsip.index', compact('arsip_perkara', 'title'));
     }
 
-    //Tambah Data
-    public function add()
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
-        $data = [
-            'title' => 'Form Tambah Data',
-            'user' => $this->ArsipModel->user(),
-        ];
-        return view('/arsip/v_add_arsip', $data);
+        $title = 'Tambah Arsip Perkara';
+        $users = User::whereIn('level', [2, 3])->orderBy('name', 'asc')->get();
+
+        return view('arsip.create', compact('title', 'users'));
     }
 
-    //Insert Data
-    public function insert()
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
     {
-        Request()->validate([
-            'no_banding' => 'required|unique:tb_arsip_perkara,no_banding|max:255',
-            'tgl_masuk' => 'required',
-            'no_pa' => 'required',
-            'jenis_perkara' => 'required',
-            'tgl_put_banding' => 'required',
-            'penyerah' => 'required',
-            'penerima' => 'required',
-            'no_lemari' => 'required',
-            'no_laci' => 'required',
-            'no_box' => 'required',
-            'tgl_alih_media' => 'required',
-            'putusan' => 'required|mimes:pdf|max:10000',
-            'bundel_b' => 'mimes:rar,zip|max:10000',
+        $request->validate([
+            'no_banding' => 'required|unique:arsips,no_banding|max:255',
+            'tgl_masuk' => 'required|date',
+            'no_pa' => 'required|string|max:100',
+            'jenis_perkara' => 'required|string|max:100',
+            'tgl_put_banding' => 'required|date',
+            'penyerah' => 'required|string|max:100',
+            'penerima' => 'required|string|max:100',
+            'no_lemari' => 'required|string|max:100',
+            'no_laci' => 'required|string|max:100',
+            'no_box' => 'required|string|max:100',
+            'tgl_alih_media' => 'required|date',
+            'putusan' => 'required|file|mimes:pdf|max:10240',
+            'bundel_b' => 'nullable|file|mimes:rar,zip|max:10240',
         ], [
             'no_banding.required' => 'Nomor perkara banding wajib diisi!!',
             'no_banding.unique' => 'Nomor perkara sudah ada!!',
@@ -136,120 +130,89 @@ class ArsipController extends Controller
             'putusan.required' => 'Putusan wajib diupload!!',
             'putusan.mimes' => 'Jenis file harus pdf!!',
             'putusan.max' => 'Ukuran file max 10Mb!!',
-            'bundel_b.required' => 'Putusan wajib diupload!!',
             'bundel_b.mimes' => 'Jenis file harus Rar/Zip!!',
             'bundel_b.max' => 'Ukuran file max 10Mb!!',
         ]);
 
-        if (Request()->putusan <> "" && Request()->bundel_b <> "") {
-            //jika validasi tidak ada maka lakukan simpan data
-            //upload file
-            $file = Request()->putusan;
-            $fileName = str_replace("/", "_",  Request()->no_banding) . '_' . 'Jo' . '_' . str_replace("/", "_",  Request()->no_pa) . '_' . date('dmYHis') . '.' . $file->extension();
-            $file->move(public_path('arsip_perkara_putusan'), $fileName);
+        $data = $request->only([
+            'tgl_masuk', 'no_banding', 'no_pa', 'jenis_perkara', 
+            'tgl_put_banding', 'penyerah', 'penerima', 'no_lemari', 
+            'no_laci', 'no_box', 'tgl_alih_media'
+        ]);
 
-            $file = Request()->bundel_b;
-            $fileNameZip = str_replace("/", "_",  Request()->no_banding) . '_' . 'Jo' . '_' . str_replace("/", "_",  Request()->no_pa) . '_' . date('dmYHis') . '.' . $file->extension();
-            $file->move(public_path('bundel_b_arsip_perkara'), $fileNameZip);
-
-            $data = [
-                'tgl_masuk' => Request()->tgl_masuk,
-                'no_banding' => Request()->no_banding,
-                'no_pa' => Request()->no_pa,
-                'jenis_perkara' => Request()->jenis_perkara,
-                'tgl_put_banding' => Request()->tgl_put_banding,
-                'penyerah' => Request()->penyerah,
-                'penerima' => Request()->penerima,
-                'no_lemari' => Request()->no_lemari,
-                'no_laci' => Request()->no_laci,
-                'no_box' => Request()->no_box,
-                'tgl_alih_media' => Request()->tgl_alih_media,
-                'putusan' => $fileName,
-                'bundel_b' => $fileNameZip,
-            ];
-
-            $this->ArsipModel->addData($data);
-            return redirect()->route('arsip')->with('pesan', 'Data Berhasil Ditambahkan !!');
-        } elseif (Request()->putusan <> "") {
-            $file = Request()->putusan;
-            $fileName = str_replace("/", "_",  Request()->no_banding) . '_' . 'Jo' . '_' . str_replace("/", "_",  Request()->no_pa) . '_' . date('dmYHis') . '.' . $file->extension();
-            $file->move(public_path('arsip_perkara_putusan'), $fileName);
-
-            $data = [
-                'tgl_masuk' => Request()->tgl_masuk,
-                'no_banding' => Request()->no_banding,
-                'no_pa' => Request()->no_pa,
-                'jenis_perkara' => Request()->jenis_perkara,
-                'tgl_put_banding' => Request()->tgl_put_banding,
-                'penyerah' => Request()->penyerah,
-                'penerima' => Request()->penerima,
-                'no_lemari' => Request()->no_lemari,
-                'no_laci' => Request()->no_laci,
-                'no_box' => Request()->no_box,
-                'tgl_alih_media' => Request()->tgl_alih_media,
-                'putusan' => $fileName,
-            ];
-
-            $this->ArsipModel->addData($data);
-            return redirect()->route('arsip')->with('pesan', 'Data Berhasil Ditambahkan !!');
-        } elseif (Request()->bundel_b <> "") {
-            $file = Request()->bundel_b;
-            $fileNameZip = str_replace("/", "_",  Request()->no_banding) . '_' . 'Jo' . '_' . str_replace("/", "_",  Request()->no_pa) . '_' . date('dmYHis') . '.' . $file->extension();
-            $file->move(public_path('bundel_b_arsip_perkara'), $fileNameZip);
-
-            $data = [
-                'tgl_masuk' => Request()->tgl_masuk,
-                'no_banding' => Request()->no_banding,
-                'no_pa' => Request()->no_pa,
-                'jenis_perkara' => Request()->jenis_perkara,
-                'tgl_put_banding' => Request()->tgl_put_banding,
-                'penyerah' => Request()->penyerah,
-                'penerima' => Request()->penerima,
-                'no_lemari' => Request()->no_lemari,
-                'no_laci' => Request()->no_laci,
-                'no_box' => Request()->no_box,
-                'tgl_alih_media' => Request()->tgl_alih_media,
-                'bundel_b' => $fileNameZip,
-            ];
-
-            $this->ArsipModel->addData($data);
-            return redirect()->route('arsip')->with('pesan', 'Data Berhasil Ditambahkan !!');
+        // Upload file putusan
+        if ($request->hasFile('putusan')) {
+            $data['putusan'] = $this->uploadFile($request->file('putusan'), $request->no_banding, $request->no_pa, 'arsip_perkara_putusan');
         }
+
+        // Upload file bundel_b jika ada
+        if ($request->hasFile('bundel_b')) {
+            $data['bundel_b'] = $this->uploadFile($request->file('bundel_b'), $request->no_banding, $request->no_pa, 'bundel_b_arsip_perkara');
+        }
+
+        Arsip::create($data);
+
+        return redirect()->route('arsip.index')
+            ->with('pesan', 'Data arsip perkara berhasil ditambahkan.');
     }
 
-    //Edit Data
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $arsip_perkara = Arsip::findOrFail($id);
+        $title = 'Detail Arsip Perkara';
+
+        return view('arsip.v_detail_arsip', compact('arsip_perkara', 'title'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function edit($id)
     {
-        if (!$this->ArsipModel->detailData($id)) {
-            abort(404);
-        }
-        $data = [
-            'title' => 'Edit',
-            'arsip_perkara' => $this->ArsipModel->detailData($id),
-            'user' => $this->ArsipModel->user(),
-        ];
-        return view('/arsip/v_edit_arsip', $data);
+        $arsip_perkara = Arsip::findOrFail($id);
+        $title = 'Edit Arsip Perkara';
+        $users = User::whereIn('level', [2, 3])->orderBy('name', 'asc')->get();
+
+        return view('arsip.edit', compact('arsip_perkara', 'title', 'users'));
     }
 
-    //Update Data
-    public function update($id)
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
     {
-        Request()->validate([
-            'no_banding' => 'required|max:255',
-            'tgl_masuk' => 'required',
-            'no_pa' => 'required',
-            'jenis_perkara' => 'required',
-            'tgl_put_banding' => 'required',
-            'penyerah' => 'required',
-            'penerima' => 'required',
-            'no_lemari' => 'required',
-            'no_laci' => 'required',
-            'no_box' => 'required',
-            'tgl_alih_media' => 'required',
-            'putusan' => 'mimes:pdf|max:10000',
-            'bundel_b' => 'mimes:rar,zip|max:10000',
+        $arsip_perkara = Arsip::findOrFail($id);
+
+        $request->validate([
+            'no_banding' => 'required|max:255|unique:arsips,no_banding,' . $id,
+            'tgl_masuk' => 'required|date',
+            'no_pa' => 'required|string|max:100',
+            'jenis_perkara' => 'required|string|max:100',
+            'tgl_put_banding' => 'required|date',
+            'penyerah' => 'required|string|max:100',
+            'penerima' => 'required|string|max:100',
+            'no_lemari' => 'required|string|max:100',
+            'no_laci' => 'required|string|max:100',
+            'no_box' => 'required|string|max:100',
+            'tgl_alih_media' => 'required|date',
+            'putusan' => 'nullable|file|mimes:pdf|max:10240',
+            'bundel_b' => 'nullable|file|mimes:rar,zip|max:10240',
         ], [
             'no_banding.required' => 'Nomor perkara banding wajib diisi!!',
+            'no_banding.unique' => 'Nomor perkara sudah ada!!',
             'no_banding.max' => 'Max 255 Karakter!!',
             'tgl_masuk.required' => 'Tanggal masuk wajib diisi!!',
             'no_pa.required' => 'Nomor perkara tk1 wajib diisi!!',
@@ -267,161 +230,170 @@ class ArsipController extends Controller
             'bundel_b.max' => 'Ukuran file max 10Mb!!',
         ]);
 
-        if (Request()->putusan <> "" && Request()->bundel_b <> "") {
-            $file = Request()->putusan;
-            $fileName = str_replace("/", "_",  Request()->no_banding) . '_' . 'Jo' . '_' . str_replace("/", "_",  Request()->no_pa) . '_' . date('dmYHis') . '.' . $file->extension();
-            $file->move(public_path('arsip_perkara_putusan'), $fileName);
+        $data = $request->only([
+            'tgl_masuk', 'no_banding', 'no_pa', 'jenis_perkara', 
+            'tgl_put_banding', 'penyerah', 'penerima', 'no_lemari', 
+            'no_laci', 'no_box', 'tgl_alih_media'
+        ]);
 
-            $file = Request()->bundel_b;
-            $fileNameZip = str_replace("/", "_",  Request()->no_banding) . '_' . 'Jo' . '_' . str_replace("/", "_",  Request()->no_pa) . '_' . date('dmYHis') . '.' . $file->extension();
-            $file->move(public_path('bundel_b_arsip_perkara'), $fileNameZip);
-
-            $data = [
-                'tgl_masuk' => Request()->tgl_masuk,
-                'no_banding' => Request()->no_banding,
-                'no_pa' => Request()->no_pa,
-                'jenis_perkara' => Request()->jenis_perkara,
-                'tgl_put_banding' => Request()->tgl_put_banding,
-                'penyerah' => Request()->penyerah,
-                'penerima' => Request()->penerima,
-                'no_lemari' => Request()->no_lemari,
-                'no_laci' => Request()->no_laci,
-                'no_box' => Request()->no_box,
-                'tgl_alih_media' => Request()->tgl_alih_media,
-                'putusan' => $fileName,
-                'bundel_b' => $fileNameZip,
-            ];
-
-            $this->ArsipModel->editData($id, $data);
-            return redirect()->route('arsip')->with('pesan', 'Data Berhasil Diupdate !!');
-        } elseif (Request()->putusan <> "") {
-            $file = Request()->putusan;
-            $fileName = str_replace("/", "_",  Request()->no_banding) . '_' . 'Jo' . '_' . str_replace("/", "_",  Request()->no_pa) . '_' . date('dmYHis') . '.' . $file->extension();
-            $file->move(public_path('arsip_perkara_putusan'), $fileName);
-
-            $data = [
-                'tgl_masuk' => Request()->tgl_masuk,
-                'no_banding' => Request()->no_banding,
-                'no_pa' => Request()->no_pa,
-                'jenis_perkara' => Request()->jenis_perkara,
-                'tgl_put_banding' => Request()->tgl_put_banding,
-                'penyerah' => Request()->penyerah,
-                'penerima' => Request()->penerima,
-                'no_lemari' => Request()->no_lemari,
-                'no_laci' => Request()->no_laci,
-                'no_box' => Request()->no_box,
-                'tgl_alih_media' => Request()->tgl_alih_media,
-                'putusan' => $fileName,
-            ];
-
-            $this->ArsipModel->editData($id, $data);
-            return redirect()->route('arsip')->with('pesan', 'Data Berhasil Diupdate !!');
-        } elseif (Request()->bundel_b <> "") {
-            $file = Request()->bundel_b;
-            $fileNameZip = str_replace("/", "_",  Request()->no_banding) . '_' . 'Jo' . '_' . str_replace("/", "_",  Request()->no_pa) . '_' . date('dmYHis') . '.' . $file->extension();
-            $file->move(public_path('bundel_b_arsip_perkara'), $fileNameZip);
-
-            $data = [
-                'tgl_masuk' => Request()->tgl_masuk,
-                'no_banding' => Request()->no_banding,
-                'no_pa' => Request()->no_pa,
-                'jenis_perkara' => Request()->jenis_perkara,
-                'tgl_put_banding' => Request()->tgl_put_banding,
-                'penyerah' => Request()->penyerah,
-                'penerima' => Request()->penerima,
-                'no_lemari' => Request()->no_lemari,
-                'no_laci' => Request()->no_laci,
-                'no_box' => Request()->no_box,
-                'tgl_alih_media' => Request()->tgl_alih_media,
-                'bundel_b' => $fileNameZip,
-            ];
-
-            $this->ArsipModel->editData($id, $data);
-            return redirect()->route('arsip')->with('pesan', 'Data Berhasil Diupdate !!');
-        } else {
-            $data = [
-                'tgl_masuk' => Request()->tgl_masuk,
-                'no_banding' => Request()->no_banding,
-                'no_pa' => Request()->no_pa,
-                'jenis_perkara' => Request()->jenis_perkara,
-                'tgl_put_banding' => Request()->tgl_put_banding,
-                'penyerah' => Request()->penyerah,
-                'penerima' => Request()->penerima,
-                'no_lemari' => Request()->no_lemari,
-                'no_laci' => Request()->no_laci,
-                'no_box' => Request()->no_box,
-                'tgl_alih_media' => Request()->tgl_alih_media,
-            ];
-
-            $this->ArsipModel->editData($id, $data);
-            return redirect()->route('arsip')->with('pesan', 'Data Berhasil Diupdate !!');
+        // Handle file uploads
+        if ($request->hasFile('putusan')) {
+            // Delete old file if exists
+            if ($arsip_perkara->putusan) {
+                $this->deleteFile($arsip_perkara->putusan, 'arsip_perkara_putusan');
+            }
+            $data['putusan'] = $this->uploadFile($request->file('putusan'), $request->no_banding, $request->no_pa, 'arsip_perkara_putusan');
         }
+
+        if ($request->hasFile('bundel_b')) {
+            // Delete old file if exists
+            if ($arsip_perkara->bundel_b) {
+                $this->deleteFile($arsip_perkara->bundel_b, 'bundel_b_arsip_perkara');
+            }
+            $data['bundel_b'] = $this->uploadFile($request->file('bundel_b'), $request->no_banding, $request->no_pa, 'bundel_b_arsip_perkara');
+        }
+
+        $arsip_perkara->update($data);
+
+        return redirect()->route('arsip.index')
+            ->with('pesan', 'Data arsip perkara berhasil diperbarui.');
     }
 
-    public function delete($id)
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
     {
-        //hapus Data
         try {
-            // Ambil data surat keluar
-            $arsip_perkara = $this->ArsipModel->detailData($id);
+            $arsip_perkara = Arsip::findOrFail($id);
+            
+            \Log::info('Deleting arsip perkara', [
+                'id' => $arsip_perkara->id,
+                'no_banding' => $arsip_perkara->no_banding,
+                'putusan' => $arsip_perkara->putusan,
+                'bundel_b' => $arsip_perkara->bundel_b
+            ]);
 
-            if (!$arsip_perkara) {
-                return redirect()->route('arsip')->with('pesan', 'Data Berhasil Dihapus !!');
+            // Delete related files
+            if ($arsip_perkara->putusan) {
+                $this->deleteFile($arsip_perkara->putusan, 'arsip_perkara_putusan');
+            }
+            
+            if ($arsip_perkara->bundel_b) {
+                $this->deleteFile($arsip_perkara->bundel_b, 'bundel_b_arsip_perkara');
             }
 
-            // Hapus file-file terkait
-            $this->deleteRelatedFiles($arsip_perkara);
+            $arsip_perkara->delete();
 
-            // Hapus data dari database
-            $this->ArsipModel->deleteData($id);
+            return redirect()->route('arsip.index')
+                ->with('pesan', 'Data arsip perkara berhasil dihapus.');
 
-            return redirect()->route('arsip')->with('pesan', 'Data berhasil dihapus!');
         } catch (\Exception $e) {
-            return redirect()->route('arsip')->with('pesan', 'Gagal menghapus data: ' . $e->getMessage());
+            \Log::error('Delete error: ' . $e->getMessage());
+            return redirect()->route('arsip.index')
+                ->with('pesan', 'Gagal menghapus data arsip perkara: ' . $e->getMessage());
         }
     }
 
-    protected function deleteRelatedFiles($arsip_perkara)
+    /**
+     * Search arsip perkara by date range
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+        public function searchByDateRange(Request $request)
     {
-        if (!empty($arsip_perkara->putusan && $arsip_perkara->bundel_b)) {
-            $putusanPath = public_path('arsip_perkara_putusan') . '/' . $arsip_perkara->putusan;
-            if (file_exists($putusanPath)) {
-                unlink($putusanPath);
-            }
+        try {
+            $request->validate([
+                'start_date' => 'required|date',
+                'end_date' => 'required|date|after_or_equal:start_date',
+            ]);
 
-            $bundel_bPath = public_path('bundel_b_arsip_perkara') . '/' . $arsip_perkara->bundel_b;
-            if (file_exists($bundel_bPath)) {
-                unlink($bundel_bPath);
-            }
-            // Hapus file surat PTA jika ada
-        } elseif (!empty($arsip_perkara->putusan)) {
-            $putusanPath = public_path('arsip_perkara_putusan') . '/' . $arsip_perkara->putusan;
-            if (file_exists($putusanPath)) {
-                unlink($putusanPath);
-            }
-        } elseif (!empty($sk->bundel_b)) {
-            $bundel_bPath = public_path('bundel_b_arsip_perkara') . '/' . $arsip_perkara->bundel_b;
-            if (file_exists($bundel_bPath)) {
-                unlink($bundel_bPath);
-            }
+            $arsip_perkara = Arsip::whereBetween('tgl_masuk', [
+                $request->start_date, 
+                $request->end_date
+            ])->get();
+
+            $title = 'Arsip Perkara - Pencarian';
+
+            return view('arsip.index', compact('arsip_perkara', 'title'));
+            
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan dalam pencarian.');
         }
     }
 
-    public function searchByDateRangeArsipPerkara(Request $request)
+    /**
+     * Download file putusan
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function downloadPutusan($id)
     {
-        $data = [
-            $startDate = $request->input('start_date'),
-            $endDate = $request->input('end_date'),
+        $arsip_perkara = Arsip::findOrFail($id);
 
-            'title' => 'Arsip Perkara',
+        if (!$arsip_perkara->putusan) {
+            return redirect()->back()->with('error', 'File putusan tidak ditemukan.');
+        }
 
-            'arsip_perkara' => DB::table('tb_arsip_perkara')
-                ->whereBetween('tgl_masuk', [$startDate, $endDate])
-                ->get(),
-        ];
+        $filePath = public_path('arsip_perkara_putusan/' . $arsip_perkara->putusan);
 
-        // dd($data);
+        if (!file_exists($filePath)) {
+            return redirect()->back()->with('error', 'File putusan tidak ditemukan.');
+        }
 
-        return view('/arsip/v_arsip_perkara', $data);
+        return response()->download($filePath);
+    }
+
+    /**
+     * Download file bundel_b
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function downloadBundel($id)
+    {
+        $arsip_perkara = Arsip::findOrFail($id);
+
+        if (!$arsip_perkara->bundel_b) {
+            return redirect()->back()->with('error', 'File bundel tidak ditemukan.');
+        }
+
+        $filePath = public_path('bundel_b_arsip_perkara/' . $arsip_perkara->bundel_b);
+
+        if (!file_exists($filePath)) {
+            return redirect()->back()->with('error', 'File bundel tidak ditemukan.');
+        }
+
+        return response()->download($filePath);
+    }
+
+    /**
+     * Helper method untuk upload file
+     */
+    private function uploadFile($file, $no_banding, $no_pa, $folder)
+    {
+        $fileName = str_replace("/", "_", $no_banding) . '_' . 'Jo' . '_' . 
+                   str_replace("/", "_", $no_pa) . '_' . 
+                   date('dmYHis') . '.' . $file->extension();
+        
+        $file->move(public_path($folder), $fileName);
+        
+        return $fileName;
+    }
+
+    /**
+     * Helper method untuk delete file
+     */
+    private function deleteFile($fileName, $folder)
+    {
+        $filePath = public_path($folder) . '/' . $fileName;
+        if (file_exists($filePath)) {
+            unlink($filePath);
+        }
     }
 }

@@ -118,24 +118,24 @@
                     <td class="text-start">{{ $data->keterangan }}</td>
                     <td class="text-center" style="font-size: 5px;">
                         @if(Auth::user()->level===1)
-                        <button type="button" class="btn btn-purple btn-xs" data-toggle="modal" data-target="#detail{{ $data->id_suratkeluar }}">
+                        <button type="button" class="btn btn-purple btn-xs" data-toggle="modal" data-target="#detail{{ $data->id }}">
                             <i class="fa fa-eye"></i>
                         </button>
-                        <a href="/suratkeluar/edit/{{$data->id_suratkeluar}}" class="btn btn-warning btn-xs">
+                        <a href="/suratkeluar/edit/{{$data->id}}" class="btn btn-warning btn-xs">
                             <i class="fa fa-edit"></i>
                         </a>
-                        <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#delete{{ $data->id_suratkeluar }}">
+                        <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#delete{{ $data->id }}">
                             <i class="fa fa-trash-o"></i>
                         </button>
                         @elseif(Auth::user()->level===2)
-                        <button type="button" class="btn btn-purple btn-xs" data-toggle="modal" data-target="#detail{{ $data->id_suratkeluar }}">
+                        <button type="button" class="btn btn-purple btn-xs" data-toggle="modal" data-target="#detail{{ $data->id }}">
                             <i class="fa fa-eye"></i>
                         </button>
-                        <a href="/suratkeluar/edit/{{$data->id_suratkeluar}}" class="btn btn-warning btn-xs">
+                        <a href="/suratkeluar/edit/{{$data->id}}" class="btn btn-warning btn-xs">
                             <i class="fa fa-edit"></i>
                         </a>
                         @elseif(Auth::user()->level===3)
-                        <button type="button" class="btn btn-purple btn-xs" data-toggle="modal" data-target="#detail{{ $data->id_suratkeluar }}">
+                        <button type="button" class="btn btn-purple btn-xs" data-toggle="modal" data-target="#detail{{ $data->id }}">
                             <i class="fa fa-eye"></i>
                         </button>
                         @endif
@@ -150,7 +150,7 @@
 @foreach ($suratkeluar as $data)
 
 <!-- Modal Detail -->
-<div class="modal fade" id="detail{{ $data->id_suratkeluar }}" tabindex="-1">
+<div class="modal fade" id="detail{{ $data->id }}" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -218,7 +218,7 @@
 <!-- /.modal -->
 
 <!-- Modal Hapus -->
-<div class="modal fade" id="delete{{ $data->id_suratkeluar }}">
+<div class="modal fade" id="delete{{ $data->id }}">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header">
@@ -231,7 +231,7 @@
                 <p>Apakah anda ingin menghapus data ini?&hellip;</p>
             </div>
             <div class="modal-footer justify-content-between">
-                <a href="/suratkeluar/delete/{{$data->id_suratkeluar}}" type="button" class="btn btn-xs btn-danger">Ya</a>
+                <a href="/suratkeluar/delete/{{$data->id}}" type="button" class="btn btn-xs btn-danger">Ya</a>
                 <button type="button" class="btn btn-xs btn-white" data-dismiss="modal">Tidak</button>
             </div>
         </div>

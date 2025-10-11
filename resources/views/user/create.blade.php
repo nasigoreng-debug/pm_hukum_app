@@ -17,7 +17,7 @@
         <div class="row">
             <!-- left column -->
             <div class="col-md-4 offset-md-4">
-                <form action="/member/insert" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('users.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <!-- general form elements -->
                     <div class="form-group">
@@ -40,7 +40,7 @@
                     </div>
                     <div class="form-group">
                         <label>Password</label>
-                        <input type="text" class="form-control @error('password') is-invalid @enderror" value="{{old('password')}}" name="password">
+                        <input type="password" class="form-control @error('password') is-invalid @enderror" value="{{old('password')}}" name="password">
                         <div id="validationServerUsernameFeedback" class="invalid-feedback text-danger">
                             @error('password')
                             {{ $message }}
@@ -66,7 +66,7 @@
                             <label>Foto</label>
                             <div class="">
                                 <div class="form-group">
-                                    <label>Ganti Foto</label>
+                                    <label>Upload Foto</label>
                                     <input type="file" class="form-control form-control-sm @error('foto_user') is-invalid @enderror" value="{{old('foto_user')}}" name="foto_user">
                                     <div id="validationServerUsernameFeedback" class="invalid-feedback">
                                         @error('foto_user')
@@ -78,7 +78,7 @@
                         </div>
                         <div class="form-group">
                             <button class="btn btn-success">Simpan</button>
-                            <a href="/member" class="btn btn-sm btn-info mb-2"></i>Kembali</a>
+                            <a href="{{ route('users.index') }}" class="btn btn-sm btn-info mb-2"></i>Kembali</a>
                         </div>
                 </form>
             </div>

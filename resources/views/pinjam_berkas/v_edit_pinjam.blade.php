@@ -14,7 +14,7 @@
 
     <div class="panel-body">
 
-        <form action="/pinjam/update/{{$pinjam->id_pinjam}}" method="POST" enctype="multipart/form-data">
+        <form action="/pinjam/update/{{$pinjam->id}}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="row">
                 <!-- left column -->

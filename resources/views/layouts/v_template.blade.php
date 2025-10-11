@@ -30,6 +30,14 @@
 
     <script src="{{ asset('public/template') }}/assets/js/jquery-1.11.1.min.js"></script>
     
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+
+    <!-- Include SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -52,7 +60,7 @@
             <!-- Navbar -->
             @include('layouts.v_nav')
             <!-- /Navbar -->
-
+            
             <!-- Main content -->
             @yield('content')
             <!-- /.content -->
@@ -163,6 +171,25 @@
     });
     </script>
 
+    <script>
+function confirmDelete() {
+    Swal.fire({
+        title: "Apakah Anda yakin?",
+        text: "Data yang dihapus tidak dapat dikembalikan!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Ya, hapus!",
+        cancelButtonText: "Batal"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Submit form jika konfirmasi
+            document.getElementById('deleteForm').submit();
+        }
+    });
+}
+</script>
     
 </body>
 </html>

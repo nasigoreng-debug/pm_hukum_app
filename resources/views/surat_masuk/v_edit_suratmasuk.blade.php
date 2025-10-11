@@ -14,7 +14,7 @@
 
     <div class="panel-body">
 
-        <form action="/suratmasuk/update/{{$suratmasuk->id_suratmasuk}}" method="POST" enctype="multipart/form-data">
+        <form action="/suratmasuk/update/{{$suratmasuk->id}}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="row">
                 <!-- left column -->

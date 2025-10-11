@@ -14,7 +14,7 @@
 
     <div class="panel-body">
 
-        <form action="/laporan/store" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('laporans.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="row">
                 <!-- left column -->
@@ -71,10 +71,19 @@
                                 @enderror
                             </div>
                         </div>
+                        <div class="form-group ml-3 mt-2 mb-2 mr-3">
+                            <label for="konsep">Konsep</label>
+                            <input type="file" id="konsep" class="form-control @error('konsep') is-invalid @enderror" value="{{old('konsep')}}" name="konsep">
+                            <div id="validationServerUsernameFeedback" class="invalid-feedback text-danger">
+                                @error('konsep')
+                                {{ $message }}
+                                @enderror
+                            </div>
+                        </div>
                         <div class="form-group">
                             <button class="btn btn-success">Simpan</button>
                             <button type="reset" class="btn btn-danger">Reset</button>
-                            <a href="/laporan" class="btn btn-sm btn-info mb-2"></i>Kembali</a>
+                            <a href="{{ route('laporans.index') }}" class="btn btn-sm btn-info mb-2"></i>Kembali</a>
                         </div>
                     </div>
                 </div>

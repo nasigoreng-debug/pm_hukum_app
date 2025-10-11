@@ -11,7 +11,7 @@
     </div>
 
     <div class="panel-body">
-        <form action="/laporan/update/{{$laporans->id}}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('laporans.update', $laporans->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="row">
                 <div class="col">
@@ -76,7 +76,7 @@
                             <div>{{ $laporans->dokumen }}</div>
                             
                             <div class="mt-2">
-                                <label>Ganti dokumen</label>
+                                <label>Ganti Dokumen</label>
                                 <input type="file" class="form-control form-control-sm @error('dokumen') is-invalid @enderror" 
                                        name="dokumen">
                                 @error('dokumen')
@@ -87,10 +87,27 @@
                             </div>
                         </div>
 
+                        <!-- Konsep -->
+                        <div class="form-group ml-3 mt-2 mb-2 mr-3">
+                            <label>Konsep</label>
+                            <div>{{ $laporans->konsep }}</div>
+                            
+                            <div class="mt-2">
+                                <label>Ganti Konsep</label>
+                                <input type="file" class="form-control form-control-sm @error('konsep') is-invalid @enderror" 
+                                       name="konsep">
+                                @error('konsep')
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
+                                @enderror
+                            </div>
+                        </div>
+
                         <!-- Tombol -->
                         <div class="form-group ml-3 mt-4 mb-3">
                             <button type="submit" class="btn btn-sm btn-success">Simpan</button>
-                            <a href="/laporan" class="btn btn-sm btn-info">Kembali</a>
+                            <a href="{{ route('laporans.index') }}" class="btn btn-sm btn-info">Kembali</a>
                         </div>
                         
                     </div>

@@ -14,14 +14,12 @@
 
     <div class="panel-body">
 
-        <form action="/arsip/insert" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('arsip.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="row">
-                <!-- left column -->
-                <div class="col">
-                    <!-- general form elements -->
+                <!-- Kolom Kiri -->
+                <div class="col-md-6">
                     <div class="card card-primary mt-3 ml-3 mb-3 mr-3">
-
                         <div class="form-group ml-3 mt-2 mb-2 mr-3">
                             <label>Tanggal Masuk</label>
                             <input type="date" class="form-control @error('tgl_masuk') is-invalid @enderror" value="{{old('tgl_masuk')}}" name="tgl_masuk" autofocus>
@@ -104,7 +102,7 @@
                             <label>Staf yang menyerahkan berkas</label>
                             <select name="penyerah" class="form-control @error('penyerah') is-invalid @enderror" value="{{old('penyerah')}}" >
                                 <option>{{old('penyerah')}}</option>
-                                @foreach ($user as $data)
+                                @foreach ($users as $data)
                                 <option>{{$data->name}}</option>
                                 @endforeach
                             </select>
@@ -118,7 +116,7 @@
                             <label>Petugas yang menerima berkas</label>
                             <select name="penerima" class="form-control @error('penerima') is-invalid @enderror" value="{{old('penerima')}}" >
                                 <option>{{old('penerima')}}</option>
-                                @foreach ($user as $data)
+                                @foreach ($users as $data)
                                 <option>{{$data->name}}</option>
                                 @endforeach
                             </select>
@@ -128,6 +126,12 @@
                                 @enderror
                             </div>
                         </div>
+                    </div>
+                </div>
+
+                <!-- Kolom Kanan -->
+                <div class="col-md-6">
+                    <div class="card card-primary mt-3 ml-3 mb-3 mr-3">
                         <div class="form-group ml-3 mt-2 mb-2 mr-3">
                             <label>No. Lemari</label>
                             <select name="no_lemari" class="form-control @error('no_lemari') is-invalid @enderror" id="no_lemari">
@@ -187,15 +191,14 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group ml-3 mt-2 mb-2 mr-3">
                             <button class="btn btn-success">Simpan</button>
                             <button type="reset" class="btn btn-danger">Reset</button>
-                            <a href="/arsip" class="btn btn-sm btn-info mb-2"></i>Kembali</a>
+                            <a href="{{ route('arsip.index') }}" class="btn btn-sm btn-info mb-2">Kembali</a>
                         </div>
                     </div>
                 </div>
             </div>
-
         </form>
 
     </div>

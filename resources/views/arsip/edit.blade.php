@@ -14,16 +14,16 @@
 
     <div class="panel-body">
 
-        <form action="/arsip/update/{{$arsip_perkara->id}}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('arsip.update', $arsip_perkara->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
+            @method('PUT')
             <div class="row">
-                <!-- left column -->
-                <div class="col">
-                    <!-- general form elements -->
+                <!-- Kolom Kiri -->
+                <div class="col-md-6">
                     <div class="card card-primary mt-3 ml-3 mb-3 mr-3">
                         <div class="form-group ml-3 mt-2 mb-2 mr-3">
                             <label>Tanggal Masuk</label>
-                            <input type="date" class="form-control form-control-sm @error('tgl_masuk') is-invalid @enderror" value="{{$arsip_perkara->tgl_masuk}}" name="tgl_masuk" autofocus>
+                            <input type="date" class="form-control form-control-sm @error('tgl_masuk') is-invalid @enderror" value="{{ $arsip_perkara->tgl_masuk ? \Carbon\Carbon::parse($arsip_perkara->tgl_masuk)->format('Y-m-d') : '' }}" name="tgl_masuk" autofocus>
                             <div id="validationServerUsernameFeedback" class="invalid-feedback">
                                 @error('tgl_masuk')
                                 {{ $message }}
@@ -92,7 +92,8 @@
                         </div>
                         <div class="form-group ml-3 mt-2 mb-2 mr-3">
                             <label>Tanggal Putus</label>
-                            <input type="date" class="form-control form-control-sm @error('tgl_put_banding') is-invalid @enderror" value="{{$arsip_perkara->tgl_put_banding}}" name="tgl_put_banding">
+                            <input type="date" class="form-control form-control-sm @error('tgl_put_banding') is-invalid @enderror" value="{{ $arsip_perkara->tgl_put_banding ? \Carbon\Carbon::parse($arsip_perkara->tgl_put_banding)->format('Y-m-d') : '' }}" name="tgl_put_banding">
+                            
                             <div id="validationServerUsernameFeedback" class="invalid-feedback">
                                 @error('tgl_put_banding')
                                 {{ $message }}
@@ -103,7 +104,7 @@
                             <label>Staf yang menyerahkan berkas</label>
                             <select name="penyerah" class="form-control form-control-sm @error('penyerah') is-invalid @enderror">
                                 <option>{{$arsip_perkara->penyerah}}</option>
-                                @foreach ($user as $data)
+                                @foreach ($users as $data)
                                 <option>{{$data->name}}</option>
                                 @endforeach
                             </select>
@@ -117,7 +118,7 @@
                             <label>Petugas yang menerima berkas</label>
                             <select name="penerima" class="form-control form-control-sm @error('penerima') is-invalid @enderror">
                                 <option>{{$arsip_perkara->penerima}}</option>
-                                @foreach ($user as $data)
+                                @foreach ($users as $data)
                                 <option>{{$data->name}}</option>
                                 @endforeach
                             </select>
@@ -127,6 +128,12 @@
                                 @enderror
                             </div>
                         </div>
+                    </div>
+                </div>
+
+                <!-- Kolom Kanan -->
+                <div class="col-md-6">
+                    <div class="card card-primary mt-3 ml-3 mb-3 mr-3">
                         <div class="form-group ml-3 mt-2 mb-2 mr-3">
                             <label>No. Lemari</label>
                             <select name="no_lemari" class="form-control form-control-sm @error('no_lemari') is-invalid @enderror" id="no_lemari">
@@ -161,54 +168,73 @@
                         </div>
                         <div class="form-group ml-3 mt-2 mb-2 mr-3">
                             <label>Tanggal alih media</label>
-                            <input type="date" class="form-control form-control-sm @error('tgl_alih_media') is-invalid @enderror" value="{{$arsip_perkara->tgl_alih_media}}" name="tgl_alih_media">
+                            <input type="date" class="form-control form-control-sm @error('tgl_alih_media') is-invalid @enderror" value="{{ $arsip_perkara->tgl_alih_media ? \Carbon\Carbon::parse($arsip_perkara->tgl_alih_media)->format('Y-m-d') : '' }}" name="tgl_alih_media">
                             <div id="validationServerUsernameFeedback" class="invalid-feedback">
                                 @error('tgl_alih_media')
                                 {{ $message }}
                                 @enderror
                             </div>
                         </div>
+                        
+                        <!-- File Putusan -->
                         <div class="form-group ml-3 mt-2 mb-2 mr-3">
-                            <div class="form-group ml-3 mt-2 mb-2 mr-3">
-                                <label>Putusan</label>
-                                <div>{{ $arsip_perkara->putusan }}</div>
-                            </div>
-                            <div class="">
-                                <div class="form-group ml-3 mt-2 mb-2 mr-3">
-                                    <label>Ganti Putusan</label>
-                                    <input type="file" class="form-control form-control-sm @error('putusan') is-invalid @enderror" value="{{$arsip_perkara->putusan}}" name="putusan">
-                                    <div id="validationServerUsernameFeedback" class="invalid-feedback">
-                                        @error('putusan')
-                                        {{ $message }}
-                                        @enderror
-                                    </div>
-                                </div>
+                            <label>Putusan Saat Ini</label>
+                            <div class="form-control-plaintext">
+                                @if($arsip_perkara->putusan)
+                                    <span class="badge badge-info">{{ $arsip_perkara->putusan }}</span>
+                                @else
+                                    <span class="badge badge-warning">Belum ada file</span>
+                                @endif
                             </div>
                         </div>
                         <div class="form-group ml-3 mt-2 mb-2 mr-3">
-                            <div class="form-group ml-3 mt-2 mb-2 mr-3">
-                                <label>Bundel B</label>
-                                <div>{{ $arsip_perkara->bundel_b }}</div>
-                            </div>
-                            <div class="">
-                                <div class="form-group ml-3 mt-2 mb-2 mr-3">
-                                    <label>Ganti Bundel B</label>
-                                    <input type="file" class="form-control form-control-sm @error('bundel_b') is-invalid @enderror" value="{{$arsip_perkara->bundel_b}}" name="bundel_b">
-                                    <div id="validationServerUsernameFeedback" class="invalid-feedback">
-                                        @error('bundel_b')
-                                        {{ $message }}
-                                        @enderror
-                                    </div>
-                                </div>
+                            <label>Ganti Putusan</label>
+                            <input type="file" class="form-control form-control-sm @error('putusan') is-invalid @enderror" name="putusan">
+                            <small class="form-text text-muted">Kosongkan jika tidak ingin mengubah file</small>
+                            <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                                @error('putusan')
+                                {{ $message }}
+                                @enderror
                             </div>
                         </div>
-                        <div class="form-group">
-                            <button class="btn btn-sm btn-success">Simpan</button>
-                            <a href="/arsip" class="btn btn-sm btn-info mb-2"></i>Kembali</a>
+
+                        <!-- File Bundel B -->
+                        <div class="form-group ml-3 mt-2 mb-2 mr-3">
+                            <label>Bundel B Saat Ini</label>
+                            <div class="form-control-plaintext">
+                                @if($arsip_perkara->bundel_b)
+                                    <span class="badge badge-info">{{ $arsip_perkara->bundel_b }}</span>
+                                @else
+                                    <span class="badge badge-warning">Belum ada file</span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group ml-3 mt-2 mb-2 mr-3">
+                            <label>Ganti Bundel B</label>
+                            <input type="file" class="form-control form-control-sm @error('bundel_b') is-invalid @enderror" name="bundel_b">
+                            <small class="form-text text-muted">Kosongkan jika tidak ingin mengubah file</small>
+                            <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                                @error('bundel_b')
+                                {{ $message }}
+                                @enderror
+                            </div>
+                        </div>
+
+                        <!-- Tombol Aksi -->
+                        <div class="form-group ml-3 mt-4 mb-2 mr-3">
+                            <button class="btn btn-sm btn-success">
+                                <i class="fas fa-save"></i> Simpan Perubahan
+                            </button>
+                            <a href="/arsip" class="btn btn-sm btn-info">
+                                <i class="fas fa-arrow-left"></i> Kembali
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
+        </form>
+
     </div>
+
 </div>
 @endsection

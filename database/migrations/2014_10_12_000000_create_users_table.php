@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('name', 255);
             $table->string('username', 20)->unique();
             $table->string('password', 255)->hash();
-            $table->tinyInteger('level');
+            $table->tinyInteger('level')->default(3)->nullable();
             $table->string('foto_user', 1000)->nullable();
             $table->timestamps();
         });

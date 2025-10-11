@@ -138,24 +138,24 @@
                     <td>{{ $data->keterangan }}</td>
                     <td class="text-center">
                         @if(Auth::user()->level===1)
-                        <button type="button" class="btn btn-purple btn-xs" data-toggle="modal" data-target="#detail{{ $data->id_reg_kasasi }}">
+                        <button type="button" class="btn btn-purple btn-xs" data-toggle="modal" data-target="#detail{{ $data->id }}">
                             <i class="fa fa-eye"></i></a>
                         </button>
-                        <a href="/reg_kasasi/edit/{{$data->id_reg_kasasi}}" class="btn btn-warning btn-xs">
+                        <a href="/reg_kasasi/edit/{{$data->id}}" class="btn btn-warning btn-xs">
                             <i class="fa fa-edit"></i>
                         </a>
-                        <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#delete{{ $data->id_reg_kasasi }}">
+                        <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#delete{{ $data->id }}">
                             <i class="fa fa-trash-o"></i>
                         </button>
                         @elseif(Auth::user()->level===2)
-                        <button type="button" class="btn btn-purple btn-xs" data-toggle="modal" data-target="#detail{{ $data->id_reg_kasasi }}">
+                        <button type="button" class="btn btn-purple btn-xs" data-toggle="modal" data-target="#detail{{ $data->id }}">
                             <i class="fa fa-eye"></i></a>
                         </button>
-                        <a href="/reg_kasasi/edit/{{$data->id_reg_kasasi}}" class="btn btn-warning btn-xs">
+                        <a href="/reg_kasasi/edit/{{$data->id}}" class="btn btn-warning btn-xs">
                             <i class="fa fa-edit"></i>
                         </a>
                         @elseif(Auth::user()->level===3)
-                        <a href="/reg_kasasi/detail/{{$data->id_reg_kasasi}}" class="btn btn-purple btn-xs">
+                        <a href="/reg_kasasi/detail/{{$data->id}}" class="btn btn-purple btn-xs">
                             <i class="fa fa-eye"></i></a>
                         </a>
                         @endif
@@ -170,7 +170,7 @@
 @foreach ($reg_kasasi as $data)
 
 <!-- Modal Detail -->
-<div class="modal fade" id="detail{{ $data->id_reg_kasasi }}" tabindex="-1">
+<div class="modal fade" id="detail{{ $data->id }}" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -288,7 +288,7 @@
 <!-- /.modal -->
 
 <!-- Modal Hapus -->
-<div class="modal fade" id="delete{{ $data->id_reg_kasasi }}">
+<div class="modal fade" id="delete{{ $data->id }}">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header">
@@ -301,7 +301,7 @@
                 <p>Apakah anda ingin menghapus perkara ini?&hellip;</p>
             </div>
             <div class="modal-footer justify-content-between">
-                <a href="/reg_kasasi/delete/{{$data->id_reg_kasasi}}" type="button" class="btn btn-sm btn-danger">Ya</a>
+                <a href="/reg_kasasi/delete/{{$data->id}}" type="button" class="btn btn-sm btn-danger">Ya</a>
                 <button type="button" class="btn btn-sm btn-white" data-dismiss="modal">Tidak</button>
             </div>
         </div>

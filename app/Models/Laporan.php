@@ -14,7 +14,8 @@ class Laporan extends Model
         'tahun',
         'tgl_laporan',
         'judul',
-        'dokumen'
+        'dokumen',
+        'konsep',
     ];
 
     protected $casts = [

@@ -33,10 +33,10 @@
         </script>
         <td class="text-center" style="font-size: 5px;">
             @if(Auth::user()->level===1)
-            <a href="/laporan/create" class="btn btn-sm btn-info mb-2">Tambah Data</a>
+            <a href="{{ route('laporans.create') }}" class="btn btn-sm btn-info mb-2">Tambah Data</a>
             <a href="/laporan" class="btn btn-sm btn-danger mb-2">Kembali</a>
             @elseif(Auth::user()->level===2)
-            <a href="/laporan/create" class="btn btn-sm btn-info mb-2">Tambah Data</a>
+            <a href="{{ route('laporans.create') }}" class="btn btn-sm btn-info mb-2">Tambah Data</a>
             <a href="/laporan" class="btn btn-sm btn-danger mb-2">Kembali</a>
             @elseif(Auth::user()->level===3)
 
@@ -44,10 +44,19 @@
         </td>
 
         @if (session('pesan'))
-        <div class="alert alert-success alert-dismissible mt-2">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            {{ session('pesan') }}
-        </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Sukses!',
+                    text: '{{ session('pesan') }}',
+                    timer: 3000,
+                    showConfirmButton: true,
+                    confirmButtonText: 'OK',
+                    timerProgressBar: true
+                });
+            });
+        </script>
         @endif
         <table class="table table-sm table-hover" id="example-4">
             <thead class="bg-gray text-center">
@@ -58,6 +67,7 @@
                     <th style="width: 50px;">Tanggal</th>
                     <th style="width: 200px;">Judul</th>
                     <th style="width: 30px;">Dokumen</th>
+                    <th style="width: 30px;">Konsep</th>
                     <th style="width: 60px;">Action</th>
                 </tr>
             </thead>
@@ -70,6 +80,7 @@
                     <th>Tanggal</th>
                     <th>Judul</th>
                     <th>Dokumen</th>
+                    <th>Konsep</th>
                     <th>Action</th>
                 </tr>
             </tfoot>
@@ -87,32 +98,45 @@
                         @if($data->dokumen=="")
 
                         @else
-                        <a href="public/storage/laporans/{{$data->dokumen}}" class="text-blue"><i class="fa fa-file-pdf-o"></i></i></a>
+                        <a href="public/storage/laporans/dokumen/{{$data->dokumen}}" class="text-blue"><i class="fa fa-file-pdf-o"></i></i></a>
+                        @endif
+
+                    </td>
+                    <td class="text-center">
+
+                        @if($data->konsep=="")
+
+                        @else
+                        <a href="public/storage/laporans/konsep/{{$data->konsep}}" class="text-blue"><i class="fa fa-file-pdf-o"></i></i></a>
                         @endif
 
                     </td>
                     <td class="text-center" style="font-size: 5px;">
                         @if(Auth::user()->level===1)
-                        <button type="button" class="btn btn-purple btn-xs" data-toggle="modal" data-target="#detail{{ $data->id }}">
-                            <i class="fa fa-eye"></i>
-                        </button>
-                        <a href="/laporan/edit/{{$data->id}}" class="btn btn-warning btn-xs">
-                            <i class="fa fa-edit"></i>
-                        </a>
-                        <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#delete{{ $data->id }}">
-                            <i class="fa fa-trash-o"></i>
-                        </button>
+                            <button type="button" class="btn btn-purple btn-xs" data-toggle="modal" data-target="#detail{{ $data->id }}" style="padding: 2px 5px; font-size: 8px; margin: 1px;">
+                                <i class="fa fa-eye"></i>
+                            </button>
+                            <a href="{{ route('laporans.edit', $data->id) }}" class="btn btn-warning btn-xs" style="padding: 2px 5px; font-size: 8px; margin: 1px;">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                            <form id="deleteForm" action="{{ route('laporans.destroy', $data->id) }}" method="POST" style="display: inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="button" onclick="confirmDelete()" class="btn btn-danger btn-xs" style="padding: 2px 5px; font-size: 8px; margin: 1px;">
+                                    <i class="fa fa-trash-o"></i>
+                                </button>
+                            </form>
                         @elseif(Auth::user()->level===2)
-                        <button type="button" class="btn btn-purple btn-xs" data-toggle="modal" data-target="#detail{{ $data->id }}">
-                            <i class="fa fa-eye"></i>
-                        </button>
-                        <a href="/laporan/edit/{{$data->id}}" class="btn btn-warning btn-xs">
-                            <i class="fa fa-edit"></i>
-                        </a>
+                            <button type="button" class="btn btn-purple btn-xs" data-toggle="modal" data-target="#detail{{ $data->id }}" style="padding: 2px 5px; font-size: 8px; margin: 1px;">
+                                <i class="fa fa-eye"></i>
+                            </button>
+                            <a href="{{ route('laporans.edit', $data->id) }}" class="btn btn-warning btn-xs" style="padding: 2px 5px; font-size: 8px; margin: 1px;">
+                                <i class="fa fa-edit"></i>
+                            </a>
                         @elseif(Auth::user()->level===3)
-                        <button type="button" class="btn btn-purple btn-xs" data-toggle="modal" data-target="#detail{{ $data->id }}">
-                            <i class="fa fa-eye"></i>
-                        </button>
+                            <button type="button" class="btn btn-purple btn-xs" data-toggle="modal" data-target="#detail{{ $data->id }}" style="padding: 2px 5px; font-size: 8px; margin: 1px;">
+                                <i class="fa fa-eye"></i>
+                            </button>
                         @endif
                     </td>
                 </tr>
@@ -164,30 +188,6 @@
             </div>
         </div>
     </div>
-</div>
-<!-- /.modal -->
-
-<!-- Modal Hapus -->
-<div class="modal fade" id="delete{{ $data->id }}">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h6 class="modal-title">{{ $data->jenis_laporan }} judul {{ $data->judul }} </h6>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>Apakah anda ingin menghapus laporan ini?&hellip;</p>
-            </div>
-            <div class="modal-footer justify-content-between">
-                <a href="/laporan/destroy/{{$data->id}}" type="button" class="btn btn-xs btn-danger">Ya</a>
-                <button type="button" class="btn btn-xs btn-white" data-dismiss="modal">Tidak</button>
-            </div>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
 @endforeach
