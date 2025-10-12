@@ -21,15 +21,15 @@
     <link rel="stylesheet" href="{{ asset('public/template') }}/assets/css/xenon-skins.css">
     <link rel="stylesheet" href="{{ asset('public/template') }}/assets/css/custom.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-    
+
     <!-- Additional styles -->
     <link rel="stylesheet" href="{{ asset('public/template') }}/assets/css/fonts/meteocons/css/meteocons.css">
     <link rel="stylesheet" href="{{ asset('public/template') }}/assets/js/datatables/dataTables.bootstrap.css">
-    
+
     <link rel="shortcut icon" href="{{ asset('public/favicon/favicon.ico') }}">
 
     <script src="{{ asset('public/template') }}/assets/js/jquery-1.11.1.min.js"></script>
-    
+
     <!-- SweetAlert2 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
@@ -50,7 +50,7 @@
     <div class="page-loading-overlay">
         <div class="loader-2"></div>
     </div>
-    
+
     <div class="page-container">
         <!-- Sidebar -->
         @include('layouts.v_sidebar')
@@ -60,7 +60,7 @@
             <!-- Navbar -->
             @include('layouts.v_nav')
             <!-- /Navbar -->
-            
+
             <!-- Main content -->
             @yield('content')
             <!-- /.content -->
@@ -90,42 +90,42 @@
     <script src="{{ asset('public/template') }}/assets/js/datatables/yadcf/jquery.dataTables.yadcf.js"></script>
     <script src="{{ asset('public/template') }}/assets/js/datatables/tabletools/dataTables.tableTools.min.js"></script>
     <script>
-    function updateIndonesianDate() {
-        const now = new Date();
-        const options = { 
-            weekday: 'long', 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-            timeZone: 'Asia/Jakarta'
-        };
-        
-        const formatter = new Intl.DateTimeFormat('id-ID', options);
-        const formatted = formatter.format(now);
-        
-        document.getElementById('indonesian-date').textContent = formatted;
-    }
+        function updateIndonesianDate() {
+            const now = new Date();
+            const options = {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                timeZone: 'Asia/Jakarta'
+            };
 
-    // Update immediately
-    updateIndonesianDate();
+            const formatter = new Intl.DateTimeFormat('id-ID', options);
+            const formatted = formatter.format(now);
 
-    // Update every second
-    setInterval(updateIndonesianDate, 1000);
+            document.getElementById('indonesian-date').textContent = formatted;
+        }
+
+        // Update immediately
+        updateIndonesianDate();
+
+        // Update every second
+        setInterval(updateIndonesianDate, 1000);
     </script>
 
     <script>
         function updateForecastTimes() {
             const now = new Date();
             const forecastEntries = document.querySelectorAll('.xe-forecast-entry time');
-            
+
             forecastEntries.forEach((element, index) => {
                 const forecastTime = new Date(now.getTime() + (index + 1) * 60 * 60 * 1000);
                 const hours = forecastTime.getHours().toString().padStart(2, '0');
                 const minutes = forecastTime.getMinutes().toString().padStart(2, '0');
-                
+
                 element.textContent = `${hours}:${minutes}`;
             });
         }
@@ -139,57 +139,60 @@
     <script src="{{ asset('public/template') }}/assets/js/xenon-custom.js"></script>
 
     <script>
-    // Additional JavaScript for enhanced animations
-    document.addEventListener('DOMContentLoaded', function() {
-        const widgets = document.querySelectorAll('.animated-widget');
-        
-        widgets.forEach(widget => {
-            // Add click animation
-            widget.addEventListener('click', function() {
-                this.style.transform = 'scale(0.95)';
-                setTimeout(() => {
-                    this.style.transform = '';
-                }, 150);
-            });
-            
-            // Intersection Observer for scroll animations
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
-                    }
+        // Additional JavaScript for enhanced animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const widgets = document.querySelectorAll('.animated-widget');
+
+            widgets.forEach(widget => {
+                // Add click animation
+                widget.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
                 });
-            }, { threshold: 0.1 });
-            
-            widget.style.opacity = '0';
-            widget.style.transform = 'translateY(20px)';
-            widget.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            
-            observer.observe(widget);
+
+                // Intersection Observer for scroll animations
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transform = 'translateY(0)';
+                        }
+                    });
+                }, {
+                    threshold: 0.1
+                });
+
+                widget.style.opacity = '0';
+                widget.style.transform = 'translateY(20px)';
+                widget.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+
+                observer.observe(widget);
+            });
         });
-    });
     </script>
 
     <script>
-function confirmDelete() {
-    Swal.fire({
-        title: "Apakah Anda yakin?",
-        text: "Data yang dihapus tidak dapat dikembalikan!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Ya, hapus!",
-        cancelButtonText: "Batal"
-    }).then((result) => {
-        if (result.isConfirmed) {
-            // Submit form jika konfirmasi
-            document.getElementById('deleteForm').submit();
+        function confirmDelete() {
+            Swal.fire({
+                title: "Apakah Anda yakin?",
+                text: "Data yang dihapus tidak dapat dikembalikan!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Ya, hapus!",
+                cancelButtonText: "Batal"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Submit form jika konfirmasi
+                    document.getElementById('deleteForm').submit();
+                }
+            });
         }
-    });
-}
-</script>
-    
+    </script>
+
 </body>
+
 </html>

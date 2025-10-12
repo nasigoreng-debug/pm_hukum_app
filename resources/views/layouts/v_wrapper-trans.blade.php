@@ -8,7 +8,8 @@
                             <div>
                                 <p class="mb-0">Revenue</p>
                                 <h4 class="my-1">$4805</h4>
-                                <p class="mb-0 font-13"><i class='bx bxs-up-arrow align-middle'></i>$34 Since last week</p>
+                                <p class="mb-0 font-13"><i class='bx bxs-up-arrow align-middle'></i>$34 Since last week
+                                </p>
                             </div>
                             <div class="widgets-icons ms-auto"><i class='bx bxs-wallet'></i>
                             </div>
@@ -24,7 +25,8 @@
                             <div>
                                 <p class="mb-0">Total Customers</p>
                                 <h4 class="my-1">8.4K</h4>
-                                <p class="mb-0 font-13"><i class='bx bxs-up-arrow align-middle'></i>14% Since last week</p>
+                                <p class="mb-0 font-13"><i class='bx bxs-up-arrow align-middle'></i>14% Since last week
+                                </p>
                             </div>
                             <div class="widgets-icons ms-auto"><i class='bx bxs-group'></i>
                             </div>
@@ -40,7 +42,8 @@
                             <div>
                                 <p class="mb-0">Store Visitors</p>
                                 <h4 class="my-1">59K</h4>
-                                <p class="mb-0 font-13"><i class='bx bxs-down-arrow align-middle'></i>12.4% Since last week</p>
+                                <p class="mb-0 font-13"><i class='bx bxs-down-arrow align-middle'></i>12.4% Since last
+                                    week</p>
                             </div>
                             <div class="widgets-icons ms-auto"><i class='bx bxs-binoculars'></i>
                             </div>
@@ -68,21 +71,24 @@
                                 <div>
                                     <p class="mb-0">Revenue</p>
                                     <h4 class="my-1 text-white">$4805</h4>
-                                    <p class="mb-0 font-13"><i class='bx bxs-up-arrow align-middle'></i>$1458 Since last month</p>
+                                    <p class="mb-0 font-13"><i class='bx bxs-up-arrow align-middle'></i>$1458 Since last
+                                        month</p>
                                 </div>
                             </div>
                             <div class="col">
                                 <div>
                                     <p class="mb-0">Total Customers</p>
                                     <h4 class="my-1 text-white">8.4K</h4>
-                                    <p class="mb-0 font-13"><i class='bx bxs-up-arrow align-middle'></i>12.3% Since last month</p>
+                                    <p class="mb-0 font-13"><i class='bx bxs-up-arrow align-middle'></i>12.3% Since last
+                                        month</p>
                                 </div>
                             </div>
                             <div class="col">
                                 <div>
                                     <p class="mb-0">Store Visitors</p>
                                     <h4 class="my-1 text-white">59K</h4>
-                                    <p class="mb-0 font-13"><i class='bx bxs-down-arrow align-middle'></i>2.4% Since last month</p>
+                                    <p class="mb-0 font-13"><i class='bx bxs-down-arrow align-middle'></i>2.4% Since
+                                        last month</p>
                                 </div>
                             </div>
                         </div>
@@ -275,7 +281,9 @@
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <div class="">
-                                                    <img src="assets/images/avatars/avatar-1.png" class="rounded-circle" width="46" height="46" alt="" />
+                                                    <img src="assets/images/avatars/avatar-1.png"
+                                                        class="rounded-circle" width="46" height="46"
+                                                        alt="" />
                                                 </div>
                                                 <div class="ms-2">
                                                     <h6 class="mb-1 font-14">Payment from Michle Jhon</h6>
@@ -293,7 +301,9 @@
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <div class="">
-                                                    <img src="assets/images/avatars/avatar-2.png" class="rounded-circle" width="46" height="46" alt="" />
+                                                    <img src="assets/images/avatars/avatar-2.png"
+                                                        class="rounded-circle" width="46" height="46"
+                                                        alt="" />
                                                 </div>
                                                 <div class="ms-2">
                                                     <h6 class="mb-1 font-14">Payment from Pauline Bird</h6>
@@ -311,7 +321,9 @@
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <div class="">
-                                                    <img src="assets/images/avatars/avatar-3.png" class="rounded-circle" width="46" height="46" alt="" />
+                                                    <img src="assets/images/avatars/avatar-3.png"
+                                                        class="rounded-circle" width="46" height="46"
+                                                        alt="" />
                                                 </div>
                                                 <div class="ms-2">
                                                     <h6 class="mb-1 font-14">Payment from Ralph Alva</h6>
@@ -329,7 +341,9 @@
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <div class="">
-                                                    <img src="assets/images/avatars/avatar-4.png" class="rounded-circle" width="46" height="46" alt="" />
+                                                    <img src="assets/images/avatars/avatar-4.png"
+                                                        class="rounded-circle" width="46" height="46"
+                                                        alt="" />
                                                 </div>
                                                 <div class="ms-2">
                                                     <h6 class="mb-1 font-14">Payment from John Roman</h6>
@@ -347,7 +361,9 @@
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <div class="">
-                                                    <img src="assets/images/avatars/avatar-7.png" class="rounded-circle" width="46" height="46" alt="" />
+                                                    <img src="assets/images/avatars/avatar-7.png"
+                                                        class="rounded-circle" width="46" height="46"
+                                                        alt="" />
                                                 </div>
                                                 <div class="ms-2">
                                                     <h6 class="mb-1 font-14">Payment from David Buckley</h6>
@@ -365,7 +381,9 @@
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <div class="">
-                                                    <img src="assets/images/avatars/avatar-8.png" class="rounded-circle" width="46" height="46" alt="" />
+                                                    <img src="assets/images/avatars/avatar-8.png"
+                                                        class="rounded-circle" width="46" height="46"
+                                                        alt="" />
                                                 </div>
                                                 <div class="ms-2">
                                                     <h6 class="mb-1 font-14">Payment from Lewis Cruz</h6>
@@ -383,7 +401,9 @@
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <div class="">
-                                                    <img src="assets/images/avatars/avatar-9.png" class="rounded-circle" width="46" height="46" alt="" />
+                                                    <img src="assets/images/avatars/avatar-9.png"
+                                                        class="rounded-circle" width="46" height="46"
+                                                        alt="" />
                                                 </div>
                                                 <div class="ms-2">
                                                     <h6 class="mb-1 font-14">Payment from James Caviness</h6>
@@ -401,7 +421,9 @@
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <div class="">
-                                                    <img src="assets/images/avatars/avatar-10.png" class="rounded-circle" width="46" height="46" alt="" />
+                                                    <img src="assets/images/avatars/avatar-10.png"
+                                                        class="rounded-circle" width="46" height="46"
+                                                        alt="" />
                                                 </div>
                                                 <div class="ms-2">
                                                     <h6 class="mb-1 font-14">Payment from Peter Costanzo</h6>
@@ -419,7 +441,9 @@
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <div class="">
-                                                    <img src="assets/images/avatars/avatar-11.png" class="rounded-circle" width="46" height="46" alt="" />
+                                                    <img src="assets/images/avatars/avatar-11.png"
+                                                        class="rounded-circle" width="46" height="46"
+                                                        alt="" />
                                                 </div>
                                                 <div class="ms-2">
                                                     <h6 class="mb-1 font-14">Payment from Johnny Seitz</h6>
@@ -437,7 +461,9 @@
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <div class="">
-                                                    <img src="assets/images/avatars/avatar-12.png" class="rounded-circle" width="46" height="46" alt="" />
+                                                    <img src="assets/images/avatars/avatar-12.png"
+                                                        class="rounded-circle" width="46" height="46"
+                                                        alt="" />
                                                 </div>
                                                 <div class="ms-2">
                                                     <h6 class="mb-1 font-14">Payment from Lewis Cruz</h6>
@@ -455,7 +481,9 @@
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <div class="">
-                                                    <img src="assets/images/avatars/avatar-13.png" class="rounded-circle" width="46" height="46" alt="" />
+                                                    <img src="assets/images/avatars/avatar-13.png"
+                                                        class="rounded-circle" width="46" height="46"
+                                                        alt="" />
                                                 </div>
                                                 <div class="ms-2">
                                                     <h6 class="mb-1 font-14">Payment from David Buckley</h6>
@@ -473,7 +501,9 @@
                                         <td>
                                             <div class="d-flex align-items-center">
                                                 <div class="">
-                                                    <img src="assets/images/avatars/avatar-14.png" class="rounded-circle" width="46" height="46" alt="" />
+                                                    <img src="assets/images/avatars/avatar-14.png"
+                                                        class="rounded-circle" width="46" height="46"
+                                                        alt="" />
                                                 </div>
                                                 <div class="ms-2">
                                                     <h6 class="mb-1 font-14">Payment from Thomas Wheeler</h6>
@@ -556,13 +586,17 @@
                         <div class="mt-5" id="chart15"></div>
                     </div>
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item d-flex bg-transparent justify-content-between align-items-center">Kids <span class="badge bg-light-white-2 rounded-pill">25</span>
+                        <li class="list-group-item d-flex bg-transparent justify-content-between align-items-center">
+                            Kids <span class="badge bg-light-white-2 rounded-pill">25</span>
                         </li>
-                        <li class="list-group-item d-flex bg-transparent justify-content-between align-items-center">Women <span class="badge bg-light-white-3 rounded-pill">10</span>
+                        <li class="list-group-item d-flex bg-transparent justify-content-between align-items-center">
+                            Women <span class="badge bg-light-white-3 rounded-pill">10</span>
                         </li>
-                        <li class="list-group-item d-flex bg-transparent justify-content-between align-items-center">Men <span class="badge bg-white rounded-pill text-dark">65</span>
+                        <li class="list-group-item d-flex bg-transparent justify-content-between align-items-center">
+                            Men <span class="badge bg-white rounded-pill text-dark">65</span>
                         </li>
-                        <li class="list-group-item d-flex bg-transparent justify-content-between align-items-center">Furniture <span class="badge bg-light-white-4 text-white rounded-pill">14</span>
+                        <li class="list-group-item d-flex bg-transparent justify-content-between align-items-center">
+                            Furniture <span class="badge bg-light-white-4 text-white rounded-pill">14</span>
                         </li>
                     </ul>
                 </div>
@@ -576,7 +610,8 @@
                                 <h4 class="mb-0">43,540</h4>
                             </div>
                             <div class="">
-                                <p class="mb-0 align-self-center font-weight-bold ms-2">4.4 <i class='bx bxs-up-arrow-alt mr-2'></i>
+                                <p class="mb-0 align-self-center font-weight-bold ms-2">4.4 <i
+                                        class='bx bxs-up-arrow-alt mr-2'></i>
                                 </p>
                             </div>
                         </div>
@@ -629,134 +664,165 @@
                         </div>
                     </div>
                     <div class="customers-list p-3 mb-3">
-                        <div class="customers-list-item d-flex align-items-center border-top border-bottom p-2 cursor-pointer">
+                        <div
+                            class="customers-list-item d-flex align-items-center border-top border-bottom p-2 cursor-pointer">
                             <div class="">
-                                <img src="assets/images/avatars/avatar-3.png" class="rounded-circle" width="46" height="46" alt="" />
+                                <img src="assets/images/avatars/avatar-3.png" class="rounded-circle" width="46"
+                                    height="46" alt="" />
                             </div>
                             <div class="ms-2">
                                 <h6 class="mb-1 font-14">Emy Jackson</h6>
                                 <p class="mb-0 font-13">emy_jac@xyz.com</p>
                             </div>
-                            <div class="list-inline d-flex customers-contacts ms-auto"> <a href="javascript:;" class="list-inline-item"><i class='bx bxs-envelope'></i></a>
+                            <div class="list-inline d-flex customers-contacts ms-auto"> <a href="javascript:;"
+                                    class="list-inline-item"><i class='bx bxs-envelope'></i></a>
                                 <a href="javascript:;" class="list-inline-item"><i class='bx bxs-microphone'></i></a>
-                                <a href="javascript:;" class="list-inline-item"><i class='bx bx-dots-vertical-rounded'></i></a>
+                                <a href="javascript:;" class="list-inline-item"><i
+                                        class='bx bx-dots-vertical-rounded'></i></a>
                             </div>
                         </div>
                         <div class="customers-list-item d-flex align-items-center border-bottom p-2 cursor-pointer">
                             <div class="">
-                                <img src="assets/images/avatars/avatar-4.png" class="rounded-circle" width="46" height="46" alt="" />
+                                <img src="assets/images/avatars/avatar-4.png" class="rounded-circle" width="46"
+                                    height="46" alt="" />
                             </div>
                             <div class="ms-2">
                                 <h6 class="mb-1 font-14">Martin Hughes</h6>
                                 <p class="mb-0 font-13">martin.hug@xyz.com</p>
                             </div>
-                            <div class="list-inline d-flex customers-contacts ms-auto"> <a href="javascript:;" class="list-inline-item"><i class='bx bxs-envelope'></i></a>
+                            <div class="list-inline d-flex customers-contacts ms-auto"> <a href="javascript:;"
+                                    class="list-inline-item"><i class='bx bxs-envelope'></i></a>
                                 <a href="javascript:;" class="list-inline-item"><i class='bx bxs-microphone'></i></a>
-                                <a href="javascript:;" class="list-inline-item"><i class='bx bx-dots-vertical-rounded'></i></a>
+                                <a href="javascript:;" class="list-inline-item"><i
+                                        class='bx bx-dots-vertical-rounded'></i></a>
                             </div>
                         </div>
                         <div class="customers-list-item d-flex align-items-center border-bottom p-2 cursor-pointer">
                             <div class="">
-                                <img src="assets/images/avatars/avatar-23.png" class="rounded-circle" width="46" height="46" alt="" />
+                                <img src="assets/images/avatars/avatar-23.png" class="rounded-circle" width="46"
+                                    height="46" alt="" />
                             </div>
                             <div class="ms-2">
                                 <h6 class="mb-1 font-14">Laura Madison</h6>
                                 <p class="mb-0 font-13">laura_01@xyz.com</p>
                             </div>
-                            <div class="list-inline d-flex customers-contacts ms-auto"> <a href="javascript:;" class="list-inline-item"><i class='bx bxs-envelope'></i></a>
+                            <div class="list-inline d-flex customers-contacts ms-auto"> <a href="javascript:;"
+                                    class="list-inline-item"><i class='bx bxs-envelope'></i></a>
                                 <a href="javascript:;" class="list-inline-item"><i class='bx bxs-microphone'></i></a>
-                                <a href="javascript:;" class="list-inline-item"><i class='bx bx-dots-vertical-rounded'></i></a>
+                                <a href="javascript:;" class="list-inline-item"><i
+                                        class='bx bx-dots-vertical-rounded'></i></a>
                             </div>
                         </div>
                         <div class="customers-list-item d-flex align-items-center border-bottom p-2 cursor-pointer">
                             <div class="">
-                                <img src="assets/images/avatars/avatar-24.png" class="rounded-circle" width="46" height="46" alt="" />
+                                <img src="assets/images/avatars/avatar-24.png" class="rounded-circle" width="46"
+                                    height="46" alt="" />
                             </div>
                             <div class="ms-2">
                                 <h6 class="mb-1 font-14">Shoan Stephen</h6>
                                 <p class="mb-0 font-13">s.stephen@xyz.com</p>
                             </div>
-                            <div class="list-inline d-flex customers-contacts ms-auto"> <a href="javascript:;" class="list-inline-item"><i class='bx bxs-envelope'></i></a>
+                            <div class="list-inline d-flex customers-contacts ms-auto"> <a href="javascript:;"
+                                    class="list-inline-item"><i class='bx bxs-envelope'></i></a>
                                 <a href="javascript:;" class="list-inline-item"><i class='bx bxs-microphone'></i></a>
-                                <a href="javascript:;" class="list-inline-item"><i class='bx bx-dots-vertical-rounded'></i></a>
+                                <a href="javascript:;" class="list-inline-item"><i
+                                        class='bx bx-dots-vertical-rounded'></i></a>
                             </div>
                         </div>
                         <div class="customers-list-item d-flex align-items-center border-bottom p-2 cursor-pointer">
                             <div class="">
-                                <img src="assets/images/avatars/avatar-20.png" class="rounded-circle" width="46" height="46" alt="" />
+                                <img src="assets/images/avatars/avatar-20.png" class="rounded-circle" width="46"
+                                    height="46" alt="" />
                             </div>
                             <div class="ms-2">
                                 <h6 class="mb-1 font-14">Keate Medona</h6>
                                 <p class="mb-0 font-13">Keate@xyz.com</p>
                             </div>
-                            <div class="list-inline d-flex customers-contacts ms-auto"> <a href="javascript:;" class="list-inline-item"><i class='bx bxs-envelope'></i></a>
+                            <div class="list-inline d-flex customers-contacts ms-auto"> <a href="javascript:;"
+                                    class="list-inline-item"><i class='bx bxs-envelope'></i></a>
                                 <a href="javascript:;" class="list-inline-item"><i class='bx bxs-microphone'></i></a>
-                                <a href="javascript:;" class="list-inline-item"><i class='bx bx-dots-vertical-rounded'></i></a>
+                                <a href="javascript:;" class="list-inline-item"><i
+                                        class='bx bx-dots-vertical-rounded'></i></a>
                             </div>
                         </div>
                         <div class="customers-list-item d-flex align-items-center border-bottom p-2 cursor-pointer">
                             <div class="">
-                                <img src="assets/images/avatars/avatar-16.png" class="rounded-circle" width="46" height="46" alt="" />
+                                <img src="assets/images/avatars/avatar-16.png" class="rounded-circle" width="46"
+                                    height="46" alt="" />
                             </div>
                             <div class="ms-2">
                                 <h6 class="mb-1 font-14">Paul Benn</h6>
                                 <p class="mb-0 font-13">pauly.b@xyz.com</p>
                             </div>
-                            <div class="list-inline d-flex customers-contacts ms-auto"> <a href="javascript:;" class="list-inline-item"><i class='bx bxs-envelope'></i></a>
+                            <div class="list-inline d-flex customers-contacts ms-auto"> <a href="javascript:;"
+                                    class="list-inline-item"><i class='bx bxs-envelope'></i></a>
                                 <a href="javascript:;" class="list-inline-item"><i class='bx bxs-microphone'></i></a>
-                                <a href="javascript:;" class="list-inline-item"><i class='bx bx-dots-vertical-rounded'></i></a>
+                                <a href="javascript:;" class="list-inline-item"><i
+                                        class='bx bx-dots-vertical-rounded'></i></a>
                             </div>
                         </div>
                         <div class="customers-list-item d-flex align-items-center border-bottom p-2 cursor-pointer">
                             <div class="">
-                                <img src="assets/images/avatars/avatar-25.png" class="rounded-circle" width="46" height="46" alt="" />
+                                <img src="assets/images/avatars/avatar-25.png" class="rounded-circle" width="46"
+                                    height="46" alt="" />
                             </div>
                             <div class="ms-2">
                                 <h6 class="mb-1 font-14">Winslet Maya</h6>
                                 <p class="mb-0 font-13">winslet_02@xyz.com</p>
                             </div>
-                            <div class="list-inline d-flex customers-contacts ms-auto"> <a href="javascript:;" class="list-inline-item"><i class='bx bxs-envelope'></i></a>
+                            <div class="list-inline d-flex customers-contacts ms-auto"> <a href="javascript:;"
+                                    class="list-inline-item"><i class='bx bxs-envelope'></i></a>
                                 <a href="javascript:;" class="list-inline-item"><i class='bx bxs-microphone'></i></a>
-                                <a href="javascript:;" class="list-inline-item"><i class='bx bx-dots-vertical-rounded'></i></a>
+                                <a href="javascript:;" class="list-inline-item"><i
+                                        class='bx bx-dots-vertical-rounded'></i></a>
                             </div>
                         </div>
                         <div class="customers-list-item d-flex align-items-center border-bottom p-2 cursor-pointer">
                             <div class="">
-                                <img src="assets/images/avatars/avatar-11.png" class="rounded-circle" width="46" height="46" alt="" />
+                                <img src="assets/images/avatars/avatar-11.png" class="rounded-circle" width="46"
+                                    height="46" alt="" />
                             </div>
                             <div class="ms-2">
                                 <h6 class="mb-1 font-14">Bruno Bernard</h6>
                                 <p class="mb-0 font-13">bruno.b@xyz.com</p>
                             </div>
-                            <div class="list-inline d-flex customers-contacts ms-auto"> <a href="javascript:;" class="list-inline-item"><i class='bx bxs-envelope'></i></a>
+                            <div class="list-inline d-flex customers-contacts ms-auto"> <a href="javascript:;"
+                                    class="list-inline-item"><i class='bx bxs-envelope'></i></a>
                                 <a href="javascript:;" class="list-inline-item"><i class='bx bxs-microphone'></i></a>
-                                <a href="javascript:;" class="list-inline-item"><i class='bx bx-dots-vertical-rounded'></i></a>
+                                <a href="javascript:;" class="list-inline-item"><i
+                                        class='bx bx-dots-vertical-rounded'></i></a>
                             </div>
                         </div>
                         <div class="customers-list-item d-flex align-items-center border-bottom p-2 cursor-pointer">
                             <div class="">
-                                <img src="assets/images/avatars/avatar-17.png" class="rounded-circle" width="46" height="46" alt="" />
+                                <img src="assets/images/avatars/avatar-17.png" class="rounded-circle" width="46"
+                                    height="46" alt="" />
                             </div>
                             <div class="ms-2">
                                 <h6 class="mb-1 font-14">Merlyn Dona</h6>
                                 <p class="mb-0 font-13">merlyn.d@xyz.com</p>
                             </div>
-                            <div class="list-inline d-flex customers-contacts ms-auto"> <a href="javascript:;" class="list-inline-item"><i class='bx bxs-envelope'></i></a>
+                            <div class="list-inline d-flex customers-contacts ms-auto"> <a href="javascript:;"
+                                    class="list-inline-item"><i class='bx bxs-envelope'></i></a>
                                 <a href="javascript:;" class="list-inline-item"><i class='bx bxs-microphone'></i></a>
-                                <a href="javascript:;" class="list-inline-item"><i class='bx bx-dots-vertical-rounded'></i></a>
+                                <a href="javascript:;" class="list-inline-item"><i
+                                        class='bx bx-dots-vertical-rounded'></i></a>
                             </div>
                         </div>
                         <div class="customers-list-item d-flex align-items-center border-bottom p-2 cursor-pointer">
                             <div class="">
-                                <img src="assets/images/avatars/avatar-7.png" class="rounded-circle" width="46" height="46" alt="" />
+                                <img src="assets/images/avatars/avatar-7.png" class="rounded-circle" width="46"
+                                    height="46" alt="" />
                             </div>
                             <div class="ms-2">
                                 <h6 class="mb-1 font-14">Alister Campel</h6>
                                 <p class="mb-0 font-13">alister_42@xyz.com</p>
                             </div>
-                            <div class="list-inline d-flex customers-contacts ms-auto"> <a href="javascript:;" class="list-inline-item"><i class='bx bxs-envelope'></i></a>
+                            <div class="list-inline d-flex customers-contacts ms-auto"> <a href="javascript:;"
+                                    class="list-inline-item"><i class='bx bxs-envelope'></i></a>
                                 <a href="javascript:;" class="list-inline-item"><i class='bx bxs-microphone'></i></a>
-                                <a href="javascript:;" class="list-inline-item"><i class='bx bx-dots-vertical-rounded'></i></a>
+                                <a href="javascript:;" class="list-inline-item"><i
+                                        class='bx bx-dots-vertical-rounded'></i></a>
                             </div>
                         </div>
                     </div>
@@ -830,13 +896,16 @@
                                 <td>12 Jul 2020</td>
                                 <td>$64.00</td>
                                 <td>
-                                    <div class="d-flex align-items-center text-white"> <i class='bx bx-radio-circle-marked bx-burst bx-rotate-90 align-middle font-18 me-1'></i>
+                                    <div class="d-flex align-items-center text-white"> <i
+                                            class='bx bx-radio-circle-marked bx-burst bx-rotate-90 align-middle font-18 me-1'></i>
                                         <span>Pending</span>
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="d-flex order-actions"> <a href="javascript:;" class=""><i class="bx bx-cog"></i></a>
-                                        <a href="javascript:;" class="ms-4"><i class='bx bx-down-arrow-alt'></i></a>
+                                    <div class="d-flex order-actions"> <a href="javascript:;" class=""><i
+                                                class="bx bx-cog"></i></a>
+                                        <a href="javascript:;" class="ms-4"><i
+                                                class='bx bx-down-arrow-alt'></i></a>
                                     </div>
                                 </td>
                             </tr>
@@ -856,13 +925,16 @@
                                 <td>14 Jul 2020</td>
                                 <td>$45.00</td>
                                 <td>
-                                    <div class="d-flex align-items-center text-white"> <i class='bx bx-radio-circle-marked bx-burst bx-rotate-90 align-middle font-18 me-1'></i>
+                                    <div class="d-flex align-items-center text-white"> <i
+                                            class='bx bx-radio-circle-marked bx-burst bx-rotate-90 align-middle font-18 me-1'></i>
                                         <span>Dispatched</span>
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="d-flex order-actions"> <a href="javascript:;" class=""><i class="bx bx-cog"></i></a>
-                                        <a href="javascript:;" class="ms-4"><i class='bx bx-down-arrow-alt'></i></a>
+                                    <div class="d-flex order-actions"> <a href="javascript:;" class=""><i
+                                                class="bx bx-cog"></i></a>
+                                        <a href="javascript:;" class="ms-4"><i
+                                                class='bx bx-down-arrow-alt'></i></a>
                                     </div>
                                 </td>
                             </tr>
@@ -882,13 +954,16 @@
                                 <td>15 Jul 2020</td>
                                 <td>$67.00</td>
                                 <td>
-                                    <div class="d-flex align-items-center text-white"> <i class='bx bx-radio-circle-marked bx-burst bx-rotate-90 align-middle font-18 me-1'></i>
+                                    <div class="d-flex align-items-center text-white"> <i
+                                            class='bx bx-radio-circle-marked bx-burst bx-rotate-90 align-middle font-18 me-1'></i>
                                         <span>Completed</span>
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="d-flex order-actions"> <a href="javascript:;" class=""><i class="bx bx-cog"></i></a>
-                                        <a href="javascript:;" class="ms-4"><i class='bx bx-down-arrow-alt'></i></a>
+                                    <div class="d-flex order-actions"> <a href="javascript:;" class=""><i
+                                                class="bx bx-cog"></i></a>
+                                        <a href="javascript:;" class="ms-4"><i
+                                                class='bx bx-down-arrow-alt'></i></a>
                                     </div>
                                 </td>
                             </tr>
@@ -908,13 +983,16 @@
                                 <td>18 Jul 2020</td>
                                 <td>$87.00</td>
                                 <td>
-                                    <div class="d-flex align-items-center text-white"> <i class='bx bx-radio-circle-marked bx-burst bx-rotate-90 align-middle font-18 me-1'></i>
+                                    <div class="d-flex align-items-center text-white"> <i
+                                            class='bx bx-radio-circle-marked bx-burst bx-rotate-90 align-middle font-18 me-1'></i>
                                         <span>Completed</span>
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="d-flex order-actions"> <a href="javascript:;" class=""><i class="bx bx-cog"></i></a>
-                                        <a href="javascript:;" class="ms-4"><i class='bx bx-down-arrow-alt'></i></a>
+                                    <div class="d-flex order-actions"> <a href="javascript:;" class=""><i
+                                                class="bx bx-cog"></i></a>
+                                        <a href="javascript:;" class="ms-4"><i
+                                                class='bx bx-down-arrow-alt'></i></a>
                                     </div>
                                 </td>
                             </tr>
@@ -934,13 +1012,16 @@
                                 <td>20 Jul 2020</td>
                                 <td>$75.00</td>
                                 <td>
-                                    <div class="d-flex align-items-center text-white"> <i class='bx bx-radio-circle-marked bx-burst bx-rotate-90 align-middle font-18 me-1'></i>
+                                    <div class="d-flex align-items-center text-white"> <i
+                                            class='bx bx-radio-circle-marked bx-burst bx-rotate-90 align-middle font-18 me-1'></i>
                                         <span>Pending</span>
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="d-flex order-actions"> <a href="javascript:;" class=""><i class="bx bx-cog"></i></a>
-                                        <a href="javascript:;" class="ms-4"><i class='bx bx-down-arrow-alt'></i></a>
+                                    <div class="d-flex order-actions"> <a href="javascript:;" class=""><i
+                                                class="bx bx-cog"></i></a>
+                                        <a href="javascript:;" class="ms-4"><i
+                                                class='bx bx-down-arrow-alt'></i></a>
                                     </div>
                                 </td>
                             </tr>
@@ -960,13 +1041,16 @@
                                 <td>22 Jul 2020</td>
                                 <td>$80.00</td>
                                 <td>
-                                    <div class="d-flex align-items-center text-white"> <i class='bx bx-radio-circle-marked bx-burst bx-rotate-90 align-middle font-18 me-1'></i>
+                                    <div class="d-flex align-items-center text-white"> <i
+                                            class='bx bx-radio-circle-marked bx-burst bx-rotate-90 align-middle font-18 me-1'></i>
                                         <span>Dispatched</span>
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="d-flex order-actions"> <a href="javascript:;" class=""><i class="bx bx-cog"></i></a>
-                                        <a href="javascript:;" class="ms-4"><i class='bx bx-down-arrow-alt'></i></a>
+                                    <div class="d-flex order-actions"> <a href="javascript:;" class=""><i
+                                                class="bx bx-cog"></i></a>
+                                        <a href="javascript:;" class="ms-4"><i
+                                                class='bx bx-down-arrow-alt'></i></a>
                                     </div>
                                 </td>
                             </tr>
@@ -986,13 +1070,16 @@
                                 <td>28 Jul 2020</td>
                                 <td>$96.00</td>
                                 <td>
-                                    <div class="d-flex align-items-center text-white"> <i class='bx bx-radio-circle-marked bx-burst bx-rotate-90 align-middle font-18 me-1'></i>
+                                    <div class="d-flex align-items-center text-white"> <i
+                                            class='bx bx-radio-circle-marked bx-burst bx-rotate-90 align-middle font-18 me-1'></i>
                                         <span>Pending</span>
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="d-flex order-actions"> <a href="javascript:;" class=""><i class="bx bx-cog"></i></a>
-                                        <a href="javascript:;" class="ms-4"><i class='bx bx-down-arrow-alt'></i></a>
+                                    <div class="d-flex order-actions"> <a href="javascript:;" class=""><i
+                                                class="bx bx-cog"></i></a>
+                                        <a href="javascript:;" class="ms-4"><i
+                                                class='bx bx-down-arrow-alt'></i></a>
                                     </div>
                                 </td>
                             </tr>

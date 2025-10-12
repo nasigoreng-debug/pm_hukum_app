@@ -2,7 +2,7 @@
 
 @section('content')
     @include('layouts.v_deskripsi')
-    
+
     <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title">Data Arsip Perkara</h3>
@@ -15,12 +15,11 @@
                 <a href="#" data-toggle="remove">&times;</a>
             </div>
         </div>
-        
+
         <div class="panel-body">
             <script type="text/javascript">
                 jQuery(document).ready(function($) {
-                    $("#example-3").dataTable().yadcf([
-                        {
+                    $("#example-3").dataTable().yadcf([{
                             column_number: 2,
                             filter_type: 'text'
                         },
@@ -28,14 +27,17 @@
                             column_number: 3,
                             filter_type: 'text'
                         },
-                        {column_number: 4}
+                        {
+                            column_number: 4
+                        }
                     ]);
                 });
             </script>
 
             <!-- Date Range Filter -->
             <div class="text-center">
-                <form method="GET" action="/search-date-range-arsip-perkara" class="form-inline justify-content-center align-items-start">
+                <form method="GET" action="/search-date-range-arsip-perkara"
+                    class="form-inline justify-content-center align-items-start">
                     <div class="input-group input-group-sm mr-2">
                         <input type="date" name="start_date" id="start_date" class="form-control" required>
                     </div>
@@ -52,14 +54,14 @@
 
             <!-- Action Buttons -->
             <div class="" style="font-size: 14px;">
-                @if(in_array(Auth::user()->level, [1, 2]))
+                @if (in_array(Auth::user()->level, [1, 2]))
                     <a href="{{ route('arsip.create') }}" class="btn btn-sm btn-info mb-2">Tambah Data</a>
                     <a href="/arsip" class="btn btn-sm btn-danger mb-2">Kembali</a>
                 @endif
             </div>
 
             <!-- Success Message -->
-                @if (session('pesan'))
+            @if (session('pesan'))
                 <script>
                     document.addEventListener('DOMContentLoaded', function() {
                         Swal.fire({
@@ -73,8 +75,8 @@
                         });
                     });
                 </script>
-                @endif
-            
+            @endif
+
             <!-- Data Table -->
             <table class="table table-sm table-hover" id="example-3">
                 <thead>
@@ -91,7 +93,7 @@
                         <th style="width: 30px;">Action</th>
                     </tr>
                 </thead>
-                
+
                 <tfoot>
                     <tr class="bg-gray">
                         <th>No</th>
@@ -106,7 +108,7 @@
                         <th>Action</th>
                     </tr>
                 </tfoot>
-                
+
                 <tbody>
                     @foreach ($arsip_perkara as $data)
                         <tr>
@@ -117,34 +119,38 @@
                             <td>{{ $data->jenis_perkara }}</td>
                             <td class="text-start">{{ date('d-m-Y', strtotime($data->tgl_put_banding)) }}</td>
                             <td class="text-start">
-                                @if(empty($data->putusan))
+                                @if (empty($data->putusan))
                                     <span class="badge badge-primary">belum upload</span>
                                 @else
-                                    <a href="{{ asset('public/arsip_perkara_putusan/' . $data->putusan) }}" class="text-blue" target="_blank">
+                                    <a href="{{ asset('public/arsip_perkara_putusan/' . $data->putusan) }}"
+                                        class="text-blue" target="_blank">
                                         <i class="fa fa-file-pdf-o"></i>
                                     </a>
                                 @endif
                             </td>
                             <td class="text-start">
-                                @if(empty($data->bundel_b))
+                                @if (empty($data->bundel_b))
                                     <span class="badge badge-primary">belum upload</span>
                                 @else
-                                    <a href="{{ asset('public/bundel_b_arsip_perkara/' . $data->bundel_b) }}" class="text-blue" target="_blank">
+                                    <a href="{{ asset('public/bundel_b_arsip_perkara/' . $data->bundel_b) }}"
+                                        class="text-blue" target="_blank">
                                         <i class="fa fa-file-archive-o"></i>
                                     </a>
                                 @endif
                             </td>
                             <td class="text-start">{{ date('d-m-Y', strtotime($data->tgl_alih_media)) }}</td>
                             <td class="text-center" style="font-size: 14px;">
-                                @if(Auth::user()->level == 1)
-                                    <button type="button" class="btn btn-purple btn-xs" data-toggle="modal" data-target="#detail{{ $data->id }}">
+                                @if (Auth::user()->level == 1)
+                                    <button type="button" class="btn btn-purple btn-xs" data-toggle="modal"
+                                        data-target="#detail{{ $data->id }}">
                                         <i class="fa fa-eye"></i>
                                     </button>
                                     <a href="{{ route('arsip.edit', $data->id) }}" class="btn btn-warning btn-xs">
                                         <i class="fa fa-edit"></i>
                                     </a>
-                                   
-                                    <form id="deleteForm" action="{{ route('arsip.destroy', $data->id) }}" method="POST" style="display: inline;">
+
+                                    <form id="deleteForm" action="{{ route('arsip.destroy', $data->id) }}" method="POST"
+                                        style="display: inline;">
                                         @csrf
                                         @method('DELETE')
                                         <button type="button" onclick="confirmDelete(this)" class="btn btn-danger btn-xs">
@@ -152,14 +158,16 @@
                                         </button>
                                     </form>
                                 @elseif(Auth::user()->level == 2)
-                                    <button type="button" class="btn btn-purple btn-xs" data-toggle="modal" data-target="#detail{{ $data->id }}">
+                                    <button type="button" class="btn btn-purple btn-xs" data-toggle="modal"
+                                        data-target="#detail{{ $data->id }}">
                                         <i class="fa fa-eye"></i>
                                     </button>
                                     <a href="{{ route('arsip.edit', $data->id) }}" class="btn btn-warning btn-xs">
                                         <i class="fa fa-edit"></i>
                                     </a>
                                 @elseif(Auth::user()->level == 3)
-                                    <button type="button" class="btn btn-purple btn-xs" data-toggle="modal" data-target="#detail{{ $data->id }}">
+                                    <button type="button" class="btn btn-purple btn-xs" data-toggle="modal"
+                                        data-target="#detail{{ $data->id }}">
                                         <i class="fa fa-eye"></i>
                                     </button>
                                 @endif

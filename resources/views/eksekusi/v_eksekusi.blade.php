@@ -2,7 +2,7 @@
 
 @section('content')
     @include('layouts.v_deskripsi')
-    
+
     <!-- Table exporting -->
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -16,35 +16,38 @@
                 <a href="#" data-toggle="remove">&times;</a>
             </div>
         </div>
-        
+
         <div class="panel-body">
             <script type="text/javascript">
                 jQuery(document).ready(function($) {
-                    $("#example-3").dataTable().yadcf([
-                        {column_number: 1},
-                        {column_number: 5}
+                    $("#example-3").dataTable().yadcf([{
+                            column_number: 1
+                        },
+                        {
+                            column_number: 5
+                        }
                     ]);
                 });
             </script>
 
-                        <!-- Action Buttons -->
-                <div class="text-center mb-3" style="font-size: 14px;">
-                    @if(in_array(Auth::user()->level, [1, 2]))
-                        <a href="/eks/add" class="btn btn-sm btn-info mb-2">Tambah Data</a>
-                        <a href="/eks/total" class="btn btn-sm btn-secondary mb-2">Semua</a>
-                        <a href="/eks/berjalan" class="btn btn-sm btn-secondary mb-2">Berjalan</a>
-                        <a href="/eks/selesai" class="btn btn-sm btn-secondary mb-2">Selesai</a>
-                        <a href="/eks/progres" class="btn btn-sm btn-secondary mb-2">Progres Satker</a>
-                        
-                        <!-- TAMBAHKAN TOMBOL PRINT DI SINI -->
-                        <button onclick="printTable()" class="btn btn-sm btn-success mb-2">
-                            <i class="fa fa-print"></i> Print Table
-                        </button>
-                        <!-- END TOMBOL PRINT -->
-                        
-                        <a href="/eks" class="btn btn-sm btn-danger mb-2">Kembali</a>
-                    @endif
-                </div>
+            <!-- Action Buttons -->
+            <div class="text-center mb-3" style="font-size: 14px;">
+                @if (in_array(Auth::user()->level, [1, 2]))
+                    <a href="/eks/add" class="btn btn-sm btn-info mb-2">Tambah Data</a>
+                    <a href="/eks/total" class="btn btn-sm btn-secondary mb-2">Semua</a>
+                    <a href="/eks/berjalan" class="btn btn-sm btn-secondary mb-2">Berjalan</a>
+                    <a href="/eks/selesai" class="btn btn-sm btn-secondary mb-2">Selesai</a>
+                    <a href="/eks/progres" class="btn btn-sm btn-secondary mb-2">Progres Satker</a>
+
+                    <!-- TAMBAHKAN TOMBOL PRINT DI SINI -->
+                    <button onclick="printTable()" class="btn btn-sm btn-success mb-2">
+                        <i class="fa fa-print"></i> Print Table
+                    </button>
+                    <!-- END TOMBOL PRINT -->
+
+                    <a href="/eks" class="btn btn-sm btn-danger mb-2">Kembali</a>
+                @endif
+            </div>
 
             <!-- Success Message -->
             @if (session('pesan'))
@@ -53,8 +56,8 @@
                     {{ session('pesan') }}
                 </div>
             @endif
-            
-            
+
+
             <!-- Data Table -->
             <table class="table table-sm table-hover" id="example-3">
                 <thead class="bg-gray">
@@ -99,43 +102,45 @@
                             <td class="text-center">{{ date('d-m-Y', strtotime($data->tgl_permohonan)) }}</td>
                             <td>{{ $data->proses_terakhir }}</td>
                             <td class="text-center">
-                                @if(empty($data->tgl_eks))
+                                @if (empty($data->tgl_eks))
                                     {{ date('d-m-Y', strtotime($data->tgl_permohonan)) }}
                                 @else
                                     {{ date('d-m-Y', strtotime($data->tgl_eks)) }}
                                 @endif
                             </td>
                             <td class="text-center">
-                                @if(empty($data->tgl_selesai))
-                                    <span class="badge badge-warning">Proses</span> 
+                                @if (empty($data->tgl_selesai))
+                                    <span class="badge badge-warning">Proses</span>
                                 @else
                                     {{ date('d-m-Y', strtotime($data->tgl_selesai)) }}
                                 @endif
                             </td>
                             <td class="text-center">
-                                @if(empty($data->tgl_selesai))
+                                @if (empty($data->tgl_selesai))
                                     <span class="badge badge-danger">
                                         {{ Carbon\Carbon::parse($data->tgl_permohonan)->diffInDays($sekarang) }} Hari
                                     </span>
                                 @else
                                     <span class="badge badge-success">
-                                        {{ Carbon\Carbon::parse($data->tgl_permohonan)->diffInDays($data->tgl_selesai) }} Hari
+                                        {{ Carbon\Carbon::parse($data->tgl_permohonan)->diffInDays($data->tgl_selesai) }}
+                                        Hari
                                     </span>
                                 @endif
                             </td>
                             <td>
-                                @if(empty($data->keterangan))
+                                @if (empty($data->keterangan))
                                     <span class="badge badge-primary">Tanpa keterangan</span>
                                 @else
                                     {{ $data->keterangan }}
                                 @endif
                             </td>
                             <td class="text-center" style="font-size: 14px;">
-                                @if(Auth::user()->level == 1)
+                                @if (Auth::user()->level == 1)
                                     <a href="/eks/edit/{{ $data->id }}" class="btn btn-warning btn-xs">
                                         <i class="fa fa-edit"></i>
                                     </a>
-                                    <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#delete{{ $data->id }}">
+                                    <button type="button" class="btn btn-danger btn-xs" data-toggle="modal"
+                                        data-target="#delete{{ $data->id }}">
                                         <i class="fa fa-trash-o"></i>
                                     </button>
                                 @elseif(Auth::user()->level == 2)
@@ -181,39 +186,39 @@
 
     <!-- TAMBAHKAN SCRIPT PRINT DI SINI -->
     <script>
-    function printTable() {
-        // Clone table asli
-        var originalTable = document.getElementById('example-3');
-        var printContent = originalTable.cloneNode(true);
-        
-        // Hapus kolom Action (kolom terakhir)
-        var rows = printContent.getElementsByTagName('tr');
-        for (var i = 0; i < rows.length; i++) {
-            var cells = rows[i].getElementsByTagName('td');
-            var thCells = rows[i].getElementsByTagName('th');
-            
-            // Hapus td terakhir (kolom Action)
-            if (cells.length > 0) {
-                cells[cells.length - 1].remove();
+        function printTable() {
+            // Clone table asli
+            var originalTable = document.getElementById('example-3');
+            var printContent = originalTable.cloneNode(true);
+
+            // Hapus kolom Action (kolom terakhir)
+            var rows = printContent.getElementsByTagName('tr');
+            for (var i = 0; i < rows.length; i++) {
+                var cells = rows[i].getElementsByTagName('td');
+                var thCells = rows[i].getElementsByTagName('th');
+
+                // Hapus td terakhir (kolom Action)
+                if (cells.length > 0) {
+                    cells[cells.length - 1].remove();
+                }
+
+                // Hapus th terakhir (header Action)
+                if (thCells.length > 0) {
+                    thCells[thCells.length - 1].remove();
+                }
             }
-            
-            // Hapus th terakhir (header Action)
-            if (thCells.length > 0) {
-                thCells[thCells.length - 1].remove();
-            }
-        }
-        
-        // Buat window print
-        var printWindow = window.open('', '_blank', 'width=1000,height=600');
-        printWindow.document.write(`
+
+            // Buat window print
+            var printWindow = window.open('', '_blank', 'width=1000,height=600');
+            printWindow.document.write(`
             <!DOCTYPE html>
             <html>
             <head>
                 <title>Laporan Data Perkara Eksekusi</title>
                 <style>
-                    body { 
-                        font-family: Arial, sans-serif; 
-                        margin: 20px; 
+                    body {
+                        font-family: Arial, sans-serif;
+                        margin: 20px;
                         font-size: 12px;
                     }
                     .header {
@@ -269,21 +274,21 @@
             <body>
                 <div class="header">
                     <h2>LAPORAN DATA PERKARA EKSEKUSI</h2>
-                    <p>Tanggal Cetak: ${new Date().toLocaleDateString('id-ID', { 
-                        weekday: 'long', 
-                        year: 'numeric', 
-                        month: 'long', 
-                        day: 'numeric' 
+                    <p>Tanggal Cetak: ${new Date().toLocaleDateString('id-ID', {
+                        weekday: 'long',
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
                     })}</p>
                 </div>
-                
+
                 <div class="info">
                     <strong>Total Data:</strong> ${originalTable.rows.length - 1} Perkara<br>
                     <strong>User:</strong> {{ Auth::user()->name }}
                 </div>
-                
+
                 ${printContent.outerHTML}
-                
+
                 <div class="no-print" style="margin-top: 20px; text-align: center;">
                     <button onclick="window.print()" style="padding: 8px 15px; background: #28a745; color: white; border: none; border-radius: 3px; cursor: pointer;">
                         🖨️ Print Halaman
@@ -292,7 +297,7 @@
                         ❌ Tutup
                     </button>
                 </div>
-                
+
                 <script>
                     window.onload = function() {
                         // Auto print setelah window terbuka (opsional)
@@ -302,7 +307,7 @@
             </body>
             </html>
         `);
-        printWindow.document.close();
-    }
+            printWindow.document.close();
+        }
     </script>
 @endsection

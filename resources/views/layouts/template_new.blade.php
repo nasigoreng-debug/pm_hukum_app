@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,19 +15,23 @@
         .table-responsive {
             min-height: 400px;
         }
+
         .pagination {
             justify-content: center;
         }
+
         @media (max-width: 768px) {
             .filter-section {
                 margin-bottom: 15px;
             }
+
             .btn-action {
                 margin-bottom: 5px;
             }
         }
     </style>
 </head>
+
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container">
@@ -45,20 +50,20 @@
     </nav>
 
     <div class="container mt-4">
-        @if(session('success'))
+        @if (session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 {{ session('success') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
-        
-        @if(session('error'))
+
+        @if (session('error'))
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 {{ session('error') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
-        
+
         @yield('content')
     </div>
 
@@ -68,7 +73,8 @@
     <!-- DataTables JS -->
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
-    
+
     @yield('scripts')
 </body>
+
 </html>
