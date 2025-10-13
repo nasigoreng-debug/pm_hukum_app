@@ -19,7 +19,7 @@ class ArsipController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-     public function index()
+    public function index()
     {
         // Gunakan aggregate query untuk performa lebih baik
         $stats = Arsip::selectRaw('
@@ -135,9 +135,17 @@ class ArsipController extends Controller
         ]);
 
         $data = $request->only([
-            'tgl_masuk', 'no_banding', 'no_pa', 'jenis_perkara',
-            'tgl_put_banding', 'penyerah', 'penerima', 'no_lemari',
-            'no_laci', 'no_box', 'tgl_alih_media'
+            'tgl_masuk',
+            'no_banding',
+            'no_pa',
+            'jenis_perkara',
+            'tgl_put_banding',
+            'penyerah',
+            'penerima',
+            'no_lemari',
+            'no_laci',
+            'no_box',
+            'tgl_alih_media'
         ]);
 
         // Upload file putusan
@@ -231,9 +239,17 @@ class ArsipController extends Controller
         ]);
 
         $data = $request->only([
-            'tgl_masuk', 'no_banding', 'no_pa', 'jenis_perkara',
-            'tgl_put_banding', 'penyerah', 'penerima', 'no_lemari',
-            'no_laci', 'no_box', 'tgl_alih_media'
+            'tgl_masuk',
+            'no_banding',
+            'no_pa',
+            'jenis_perkara',
+            'tgl_put_banding',
+            'penyerah',
+            'penerima',
+            'no_lemari',
+            'no_laci',
+            'no_box',
+            'tgl_alih_media'
         ]);
 
         // Handle file uploads
@@ -253,7 +269,7 @@ class ArsipController extends Controller
             $data['bundel_b'] = $this->uploadFile($request->file('bundel_b'), $request->no_banding, $request->no_pa, 'bundel_b_arsip_perkara');
         }
 
-          $arsip_perkara->update($data);
+        $arsip_perkara->update($data);
 
         return redirect()->route('arsip.index')
             ->with('pesan', 'Data arsip perkara berhasil diperbarui.');
@@ -290,7 +306,6 @@ class ArsipController extends Controller
 
             return redirect()->route('arsip.index')
                 ->with('pesan', 'Data arsip perkara berhasil dihapus.');
-
         } catch (\Exception $e) {
             \Log::error('Delete error: ' . $e->getMessage());
             return redirect()->route('arsip.index')
@@ -304,7 +319,7 @@ class ArsipController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-        public function searchByDateRange(Request $request)
+    public function searchByDateRange(Request $request)
     {
         try {
             $request->validate([
@@ -320,7 +335,6 @@ class ArsipController extends Controller
             $title = 'Arsip Perkara - Pencarian';
 
             return view('arsip.index', compact('arsip_perkara', 'title'));
-
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Terjadi kesalahan dalam pencarian.');
         }
@@ -378,8 +392,8 @@ class ArsipController extends Controller
     private function uploadFile($file, $no_banding, $no_pa, $folder)
     {
         $fileName = str_replace("/", "_", $no_banding) . '_' . 'Jo' . '_' .
-                   str_replace("/", "_", $no_pa) . '_' .
-                   date('dmYHis') . '.' . $file->extension();
+            str_replace("/", "_", $no_pa) . '_' .
+            date('dmYHis') . '.' . $file->extension();
 
         $file->move(public_path($folder), $fileName);
 

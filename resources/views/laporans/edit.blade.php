@@ -13,6 +13,7 @@
         <div class="panel-body">
             <form action="{{ route('laporans.update', $laporans->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
+                @method('PUT')
                 <div class="row">
                     <div class="col">
                         <div class="card card-primary mt-3 ml-3 mb-3 mr-3">

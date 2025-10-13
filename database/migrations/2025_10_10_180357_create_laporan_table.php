@@ -19,8 +19,8 @@ class CreateLaporanTable extends Migration
             $table->year('tahun');
             $table->date('tgl_laporan');
             $table->string('judul');
-            $table->string('document_path', 1000)->nullable();
-            $table->string('konsep_path', 1000)->nullable();
+            $table->string('dokumen', 1000)->nullable();
+            $table->string('konsep', 1000)->nullable();
             $table->timestamps();
         });
     }
