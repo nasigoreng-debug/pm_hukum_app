@@ -58,8 +58,10 @@
                                     <option> Cerai Gugat </option>
                                     <option> Cerai Talak </option>
                                     <option> Dispensasi Kawin </option>
+                                    <option> Derden Verzet </option>
                                     <option> Ekonomi Syariah </option>
                                     <option> Ganti Rugi terhadap Wali </option>
+                                    <option> Hadhonah Anak </option>
                                     <option> Hak-hak Bekas Isteri </option>
                                     <option> Harta Bersama </option>
                                     <option> Hibah </option>
@@ -71,6 +73,7 @@
                                     <option> Lain-lain </option>
                                     <option> Nafkah Anak oleh Ibu </option>
                                     <option> P3HP/Penetapan Ahli Waris </option>
+                                    <option> Pembatalan Penetapan Ahli Waris </option>
                                     <option> Pembatalan Perkawinan </option>
                                     <option> Pencabutan Kekuasaan Orang Tua </option>
                                     <option> Pencabutan Kekuasaan Wali </option>

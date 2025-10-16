@@ -2,218 +2,245 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BankputModel;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\DB;
+use App\Models\Bankput;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class BankputController extends Controller
 {
     public function __construct()
     {
-        $this->BankputModel = new BankputModel();
         $this->middleware('auth');
     }
+
     public function index()
     {
+        $bankputs = Bankput::latest()->get();
+        $title = 'Bank Putusan';
 
-        $data = [
-            'title' => 'Bank Putusan',
-            'bankput' => $this->BankputModel->allData(),
-        ];
-
-        return view('/bank_putusan/v_bankput_perkara', $data);
+        return view('bank_putusan.index', compact(
+            'bankputs',
+            'title'
+        ));
     }
 
-    //Detail
-    public function detail($id)
+    public function create()
     {
-        if (!$this->BankputModel->detailData($id)) {
-            abort(404);
-        }
-        $data = [
-            'title' => 'Detail',
-            'bankput' => $this->BankputModel->detailData($id),
-        ];
-        return view('/bank_putusan/v_detail_bankput', $data);
+        $title = 'Form Tambah Data';
+        return view('bank_putusan.create', compact('title'));
     }
 
-    //Tambah Data
-    public function add()
+    public function store(Request $request)
     {
-        $data = [
-            'title' => 'Form Tambah Data'
-        ];
-        return view('/bank_putusan/v_add_bankput', $data);
-    }
-
-    //Insert Data
-    public function insert()
-    {
-        Request()->validate([
-            'no_banding' => 'required|unique:tb_bank_putusan,no_banding|max:255',
+        $request->validate([
+            'no_banding' => 'required|unique:bankputs,no_banding|max:255',
             'jenis_perkara' => 'required',
-            'tgl_put_banding' => 'required',
+            'tgl_put_banding' => 'required|date',
             'status_putus' => 'required',
             'keterangan' => 'required',
-            'put_rtf' => 'required|mimes:docx,doc,rtf|max:2000',
-            'put_anonim' => 'required|mimes:docx,doc,rtf|max:2000',
-
+            'put_rtf' => 'required|file|mimes:docx,doc,rtf|max:2048',
+            'put_anonim' => 'required|file|mimes:docx,doc,rtf|max:2048',
         ], [
             'no_banding.required' => 'Nomor perkara banding wajib diisi!!',
             'no_banding.unique' => 'Nomor perkara sudah ada!!',
             'no_banding.max' => 'Max 255 Karakter!!',
             'jenis_perkara.required' => 'Jenis perkara wajib diisi!!',
-            'tgl_put_banding.required' => 'Tanggal masuk wajib diisi!!',
+            'tgl_put_banding.required' => 'Tanggal putusan banding wajib diisi!!',
             'status_putus.required' => 'Status putusan wajib diisi!!',
             'keterangan.required' => 'Keterangan wajib diisi!!',
             'put_rtf.required' => 'Putusan wajib diupload!!',
             'put_rtf.mimes' => 'Jenis file harus doc,docx,rtf!!',
-            'put_rtf.max' => 'Ukuran file max 2Mb!!',
+            'put_rtf.max' => 'Ukuran file max 2MB!!',
             'put_anonim.required' => 'Anonimasi wajib diupload!!',
             'put_anonim.mimes' => 'Jenis file harus doc,docx,rtf!!',
-            'put_anonim.max' => 'Ukuran file max 2Mb!!',
+            'put_anonim.max' => 'Ukuran file max 2MB!!',
         ]);
 
-        //jika validasi tidak ada maka lakukan simpan data
-        //upload file
-        $file = Request()->put_rtf;
-        $fileNameRtf = str_replace("/", "_",  Request()->no_banding) . '_' . str_replace("/", "_",  Request()->jenis_perkara) . '_' . '_' . str_replace("/", "_",  Request()->tgl_put_banding) . '_' . str_replace("/", "_",  Request()->status_putus) . '_' . str_replace("/", "_",  Request()->keterangan) . '_' . 'putusan' . '.' . $file->extension();
-        $file->move(public_path('bank_putusan_rtf'), $fileNameRtf);
+        $data = $request->all();
 
-        $file = Request()->put_anonim;
-        $fileNameAnonim = str_replace("/", "_",  Request()->no_banding) . '_' . str_replace("/", "_",  Request()->jenis_perkara) . '_' . str_replace("/", "_",  Request()->tgl_put_banding) . '_' . str_replace("/", "_",  Request()->status_putus) . '_'.  str_replace("/", "_",  Request()->keterangan) . '_' . 'anonimasi' . '.' . $file->extension();
-        $file->move(public_path('bank_putusan_anonim'), $fileNameAnonim);
+        // Generate nama file
+        $fileNameBase = str_replace("/", "_", $request->no_banding) . '_' .
+            str_replace("/", "_", $request->jenis_perkara) . '_' .
+            str_replace("/", "_", $request->tgl_put_banding) . '_' .
+            str_replace("/", "_", $request->status_putus) . '_' .
+            str_replace("/", "_", $request->keterangan);
 
-        $data = [
-            'no_banding' => Request()->no_banding,
-            'jenis_perkara' => Request()->jenis_perkara,
-            'tgl_put_banding' => Request()->tgl_put_banding,
-            'status_putus' => Request()->status_putus,
-            'keterangan' => Request()->keterangan,
-            'put_rtf' => $fileNameRtf,
-            'put_anonim' => $fileNameAnonim,
-        ];
+        // Upload file put_rtf
+        if ($request->hasFile('put_rtf')) {
+            $file = $request->file('put_rtf');
+            $fileNameRtf = $fileNameBase . '_putusan.' . $file->getClientOriginalExtension();
+            $filePath = $file->storeAs('bank_putusan/rtf', $fileNameRtf, 'public');
+            $data['put_rtf'] = $fileNameRtf;
+        }
 
-        $this->BankputModel->addData($data);
-        return redirect()->route('bankput')->with('pesan', 'Data Berhasil Ditambahkan !!');
+        // Upload file put_anonim
+        if ($request->hasFile('put_anonim')) {
+            $file = $request->file('put_anonim');
+            $fileNameAnonim = $fileNameBase . '_anonimasi.' . $file->getClientOriginalExtension();
+            $filePath = $file->storeAs('bank_putusan/anonim', $fileNameAnonim, 'public');
+            $data['put_anonim'] = $fileNameAnonim;
+        }
+
+        Bankput::create($data);
+
+        return redirect()->route('bankput.index')
+            ->with('pesan', 'Data Berhasil Ditambahkan !!');
     }
 
-    //Edit Data
+    public function show($id)
+    {
+        $bankput = Bankput::findOrFail($id);
+        return view('bank_putusan.show', compact('bankput'));
+    }
+
     public function edit($id)
     {
-        if (!$this->BankputModel->detailData($id)) {
-            abort(404);
-        }
-        $data = [
-            'title' => 'Edit',
-            'bankput' => $this->BankputModel->detailData($id),
-        ];
-        return view('/bank_putusan/v_edit_bankput', $data);
+        $bankput = Bankput::findOrFail($id);
+        $title = 'Edit Data';
+
+        return view('bank_putusan.edit', compact(
+            'bankput',
+            'title'
+        ));
     }
 
-    //Update Data
-    public function update($id)
+    public function update(Request $request, $id)
     {
-        Request()->validate([
-            'no_banding' => 'required|max:255',
-            // 'tgl_reg' => 'required',
+        $bankput = Bankput::findOrFail($id);
+
+        $request->validate([
+            'no_banding' => 'required|max:255|unique:bankputs,no_banding,' . $id,
             'jenis_perkara' => 'required',
-            // 'pembanding' => 'required',
-            // 'terbanding' => 'required',
-            'tgl_put_banding' => 'required',
+            'tgl_put_banding' => 'required|date',
             'status_putus' => 'required',
             'keterangan' => 'required',
-            'put_rtf' => 'mimes:docx,doc,rtf|max:2000',
-            'put_anonim' => 'mimes:docx,doc,rtf|max:2000',
+            'put_rtf' => 'nullable|file|mimes:docx,doc,rtf|max:2048',
+            'put_anonim' => 'nullable|file|mimes:docx,doc,rtf|max:2048',
         ], [
             'no_banding.required' => 'Nomor perkara banding wajib diisi!!',
+            'no_banding.unique' => 'Nomor perkara sudah ada!!',
             'no_banding.max' => 'Max 255 Karakter!!',
-            // 'tgl_reg.required' => 'Tanggal masuk wajib diisi!!',
             'jenis_perkara.required' => 'Jenis perkara wajib diisi!!',
-            // 'pembanding.required' => 'Nama Pembanding wajib diisi!!',
-            // 'terbanding.required' => 'Nama Terbanding wajib diisi!!',
-            'tgl_put_banding.required' => 'Tanggal masuk wajib diisi!!',
+            'tgl_put_banding.required' => 'Tanggal putusan banding wajib diisi!!',
             'status_putus.required' => 'Status putusan wajib diisi!!',
             'keterangan.required' => 'Keterangan wajib diisi!!',
             'put_rtf.mimes' => 'Jenis file harus doc,docx,rtf!!',
-            'put_rtf.max' => 'Ukuran file max 2Mb!!',
+            'put_rtf.max' => 'Ukuran file max 2MB!!',
             'put_anonim.mimes' => 'Jenis file harus doc,docx,rtf!!',
-            'put_anonim.max' => 'Ukuran file max 2Mb!!',
+            'put_anonim.max' => 'Ukuran file max 2MB!!',
         ]);
 
-        //jika validasi tidak ada maka lakukan simpan data
-        if (Request()->put_rtf <> "") {
-            //Jika ganti file
-            //upload file
-            $file = Request()->put_rtf;
-            $fileNameRtf = str_replace("/", "_",  Request()->no_banding) . '_' . str_replace("/", "_",  Request()->jenis_perkara) . '_' . '_' . str_replace("/", "_",  Request()->tgl_put_banding) . '_' . str_replace("/", "_",  Request()->status_putus) . '_' . str_replace("/", "_",  Request()->keterangan) . '_' . 'putusan' . '.' . $file->extension();
-            $file->move(public_path('bank_putusan_rtf'), $fileNameRtf);
+        $data = $request->all();
 
-            $data = [
-                // 'tgl_reg' => Request()->tgl_reg,
-                'no_banding' => Request()->no_banding,
-                'jenis_perkara' => Request()->jenis_perkara,
-                // 'pembanding' => Request()->pembanding,
-                // 'terbanding' => Request()->terbanding,
-                'tgl_put_banding' => Request()->tgl_put_banding,
-                'status_putus' => Request()->status_putus,
-                'keterangan' => Request()->keterangan,
-                'put_rtf' => $fileNameRtf,
+        // Generate nama file base
+        $fileNameBase = str_replace("/", "_", $request->no_banding) . '_' .
+            str_replace("/", "_", $request->jenis_perkara) . '_' .
+            str_replace("/", "_", $request->tgl_put_banding) . '_' .
+            str_replace("/", "_", $request->status_putus) . '_' .
+            str_replace("/", "_", $request->keterangan);
 
+        // Update file put_rtf jika ada
+        if ($request->hasFile('put_rtf')) {
+            // Hapus file lama jika ada
+            if ($bankput->put_rtf) {
+                Storage::disk('public')->delete('bank_putusan/rtf/' . $bankput->put_rtf);
+            }
 
-            ];
-            $this->BankputModel->editData($id, $data);
-        } else {
-            //Jika tidak ganti file
-            //upload file
-
-            $data = [
-                // 'tgl_reg' => Request()->tgl_reg,
-                'no_banding' => Request()->no_banding,
-                'jenis_perkara' => Request()->jenis_perkara,
-                // 'pembanding' => Request()->pembanding,
-                // 'terbanding' => Request()->terbanding,
-                'tgl_put_banding' => Request()->tgl_put_banding,
-                'status_putus' => Request()->status_putus,
-                'keterangan' => Request()->keterangan,
-
-
-            ];
-
-            $this->BankputModel->editData($id, $data);
+            $file = $request->file('put_rtf');
+            $fileNameRtf = $fileNameBase . '_putusan.' . $file->getClientOriginalExtension();
+            $filePath = $file->storeAs('bank_putusan/rtf/', $fileNameRtf, 'public');
+            $data['put_rtf'] = $fileNameRtf;
         }
 
-        if (Request()->put_anonim <> "") {
-            //Jika ganti file
-            //upload file
+        // Update file put_anonim jika ada
+        if ($request->hasFile('put_anonim')) {
+            // Hapus file lama jika ada
+            if ($bankput->put_anonim) {
+                Storage::disk('public')->delete('bank_putusan/anonim/' . $bankput->put_anonim);
+            }
 
-            $file = Request()->put_anonim;
-            $fileNameAnonim = str_replace("/", "_",  Request()->no_banding) . '_' . str_replace("/", "_",  Request()->jenis_perkara) . '_' . str_replace("/", "_",  Request()->tgl_put_banding) . '_' . str_replace("/", "_",  Request()->status_putus) . '_'. str_replace("/", "_",  Request()->keterangan) . '_' . 'anonimasi' . '.' . $file->extension();
-            $file->move(public_path('bank_putusan_anonim'), $fileNameAnonim);
-
-            $data = [
-
-                'put_anonim' => $fileNameAnonim,
-
-            ];
-            $this->BankputModel->editData($id, $data);
+            $file = $request->file('put_anonim');
+            $fileNameAnonim = $fileNameBase . '_anonimasi.' . $file->getClientOriginalExtension();
+            $filePath = $file->storeAs('bank_putusan/anonim', $fileNameAnonim, 'public');
+            $data['put_anonim'] = $fileNameAnonim;
         }
-        return redirect()->route('bankput')->with('pesan', 'Data Berhasil Diupdate !!');
+
+        $bankput->update($data);
+
+        return redirect()->route('bankput.index')
+            ->with('pesan', 'Data Berhasil Diupdate !!');
     }
 
-    public function delete($id)
+    public function destroy($id)
     {
-        //hapus Data
-        $bankput = $this->BankputModel->detailData($id);
+        try {
+            $bankput = Bankput::findOrFail($id);
 
-        if ($bankput->put_rtf <> "") {
-            unlink(public_path('bank_putusan_rtf') . '/' . $bankput->put_rtf);
-            $this->BankputModel->deleteData($id);
+            \Log::info('Deleting bank putusan', [
+                'id' => $bankput->id,
+                'no_banding' => $bankput->no_banding,
+                'put_rtf' => $bankput->put_rtf,
+                'put_anonim' => $bankput->put_anonim
+            ]);
+
+            // Hapus file put_rtf jika ada
+            if ($bankput->put_rtf) {
+                $filePath = 'bank_putusan/rtf/' . $bankput->put_rtf;
+                if (Storage::disk('public')->exists($filePath)) {
+                    Storage::disk('public')->delete($filePath);
+                }
+            }
+
+            // Hapus file put_anonim jika ada
+            if ($bankput->put_anonim) {
+                $filePath = 'bank_putusan/anonim/' . $bankput->put_anonim;
+                if (Storage::disk('public')->exists($filePath)) {
+                    Storage::disk('public')->delete($filePath);
+                }
+            }
+
+            $bankput->delete();
+
+            return redirect()->route('bankput.index')
+                ->with('pesan', 'Data Berhasil Dihapus !!');
+        } catch (\Exception $e) {
+            \Log::error('Delete error: ' . $e->getMessage());
+            return redirect()->route('bankput.index')
+                ->with('pesan', 'Gagal menghapus data: ' . $e->getMessage());
         }
-        if ($bankput->put_anonim <> "") {
-            unlink(public_path('bank_putusan_anonim') . '/' . $bankput->put_anonim);
-            $this->BankputModel->deleteData($id);
+    }
+
+    public function downloadRtf($id)
+    {
+        $bankput = Bankput::findOrFail($id);
+
+        if (!$bankput->put_rtf) {
+            return redirect()->back()->with('error', 'File putusan tidak ditemukan.');
         }
-        return redirect()->route('bankput')->with('pesan', 'Data Berhasil Dihapus !!');
+
+        $filePath = storage_path('app/public/bank_putusan/rtf/' . $bankput->put_rtf);
+
+        if (!file_exists($filePath)) {
+            return redirect()->back()->with('error', 'File tidak ditemukan.');
+        }
+
+        return response()->download($filePath);
+    }
+
+    public function downloadAnonim($id)
+    {
+        $bankput = Bankput::findOrFail($id);
+
+        if (!$bankput->put_anonim) {
+            return redirect()->back()->with('error', 'File anonimasi tidak ditemukan.');
+        }
+
+        $filePath = storage_path('app/public/bank_putusan/anonim/' . $bankput->put_anonim);
+
+        if (!file_exists($filePath)) {
+            return redirect()->back()->with('error', 'File tidak ditemukan.');
+        }
+
+        return response()->download($filePath);
     }
 }

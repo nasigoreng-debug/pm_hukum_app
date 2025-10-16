@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
-use App\Models\EksekusiModel; // Pastikan import model yang benar
+use App\Models\EksekusiModel;
+use Illuminate\Http\Request;
 
 class EksekusiController extends Controller
 {
@@ -25,7 +26,7 @@ class EksekusiController extends Controller
 
         //Function Tahun sekarang
         $day = Carbon::now()->format('d');    // 01-31
-        $month = Carbon::now()->format('m');  // 01-12  
+        $month = Carbon::now()->format('m');  // 01-12
         $year = Carbon::now()->format('Y');   // 2024
 
         //eksekusi
@@ -57,7 +58,7 @@ class EksekusiController extends Controller
 
         $eksekusi_blm_selesai = $eksekusi_blm_selesai_0000 + $eksekusi_blm_selesai_null;
 
-        // Eksekusi selesai 
+        // Eksekusi selesai
         $eksekusi_selesai = $eksekusi_total - $eksekusi_blm_selesai;
 
         // Presentase selesai - handle division by zero
@@ -108,12 +109,16 @@ class EksekusiController extends Controller
         ));
     }
 
-    public function progres_eks()
+    public function progres_eks(Request $request)
     {
         $data = [
             'title' => 'Perkara Eksekusi',
             'eksekusi' => $this->EksekusiModel->allData(),
         ];
+
+        // Default tanggal KOSONG (tampilkan semua data)
+        $startDate = $request->start_date;
+        $endDate = $request->end_date;
 
         // Function Tahun sekarang
         $currentDate = Carbon::now();
@@ -121,17 +126,22 @@ class EksekusiController extends Controller
         $month = $currentDate->format('m');
         $year = $currentDate->format('Y');
 
-        // Data umum
-        $eksekusi_total = DB::table('tb_eksekusi')->count();
+
+        // Data umum dengan filter tanggal
+        $eksekusi_total = DB::table('tb_eksekusi')
+            ->whereBetween('tgl_permohonan', [$startDate, $endDate])
+            ->count();
+
         $eksekusi_masuk_thn_ini = DB::table('tb_eksekusi')
             ->whereYear('tgl_permohonan', $year)
             ->count();
+
         $eksekusi_bln_ini = DB::table('tb_eksekusi')
             ->whereMonth('tgl_permohonan', $month)
             ->whereYear('tgl_permohonan', $year)
             ->count();
 
-        // Daftar semua satker - lebih mudah dikelola
+        // Daftar semua satker
         $satkers = [
             'bandung',
             'sumedang',
@@ -164,22 +174,29 @@ class EksekusiController extends Controller
         $results = [];
 
         foreach ($satkers as $satker) {
-            $results[$satker] = $this->hitungDataEksekusi($satker);
+            $results[$satker] = $this->hitungDataEksekusi($satker, $startDate, $endDate);
         }
 
         return view('/eksekusi/v_eksekusi_progres', array_merge($data, [
             'results' => $results,
             'eksekusi_total' => $eksekusi_total,
             'eksekusi_masuk_thn_ini' => $eksekusi_masuk_thn_ini,
-            'eksekusi_bln_ini' => $eksekusi_bln_ini
+            'eksekusi_bln_ini' => $eksekusi_bln_ini,
+            'startDate' => $startDate,
+            'endDate' => $endDate
         ]));
     }
 
-    // Fungsi helper untuk menghitung data eksekusi per satker
-    private function hitungDataEksekusi($satker)
+    // Update fungsi helper untuk menerima parameter tanggal
+    private function hitungDataEksekusi($satker, $startDate = null, $endDate = null)
     {
-        // Query dasar untuk satker tertentu
+        // Query dasar untuk satker tertentu dengan filter tanggal
         $query = DB::table('tb_eksekusi')->where('satker', $satker);
+
+        // Tambahkan filter tanggal jika ada
+        if ($startDate && $endDate) {
+            $query->whereBetween('tgl_permohonan', [$startDate, $endDate]);
+        }
 
         // Hitung total eksekusi
         $total = $query->count();
@@ -381,5 +398,37 @@ class EksekusiController extends Controller
 
         $this->EksekusiModel->deleteData($id);
         return redirect()->route('eks')->with('pesan', 'Data Berhasil Dihapus !!');
+    }
+    public function searchByDateRangeEksekusi(Request $request)
+    {
+        // Validasi input tanggal
+        $request->validate([
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+        ], [
+            'start_date.required' => 'Tanggal mulai wajib diisi',
+            'end_date.required' => 'Tanggal akhir wajib diisi',
+            'end_date.after_or_equal' => 'Tanggal akhir harus setelah atau sama dengan tanggal mulai',
+        ]);
+
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        // Query data dengan error handling
+        $eksekusi = DB::table('tb_eksekusi')
+            ->whereBetween('tgl_permohonan', [$startDate, $endDate])
+            ->orderBy('tgl_permohonan', 'asc')
+            ->get();
+
+        $data = [
+            'title' => 'Pencarian Eksekusi - ' . $startDate . ' hingga ' . $endDate,
+            'eksekusi' => $eksekusi,
+            'start_date' => $startDate,
+            'end_date' => $endDate,
+            'sekarang' => date("Y-m-d"),
+            'total_data' => $eksekusi->count(),
+        ];
+
+        return view('/eksekusi/v_eksekusi', $data);
     }
 }

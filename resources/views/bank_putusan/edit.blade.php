@@ -13,7 +13,7 @@
 
         <div class="panel-body">
 
-            <form action="/bankput/update/{{ $bankput->id }}" method="POST" enctype="multipart/form-data">
+            <form action="/bankput/update/{{ $bankputs->id }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     <!-- left column -->
@@ -23,7 +23,7 @@
                             <div class="col-xs-6">
                                 <label>Nomor Perkara Banding</label>
                                 <input type="text" class="form-control @error('no_banding') is-invalid @enderror"
-                                    value="{{ $bankput->no_banding }}" name="no_banding" autofocus readonly>
+                                    value="{{ $bankputs->no_banding }}" name="no_banding" autofocus readonly>
                                 <div id="validationServerUsernameFeedback" class="invalid-feedback text-danger">
                                     @error('no_banding')
                                         {{ $message }}
@@ -33,7 +33,7 @@
                             <div class="col-xs-6">
                                 <label>Tanggal Putus Banding</label>
                                 <input type="date" class="form-control @error('tgl_put_banding') is-invalid @enderror"
-                                    value="{{ $bankput->tgl_put_banding }}" name="tgl_put_banding">
+                                    value="{{ $bankputs->tgl_put_banding }}" name="tgl_put_banding">
                                 <div id="validationServerUsernameFeedback" class="invalid-feedback text-danger">
                                     @error('tgl_put_banding')
                                         {{ $message }}
@@ -44,7 +44,7 @@
                                 <label for="jenis_perkara">Jenis Perkara</label>
                                 <select name="jenis_perkara" type="text"
                                     class="form-control @error('jenis_perkara') is-invalid @enderror">
-                                    <option>{{ $bankput->jenis_perkara }}</option>
+                                    <option>{{ $bankputs->jenis_perkara }}</option>
                                     <option> Asal Usul Anak </option>
                                     <option> Cerai Gugat </option>
                                     <option> Cerai Talak </option>
@@ -87,7 +87,7 @@
                                 <label for="status_putus">Status Putusan</label>
                                 <select name="status_putus" type="text"
                                     class="form-control @error('status_putus') is-invalid @enderror">
-                                    <option>{{ $bankput->status_putus }}</option>
+                                    <option>{{ $bankputs->status_putus }}</option>
                                     <option> Menguatkan </option>
                                     <option> Membatalkan </option>
                                     <option> Memperbaiki </option>
@@ -104,7 +104,7 @@
                                 <label for="keterangan">Keterangan</label>
                                 <select name="keterangan" type="text"
                                     class="form-control @error('keterangan') is-invalid @enderror">
-                                    <option>{{ $bankput->keterangan }}</option>
+                                    <option>{{ $bankputs->keterangan }}</option>
                                     <option> e-Court </option>
                                     <option> Non e-Court </option>
                                 </select>
@@ -117,14 +117,14 @@
                             <div class="col-xs-6">
                                 <div class="form-group ml-3 mt-2 mb-2 mr-3">
                                     <label>Putusan</label>
-                                    <div>{{ $bankput->put_rtf }}</div>
+                                    <div>{{ $bankputs->put_rtf }}</div>
                                 </div>
                                 <div class="">
                                     <div class="form-group ml-3 mt-2 mb-2 mr-3">
                                         <label>Ganti Putusan</label>
                                         <input type="file"
                                             class="form-control form-control-sm @error('put_rtf') is-invalid @enderror"
-                                            value="{{ $bankput->put_rtf }}" name="put_rtf">
+                                            value="{{ $bankputs->put_rtf }}" name="put_rtf">
                                         <div id="validationServerUsernameFeedback" class="invalid-feedback text-danger">
                                             @error('put_rtf')
                                                 {{ $message }}
@@ -136,14 +136,14 @@
                             <div class="col-xs-6">
                                 <div class="form-group ml-3 mt-2 mb-2 mr-3">
                                     <label>Anonimasi</label>
-                                    <div>{{ $bankput->put_anonim }}</div>
+                                    <div>{{ $bankputs->put_anonim }}</div>
                                 </div>
                                 <div class="">
                                     <div class="form-group ml-3 mt-2 mb-2 mr-3">
                                         <label>Ganti Anonimasi</label>
                                         <input type="file"
                                             class="form-control form-control-sm @error('put_anonim') is-invalid @enderror"
-                                            value="{{ $bankput->put_anonim }}" name="put_anonim">
+                                            value="{{ $bankputs->put_anonim }}" name="put_anonim">
                                         <div id="validationServerUsernameFeedback" class="invalid-feedback text-danger">
                                             @error('put_anonim')
                                                 {{ $message }}

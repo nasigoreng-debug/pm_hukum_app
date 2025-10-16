@@ -33,9 +33,9 @@
             </script>
             <td class="text-center" style="font-size: 5px;">
                 @if (Auth::user()->level === 1)
-                    <a href="/bankput/add" class="btn btn-sm btn-info mb-2">Tambah Data</a>
+                    <a href="{{route('bankput.create')}}" class="btn btn-sm btn-info mb-2">Tambah Data</a>
                 @elseif(Auth::user()->level === 2)
-                    <a href="/bankput/add" class="btn btn-sm btn-info mb-2">Tambah Data</a>
+                    <a href="{{route('bankput.create')}}" class="btn btn-sm btn-info mb-2">Tambah Data</a>
                 @elseif(Auth::user()->level === 3)
                 @endif
             </td>
@@ -82,7 +82,7 @@
                 </tfoot>
 
                 <tbody>
-                    @foreach ($bankput as $data)
+                    @foreach ($bankputs as $data)
                         <tr>
                             <td class="text-center">{{ $loop->iteration }}</td>
 
@@ -148,7 +148,7 @@
 
         </div>
     </div>
-    @foreach ($bankput as $data)
+    @foreach ($bankputs as $data)
         <!-- Modal Detail -->
         <div class="modal fade" id="detail{{ $data->id }}" tabindex="-1">
             <div class="modal-dialog modal-lg">
@@ -169,7 +169,7 @@
                                     @if ($data->put_rtf == '')
                                         ""
                                     @else
-                                        <a href="bank_putusan_rtf/{{ $data->put_rtf }}" class="text-blue"
+                                        <a href="\public\storage\laporans\rtf\{{ $data->put_rtf }}" class="text-blue"
                                             target="_blank"><i class="fa fa-file-pdf-o"></i></a>
                                     @endif
                                 </td>
@@ -180,13 +180,13 @@
                                     @if ($data->put_anonim == '')
                                         ""
                                     @else
-                                        <a href="bank_putusan_anonim/{{ $data->put_anonim }}" class="text-blue"
+                                        <a href="\public\storage\laporans\anonim\{{ $data->put_anonim }}" class="text-blue"
                                             target="_blank"><i class="fa fa-file-pdf-o"></i></a>
                                     @endif
                                 </td>
                             </tr>
                         </table>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">    
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -209,7 +209,7 @@
                         <p>Apakah anda ingin menghapus perkara ini?&hellip;</p>
                     </div>
                     <div class="modal-footer justify-content-between">
-                        <a href="/bankput/delete/{{ $data->id }}" type="button"
+                        <a href="{{ route('bankput.destroy', $data->id) }}" type="button"
                             class="btn btn-sm btn-danger">Ya</a>
                         <button type="button" class="btn btn-sm btn-white" data-dismiss="modal">Tidak</button>
                     </div>

@@ -111,8 +111,8 @@ class ArsipController extends Controller
             'no_laci' => 'required|string|max:100',
             'no_box' => 'required|string|max:100',
             'tgl_alih_media' => 'required|date',
-            'putusan' => 'required|file|mimes:pdf|max:10240',
-            'bundel_b' => 'nullable|file|mimes:rar,zip|max:10240',
+            'putusan' => 'required|file|mimes:pdf|max:500240',
+            'bundel_b' => 'nullable|file|mimes:rar,zip|max:500240',
         ], [
             'no_banding.required' => 'Nomor perkara banding wajib diisi!!',
             'no_banding.unique' => 'Nomor perkara sudah ada!!',
@@ -160,7 +160,7 @@ class ArsipController extends Controller
 
         Arsip::create($data);
 
-        return redirect()->route('arsip.index')
+        return redirect()->route('arsip.filter', 'total')
             ->with('pesan', 'Data arsip perkara berhasil ditambahkan.');
     }
 
@@ -216,8 +216,8 @@ class ArsipController extends Controller
             'no_laci' => 'required|string|max:100',
             'no_box' => 'required|string|max:100',
             'tgl_alih_media' => 'required|date',
-            'putusan' => 'nullable|file|mimes:pdf|max:10240',
-            'bundel_b' => 'nullable|file|mimes:rar,zip|max:10240',
+            'putusan' => 'nullable|file|mimes:pdf|max:500240',
+            'bundel_b' => 'nullable|file|mimes:rar,zip|max:500240',
         ], [
             'no_banding.required' => 'Nomor perkara banding wajib diisi!!',
             'no_banding.unique' => 'Nomor perkara sudah ada!!',
@@ -271,7 +271,7 @@ class ArsipController extends Controller
 
         $arsip_perkara->update($data);
 
-        return redirect()->route('arsip.index')
+        return redirect()->route('arsip.filter', 'total')
             ->with('pesan', 'Data arsip perkara berhasil diperbarui.');
     }
 
@@ -304,11 +304,11 @@ class ArsipController extends Controller
 
             $arsip_perkara->delete();
 
-            return redirect()->route('arsip.index')
+            return redirect()->route('arsip.total')
                 ->with('pesan', 'Data arsip perkara berhasil dihapus.');
         } catch (\Exception $e) {
             \Log::error('Delete error: ' . $e->getMessage());
-            return redirect()->route('arsip.index')
+            return redirect()->route('arsip.total')
                 ->with('pesan', 'Gagal menghapus data arsip perkara: ' . $e->getMessage());
         }
     }

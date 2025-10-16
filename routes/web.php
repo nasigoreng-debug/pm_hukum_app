@@ -34,11 +34,11 @@ use App\Http\Controllers\LaporanController;
 |
 */
 
-//Ori Home
+//Home
 Route::get('/', [HomeController::class, 'index']);
 
 //Arsip Perkara
-// routes/web.php
+
 Route::resource('arsip', ArsipController::class);
 Route::get('arsip/filter/{filter}', [ArsipController::class, 'filter'])->name('arsip.filter');
 Route::get('/search-date-range-arsip-perkara', [ArsipController::class, 'searchByDateRange'])->name('arsip.search');
@@ -47,12 +47,13 @@ Route::get('arsip/{id}/download-bundel', [ArsipController::class, 'downloadBunde
 // Route::get('/arsip/delete/{id}', [ArsipController::class, 'delete'])->name('delete');
 
 //Bank Putusan
-Route::get('/bankput', [BankputController::class, 'index'])->name('bankput');
-Route::get('/bankput/detail/{id}', [BankputController::class, 'detail'])->name('detail');
-Route::get('/bankput/add', [BankputController::class, 'add'])->name('add');
-Route::post('/bankput/insert', [BankputController::class, 'insert'])->name('insert');
-Route::get('/bankput/edit/{id}', [BankputController::class, 'edit'])->name('edit');
-Route::post('/bankput/update/{id}', [BankputController::class, 'update'])->name('update');
+Route::resource('bankput', BankputController::class);
+// Route::get('/bankput', [BankputController::class, 'index'])->name('bankput');
+// Route::get('/bankput/detail/{id}', [BankputController::class, 'detail'])->name('detail');
+// Route::get('/bankput/add', [BankputController::class, 'add'])->name('add');
+// Route::post('/bankput/insert', [BankputController::class, 'insert'])->name('insert');
+// Route::get('/bankput/edit/{id}', [BankputController::class, 'edit'])->name('edit');
+// Route::post('/bankput/update/{id}', [BankputController::class, 'update'])->name('update');
 // Route::get('/bankput/delete/{id}', [BankputController::class, 'delete'])->name('delete');
 
 //Eksekusi
@@ -66,6 +67,7 @@ Route::get('/eks/add', [EksekusiController::class, 'add'])->name('add');
 Route::post('/eks/insert', [EksekusiController::class, 'insert'])->name('insert');
 Route::get('/eks/edit/{id}', [EksekusiController::class, 'edit'])->name('edit');
 Route::post('/eks/update/{id}', [EksekusiController::class, 'update'])->name('update');
+Route::get('/search-date-range-eksekusi', [EksekusiController::class, 'searchByDateRangeEksekusi']);
 // Route::get('/eks/delete/{id}', [EksekusiController::class, 'delete'])->name('delete');
 
 //Jdih
@@ -119,6 +121,7 @@ Route::get('/pgd/add', [PengaduanController::class, 'add'])->name('add');
 Route::post('/pgd/insert', [PengaduanController::class, 'insert'])->name('insert');
 Route::get('/pgd/edit/{id}', [PengaduanController::class, 'edit'])->name('edit');
 Route::post('/pgd/update/{id}', [PengaduanController::class, 'update'])->name('update');
+Route::get('/search-date-range-pengaduan', [PengaduanController::class, 'searchByDateRangePengaduan']);
 // Route::get('/pgd/delete/{id}', [PengaduanController::class, 'delete'])->name('delete');
 
 //Pinjam berkas

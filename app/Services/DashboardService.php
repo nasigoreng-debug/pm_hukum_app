@@ -161,37 +161,37 @@ class DashboardService
     // ==================== BANK PUTUSAN ====================
     private function getBankPutusanPutusTahunIni($year)
     {
-        return DB::table('tb_bank_putusan')
+        return DB::table('bankputs')
             ->whereYear('tgl_put_banding', $year)
             ->count();
     }
 
     private function getTotalBankPutusanFormatted()
     {
-        $total = DB::table('tb_bank_putusan')->count();
+        $total = DB::table('bankputs')->count();
         return number_format($total, 0, ",", ".");
     }
 
     private function getBankPutusanUploadPutusan()
     {
-        return DB::table('tb_bank_putusan')
+        return DB::table('bankputs')
             ->whereNotNull('put_rtf')
             ->count();
     }
 
     private function getBankPutusanUploadAnonim()
     {
-        return DB::table('tb_bank_putusan')
+        return DB::table('bankputs')
             ->whereNotNull('put_anonim')
             ->count();
     }
 
     private function getBankPutusanPresentase()
     {
-        $total = DB::table('tb_bank_putusan')->count();
+        $total = DB::table('bankputs')->count();
         $uploadPutusan = $this->getBankPutusanUploadPutusan();
         $uploadAnonim = $this->getBankPutusanUploadAnonim();
-        
+
         $uploadAvg = ($uploadPutusan + $uploadAnonim) / 2;
         return $total > 0 ? round(($uploadAvg / $total) * 100) : 0;
     }
@@ -240,7 +240,7 @@ class DashboardService
         $upload = DB::table('tb_surat_masuk')
             ->whereNotNull('lampiran')
             ->count();
-        
+
         return $total > 0 ? round(($upload / $total) * 100) : 0;
     }
 
@@ -277,7 +277,7 @@ class DashboardService
         $upload = DB::table('tb_surat_keluar')
             ->whereNotNull('surat_pta')
             ->count();
-        
+
         return $total > 0 ? round(($upload / $total) * 100) : 0;
     }
 
@@ -361,7 +361,7 @@ class DashboardService
         $upload = DB::table('tb_kasasi')
             ->whereNotNull('salput_kasasi')
             ->count();
-        
+
         return $total > 0 ? round(($upload / $total) * 100) : 0;
     }
 
@@ -398,7 +398,7 @@ class DashboardService
         $upload = DB::table('tb_pbt_banding')
             ->whereNotNull('pbt_put')
             ->count();
-        
+
         return $total > 0 ? round(($upload / $total) * 100) : 0;
     }
 
@@ -428,7 +428,7 @@ class DashboardService
         $selesai = DB::table('tb_pengaduan')
             ->whereIn('status_pgd', ['Diarsipkan', 'Selesai', 'Klarifikasi'])
             ->count();
-        
+
         return $total - $selesai;
     }
 
@@ -445,7 +445,7 @@ class DashboardService
         $selesai = DB::table('tb_pengaduan')
             ->whereIn('status_pgd', ['Diarsipkan', 'Selesai', 'Klarifikasi'])
             ->count();
-        
+
         return $total > 0 ? round(($selesai / $total) * 100) : 0;
     }
 
@@ -482,7 +482,7 @@ class DashboardService
         $upload = DB::table('tb_peninjauan_kembali')
             ->whereNotNull('salput_pk')
             ->count();
-        
+
         return $total > 0 ? round(($upload / $total) * 100) : 0;
     }
 
@@ -529,7 +529,7 @@ class DashboardService
             ->whereNotNull('putusan')
             ->where('putusan', '!=', '')
             ->count();
-        
+
         return $total > 0 ? round(($upload / $total) * 100) : 0;
     }
 

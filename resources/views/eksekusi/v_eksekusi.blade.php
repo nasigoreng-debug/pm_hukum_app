@@ -30,24 +30,45 @@
                 });
             </script>
 
-            <!-- Action Buttons -->
-            <div class="text-center mb-3" style="font-size: 14px;">
-                @if (in_array(Auth::user()->level, [1, 2]))
-                    <a href="/eks/add" class="btn btn-sm btn-info mb-2">Tambah Data</a>
-                    <a href="/eks/total" class="btn btn-sm btn-secondary mb-2">Semua</a>
-                    <a href="/eks/berjalan" class="btn btn-sm btn-secondary mb-2">Berjalan</a>
-                    <a href="/eks/selesai" class="btn btn-sm btn-secondary mb-2">Selesai</a>
-                    <a href="/eks/progres" class="btn btn-sm btn-secondary mb-2">Progres Satker</a>
-
-                    <!-- TAMBAHKAN TOMBOL PRINT DI SINI -->
-                    <button onclick="printTable()" class="btn btn-sm btn-success mb-2">
-                        <i class="fa fa-print"></i> Print Table
+            <div class="text-center mb-3">
+                <!-- Filter Form -->
+                <form action="/search-date-range-eksekusi" method="GET" class="form-inline mb-3">
+                    <div class="form-group mr-3 mb-2">
+                        <label for="start_date" class="mr-2"><strong>Dari Tanggal:</strong></label>
+                        <input type="date" class="form-control form-control-sm" id="start_date" name="start_date"
+                            value="{{ $startDate ?? '' }}" required>
+                    </div>
+                    <div class="form-group mr-3 mb-2">
+                        <label for="end_date" class="mr-2"><strong>Sampai Tanggal:</strong></label>
+                        <input type="date" class="form-control form-control-sm" id="end_date" name="end_date"
+                            value="{{ $endDate ?? '' }}" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-sm mr-2 mb-2">
+                        <i class="fa fa-search"></i> Tampilkan Data
                     </button>
-                    <!-- END TOMBOL PRINT -->
-
-                    <a href="/eks" class="btn btn-sm btn-danger mb-2">Kembali</a>
-                @endif
+                    <a href="/eks/berjalan" class="btn btn-warning btn-sm mr-2 mb-2">
+                        <i class="fa fa-refresh"></i> Reset Filter
+                    </a>
+                </form>
             </div>
+            <br>
+
+            <!-- Action Buttons -->
+            @if (in_array(Auth::user()->level, [1, 2]))
+                <div class="text-start mb-4">
+                    <div class="d-flex flex-wrap justify-content-center gap-2" style="font-size: 14px;">
+                        <a href="/eks/add" class="btn btn-sm btn-info">Tambah Data</a>
+                        <a href="/eks/total" class="btn btn-sm btn-secondary">Semua</a>
+                        <a href="/eks/berjalan" class="btn btn-sm btn-secondary">Berjalan</a>
+                        <a href="/eks/selesai" class="btn btn-sm btn-secondary">Selesai</a>
+                        <a href="/eks/progres" class="btn btn-sm btn-secondary">Progres Satker</a>
+                        <button onclick="printTable()" class="btn btn-sm btn-success">
+                            <i class="fa fa-print"></i> Print Table
+                        </button>
+                        <a href="/eks" class="btn btn-sm btn-danger">Kembali</a>
+                    </div>
+                </div>
+            @endif
 
             <!-- Success Message -->
             @if (session('pesan'))
@@ -56,7 +77,6 @@
                     {{ session('pesan') }}
                 </div>
             @endif
-
 
             <!-- Data Table -->
             <table class="table table-sm table-hover" id="example-3">
@@ -179,37 +199,42 @@
         </div>
     @endforeach
 
-    <!-- Data Table -->
-    <table class="table table-sm table-hover" id="example-3">
-        <!-- ... existing table code ... -->
-    </table>
-
-    <!-- TAMBAHKAN SCRIPT PRINT DI SINI -->
+    <!-- Print Script -->
+    <!-- Print Script -->
     <script>
         function printTable() {
-            // Clone table asli
+            // Dapatkan semua data asli (bukan hanya yang terlihat di halaman saat ini)
             var originalTable = document.getElementById('example-3');
+
+            // Clone seluruh tabel beserta semua data
             var printContent = originalTable.cloneNode(true);
 
-            // Hapus kolom Action (kolom terakhir)
+            // Hapus pagination dari cloned table
+            var paginationElements = printContent.querySelectorAll(
+                '.dataTables_paginate, .pagination, .dataTables_info, .dataTables_length, .dataTables_filter');
+            paginationElements.forEach(function(element) {
+                element.remove();
+            });
+
+            // Remove Action column (last column)
             var rows = printContent.getElementsByTagName('tr');
             for (var i = 0; i < rows.length; i++) {
                 var cells = rows[i].getElementsByTagName('td');
                 var thCells = rows[i].getElementsByTagName('th');
 
-                // Hapus td terakhir (kolom Action)
+                // Remove last td (Action column)
                 if (cells.length > 0) {
                     cells[cells.length - 1].remove();
                 }
 
-                // Hapus th terakhir (header Action)
+                // Remove last th (Action header)
                 if (thCells.length > 0) {
                     thCells[thCells.length - 1].remove();
                 }
             }
 
-            // Buat window print
-            var printWindow = window.open('', '_blank', 'width=1000,height=600');
+            // Create print window
+            var printWindow = window.open('', '_blank', 'width=1200,height=800');
             printWindow.document.write(`
             <!DOCTYPE html>
             <html>
@@ -218,8 +243,9 @@
                 <style>
                     body {
                         font-family: Arial, sans-serif;
-                        margin: 20px;
+                        margin: 15px;
                         font-size: 12px;
+                        background: white;
                     }
                     .header {
                         text-align: center;
@@ -230,44 +256,89 @@
                     .header h2 {
                         margin: 0;
                         color: #333;
+                        font-size: 18px;
                     }
                     .info {
                         margin: 10px 0;
                         padding: 10px;
                         background: #f5f5f5;
                         border-radius: 5px;
+                        border: 1px solid #ddd;
                     }
                     table {
                         width: 100%;
                         border-collapse: collapse;
                         margin-top: 15px;
+                        font-size: 11px;
                     }
                     th, td {
                         border: 1px solid #000;
-                        padding: 6px;
+                        padding: 6px 8px;
                         text-align: left;
-                        font-size: 11px;
                     }
                     th {
                         background-color: #e9ecef;
                         font-weight: bold;
+                        text-align: center;
+                    }
+                    tr:nth-child(even) {
+                        background-color: #f8f9fa;
                     }
                     .text-center {
                         text-align: center;
                     }
                     .badge {
-                        padding: 2px 6px;
-                        border-radius: 3px;
+                        padding: 3px 8px;
+                        border-radius: 4px;
                         font-size: 10px;
-                        border: 1px solid #000;
+                        font-weight: bold;
                     }
-                    .badge-warning { background-color: #ffc107; }
+                    .badge-warning { background-color: #ffc107; color: #000; }
                     .badge-danger { background-color: #dc3545; color: white; }
                     .badge-success { background-color: #28a745; color: white; }
                     .badge-primary { background-color: #007bff; color: white; }
+
+                    /* Hide unnecessary elements */
+                    .dataTables_paginate,
+                    .pagination,
+                    .dt-paging,
+                    .dataTables_info,
+                    .dataTables_length,
+                    .dataTables_filter {
+                        display: none !important;
+                    }
+
+                    /* Print styles */
                     @media print {
-                        body { margin: 0; }
-                        .no-print { display: none; }
+                        @page {
+                            size: landscape;
+                            margin: 10mm;
+                        }
+                        body {
+                            margin: 0;
+                            padding: 0;
+                            font-size: 10px;
+                        }
+                        .no-print {
+                            display: none !important;
+                        }
+                        table {
+                            page-break-inside: auto;
+                            font-size: 9px;
+                        }
+                        tr {
+                            page-break-inside: avoid;
+                            page-break-after: auto;
+                        }
+                        thead {
+                            display: table-header-group;
+                        }
+                        tfoot {
+                            display: table-footer-group;
+                        }
+                        .header {
+                            margin-bottom: 15px;
+                        }
                     }
                 </style>
             </head>
@@ -283,24 +354,25 @@
                 </div>
 
                 <div class="info">
-                    <strong>Total Data:</strong> ${originalTable.rows.length - 1} Perkara<br>
-                    <strong>User:</strong> {{ Auth::user()->name }}
+                    <strong>Total Data:</strong> ${rows.length - 1} Perkara<br>
+                    <strong>User:</strong> ${document.body.getAttribute('data-user-name') || 'User'}
                 </div>
 
                 ${printContent.outerHTML}
 
-                <div class="no-print" style="margin-top: 20px; text-align: center;">
-                    <button onclick="window.print()" style="padding: 8px 15px; background: #28a745; color: white; border: none; border-radius: 3px; cursor: pointer;">
+                <div class="no-print" style="margin-top: 20px; text-align: center; padding: 15px;">
+                    <button onclick="window.print()" style="padding: 10px 20px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; margin: 5px;">
                         🖨️ Print Halaman
                     </button>
-                    <button onclick="window.close()" style="padding: 8px 15px; background: #dc3545; color: white; border: none; border-radius: 3px; cursor: pointer;">
+                    <button onclick="window.close()" style="padding: 10px 20px; background: #dc3545; color: white; border: none; border-radius: 5px; cursor: pointer; margin: 5px;">
                         ❌ Tutup
                     </button>
                 </div>
 
                 <script>
                     window.onload = function() {
-                        // Auto print setelah window terbuka (opsional)
+                        console.log('Total rows in print view:', document.querySelectorAll('table tr').length);
+                        // Auto print jika diperlukan
                         // window.print();
                     };
                 <\/script>

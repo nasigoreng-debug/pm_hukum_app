@@ -52,7 +52,7 @@ class UserController extends Controller
             'username' => 'required|string|max:255|unique:users,username',
             'password' => 'required|string|min:6',
             'level' => 'required|integer',
-            'foto_user' => 'required|image|mimes:jpg,png|max:1024',
+            'foto_user' => 'required|image|mimes:jpg,jpeg,png|max:500',
         ], [
             'name.required' => 'Nama wajib diisi!!',
             'username.required' => 'Username wajib diisi!!',
@@ -62,8 +62,8 @@ class UserController extends Controller
             'level.required' => 'Role wajib diisi!!',
             'foto_user.required' => 'Foto wajib diupload!!',
             'foto_user.image' => 'File harus berupa gambar!!',
-            'foto_user.mimes' => 'Jenis file harus JPG atau PNG!!',
-            'foto_user.max' => 'Ukuran file maksimal 1MB!!',
+            'foto_user.mimes' => 'Jenis file harus JPG, JPEG atau PNG!!',
+            'foto_user.max' => 'Ukuran file maksimal 500Kb!!',
         ]);
 
         $data = $request->only(['name', 'username', 'level']);
@@ -127,7 +127,7 @@ class UserController extends Controller
             'username' => 'required|string|max:255|unique:users,username,' . $id,
             'password' => 'nullable|string|min:6',
             'level' => 'required|integer',
-            'foto_user' => 'nullable|image|mimes:jpg,png|max:1024',
+            'foto_user' => 'nullable|image|mimes:jpg,jpeg,png|max:500',
         ], [
             'name.required' => 'Nama wajib diisi!!',
             'username.required' => 'Username wajib diisi!!',
@@ -135,8 +135,8 @@ class UserController extends Controller
             'password.min' => 'Password minimal 6 karakter!!',
             'level.required' => 'Role wajib diisi!!',
             'foto_user.image' => 'File harus berupa gambar!!',
-            'foto_user.mimes' => 'Jenis file harus JPG atau PNG!!',
-            'foto_user.max' => 'Ukuran file maksimal 1MB!!',
+            'foto_user.mimes' => 'Jenis file harus JPG, JPEG atau PNG!!',
+            'foto_user.max' => 'Ukuran file maksimal 500Kb!!',
         ]);
 
         $data = $request->only(['name', 'username', 'level']);
@@ -172,38 +172,36 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-{
-    try {
-        $user = User::findOrFail($id);
+    {
+        try {
+            $user = User::findOrFail($id);
 
-        \Log::info('Deleting user', [
-            'id' => $user->id,
-            'name' => $user->name,
-            'foto_user' => $user->foto_user
-        ]);
+            \Log::info('Deleting user', [
+                'id' => $user->id,
+                'name' => $user->name,
+                'foto_user' => $user->foto_user
+            ]);
 
-        // Hapus foto user jika ada
-        if ($user->foto_user) {
-            $filePath = 'users/' . $user->foto_user;
-            if (Storage::disk('public')->exists($filePath)) {
-                Storage::disk('public')->delete($filePath);
+            // Hapus foto user jika ada
+            if ($user->foto_user) {
+                $filePath = 'users/' . $user->foto_user;
+                if (Storage::disk('public')->exists($filePath)) {
+                    Storage::disk('public')->delete($filePath);
+                }
             }
+
+            $user->delete();
+
+            // PERBAIKAN: Hapus spasi di route name
+            return redirect()->route('users.index')
+                ->with('pesan', 'User berhasil dihapus.');
+        } catch (\Exception $e) {
+            \Log::error('Delete user error: ' . $e->getMessage());
+            return redirect()->route('users.index')
+                ->with('pesan', 'Gagal menghapus user: ' . $e->getMessage());
         }
-
-        $user->delete();
-
-        // PERBAIKAN: Hapus spasi di route name
-        return redirect()->route('users.index')
-            ->with('pesan', 'User berhasil dihapus.');
-
-    } catch (\Exception $e) {
-        \Log::error('Delete user error: ' . $e->getMessage());
-        return redirect()->route('users.index')
-            ->with('pesan', 'Gagal menghapus user: ' . $e->getMessage());
     }
-}
     /**
      * Method lama untuk kompatibilitas
      */
-    
 }

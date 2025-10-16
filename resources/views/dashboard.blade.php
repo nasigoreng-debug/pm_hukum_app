@@ -141,7 +141,7 @@
             <!-- Peminjam Berkas -->
             <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 mb-4">
                 <div class="xe-widget xe-progress-counter xe-progress-counter-green animated-widget" data-count=".num"
-                    data-from="0" data-to="{{ $pinjam }}" data-duration="5">
+                    data-from="0" data-to="{{ $pinjam_bl_kembali }}" data-duration="5">
                     <div class="xe-background">
                         <i class="fa fa-user grow"></i>
                     </div>
@@ -150,7 +150,7 @@
                             <i class="fa fa-user"></i>
                         </div>
                         <div class="xe-label">
-                            <span>Peminjam Berkas {{ date('Y') }}</span>
+                            <span>Berkas Belum Kembali</span>
                             <strong class="num">0</strong>
                         </div>
                     </div>
@@ -160,8 +160,9 @@
                             data-fill-easing="true"></span>
                     </div>
                     <div class="xe-lower">
-                        <span>Belum Kembali {{ date('Y') }}</span>
-                        <strong>{{ $pinjam_bl_kembali }}</strong>
+                        <span>Total Peminjam Berkas</span>
+                        <strong>{{ $pinjam }}</strong>
+
                     </div>
                     <div class="widget-wave"></div>
                 </div>

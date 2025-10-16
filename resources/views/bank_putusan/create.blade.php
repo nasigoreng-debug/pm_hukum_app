@@ -13,7 +13,7 @@
 
         <div class="panel-body">
 
-            <form action="/bankput/insert" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('bankput.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     <!-- left column -->
@@ -136,7 +136,7 @@
                             <div class="col-xs-12">
                                 <button class="btn btn-sm btn-success">Simpan</button>
                                 <button type="reset" class="btn btn-sm btn-danger">Reset</button>
-                                <a href="/bankput" class="btn btn-sm btn-info mb-2"></i>Kembali</a>
+                                <a href="{{ route('bankput.index') }}" class="btn btn-sm btn-info mb-2"></i>Kembali</a>
                             </div>
                         </div>
                     </div>

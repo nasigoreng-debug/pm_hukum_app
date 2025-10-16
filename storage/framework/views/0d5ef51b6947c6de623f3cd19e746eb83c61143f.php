@@ -1,7 +1,5 @@
-@extends('layouts.v_template')
-
-@section('content')
-    @include('layouts.v_deskripsi')
+<?php $__env->startSection('content'); ?>
+    <?php echo $__env->make('layouts.v_deskripsi', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     <!-- Table exporting -->
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -38,12 +36,12 @@
                     <div class="form-group mr-3 mb-2">
                         <label for="start_date" class="mr-2"><strong>Dari Tanggal:</strong></label>
                         <input type="date" class="form-control form-control-sm" id="start_date" name="start_date"
-                            value="{{ $startDate ?? '' }}" required>
+                            value="<?php echo e($startDate ?? ''); ?>" required>
                     </div>
                     <div class="form-group mr-3 mb-2">
                         <label for="end_date" class="mr-2"><strong>Sampai Tanggal:</strong></label>
                         <input type="date" class="form-control form-control-sm" id="end_date" name="end_date"
-                            value="{{ $endDate ?? '' }}" required>
+                            value="<?php echo e($endDate ?? ''); ?>" required>
                     </div>
                     <button type="submit" class="btn btn-primary btn-sm mr-2 mb-2">
                         <i class="fa fa-search"></i> Tampilkan Data
@@ -64,20 +62,15 @@
                 <a href="/pgd" class="btn btn-sm btn-danger mb-2">Kembali</a>
             </div>
 
-            {{-- @if (session('pesan'))
-                <div class="alert alert-success alert-dismissible mt-2">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    {{ session('pesan') }}
-                </div>
-            @endif --}}
+            
             <!-- Success Message -->
-            @if (session('pesan'))
+            <?php if(session('pesan')): ?>
                 <script>
                     document.addEventListener('DOMContentLoaded', function() {
                         Swal.fire({
                             icon: 'success',
                             title: 'Sukses!',
-                            text: '{{ session('pesan') }}',
+                            text: '<?php echo e(session('pesan')); ?>',
                             timer: 3000,
                             showConfirmButton: true,
                             confirmButtonText: 'OK',
@@ -85,7 +78,7 @@
                         });
                     });
                 </script>
-            @endif
+            <?php endif; ?>
             <table class="table table-sm table-hover" id="example-4">
                 <thead class="bg-gray">
                     <tr>
@@ -136,69 +129,72 @@
                 </tfoot>
 
                 <tbody>
-                    @foreach ($pengaduan as $data)
+                    <?php $__currentLoopData = $pengaduan; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $data): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ date('d-m-Y', strtotime($data->tgl_terima_pgd)) }}</td>
-                            <td class="text-start">{{ $data->no_pgd }}</td>
-                            <td class="text-start">{{ $data->pelapor }}</td>
-                            <td class="text-start">{{ $data->terlapor }}</td>
+                            <td><?php echo e($loop->iteration); ?></td>
+                            <td><?php echo e(date('d-m-Y', strtotime($data->tgl_terima_pgd))); ?></td>
+                            <td class="text-start"><?php echo e($data->no_pgd); ?></td>
+                            <td class="text-start"><?php echo e($data->pelapor); ?></td>
+                            <td class="text-start"><?php echo e($data->terlapor); ?></td>
                             <td class="text-start">
-                                {{ $data->uraian_pgd }}
-                            </td>
-                            <!-- <td>{{ $data->ditangani_oleh }}</td>
-                                                                                <td>{{ date('d-m-Y', strtotime($data->dis_pm_hk)) }}</td>
-                                                                                <td>{{ date('d-m-Y', strtotime($data->dis_kpta)) }}</td>
-                                                                                <td>{{ date('d-m-Y', strtotime($data->dis_wkpta)) }}</td>
-                                                                                <td>{{ date('d-m-Y', strtotime($data->dis_hatiwasda)) }}</td>
-                                                                                <td>{{ date('d-m-Y', strtotime($data->tgl_tindak_lanjut)) }}</td> -->
-                            <td>
-
-                                {{ $data->status_pgd }}
+                                <?php echo e($data->uraian_pgd); ?>
 
                             </td>
+                            <!-- <td><?php echo e($data->ditangani_oleh); ?></td>
+                                                                                <td><?php echo e(date('d-m-Y', strtotime($data->dis_pm_hk))); ?></td>
+                                                                                <td><?php echo e(date('d-m-Y', strtotime($data->dis_kpta))); ?></td>
+                                                                                <td><?php echo e(date('d-m-Y', strtotime($data->dis_wkpta))); ?></td>
+                                                                                <td><?php echo e(date('d-m-Y', strtotime($data->dis_hatiwasda))); ?></td>
+                                                                                <td><?php echo e(date('d-m-Y', strtotime($data->tgl_tindak_lanjut))); ?></td> -->
+                            <td>
+
+                                <?php echo e($data->status_pgd); ?>
+
+
+                            </td>
 
                             <td>
-                                {{ $data->status_berkas }}
+                                <?php echo e($data->status_berkas); ?>
+
                             </td>
                             <td>
-                                @if (Auth::user()->level === 1)
+                                <?php if(Auth::user()->level === 1): ?>
                                     <button type="button" class="btn btn-purple btn-xs" data-toggle="modal"
-                                        data-target="#detail{{ $data->id }}">
+                                        data-target="#detail<?php echo e($data->id); ?>">
                                         <i class="fa fa-eye"></i></a>
                                     </button>
-                                    <a href="/pgd/edit/{{ $data->id }}" class="btn btn-warning btn-xs">
+                                    <a href="/pgd/edit/<?php echo e($data->id); ?>" class="btn btn-warning btn-xs">
                                         <i class="fa fa-edit"></i>
                                     </a>
                                     <button type="button" class="btn btn-danger btn-xs" data-toggle="modal"
-                                        data-target="#delete{{ $data->id }}">
+                                        data-target="#delete<?php echo e($data->id); ?>">
                                         <i class="fa fa-trash-o"></i>
                                     </button>
-                                @elseif(Auth::user()->level === 2)
+                                <?php elseif(Auth::user()->level === 2): ?>
                                     <button type="button" class="btn btn-purple btn-xs" data-toggle="modal"
-                                        data-target="#detail{{ $data->id }}">
+                                        data-target="#detail<?php echo e($data->id); ?>">
                                         <i class="fa fa-eye"></i></a>
                                     </button>
-                                    <a href="/pgd/edit/{{ $data->id }}" class="btn btn-warning btn-xs">
+                                    <a href="/pgd/edit/<?php echo e($data->id); ?>" class="btn btn-warning btn-xs">
                                         <i class="fa fa-edit"></i>
                                     </a>
-                                @elseif(Auth::user()->level === 3)
+                                <?php elseif(Auth::user()->level === 3): ?>
                                     <button type="button" class="btn btn-purple btn-xs" data-toggle="modal"
-                                        data-target="#detail{{ $data->id }}">
+                                        data-target="#detail<?php echo e($data->id); ?>">
                                         <i class="fa fa-eye"></i></a>
                                     </button>
-                                @endif
+                                <?php endif; ?>
                             </td>
                         </tr>
-                    @endforeach
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </tbody>
             </table>
 
         </div>
     </div>
-    @foreach ($pengaduan as $data)
+    <?php $__currentLoopData = $pengaduan; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $data): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
         <!-- Modal Detail -->
-        <div class="modal fade" id="detail{{ $data->id }}" tabindex="-1">
+        <div class="modal fade" id="detail<?php echo e($data->id); ?>" tabindex="-1">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -208,158 +204,165 @@
                         <table class="table table-small-font table-bordered table-hover">
                             <tr class="text-start border">
                                 <td style="width: 200px;">Terima Pengaduan</td>
-                                <td>{{ date('d-m-Y', strtotime($data->tgl_terima_pgd)) }}</td>
+                                <td><?php echo e(date('d-m-Y', strtotime($data->tgl_terima_pgd))); ?></td>
                             </tr>
                             <tr class="text-start border">
                                 <td>Nomor Pengaduan</td>
-                                <td>{{ $data->no_pgd }}</td>
+                                <td><?php echo e($data->no_pgd); ?></td>
                             </tr>
                             <tr class="text-start border">
                                 <td>Pelapor</td>
-                                <td>{{ $data->pelapor }}</td>
+                                <td><?php echo e($data->pelapor); ?></td>
                             </tr>
                             <tr class="text-start border">
                                 <td>Terlapor</td>
-                                <td>{{ $data->terlapor }}</td>
+                                <td><?php echo e($data->terlapor); ?></td>
                             </tr>
                             <tr class="text-start border">
                                 <td> Uraian Pengaduan</td>
-                                <td>{{ $data->uraian_pgd }}</td>
+                                <td><?php echo e($data->uraian_pgd); ?></td>
                             </tr>
                             <tr class="text-start border">
                                 <td> Ditangani Oleh</td>
-                                <td>{{ $data->ditangani_oleh }}</td>
+                                <td><?php echo e($data->ditangani_oleh); ?></td>
                             </tr>
 
-                            @if ($data->dis_pm_hk == '0000-00-00')
-                            @elseif($data->dis_pm_hk == '')
-                            @else
+                            <?php if($data->dis_pm_hk == '0000-00-00'): ?>
+                            <?php elseif($data->dis_pm_hk == ''): ?>
+                            <?php else: ?>
                                 <tr class="text-start border">
                                     <td>Disposisi Panitera Muda Hukum</td>
                                     <td>
-                                        @if ($data->dis_pm_hk == '0000-00-00')
+                                        <?php if($data->dis_pm_hk == '0000-00-00'): ?>
                                             <span class="badge badge-danger">Belum Disposisi</span>
                                             elseif($data->dis_pm_hk=="")
                                             <span class="badge badge-danger">Belum Disposisi</span>
-                                        @else
-                                            {{ date('d-m-Y', strtotime($data->dis_pm_hk)) }}
-                                        @endif
+                                        <?php else: ?>
+                                            <?php echo e(date('d-m-Y', strtotime($data->dis_pm_hk))); ?>
+
+                                        <?php endif; ?>
                                     </td>
                                 </tr>
-                            @endif
+                            <?php endif; ?>
 
-                            @if ($data->dis_kpta == '0000-00-00')
-                            @elseif($data->dis_kpta == '')
-                            @else
+                            <?php if($data->dis_kpta == '0000-00-00'): ?>
+                            <?php elseif($data->dis_kpta == ''): ?>
+                            <?php else: ?>
                                 <tr class="text-start border">
                                     <td>Disposisi Ketua</td>
                                     <td>
-                                        @if ($data->dis_kpta == '0000-00-00')
+                                        <?php if($data->dis_kpta == '0000-00-00'): ?>
                                             <span class="badge badge-danger">Disposisi terakhir oleh Panitera Muda
                                                 Hukum</span>
-                                        @elseif($data->dis_kpta == '')
+                                        <?php elseif($data->dis_kpta == ''): ?>
                                             <span class="badge badge-danger">Disposisi terakhir oleh Panitera Muda
                                                 Hukum</span>
-                                        @else
-                                            {{ date('d-m-Y', strtotime($data->dis_kpta)) }}
-                                        @endif
+                                        <?php else: ?>
+                                            <?php echo e(date('d-m-Y', strtotime($data->dis_kpta))); ?>
+
+                                        <?php endif; ?>
                                     </td>
                                 </tr>
-                            @endif
+                            <?php endif; ?>
 
-                            @if ($data->dis_wkpta == '0000-00-00')
-                            @elseif($data->dis_wkpta == '')
-                            @else
+                            <?php if($data->dis_wkpta == '0000-00-00'): ?>
+                            <?php elseif($data->dis_wkpta == ''): ?>
+                            <?php else: ?>
                                 <tr class="text-start border">
                                     <td>Disposisi Wakil</td>
                                     <td>
-                                        @if ($data->dis_wkpta == '0000-00-00')
+                                        <?php if($data->dis_wkpta == '0000-00-00'): ?>
                                             <span class="badge badge-danger">Disposisi terakhir oleh Ketua</span>
-                                        @elseif($data->dis_wkpta == '')
+                                        <?php elseif($data->dis_wkpta == ''): ?>
                                             <span class="badge badge-danger">Disposisi terakhir oleh Ketua</span>
-                                        @else
-                                            {{ date('d-m-Y', strtotime($data->dis_wkpta)) }}
-                                        @endif
+                                        <?php else: ?>
+                                            <?php echo e(date('d-m-Y', strtotime($data->dis_wkpta))); ?>
+
+                                        <?php endif; ?>
                                     </td>
                                 </tr>
-                            @endif
+                            <?php endif; ?>
 
-                            @if ($data->dis_hatiwasda == '0000-00-00')
-                            @elseif($data->dis_hatiwasda == '')
-                            @else
+                            <?php if($data->dis_hatiwasda == '0000-00-00'): ?>
+                            <?php elseif($data->dis_hatiwasda == ''): ?>
+                            <?php else: ?>
                                 <tr class="text-start border">
                                     <td>Disposisi Hatiwasda</td>
                                     <td>
-                                        @if ($data->dis_hatiwasda == '0000-00-00')
-                                        @elseif($data->dis_hatiwasda == '')
-                                        @else
-                                            {{ date('d-m-Y', strtotime($data->dis_hatiwasda)) }}
-                                        @endif
+                                        <?php if($data->dis_hatiwasda == '0000-00-00'): ?>
+                                        <?php elseif($data->dis_hatiwasda == ''): ?>
+                                        <?php else: ?>
+                                            <?php echo e(date('d-m-Y', strtotime($data->dis_hatiwasda))); ?>
+
+                                        <?php endif; ?>
                                     </td>
                                 </tr>
-                            @endif
+                            <?php endif; ?>
 
-                            @if ($data->tgl_tindak_lanjut == '0000-00-00')
-                            @elseif($data->tgl_tindak_lanjut == '')
-                            @else
+                            <?php if($data->tgl_tindak_lanjut == '0000-00-00'): ?>
+                            <?php elseif($data->tgl_tindak_lanjut == ''): ?>
+                            <?php else: ?>
                                 <tr class="text-start border">
                                     <td>Tindak Lanjut</td>
                                     <td>
-                                        @if ($data->tgl_tindak_lanjut == '0000-00-00')
-                                        @elseif($data->tgl_tindak_lanjut == '')
-                                        @else
-                                            {{ date('d-m-Y', strtotime($data->tgl_tindak_lanjut)) }}
-                                        @endif
+                                        <?php if($data->tgl_tindak_lanjut == '0000-00-00'): ?>
+                                        <?php elseif($data->tgl_tindak_lanjut == ''): ?>
+                                        <?php else: ?>
+                                            <?php echo e(date('d-m-Y', strtotime($data->tgl_tindak_lanjut))); ?>
+
+                                        <?php endif; ?>
                                     </td>
                                 </tr>
-                            @endif
+                            <?php endif; ?>
 
                             <tr class="text-start border">
                                 <td>Status Pengaduan</td>
-                                <td>{{ $data->status_pgd }}</td>
+                                <td><?php echo e($data->status_pgd); ?></td>
                             </tr>
                             <tr class="text-start border">
                                 <td>Posisi Berkas</td>
-                                <td>{{ $data->status_berkas }}</td>
+                                <td><?php echo e($data->status_berkas); ?></td>
                             </tr>
                             <tr class="text-start border">
                                 <td>Tanggal Selesai</td>
                                 <td>
-                                    @if ($data->tgl_selesai_pgd == '0000-00-00')
-                                    @elseif($data->tgl_selesai_pgd == '')
-                                    @else
-                                        {{ date('d-m-Y', strtotime($data->tgl_selesai_pgd)) }}
-                                    @endif
+                                    <?php if($data->tgl_selesai_pgd == '0000-00-00'): ?>
+                                    <?php elseif($data->tgl_selesai_pgd == ''): ?>
+                                    <?php else: ?>
+                                        <?php echo e(date('d-m-Y', strtotime($data->tgl_selesai_pgd))); ?>
+
+                                    <?php endif; ?>
                                 </td>
                             </tr>
                             <tr class="text-start border">
                                 <td> Tanggal LHP</td>
                                 <td>
-                                    @if ($data->tgl_lhp == '0000-00-00')
-                                    @elseif($data->tgl_lhp == '')
-                                    @else
-                                        {{ date('d-m-Y', strtotime($data->tgl_lhp)) }}
-                                    @endif
+                                    <?php if($data->tgl_lhp == '0000-00-00'): ?>
+                                    <?php elseif($data->tgl_lhp == ''): ?>
+                                    <?php else: ?>
+                                        <?php echo e(date('d-m-Y', strtotime($data->tgl_lhp))); ?>
+
+                                    <?php endif; ?>
                                 </td>
                             </tr>
                             <tr class="text-start border">
                                 <td> Surat Pengaduan</td>
                                 <td>
-                                    @if ($data->surat_pgd == '')
-                                    @else
-                                        <a href="public/surat_pengaduan/{{ $data->surat_pgd }}" class="text-blue"
+                                    <?php if($data->surat_pgd == ''): ?>
+                                    <?php else: ?>
+                                        <a href="public/surat_pengaduan/<?php echo e($data->surat_pgd); ?>" class="text-blue"
                                             target="_blank"><i class="fa fa-file-pdf-o"></i></a>
-                                    @endif
+                                    <?php endif; ?>
                                 </td>
                             </tr>
                             <tr class="text-start border">
                                 <td> Lampiran</td>
                                 <td>
-                                    @if ($data->lampiran == '')
-                                    @else
-                                        <a href="public/lampiran_pengaduan/{{ $data->lampiran }}" class="text-blue"
+                                    <?php if($data->lampiran == ''): ?>
+                                    <?php else: ?>
+                                        <a href="public/lampiran_pengaduan/<?php echo e($data->lampiran); ?>" class="text-blue"
                                             target="_blank"><i class="fa fa-file-pdf-o"></i></a>
-                                    @endif
+                                    <?php endif; ?>
                                 </td>
                             </tr>
                         </table>
@@ -373,11 +376,11 @@
         <!-- /.modal -->
 
         <!-- Modal Hapus -->
-        <div class="modal fade" id="delete{{ $data->id }}">
+        <div class="modal fade" id="delete<?php echo e($data->id); ?>">
             <div class="modal-dialog modal-sm">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h6 class="modal-title">{{ $data->no_pgd }} Perihal {{ $data->uraian_pgd }} </h6>
+                        <h6 class="modal-title"><?php echo e($data->no_pgd); ?> Perihal <?php echo e($data->uraian_pgd); ?> </h6>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -386,7 +389,7 @@
                         <p>Apakah anda ingin menghapus perkara ini?&hellip;</p>
                     </div>
                     <div class="modal-footer justify-content-between">
-                        <a href="/pgd/delete/{{ $data->id }}" type="button" class="btn btn-sm btn-danger">Ya</a>
+                        <a href="/pgd/delete/<?php echo e($data->id); ?>" type="button" class="btn btn-sm btn-danger">Ya</a>
                         <button type="button" class="btn btn-sm btn-white" data-dismiss="modal">Tidak</button>
                     </div>
                 </div>
@@ -395,8 +398,8 @@
             <!-- /.modal-dialog -->
         </div>
         <!-- /.modal -->
-    @endforeach
-@endsection
+    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+<?php $__env->stopSection(); ?>
 
 <!-- Print -->
 
@@ -406,7 +409,7 @@
         var printWindow = window.open('', '_blank', 'width=1000,height=700');
 
         // Ambil data langsung dari PHP (semua data)
-        var allData = @json($pengaduan);
+        var allData = <?php echo json_encode($pengaduan, 15, 512) ?>;
 
         var tableContent = `
             <!DOCTYPE html>
@@ -422,7 +425,7 @@
                     th, td { border: 1px solid #000; padding: 6px; text-align: left; }
                     th { background-color: #f2f2f2; font-weight: bold; }
                     .text-center { text-align: center; }
-                    @media print { body { margin: 15px; } }
+                    @media  print { body { margin: 15px; } }
                 </style>
             </head>
             <body>
@@ -512,3 +515,5 @@
         }
     }
 </script>
+
+<?php echo $__env->make('layouts.v_template', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\Admin\Desktop\pm_hukum_app\resources\views//pengaduan/v_pengaduan.blade.php ENDPATH**/ ?>

@@ -1,7 +1,5 @@
-@extends('layouts.v_template')
-
-@section('content')
-    @include('layouts.v_deskripsi')
+<?php $__env->startSection('content'); ?>
+    <?php echo $__env->make('layouts.v_deskripsi', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -46,7 +44,7 @@
                         <input type="date" name="end_date" id="end_date" class="form-control" required>
                     </div>
                     <button type="submit" class="btn btn-sm btn-primary mr-2">Tampilkan</button>
-                    <a href="{{ route('arsip.filter', 'total') }}" class="btn btn-sm btn-danger">
+                    <a href="<?php echo e(route('arsip.filter', 'total')); ?>" class="btn btn-sm btn-danger">
                         <i class="fa fa-repeat"></i> Reset
                     </a>
                 </form>
@@ -54,20 +52,20 @@
 
             <!-- Action Buttons -->
             <div class="" style="font-size: 14px;">
-                @if (in_array(Auth::user()->level, [1, 2]))
-                    <a href="{{ route('arsip.create') }}" class="btn btn-sm btn-info mb-2">Tambah Data</a>
+                <?php if(in_array(Auth::user()->level, [1, 2])): ?>
+                    <a href="<?php echo e(route('arsip.create')); ?>" class="btn btn-sm btn-info mb-2">Tambah Data</a>
                     <a href="/arsip" class="btn btn-sm btn-danger mb-2">Kembali</a>
-                @endif
+                <?php endif; ?>
             </div>
 
             <!-- Success Message -->
-            @if (session('pesan'))
+            <?php if(session('pesan')): ?>
                 <script>
                     document.addEventListener('DOMContentLoaded', function() {
                         Swal.fire({
                             icon: 'success',
                             title: 'Sukses!',
-                            text: '{{ session('pesan') }}',
+                            text: '<?php echo e(session('pesan')); ?>',
                             timer: 3000,
                             showConfirmButton: true,
                             confirmButtonText: 'OK',
@@ -75,7 +73,7 @@
                         });
                     });
                 </script>
-            @endif
+            <?php endif; ?>
 
             <!-- Data Table -->
             <table class="table table-sm table-hover" id="example-3">
@@ -110,79 +108,79 @@
                 </tfoot>
 
                 <tbody>
-                    @foreach ($arsip_perkara as $data)
+                    <?php $__currentLoopData = $arsip_perkara; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $data): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <tr>
-                            <td class="text-start">{{ $loop->iteration }}</td>
-                            <td class="text-start">{{ date('d-m-Y', strtotime($data->tgl_masuk)) }}</td>
-                            <td>{{ $data->no_banding }}</td>
-                            <td>{{ $data->no_pa }}</td>
-                            <td>{{ $data->jenis_perkara }}</td>
-                            <td class="text-start">{{ date('d-m-Y', strtotime($data->tgl_put_banding)) }}</td>
+                            <td class="text-start"><?php echo e($loop->iteration); ?></td>
+                            <td class="text-start"><?php echo e(date('d-m-Y', strtotime($data->tgl_masuk))); ?></td>
+                            <td><?php echo e($data->no_banding); ?></td>
+                            <td><?php echo e($data->no_pa); ?></td>
+                            <td><?php echo e($data->jenis_perkara); ?></td>
+                            <td class="text-start"><?php echo e(date('d-m-Y', strtotime($data->tgl_put_banding))); ?></td>
                             <td class="text-start">
-                                @if (empty($data->putusan))
+                                <?php if(empty($data->putusan)): ?>
                                     <span class="badge badge-primary">belum upload</span>
-                                @else
-                                    <a href="{{ asset('public/arsip_perkara_putusan/' . $data->putusan) }}"
+                                <?php else: ?>
+                                    <a href="<?php echo e(asset('public/arsip_perkara_putusan/' . $data->putusan)); ?>"
                                         class="text-blue" target="_blank">
                                         <i class="fa fa-file-pdf-o"></i>
                                     </a>
-                                @endif
+                                <?php endif; ?>
                             </td>
                             <td class="text-start">
-                                @if (empty($data->bundel_b))
+                                <?php if(empty($data->bundel_b)): ?>
                                     <span class="badge badge-primary">belum upload</span>
-                                @else
-                                    <a href="{{ asset('public/bundel_b_arsip_perkara/' . $data->bundel_b) }}"
+                                <?php else: ?>
+                                    <a href="<?php echo e(asset('public/bundel_b_arsip_perkara/' . $data->bundel_b)); ?>"
                                         class="text-blue" target="_blank">
                                         <i class="fa fa-file-archive-o"></i>
                                     </a>
-                                @endif
+                                <?php endif; ?>
                             </td>
-                            <td class="text-start">{{ date('d-m-Y', strtotime($data->tgl_alih_media)) }}</td>
+                            <td class="text-start"><?php echo e(date('d-m-Y', strtotime($data->tgl_alih_media))); ?></td>
                             <td class="text-center" style="font-size: 14px;">
-                                @if (Auth::user()->level == 1)
+                                <?php if(Auth::user()->level == 1): ?>
                                     <button type="button" class="btn btn-purple btn-xs" data-toggle="modal"
-                                        data-target="#detail{{ $data->id }}">
+                                        data-target="#detail<?php echo e($data->id); ?>">
                                         <i class="fa fa-eye"></i>
                                     </button>
-                                    <a href="{{ route('arsip.edit', $data->id) }}" class="btn btn-warning btn-xs">
+                                    <a href="<?php echo e(route('arsip.edit', $data->id)); ?>" class="btn btn-warning btn-xs">
                                         <i class="fa fa-edit"></i>
                                     </a>
 
-                                    <form id="deleteForm" action="{{ route('arsip.destroy', $data->id) }}" method="POST"
+                                    <form id="deleteForm" action="<?php echo e(route('arsip.destroy', $data->id)); ?>" method="POST"
                                         style="display: inline;">
-                                        @csrf
-                                        @method('DELETE')
+                                        <?php echo csrf_field(); ?>
+                                        <?php echo method_field('DELETE'); ?>
                                         <button type="button" onclick="confirmDelete(this)" class="btn btn-danger btn-xs">
                                             <i class="fa fa-trash-o"></i>
                                         </button>
                                     </form>
-                                @elseif(Auth::user()->level == 2)
+                                <?php elseif(Auth::user()->level == 2): ?>
                                     <button type="button" class="btn btn-purple btn-xs" data-toggle="modal"
-                                        data-target="#detail{{ $data->id }}">
+                                        data-target="#detail<?php echo e($data->id); ?>">
                                         <i class="fa fa-eye"></i>
                                     </button>
-                                    <a href="{{ route('arsip.edit', $data->id) }}" class="btn btn-warning btn-xs">
+                                    <a href="<?php echo e(route('arsip.edit', $data->id)); ?>" class="btn btn-warning btn-xs">
                                         <i class="fa fa-edit"></i>
                                     </a>
-                                @elseif(Auth::user()->level == 3)
+                                <?php elseif(Auth::user()->level == 3): ?>
                                     <button type="button" class="btn btn-purple btn-xs" data-toggle="modal"
-                                        data-target="#detail{{ $data->id }}">
+                                        data-target="#detail<?php echo e($data->id); ?>">
                                         <i class="fa fa-eye"></i>
                                     </button>
-                                @endif
+                                <?php endif; ?>
                             </td>
                         </tr>
-                    @endforeach
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </tbody>
             </table>
         </div>
     </div>
 
     <!-- Modals -->
-    @foreach ($arsip_perkara as $data)
+    <?php $__currentLoopData = $arsip_perkara; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $data): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
         <!-- Modal Detail -->
-        <div class="modal fade" id="detail{{ $data->id }}" tabindex="-1">
+        <div class="modal fade" id="detail<?php echo e($data->id); ?>" tabindex="-1">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -195,47 +193,47 @@
                         <table class="table table-small-font table-bordered table-hover">
                             <tr class="text-start border">
                                 <td style="width: 200px;">Tanggal Masuk Arsip</td>
-                                <td>{{ date('d-m-Y', strtotime($data->tgl_masuk)) }}</td>
+                                <td><?php echo e(date('d-m-Y', strtotime($data->tgl_masuk))); ?></td>
                             </tr>
                             <tr class="text-start border">
                                 <td>Nomor Perkara Banding</td>
-                                <td>{{ $data->no_banding }}</td>
+                                <td><?php echo e($data->no_banding); ?></td>
                             </tr>
                             <tr class="text-start border">
                                 <td>Nomor Perkara TK.I</td>
-                                <td>{{ $data->no_pa }}</td>
+                                <td><?php echo e($data->no_pa); ?></td>
                             </tr>
                             <tr class="text-start border">
                                 <td>Jenis Perkara</td>
-                                <td>{{ $data->jenis_perkara }}</td>
+                                <td><?php echo e($data->jenis_perkara); ?></td>
                             </tr>
                             <tr class="text-start border">
                                 <td>Tanggal Putus Banding</td>
-                                <td>{{ date('d-m-Y', strtotime($data->tgl_put_banding)) }}</td>
+                                <td><?php echo e(date('d-m-Y', strtotime($data->tgl_put_banding))); ?></td>
                             </tr>
                             <tr class="text-start border">
                                 <td>Petugas yang Menyerahkan Berkas</td>
-                                <td>{{ $data->penyerah }}</td>
+                                <td><?php echo e($data->penyerah); ?></td>
                             </tr>
                             <tr class="text-start border">
                                 <td>Petugas yang Menerima Berkas</td>
-                                <td>{{ $data->penerima }}</td>
+                                <td><?php echo e($data->penerima); ?></td>
                             </tr>
                             <tr class="text-start border">
                                 <td>Nomor Lemari</td>
-                                <td>{{ $data->no_lemari }}</td>
+                                <td><?php echo e($data->no_lemari); ?></td>
                             </tr>
                             <tr class="text-start border">
                                 <td>Nomor Laci</td>
-                                <td>{{ $data->no_laci }}</td>
+                                <td><?php echo e($data->no_laci); ?></td>
                             </tr>
                             <tr class="text-start border">
                                 <td>Nomor Box</td>
-                                <td>{{ $data->no_box }}</td>
+                                <td><?php echo e($data->no_box); ?></td>
                             </tr>
                             <tr class="text-start border">
                                 <td>Tanggal Alih Media</td>
-                                <td>{{ date('d-m-Y', strtotime($data->tgl_alih_media)) }}</td>
+                                <td><?php echo e(date('d-m-Y', strtotime($data->tgl_alih_media))); ?></td>
                             </tr>
                         </table>
                     </div>
@@ -244,11 +242,11 @@
         </div>
 
         <!-- Modal Delete -->
-        <div class="modal fade" id="delete{{ $data->id }}">
+        <div class="modal fade" id="delete<?php echo e($data->id); ?>">
             <div class="modal-dialog modal-sm">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h6 class="modal-title">{{ $data->no_banding }}</h6>
+                        <h6 class="modal-title"><?php echo e($data->no_banding); ?></h6>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -257,11 +255,13 @@
                         <p>Apakah anda ingin menghapus perkara ini?&hellip;</p>
                     </div>
                     <div class="modal-footer justify-content-between">
-                        <a href="/arsip/delete/{{ $data->id }}" type="button" class="btn btn-xs btn-danger">Ya</a>
+                        <a href="/arsip/delete/<?php echo e($data->id); ?>" type="button" class="btn btn-xs btn-danger">Ya</a>
                         <button type="button" class="btn btn-xs btn-white" data-dismiss="modal">Tidak</button>
                     </div>
                 </div>
             </div>
         </div>
-    @endforeach
-@endsection
+    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.v_template', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\Admin\Desktop\pm_hukum_app\resources\views/arsip/index.blade.php ENDPATH**/ ?>

@@ -16,11 +16,9 @@
             <form action="/pgd/insert" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
-                    <!-- left column -->
-                    <div class="col">
-                        <!-- general form elements -->
+                    <!-- Kolom Kiri -->
+                    <div class="col-md-6">
                         <div class="card card-primary mt-3 ml-3 mb-3 mr-3">
-
                             <div class="form-group ml-3 mt-2 mb-2 mr-3">
                                 <label>Tanggal Terima</label>
                                 <input type="date" class="form-control @error('tgl_terima_pgd') is-invalid @enderror"
@@ -90,8 +88,7 @@
                             </div>
                             <div class="form-group ml-3 mt-2 mb-2 mr-3">
                                 <label>Uraian Pengaduan</label>
-                                <input type="text" class="form-control @error('uraian_pgd') is-invalid @enderror"
-                                    value="{{ old('uraian_pgd') }}" name="uraian_pgd">
+                                <textarea class="form-control @error('uraian_pgd') is-invalid @enderror" name="uraian_pgd" rows="4">{{ old('uraian_pgd') }}</textarea>
                                 <div id="validationServerUsernameFeedback" class="invalid-feedback text-danger">
                                     @error('uraian_pgd')
                                         {{ $message }}
@@ -143,6 +140,12 @@
                                     @enderror
                                 </div>
                             </div>
+                        </div>
+                    </div>
+
+                    <!-- Kolom Kanan -->
+                    <div class="col-md-6">
+                        <div class="card card-primary mt-3 ml-3 mb-3 mr-3">
                             <div class="form-group ml-3 mt-2 mb-2 mr-3">
                                 <label>Disposisi Hatiwasda</label>
                                 <input type="date" class="form-control @error('dis_hatiwasda') is-invalid @enderror"
@@ -241,11 +244,17 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <button class="btn btn-success">Simpan</button>
-                                <button type="reset" class="btn btn-danger">Reset</button>
-                                <a href="/kasasi" class="btn btn-sm btn-info mb-2"></i>Kembali</a>
-                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tombol Aksi -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group text-center">
+                            <button class="btn btn-success">Simpan</button>
+                            <button type="reset" class="btn btn-danger">Reset</button>
+                            <a href="/pgd_total" class="btn btn-sm btn-info mb-2">Kembali</a>
                         </div>
                     </div>
                 </div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\PengaduanModel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
+use Illuminate\Http\Request;
 
 class PengaduanController extends Controller
 {
@@ -28,12 +29,12 @@ class PengaduanController extends Controller
         $pengaduan_total = DB::table('tb_pengaduan')->count();
 
         $pengaduan_berjalan = DB::table('tb_pengaduan')
-                                ->whereYear('tgl_terima_pgd', $year)
-                                ->count();
+            ->whereYear('tgl_terima_pgd', $year)
+            ->count();
 
         $pengaduan_blm_selesai = DB::table('tb_pengaduan')
-                                ->whereNull('tgl_selesai_pgd')
-                                ->orderBy('tgl_terima_pgd', 'desc')->count();
+            ->whereNull('tgl_selesai_pgd')
+            ->orderBy('tgl_terima_pgd', 'desc')->count();
 
         return view('/pengaduan/v_dashboard_pengaduan', $data, compact(
             'pengaduan_total',
@@ -49,9 +50,8 @@ class PengaduanController extends Controller
             'title' => 'Pengaduan',
             'pengaduan' => $this->PengaduanModel->pgd_berjalan(),
         ];
-        
-        return view('/pengaduan/v_pengaduan', $data);
 
+        return view('/pengaduan/v_pengaduan', $data);
     }
 
     public function pgd_total()
@@ -165,7 +165,7 @@ class PengaduanController extends Controller
             $this->PengaduanModel->addData($data);
         }
 
-        return redirect()->route('pgd')->with('pesan', 'Data Berhasil Ditambahkan !!');
+        return redirect()->route('pgd_berjalan')->with('pesan', 'Data Berhasil Ditambahkan !!');
     }
 
     public function edit($id)
@@ -270,7 +270,7 @@ class PengaduanController extends Controller
             ];
             $this->PengaduanModel->editData($id, $data);
         }
-        return redirect()->route('pgd')->with('pesan', 'Data Berhasil Diupdate !!');
+        return redirect()->route('pgd_berjalan')->with('pesan', 'Data Berhasil Diupdate !!');
     }
 
     public function delete($id)
@@ -285,6 +285,34 @@ class PengaduanController extends Controller
         }
 
         $this->PengaduanModel->deleteData($id);
-        return redirect()->route('pgd')->with('pesan', 'Data Berhasil Dihapus !!');
+        return redirect()->route('pgd_berjalan')->with('pesan', 'Data Berhasil Dihapus !!');
+    }
+
+    public function searchByDateRangePengaduan(Request $request)
+    {
+        // Validasi input tanggal
+        $request->validate([
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+        ], [
+            'start_date.required' => 'Tanggal mulai wajib diisi',
+            'end_date.required' => 'Tanggal akhir wajib diisi',
+            'end_date.after_or_equal' => 'Tanggal akhir harus setelah atau sama dengan tanggal mulai',
+        ]);
+
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        $data = [
+            'title' => 'Pencarian Pengaduan - ' . $startDate . ' hingga ' . $endDate,
+            'pengaduan' => DB::table('tb_pengaduan')
+                ->whereBetween('tgl_terima_pgd', [$startDate, $endDate])
+                ->orderBy('tgl_terima_pgd', 'asc')
+                ->get(),
+            'start_date' => $startDate,
+            'end_date' => $endDate,
+        ];
+
+        return view('/pengaduan/v_pengaduan', $data);
     }
 }

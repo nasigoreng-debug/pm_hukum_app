@@ -11,7 +11,7 @@
         <div class="panel-body">
             <form action="<?php echo e(route('laporans.update', $laporans->id)); ?>" method="POST" enctype="multipart/form-data">
                 <?php echo csrf_field(); ?>
-                <?php echo method_field('PUT'); ?> 
+                <?php echo method_field('PUT'); ?>
                 <div class="row">
                     <div class="col">
                         <div class="card card-primary mt-3 ml-3 mb-3 mr-3">

@@ -7,7 +7,7 @@
 
         <div class="panel-heading">
             <div class="panel-title">
-                Ubah Data Pengaduan Pengaduan
+                Ubah Data Pengaduan
             </div>
         </div>
 
@@ -16,11 +16,9 @@
             <form action="/pgd/update/{{ $pengaduan->id }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
-                    <!-- left column -->
-                    <div class="col">
-                        <!-- general form elements -->
+                    <!-- Kolom Kiri -->
+                    <div class="col-md-6">
                         <div class="card card-primary mt-3 ml-3 mb-3 mr-3">
-
                             <div class="form-group ml-3 mt-2 mb-2 mr-3">
                                 <label>Tanggal Terima</label>
                                 <input type="date" class="form-control @error('tgl_terima_pgd') is-invalid @enderror"
@@ -54,7 +52,7 @@
                             <div class="form-group ml-3 mt-2 mb-2 mr-3">
                                 <label>Terlapor</label>
                                 <select name="terlapor" class="form-control @error('terlapor') is-invalid @enderror">
-                                    <option>{{ $pengaduan->terlapor }}</option>
+                                    <option value="{{ $pengaduan->terlapor }}" selected>{{ $pengaduan->terlapor }}</option>
                                     <option>Bandung</option>
                                     <option>Bekasi</option>
                                     <option>Bogor</option>
@@ -102,7 +100,8 @@
                                 <label>Ditangani Oleh</label>
                                 <select name="ditangani_oleh"
                                     class="form-control @error('ditangani_oleh') is-invalid @enderror">
-                                    <option>{{ $pengaduan->ditangani_oleh }}</option>
+                                    <option value="{{ $pengaduan->ditangani_oleh }}" selected>
+                                        {{ $pengaduan->ditangani_oleh }}</option>
                                     <option> Badan Pengawas MARI </option>
                                     <option> Pengadilan Tingkat Banding </option>
                                     <option> Pengadilan Tingkat Pertama </option>
@@ -133,6 +132,12 @@
                                     @enderror
                                 </div>
                             </div>
+                        </div>
+                    </div>
+
+                    <!-- Kolom Kanan -->
+                    <div class="col-md-6">
+                        <div class="card card-primary mt-3 ml-3 mb-3 mr-3">
                             <div class="form-group ml-3 mt-2 mb-2 mr-3">
                                 <label>Disposisi Wakil</label>
                                 <input type="date" class="form-control @error('dis_wkpta') is-invalid @enderror"
@@ -167,7 +172,8 @@
                                 <label>Status Pengaduan</label>
                                 <select name="status_pgd" class="form-control @error('status_pgd') is-invalid @enderror"
                                     autofocus>
-                                    <option>{{ $pengaduan->status_pgd }}</option>
+                                    <option value="{{ $pengaduan->status_pgd }}" selected>{{ $pengaduan->status_pgd }}
+                                    </option>
                                     <option> Disposisi </option>
                                     <option> Klarifikasi </option>
                                     <option> Telaah Berkas </option>
@@ -186,7 +192,8 @@
                                 <label>Status Berkas</label>
                                 <select name="status_berkas"
                                     class="form-control @error('status_berkas') is-invalid @enderror" autofocus>
-                                    <option>{{ $pengaduan->status_berkas }}</option>
+                                    <option value="{{ $pengaduan->status_berkas }}" selected>
+                                        {{ $pengaduan->status_berkas }}</option>
                                     <option> Ketua </option>
                                     <option> Wakil Ketua </option>
                                     <option> Hakim Tinggi Pengawas </option>
@@ -221,48 +228,45 @@
                                     @enderror
                                 </div>
                             </div>
+
+                            <!-- File Upload Section -->
                             <div class="form-group ml-3 mt-2 mb-2 mr-3">
-                                <div class="form-group ml-3 mt-2 mb-2 mr-3">
-                                    <label>Surat Pengaduan</label>
-                                    <div>{{ $pengaduan->surat_pgd }}</div>
-                                </div>
-                                <div class="">
-                                    <div class="form-group ml-3 mt-2 mb-2 mr-3">
-                                        <label>Ganti surat_pgd</label>
-                                        <input type="file"
-                                            class="form-control form-control-sm @error('surat_pgd') is-invalid @enderror"
-                                            value="{{ $pengaduan->surat_pgd }}" name="surat_pgd">
-                                        <div id="validationServerUsernameFeedback" class="invalid-feedback">
-                                            @error('surat_pgd')
-                                                {{ $message }}
-                                            @enderror
-                                        </div>
-                                    </div>
+                                <label>Surat Pengaduan Saat Ini</label>
+                                <div class="form-control-plaintext">{{ $pengaduan->surat_pgd }}</div>
+                                <label class="mt-2">Ganti Surat Pengaduan</label>
+                                <input type="file"
+                                    class="form-control form-control-sm @error('surat_pgd') is-invalid @enderror"
+                                    name="surat_pgd">
+                                <div id="validationServerUsernameFeedback" class="invalid-feedback text-danger">
+                                    @error('surat_pgd')
+                                        {{ $message }}
+                                    @enderror
                                 </div>
                             </div>
+
                             <div class="form-group ml-3 mt-2 mb-2 mr-3">
-                                <div class="form-group ml-3 mt-2 mb-2 mr-3">
-                                    <label>Lampiran</label>
-                                    <div>{{ $pengaduan->lampiran }}</div>
-                                </div>
-                                <div class="">
-                                    <div class="form-group ml-3 mt-2 mb-2 mr-3">
-                                        <label>Ganti Lampiran</label>
-                                        <input type="file"
-                                            class="form-control form-control-sm @error('lampiran') is-invalid @enderror"
-                                            value="{{ $pengaduan->lampiran }}" name="lampiran">
-                                        <div id="validationServerUsernameFeedback" class="invalid-feedback">
-                                            @error('lampiran')
-                                                {{ $message }}
-                                            @enderror
-                                        </div>
-                                    </div>
+                                <label>Lampiran Saat Ini</label>
+                                <div class="form-control-plaintext">{{ $pengaduan->lampiran }}</div>
+                                <label class="mt-2">Ganti Lampiran</label>
+                                <input type="file"
+                                    class="form-control form-control-sm @error('lampiran') is-invalid @enderror"
+                                    name="lampiran">
+                                <div id="validationServerUsernameFeedback" class="invalid-feedback text-danger">
+                                    @error('lampiran')
+                                        {{ $message }}
+                                    @enderror
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <button class="btn btn-success">Simpan</button>
-                                <a href="/pgd" class="btn btn-sm btn-info mb-2"></i>Kembali</a>
-                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tombol Aksi -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group text-center">
+                            <button class="btn btn-success">Simpan Perubahan</button>
+                            <a href="/pgd_total" class="btn btn-info">Kembali</a>
                         </div>
                     </div>
                 </div>
