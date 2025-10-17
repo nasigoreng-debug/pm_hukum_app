@@ -13,15 +13,66 @@ class BankputController extends Controller
         $this->middleware('auth');
     }
 
+    // public function index()
+    // {
+    //     $bankputs = Bankput::latest()->get();
+    //     $title = 'Bank Putusan';
+
+    //     return view('bank_putusan.index', compact(
+    //         'bankputs',
+    //         'title'
+    //     ));
+    // }
+
     public function index()
     {
-        $bankputs = Bankput::latest()->get();
+        // Gunakan aggregate query untuk performa lebih baik
+        $stats = Bankput::selectRaw('
+            COUNT(*) as total,
+            COUNT(keterangan) as uploaded,
+            COUNT(*) - COUNT(keterangan) as not_uploaded
+        ')->first();
+
+        $data = [
+            'title' => 'Bank Putusan',
+            'bankputs' => Bankput::orderBy('tgl_put_banding', 'desc')->get(),
+            'bankputs_total' => $stats->total,
+            'bankputs_e_court' => $stats->not_uploaded,
+            'bankputs_non_e_court' => $stats->uploaded,
+        ];
+
+        return view('bank_putusan.dashboard', $data);
+    }
+
+    public function filter($filter)
+    {
+        $query = Bankput::query();
         $title = 'Bank Putusan';
 
-        return view('bank_putusan.index', compact(
-            'bankputs',
-            'title'
-        ));
+        switch ($filter) {
+            case 'e-Court':
+                $query->where('keterangan, e-Court');
+                $title .= ' - e-Court';
+                break;
+            case 'sudah-upload':
+                $query->where('keterangan, Non e-Court');
+                $title .= ' - Non e-Court';
+                break;
+            case 'tahun-ini':
+                $query->whereYear('tgl_masuk', now()->year);
+                $title .= ' - Tahun Ini';
+                break;
+            case 'total':
+            default:
+                $title .= ' - Total';
+                break;
+        }
+
+        $bankputs = $filter === 'tahun-ini'
+            ? $query->orderBy('tgl_put_banding', 'desc')->get()
+            : $query->orderBy('tgl_put_banding', 'desc')->get();
+
+        return view('bank_putusan.index', compact('bankputs', 'title'));
     }
 
     public function create()
@@ -89,24 +140,24 @@ class BankputController extends Controller
 
     public function show($id)
     {
-        $bankput = Bankput::findOrFail($id);
-        return view('bank_putusan.show', compact('bankput'));
+        $bankputs = Bankput::findOrFail($id);
+        return view('bank_putusan.show', compact('bankputs'));
     }
 
     public function edit($id)
     {
-        $bankput = Bankput::findOrFail($id);
+        $bankputs = Bankput::findOrFail($id);
         $title = 'Edit Data';
 
         return view('bank_putusan.edit', compact(
-            'bankput',
+            'bankputs',
             'title'
         ));
     }
 
     public function update(Request $request, $id)
     {
-        $bankput = Bankput::findOrFail($id);
+        $bankputs = Bankput::findOrFail($id);
 
         $request->validate([
             'no_banding' => 'required|max:255|unique:bankputs,no_banding,' . $id,
@@ -142,8 +193,8 @@ class BankputController extends Controller
         // Update file put_rtf jika ada
         if ($request->hasFile('put_rtf')) {
             // Hapus file lama jika ada
-            if ($bankput->put_rtf) {
-                Storage::disk('public')->delete('bank_putusan/rtf/' . $bankput->put_rtf);
+            if ($bankputs->put_rtf) {
+                Storage::disk('public')->delete('bank_putusan/rtf/' . $bankputs->put_rtf);
             }
 
             $file = $request->file('put_rtf');
@@ -155,8 +206,8 @@ class BankputController extends Controller
         // Update file put_anonim jika ada
         if ($request->hasFile('put_anonim')) {
             // Hapus file lama jika ada
-            if ($bankput->put_anonim) {
-                Storage::disk('public')->delete('bank_putusan/anonim/' . $bankput->put_anonim);
+            if ($bankputs->put_anonim) {
+                Storage::disk('public')->delete('bank_putusan/anonim/' . $bankputs->put_anonim);
             }
 
             $file = $request->file('put_anonim');
@@ -165,7 +216,7 @@ class BankputController extends Controller
             $data['put_anonim'] = $fileNameAnonim;
         }
 
-        $bankput->update($data);
+        $bankputs->update($data);
 
         return redirect()->route('bankput.index')
             ->with('pesan', 'Data Berhasil Diupdate !!');
@@ -174,32 +225,32 @@ class BankputController extends Controller
     public function destroy($id)
     {
         try {
-            $bankput = Bankput::findOrFail($id);
+            $bankputs = Bankput::findOrFail($id);
 
             \Log::info('Deleting bank putusan', [
-                'id' => $bankput->id,
-                'no_banding' => $bankput->no_banding,
-                'put_rtf' => $bankput->put_rtf,
-                'put_anonim' => $bankput->put_anonim
+                'id' => $bankputs->id,
+                'no_banding' => $bankputs->no_banding,
+                'put_rtf' => $bankputs->put_rtf,
+                'put_anonim' => $bankputs->put_anonim
             ]);
 
             // Hapus file put_rtf jika ada
-            if ($bankput->put_rtf) {
-                $filePath = 'bank_putusan/rtf/' . $bankput->put_rtf;
+            if ($bankputs->put_rtf) {
+                $filePath = 'bank_putusan/rtf/' . $bankputs->put_rtf;
                 if (Storage::disk('public')->exists($filePath)) {
                     Storage::disk('public')->delete($filePath);
                 }
             }
 
             // Hapus file put_anonim jika ada
-            if ($bankput->put_anonim) {
-                $filePath = 'bank_putusan/anonim/' . $bankput->put_anonim;
+            if ($bankputs->put_anonim) {
+                $filePath = 'bank_putusan/anonim/' . $bankputs->put_anonim;
                 if (Storage::disk('public')->exists($filePath)) {
                     Storage::disk('public')->delete($filePath);
                 }
             }
 
-            $bankput->delete();
+            $bankputs->delete();
 
             return redirect()->route('bankput.index')
                 ->with('pesan', 'Data Berhasil Dihapus !!');
@@ -212,13 +263,13 @@ class BankputController extends Controller
 
     public function downloadRtf($id)
     {
-        $bankput = Bankput::findOrFail($id);
+        $bankputs = Bankput::findOrFail($id);
 
-        if (!$bankput->put_rtf) {
+        if (!$bankputs->put_rtf) {
             return redirect()->back()->with('error', 'File putusan tidak ditemukan.');
         }
 
-        $filePath = storage_path('app/public/bank_putusan/rtf/' . $bankput->put_rtf);
+        $filePath = storage_path('app/public/bank_putusan/rtf/' . $bankputs->put_rtf);
 
         if (!file_exists($filePath)) {
             return redirect()->back()->with('error', 'File tidak ditemukan.');
@@ -229,13 +280,13 @@ class BankputController extends Controller
 
     public function downloadAnonim($id)
     {
-        $bankput = Bankput::findOrFail($id);
+        $bankputs = Bankput::findOrFail($id);
 
-        if (!$bankput->put_anonim) {
+        if (!$bankputs->put_anonim) {
             return redirect()->back()->with('error', 'File anonimasi tidak ditemukan.');
         }
 
-        $filePath = storage_path('app/public/bank_putusan/anonim/' . $bankput->put_anonim);
+        $filePath = storage_path('app/public/bank_putusan/anonim/' . $bankputs->put_anonim);
 
         if (!file_exists($filePath)) {
             return redirect()->back()->with('error', 'File tidak ditemukan.');

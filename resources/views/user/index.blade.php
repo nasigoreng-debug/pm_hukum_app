@@ -37,22 +37,6 @@
                         </script>
                     @endif
 
-                    @if (session('error'))
-                        <script>
-                            document.addEventListener('DOMContentLoaded', function() {
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'Gagal!',
-                                    text: '{{ session('error') }}',
-                                    timer: 3000,
-                                    showConfirmButton: true,
-                                    confirmButtonText: 'OK',
-                                    timerProgressBar: true
-                                });
-                            });
-                        </script>
-                    @endif
-
                     <div class="table-responsive">
                         <table class="table table-sm table-hover userss-table">
                             <thead class="thead-light">

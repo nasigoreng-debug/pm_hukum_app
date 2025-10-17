@@ -89,6 +89,7 @@
                                         </div>
                                     @enderror
                                 </div>
+                                <small>file pdf, max 5MB</small>
                             </div>
 
                             <!-- Konsep -->
@@ -107,6 +108,7 @@
                                         </div>
                                     @enderror
                                 </div>
+                                <small>file doc,docx,rtf, max 5MB</small>
                             </div>
 
                             <!-- Tombol -->

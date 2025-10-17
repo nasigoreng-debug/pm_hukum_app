@@ -151,6 +151,7 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                                 </div>
+                                <small>file pdf, max 5MB</small>
                             </div>
                             <div class="form-group ml-3 mt-2 mb-2 mr-3">
                                 <label for="konsep">Konsep</label>
@@ -177,6 +178,7 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                                 </div>
+                                <small>file doc,docx,rtf, max 5MB</small>
                             </div>
                             <div class="form-group">
                                 <button class="btn btn-success">Simpan</button>

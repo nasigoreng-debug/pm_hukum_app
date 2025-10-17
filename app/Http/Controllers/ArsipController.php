@@ -304,11 +304,11 @@ class ArsipController extends Controller
 
             $arsip_perkara->delete();
 
-            return redirect()->route('arsip.total')
+            return redirect()->route('arsip.filter', 'total')
                 ->with('pesan', 'Data arsip perkara berhasil dihapus.');
         } catch (\Exception $e) {
             \Log::error('Delete error: ' . $e->getMessage());
-            return redirect()->route('arsip.total')
+            return redirect()->route('arsip.filter', 'total')
                 ->with('pesan', 'Gagal menghapus data arsip perkara: ' . $e->getMessage());
         }
     }

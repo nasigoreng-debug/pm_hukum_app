@@ -84,7 +84,8 @@
                         pageLength: 25,
                         scrollX: true,
                         autoWidth: false,
-                        columnDefs: [{
+                        columnDefs: [
+                            {
                                 width: "40px",
                                 targets: 0
                             },
@@ -93,12 +94,12 @@
                                 targets: 1
                             },
                             {
-                                width: "80px",
+                                width: "60px",
                                 targets: 2
                             },
                             {
                                 width: "70px",
-                                targets: [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+                                targets: [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
                             }
                         ],
                         language: {
@@ -146,12 +147,13 @@
 
             <!-- TABEL DATA -->
             <div class="table-responsive">
-                <table class="table table-bordered table-striped table-hover table-sm" id=""
+                <table class="table table-bordered table-striped table-hover table-sm" id="example-4"
                     style="font-size: 12px;">
                     <thead class="thead-dark">
                         <tr>
                             <th rowspan="2" class="align-middle text-center">No</th>
                             <th rowspan="2" class="align-middle text-center">Pengadilan Agama</th>
+                            <th rowspan="2" class="align-middle text-center">Kelas</th>
                             <th rowspan="2" class="align-middle text-center">Permohonan<br>Eksekusi</th>
                             <th colspan="2" class="text-center bg-info">Jenis Eksekusi</th>
                             <th colspan="5" class="text-center bg-success">Jenis Penyelesaian</th>
@@ -174,6 +176,7 @@
                         <tr>
                             <th rowspan="2" class="align-middle text-center">No</th>
                             <th rowspan="2" class="align-middle text-center">Pengadilan Agama</th>
+                            <th rowspan="2" class="align-middle text-center">Kelas</th>
                             <th rowspan="2" class="align-middle text-center">Permohonan<br>Eksekusi</th>
                             <th colspan="2" class="text-center bg-info">Jenis Eksekusi</th>
                             <th colspan="5" class="text-center bg-success">Jenis Penyelesaian</th>
@@ -197,10 +200,18 @@
                             @php $no = 1 @endphp
                             @foreach ($results as $satker => $data)
                                 @if ($data['total'] > 0)
-                                    {{-- Hanya tampilkan yang ada datanya --}}
                                     <tr>
                                         <td class="text-center">{{ $no++ }}</td>
                                         <td><strong>{{ ucfirst($satker) }}</strong></td>
+                                        <td class="text-center">
+                                            <span class="badge
+                                                @if($data['kelas'] == 'IA') badge-primary
+                                                @elseif($data['kelas'] == 'IB') badge-success
+                                                @else badge-secondary
+                                                @endif">
+                                                {{ $data['kelas'] ?? '-' }}
+                                            </span>
+                                        </td>
                                         <td class="text-center">{{ number_format($data['total'], 0, ',', '.') }}</td>
                                         <td class="text-center">{{ number_format($data['putusan'], 0, ',', '.') }}</td>
                                         <td class="text-center">{{ number_format($data['ht'], 0, ',', '.') }}</td>
@@ -224,7 +235,7 @@
                             {{-- Tampilkan pesan jika tidak ada data --}}
                             @if ($no == 1)
                                 <tr>
-                                    <td colspan="14" class="text-center text-muted py-4">
+                                    <td colspan="15" class="text-center text-muted py-4">
                                         <i class="fa fa-database fa-2x mb-3"></i><br>
                                         Tidak ada data untuk periode yang dipilih.
                                     </td>
@@ -232,7 +243,7 @@
                             @endif
                         @else
                             <tr>
-                                <td colspan="14" class="text-center text-muted py-4">
+                                <td colspan="15" class="text-center text-muted py-4">
                                     <i class="fa fa-database fa-2x mb-3"></i><br>
                                     Belum ada data yang tersimpan.
                                 </td>
@@ -240,6 +251,75 @@
                         @endif
                     </tbody>
                 </table>
+            </div>
+
+            <!-- INFO TOTAL PER KELAS -->
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header bg-info text-white">
+                            <h6 class="card-title mb-0" style="font-size: 12px;">
+                                <i class="fa fa-bar-chart"></i> Ringkasan Berdasarkan Kelas
+                            </h6>
+                        </div>
+                        <div class="card-body p-2">
+                            <table class="table table-sm table-bordered mb-0" style="font-size: 11px;">
+                                <thead>
+                                    <tr class="bg-light">
+                                        <th class="text-center">Kelas</th>
+                                        <th class="text-center">Total Permohonan</th>
+                                        <th class="text-center">Eksekusi Riil</th>
+                                        <th class="text-center">Eksekusi Lelang</th>
+                                        <th class="text-center">Total Selesai</th>
+                                        <th class="text-center">Bobot Nilai</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @php
+                                        $grandTotal = 0;
+                                        $grandRiil = 0;
+                                        $grandLelang = 0;
+                                        $grandSelesai = 0;
+                                        $grandBobot = 0;
+                                    @endphp
+                                    @foreach($totalPerKelas as $kelas => $data)
+                                    <tr>
+                                        <td class="text-center">
+                                            <span class="badge
+                                                @if($kelas == 'IA') badge-primary
+                                                @elseif($kelas == 'IB') badge-success
+                                                @else badge-secondary
+                                                @endif">
+                                                {{ $kelas }}
+                                            </span>
+                                        </td>
+                                        <td class="text-center">{{ number_format($data['total'], 0, ',', '.') }}</td>
+                                        <td class="text-center">{{ number_format($data['riil'], 0, ',', '.') }}</td>
+                                        <td class="text-center">{{ number_format($data['lelang'], 0, ',', '.') }}</td>
+                                        <td class="text-center">{{ number_format($data['selesai'], 0, ',', '.') }}</td>
+                                        <td class="text-center">{{ number_format($data['bobot_nilai'], 0, ',', '.') }}</td>
+                                    </tr>
+                                    @php
+                                        $grandTotal += $data['total'];
+                                        $grandRiil += $data['riil'];
+                                        $grandLelang += $data['lelang'];
+                                        $grandSelesai += $data['selesai'];
+                                        $grandBobot += $data['bobot_nilai'];
+                                    @endphp
+                                    @endforeach
+                                    <tr class="bg-primary">
+                                        <td class="text-center"><strong>GRAND TOTAL</strong></td>
+                                        <td class="text-center"><strong>{{ number_format($grandTotal, 0, ',', '.') }}</strong></td>
+                                        <td class="text-center"><strong>{{ number_format($grandRiil, 0, ',', '.') }}</strong></td>
+                                        <td class="text-center"><strong>{{ number_format($grandLelang, 0, ',', '.') }}</strong></td>
+                                        <td class="text-center"><strong>{{ number_format($grandSelesai, 0, ',', '.') }}</strong></td>
+                                        <td class="text-center"><strong>{{ number_format($grandBobot, 0, ',', '.') }}</strong></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -276,6 +356,35 @@
 
         .bg-warning {
             background-color: #fff3cd !important;
+        }
+
+        /* Style untuk badge kelas */
+        .badge {
+            font-size: 10px;
+            padding: 4px 8px;
+            font-weight: bold;
+            border-radius: 4px;
+        }
+
+        .badge-primary {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .badge-success {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .badge-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        /* Style untuk tabel ringkasan */
+        .table-sm th,
+        .table-sm td {
+            padding: 4px 3px;
         }
     </style>
 @endsection

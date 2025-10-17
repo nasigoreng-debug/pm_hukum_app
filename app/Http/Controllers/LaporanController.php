@@ -20,7 +20,7 @@ class LaporanController extends Controller
      */
     public function index()
     {
-        
+
         $laporans = Laporan::latest()->get();
         $title = 'Laporan';
         return view('laporans.index', compact(
@@ -55,8 +55,8 @@ class LaporanController extends Controller
             'tahun' => 'required|integer|min:2000|max:' . (date('Y') + 1),
             'tgl_laporan' => 'required|date',
             'judul' => 'required|string|max:255',
-            'dokumen' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx|max:2048',
-            'konsep' => 'nullable|file|mimes:doc,docx,rtf|max:2048'
+            'dokumen' => 'nullable|file|mimes:pdf|max:5048',
+            'konsep' => 'nullable|file|mimes:doc,docx,rtf|max:5048'
         ]);
 
         $data = $request->all();
@@ -108,7 +108,7 @@ class LaporanController extends Controller
     {
         $laporans = Laporan::findOrFail($id);
         $title = 'Edit Laporan';
-        
+
         return view('laporans.edit', compact(
             'laporans',
             'title'
@@ -125,14 +125,14 @@ class LaporanController extends Controller
     public function update(Request $request, $id)
     {
         $laporan = Laporan::findOrFail($id);
-        
+
         $request->validate([
             'jenis_laporan' => 'required|string|max:255',
             'tahun' => 'required|integer|min:2000|max:' . (date('Y') + 1),
             'tgl_laporan' => 'required|date',
             'judul' => 'required|string|max:255',
-            'dokumen' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx|max:2048',
-            'konsep' => 'nullable|file|mimes:doc,docx,rtf|max:2048'
+            'dokumen' => 'nullable|file|mimes:pdf|max:5048',
+            'konsep' => 'nullable|file|mimes:doc,docx,rtf|max:5048'
         ]);
 
         $data = $request->all();
@@ -179,7 +179,7 @@ class LaporanController extends Controller
     {
         try {
             $laporan = Laporan::findOrFail($id);
-            
+
             \Log::info('Deleting laporan', [
                 'id' => $laporan->id,
                 'dokumen' => $laporan->dokumen,
@@ -193,7 +193,7 @@ class LaporanController extends Controller
                     Storage::disk('public')->delete($filePath);
                 }
             }
-            
+
             // Hapus file konsep jika ada
             if ($laporan->konsep) {
                 $filePath = 'laporans/konsep/' . $laporan->konsep;

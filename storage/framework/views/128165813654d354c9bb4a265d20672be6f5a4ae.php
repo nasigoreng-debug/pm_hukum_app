@@ -1,0 +1,392 @@
+<?php $__env->startSection('content'); ?>
+    <?php echo $__env->make('layouts.v_deskripsi', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+
+    <div class="panel panel-default">
+        <div class="panel-heading text-center">
+            <h4 class="panel-title"><strong>Progres Penyelesaian Perkara Eksekusi Pengadilan Agama Di Wilayah Pengadilan
+                    Tinggi Agama Bandung</strong></h4>
+
+            <div class="panel-options">
+                <a href="#" data-toggle="panel">
+                    <span class="collapse-icon">&ndash;</span>
+                    <span class="expand-icon">+</span>
+                </a>
+                <a href="#" data-toggle="remove">
+                    &times;
+                </a>
+            </div>
+        </div>
+        <div class="panel-body">
+
+            <!-- FORM FILTER TANGGAL -->
+            <div class="row mb-4">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header bg-light">
+                            <h5 class="card-title mb-0" style="font-size: 14px;">
+                                <i class="fa fa-filter"></i> Filter Berdasarkan Tanggal Permohonan
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <form action="<?php echo e(route('progres_eks')); ?>" method="GET" class="form-inline">
+                                <div class="form-group mr-3 mb-2">
+                                    <label for="start_date" class="mr-2"><strong>Dari Tanggal:</strong></label>
+                                    <input type="date" class="form-control form-control-sm" id="start_date"
+                                        name="start_date" value="<?php echo e($startDate); ?>" required>
+                                </div>
+                                <div class="form-group mr-3 mb-2">
+                                    <label for="end_date" class="mr-2"><strong>Sampai Tanggal:</strong></label>
+                                    <input type="date" class="form-control form-control-sm" id="end_date"
+                                        name="end_date" value="<?php echo e($endDate); ?>" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-sm mr-2 mb-2">
+                                    <i class="fa fa-search"></i> Tampilkan Data
+                                </button>
+                                <a href="<?php echo e(route('progres_eks')); ?>" class="btn btn-warning btn-sm mr-2 mb-2">
+                                    <i class="fa fa-refresh"></i> Reset Filter
+                                </a>
+
+                                <?php if(in_array(Auth::user()->level, [1, 2])): ?>
+                                    <a href="/eks" class="btn btn-danger btn-sm mb-2">
+                                        <i class="fa fa-arrow-left"></i> Kembali
+                                    </a>
+                                <?php endif; ?>
+                            </form>
+
+                            <?php if(request()->has('start_date')): ?>
+                                <div class="mt-2">
+                                    <small class="text-info">
+                                        <i class="fa fa-info-circle"></i>
+                                        Menampilkan data permohonan eksekusi dari
+                                        <strong><?php echo e(\Carbon\Carbon::parse($startDate)->format('d/m/Y')); ?></strong>
+                                        sampai <strong><?php echo e(\Carbon\Carbon::parse($endDate)->format('d/m/Y')); ?></strong>
+                                        | Total Data: <strong><?php echo e($eksekusi_total); ?></strong>
+                                    </small>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script type="text/javascript">
+                jQuery(document).ready(function($) {
+                    // Inisialisasi DataTable
+                    $("#example-4").dataTable({
+                        dom: "<'row'<'col-sm-5'l><'col-sm-7'Tf>r>" +
+                            "t" +
+                            "<'row'<'col-xs-6'i><'col-xs-6'p>>",
+                        tableTools: {
+                            sSwfPath: "<?php echo e(asset('public/template')); ?>/assets/js/datatables/tabletools/copy_csv_xls_pdf.swf"
+                        },
+                        pageLength: 25,
+                        scrollX: true,
+                        autoWidth: false,
+                        columnDefs: [
+                            {
+                                width: "40px",
+                                targets: 0
+                            },
+                            {
+                                width: "150px",
+                                targets: 1
+                            },
+                            {
+                                width: "60px",
+                                targets: 2
+                            },
+                            {
+                                width: "70px",
+                                targets: [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+                            }
+                        ],
+                        language: {
+                            search: "Cari:",
+                            lengthMenu: "Tampilkan _MENU_ data per halaman",
+                            info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                            infoEmpty: "Menampilkan 0 sampai 0 dari 0 data",
+                            infoFiltered: "(disaring dari _MAX_ total data)",
+                            paginate: {
+                                first: "Pertama",
+                                last: "Terakhir",
+                                next: "Berikutnya",
+                                previous: "Sebelumnya"
+                            }
+                        }
+                    });
+
+                    // Validasi tanggal
+                    $('#start_date').change(function() {
+                        var startDate = $(this).val();
+                        $('#end_date').attr('min', startDate);
+
+                        // Jika end_date < start_date, reset end_date
+                        if ($('#end_date').val() < startDate) {
+                            $('#end_date').val(startDate);
+                        }
+                    });
+
+                    $('#end_date').change(function() {
+                        var endDate = $(this).val();
+                        $('#start_date').attr('max', endDate);
+                    });
+
+                    // Set min/max awal
+                    var today = new Date().toISOString().split('T')[0];
+                    $('#start_date').attr('max', today);
+                    $('#end_date').attr('max', today);
+
+                    // Set min untuk end_date berdasarkan start_date awal
+                    <?php if(request()->has('start_date')): ?>
+                        $('#end_date').attr('min', '<?php echo e($startDate); ?>');
+                    <?php endif; ?>
+                });
+            </script>
+
+            <!-- TABEL DATA -->
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped table-hover table-sm" id="example-4"
+                    style="font-size: 12px;">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th rowspan="2" class="align-middle text-center">No</th>
+                            <th rowspan="2" class="align-middle text-center">Pengadilan Agama</th>
+                            <th rowspan="2" class="align-middle text-center">Kelas</th>
+                            <th rowspan="2" class="align-middle text-center">Permohonan<br>Eksekusi</th>
+                            <th colspan="2" class="text-center bg-info">Jenis Eksekusi</th>
+                            <th colspan="5" class="text-center bg-success">Jenis Penyelesaian</th>
+                            <th rowspan="2" class="align-middle text-center bg-warning">Total<br>Selesai</th>
+                            <th rowspan="2" class="align-middle text-center bg-warning">Sisa</th>
+                            <th rowspan="2" class="align-middle text-center bg-warning">Presentase</th>
+                            <th rowspan="2" class="align-middle text-center bg-warning">Bobot<br>Nilai</th>
+                        </tr>
+                        <tr>
+                            <th class="text-center bg-info">Eksekusi<br>Putusan</th>
+                            <th class="text-center bg-info">Eksekusi<br>Hak Tanggungan</th>
+                            <th class="text-center bg-success">Eksekusi<br>Riil</th>
+                            <th class="text-center bg-success">Eksekusi<br>Lelang</th>
+                            <th class="text-center bg-success">Eksekusi<br>Dicabut</th>
+                            <th class="text-center bg-success">Eksekusi<br>Dicoret</th>
+                            <th class="text-center bg-success">Eksekusi<br>NE</th>
+                        </tr>
+                    </thead>
+                    <tfoot class="thead-dark">
+                        <tr>
+                            <th rowspan="2" class="align-middle text-center">No</th>
+                            <th rowspan="2" class="align-middle text-center">Pengadilan Agama</th>
+                            <th rowspan="2" class="align-middle text-center">Kelas</th>
+                            <th rowspan="2" class="align-middle text-center">Permohonan<br>Eksekusi</th>
+                            <th colspan="2" class="text-center bg-info">Jenis Eksekusi</th>
+                            <th colspan="5" class="text-center bg-success">Jenis Penyelesaian</th>
+                            <th rowspan="2" class="align-middle text-center bg-warning">Total<br>Selesai</th>
+                            <th rowspan="2" class="align-middle text-center bg-warning">Sisa</th>
+                            <th rowspan="2" class="align-middle text-center bg-warning">Presentase</th>
+                            <th rowspan="2" class="align-middle text-center bg-warning">Bobot<br>Nilai</th>
+                        </tr>
+                        <tr>
+                            <th class="text-center bg-info">Eksekusi<br>Putusan</th>
+                            <th class="text-center bg-info">Eksekusi<br>Hak Tanggungan</th>
+                            <th class="text-center bg-success">Eksekusi<br>Riil</th>
+                            <th class="text-center bg-success">Eksekusi<br>Lelang</th>
+                            <th class="text-center bg-success">Eksekusi<br>Dicabut</th>
+                            <th class="text-center bg-success">Eksekusi<br>Dicoret</th>
+                            <th class="text-center bg-success">Eksekusi<br>NE</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        <?php if(count($results) > 0): ?>
+                            <?php $no = 1 ?>
+                            <?php $__currentLoopData = $results; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $satker => $data): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php if($data['total'] > 0): ?>
+                                    <tr>
+                                        <td class="text-center"><?php echo e($no++); ?></td>
+                                        <td><strong><?php echo e(ucfirst($satker)); ?></strong></td>
+                                        <td class="text-center">
+                                            <span class="badge
+                                                <?php if($data['kelas'] == 'IA'): ?> badge-primary
+                                                <?php elseif($data['kelas'] == 'IB'): ?> badge-success
+                                                <?php else: ?> badge-secondary
+                                                <?php endif; ?>">
+                                                <?php echo e($data['kelas'] ?? '-'); ?>
+
+                                            </span>
+                                        </td>
+                                        <td class="text-center"><?php echo e(number_format($data['total'], 0, ',', '.')); ?></td>
+                                        <td class="text-center"><?php echo e(number_format($data['putusan'], 0, ',', '.')); ?></td>
+                                        <td class="text-center"><?php echo e(number_format($data['ht'], 0, ',', '.')); ?></td>
+                                        <td class="text-center"><?php echo e(number_format($data['riil'], 0, ',', '.')); ?></td>
+                                        <td class="text-center"><?php echo e(number_format($data['lelang'], 0, ',', '.')); ?></td>
+                                        <td class="text-center"><?php echo e(number_format($data['dicabut'], 0, ',', '.')); ?></td>
+                                        <td class="text-center"><?php echo e(number_format($data['dicoret'], 0, ',', '.')); ?></td>
+                                        <td class="text-center"><?php echo e(number_format($data['ne'], 0, ',', '.')); ?></td>
+                                        <td class="text-center">
+                                            <strong><?php echo e(number_format($data['selesai'], 0, ',', '.')); ?></strong>
+                                        </td>
+                                        <td class="text-center"><?php echo e(number_format($data['sisa'], 0, ',', '.')); ?></td>
+                                        <td class="text-center"><?php echo e($data['presentase']); ?>%</td>
+                                        <td class="text-center">
+                                            <strong><?php echo e(number_format($data['bobot_nilai'], 0, ',', '.')); ?></strong>
+                                        </td>
+                                    </tr>
+                                <?php endif; ?>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+                            
+                            <?php if($no == 1): ?>
+                                <tr>
+                                    <td colspan="15" class="text-center text-muted py-4">
+                                        <i class="fa fa-database fa-2x mb-3"></i><br>
+                                        Tidak ada data untuk periode yang dipilih.
+                                    </td>
+                                </tr>
+                            <?php endif; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="15" class="text-center text-muted py-4">
+                                    <i class="fa fa-database fa-2x mb-3"></i><br>
+                                    Belum ada data yang tersimpan.
+                                </td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- INFO TOTAL PER KELAS -->
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header bg-info text-white">
+                            <h6 class="card-title mb-0" style="font-size: 12px;">
+                                <i class="fa fa-bar-chart"></i> Ringkasan Berdasarkan Kelas
+                            </h6>
+                        </div>
+                        <div class="card-body p-2">
+                            <table class="table table-sm table-bordered mb-0" style="font-size: 11px;">
+                                <thead>
+                                    <tr class="bg-light">
+                                        <th class="text-center">Kelas</th>
+                                        <th class="text-center">Total Permohonan</th>
+                                        <th class="text-center">Eksekusi Riil</th>
+                                        <th class="text-center">Eksekusi Lelang</th>
+                                        <th class="text-center">Total Selesai</th>
+                                        <th class="text-center">Bobot Nilai</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                        $grandTotal = 0;
+                                        $grandRiil = 0;
+                                        $grandLelang = 0;
+                                        $grandSelesai = 0;
+                                        $grandBobot = 0;
+                                    ?>
+                                    <?php $__currentLoopData = $totalPerKelas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $kelas => $data): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <tr>
+                                        <td class="text-center">
+                                            <span class="badge
+                                                <?php if($kelas == 'IA'): ?> badge-primary
+                                                <?php elseif($kelas == 'IB'): ?> badge-success
+                                                <?php else: ?> badge-secondary
+                                                <?php endif; ?>">
+                                                <?php echo e($kelas); ?>
+
+                                            </span>
+                                        </td>
+                                        <td class="text-center"><?php echo e(number_format($data['total'], 0, ',', '.')); ?></td>
+                                        <td class="text-center"><?php echo e(number_format($data['riil'], 0, ',', '.')); ?></td>
+                                        <td class="text-center"><?php echo e(number_format($data['lelang'], 0, ',', '.')); ?></td>
+                                        <td class="text-center"><?php echo e(number_format($data['selesai'], 0, ',', '.')); ?></td>
+                                        <td class="text-center"><?php echo e(number_format($data['bobot_nilai'], 0, ',', '.')); ?></td>
+                                    </tr>
+                                    <?php
+                                        $grandTotal += $data['total'];
+                                        $grandRiil += $data['riil'];
+                                        $grandLelang += $data['lelang'];
+                                        $grandSelesai += $data['selesai'];
+                                        $grandBobot += $data['bobot_nilai'];
+                                    ?>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    <tr class="bg-primary">
+                                        <td class="text-center"><strong>GRAND TOTAL</strong></td>
+                                        <td class="text-center"><strong><?php echo e(number_format($grandTotal, 0, ',', '.')); ?></strong></td>
+                                        <td class="text-center"><strong><?php echo e(number_format($grandRiil, 0, ',', '.')); ?></strong></td>
+                                        <td class="text-center"><strong><?php echo e(number_format($grandLelang, 0, ',', '.')); ?></strong></td>
+                                        <td class="text-center"><strong><?php echo e(number_format($grandSelesai, 0, ',', '.')); ?></strong></td>
+                                        <td class="text-center"><strong><?php echo e(number_format($grandBobot, 0, ',', '.')); ?></strong></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .table th {
+            font-size: 11px;
+            padding: 8px 5px;
+            vertical-align: middle;
+        }
+
+        .table td {
+            padding: 6px 4px;
+            vertical-align: middle;
+            font-size: 11px;
+        }
+
+        .card-header {
+            padding: 8px 15px;
+        }
+
+        .form-inline .form-group {
+            margin-right: 15px;
+            margin-bottom: 10px;
+        }
+
+        .bg-info {
+            background-color: #d1ecf1 !important;
+        }
+
+        .bg-success {
+            background-color: #d4edda !important;
+        }
+
+        .bg-warning {
+            background-color: #fff3cd !important;
+        }
+
+        /* Style untuk badge kelas */
+        .badge {
+            font-size: 10px;
+            padding: 4px 8px;
+            font-weight: bold;
+            border-radius: 4px;
+        }
+
+        .badge-primary {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .badge-success {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .badge-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        /* Style untuk tabel ringkasan */
+        .table-sm th,
+        .table-sm td {
+            padding: 4px 3px;
+        }
+    </style>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.v_template', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\Admin\Desktop\pm_hukum_app\resources\views//eksekusi/v_eksekusi_progres.blade.php ENDPATH**/ ?>

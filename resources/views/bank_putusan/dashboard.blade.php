@@ -1,56 +1,58 @@
 @extends('layouts.v_template')
 
 @section('content')
-    <!-- DASHBOARD PENGADUAN -->
+    @include('layouts.v_deskripsi')
+    <!-- DASHBOARD JDIH -->
 
     <div class="container-fluid">
         <div class="row">
 
-            <!-- TOTAL PENGADUAN -->
+            <!-- TOTAL BANK PUTUSAN -->
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+                <div class="xe-widget xe-vertical-counter xe-vertical-counter-info animated-widget" data-count=".num"
+                    data-from="0" data-to="{{ $bankputs_total }}" data-decimal="," data-suffix="" data-duration="2.5">
+                    <div class="xe-icon">
+                        <i class="fa fa-file-text-o pulse"></i>
+                        <h4 class="widget-title">TOTAL PERKARA</h4>
+                    </div>
+                    <div class="xe-label">
+                        <a href="{{ route('arsip.filter', 'total') }}" class="text-white">
+                            <h1 class="num">0</h1>
+                        </a>
+                    </div>
+                    <div class="widget-wave"></div>
+                </div>
+            </div>
+
+            <!-- SUDAH UPLOAD BUNDEL B -->
             <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 mb-4">
                 <div class="xe-widget xe-vertical-counter xe-vertical-counter-success animated-widget" data-count=".num"
-                    data-from="0" data-to="{{ $pengaduan_total }}" data-decimal="," data-suffix="" data-duration="2.5">
-                    <div class="xe-icon">
-                        <i class="fa fa-users pulse"></i>
-                        <h4 class="widget-title">TOTAL PENGADUAN</h4>
-                    </div>
-                    <div class="xe-label">
-                        <a href="/pgd_total" class="text-white">
-                            <h1 class="num">0</h1>
-                        </a>
-                    </div>
-                    <div class="widget-wave"></div>
-                </div>
-            </div>
-
-            <!-- PENGADUAN TAHUN INI -->
-            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 mb-4">
-                <div class="xe-widget xe-vertical-counter xe-vertical-counter-purple animated-widget" data-count=".num"
-                    data-from="0" data-to="{{ $pengaduan_berjalan }}" data-decimal="," data-suffix="" data-duration="2.5">
-                    <div class="xe-icon">
-                        <i class="fa fa-users bounce"></i>
-                        <h4 class="widget-title">PENGADUAN {{ date('Y') }}</h4>
-                    </div>
-                    <div class="xe-label">
-                        <a href="/pgd_berjalan" class="text-white">
-                            <h1 class="num">0</h1>
-                        </a>
-                    </div>
-                    <div class="widget-wave"></div>
-                </div>
-            </div>
-
-            <!-- PENGADUAN BELUM SELESAI -->
-            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 mb-4">
-                <div class="xe-widget xe-vertical-counter xe-vertical-counter-danger animated-widget" data-count=".num"
-                    data-from="0" data-to="{{ $pengaduan_blm_selesai }}" data-decimal="," data-suffix=""
+                    data-from="0" data-to="{{ $bankputs_e_court }}" data-decimal="," data-suffix=""
                     data-duration="2.5">
                     <div class="xe-icon">
-                        <i class="fa fa-users shake"></i>
-                        <h4 class="widget-title">PENGADUAN BELUM SELESAI</h4>
+                        <i class="fa fa-file-text-o bounce"></i>
+                        <h4 class="widget-title">SUDAH UPLOAD BUNDEL B</h4>
                     </div>
                     <div class="xe-label">
-                        <a href="/pengaduan_blm_selesai" class="text-white">
+                        <a href="{{ route('arsip.filter', 'sudah-upload') }}" class="text-white">
+                            <h1 class="num">0</h1>
+                        </a>
+                    </div>
+                    <div class="widget-wave"></div>
+                </div>
+            </div>
+
+            <!-- BELUM UPLOAD BUNDEL B -->
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+                <div class="xe-widget xe-vertical-counter xe-vertical-counter-danger animated-widget" data-count=".num"
+                    data-from="0" data-to="{{ $bankputs_non_e_court }}" data-decimal="," data-suffix=""
+                    data-duration="2.5">
+                    <div class="xe-icon">
+                        <i class="fa fa-file-text-o shake"></i>
+                        <h4 class="widget-title">BELUM UPLOAD BUNDEL B</h4>
+                    </div>
+                    <div class="xe-label">
+                        <a href="{{ route('arsip.filter', 'belum-upload') }}" class="text-white">
                             <h1 class="num">0</h1>
                         </a>
                     </div>

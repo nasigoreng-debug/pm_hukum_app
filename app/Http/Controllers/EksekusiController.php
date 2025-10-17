@@ -126,7 +126,6 @@ class EksekusiController extends Controller
         $month = $currentDate->format('m');
         $year = $currentDate->format('Y');
 
-
         // Data umum dengan filter tanggal
         $eksekusi_total = DB::table('tb_eksekusi')
             ->whereBetween('tgl_permohonan', [$startDate, $endDate])
@@ -141,44 +140,72 @@ class EksekusiController extends Controller
             ->whereYear('tgl_permohonan', $year)
             ->count();
 
-        // Daftar semua satker
-        $satkers = [
-            'bandung',
-            'sumedang',
-            'Indramayu',
-            'Majalengka',
-            'Sumber',
-            'Ciamis',
-            'Tasikmalaya',
-            'Karawang',
-            'Cimahi',
-            'Subang',
-            'Purwakarta',
-            'Sukabumi',
-            'Cianjur',
-            'Kuningan',
-            'Cibadak',
-            'Cirebon',
-            'Garut',
-            'Bogor',
-            'Bekasi',
-            'Cibinong',
-            'Cikarang',
-            'Depok',
-            'Kota Tasikmalaya',
-            'Kota Banjar',
-            'Soreang',
-            'Ngamprah'
+        // Mapping kelas satker
+        $kelasSatker = [
+            'Bandung' => 'IA',
+            'Bekasi' => 'IA',
+            'Bogor' => 'IA',
+            'Ciamis' => 'IA',
+            'Cianjur' => 'IA',
+            'Cibadak' => 'IA',
+            'Cibinong' => 'IA',
+            'Cikarang' => 'IA',
+            'Cirebon' => 'IB',
+            'Depok' => 'IA',
+            'Garut' => 'IA',
+            'Indramayu' => 'IA',
+            'Karawang' => 'IA',
+            'Kota Banjar' => 'IB',
+            'Cimahi' => 'IA',
+            'Kota Tasikmalaya' => 'IB',
+            'Kuningan' => 'IA',
+            'Majalengka' => 'IA',
+            'Ngamprah' => 'IB',
+            'Purwakarta' => 'IA',
+            'Soreang' => 'IB',
+            'Subang' => 'IA',
+            'Sukabumi' => 'IB',
+            'Sumber' => 'IA',
+            'Sumedang' => 'IA',
+            'Tasikmalaya' => 'IA'
         ];
 
         $results = [];
+        $totalPerKelas = []; // Untuk menghitung total per kelas
 
-        foreach ($satkers as $satker) {
+        foreach ($kelasSatker as $satker => $kelas) {
+            // Panggil function hitungDataEksekusi yang sudah ada
             $results[$satker] = $this->hitungDataEksekusi($satker, $startDate, $endDate);
+            $results[$satker]['kelas'] = $kelas; // Tambahkan kelas ke hasil
+
+            // Hitung total per kelas
+            if (!isset($totalPerKelas[$kelas])) {
+                $totalPerKelas[$kelas] = [
+                    'total' => 0,
+                    'riil' => 0,
+                    'lelang' => 0,
+                    'dicabut' => 0,
+                    'dicoret' => 0,
+                    'ne' => 0,
+                    'selesai' => 0,
+                    'bobot_nilai' => 0
+                ];
+            }
+
+            $totalPerKelas[$kelas]['total'] += $results[$satker]['total'];
+            $totalPerKelas[$kelas]['riil'] += $results[$satker]['riil'];
+            $totalPerKelas[$kelas]['lelang'] += $results[$satker]['lelang'];
+            $totalPerKelas[$kelas]['dicabut'] += $results[$satker]['dicabut'];
+            $totalPerKelas[$kelas]['dicoret'] += $results[$satker]['dicoret'];
+            $totalPerKelas[$kelas]['ne'] += $results[$satker]['ne'];
+            $totalPerKelas[$kelas]['selesai'] += $results[$satker]['selesai'];
+            $totalPerKelas[$kelas]['bobot_nilai'] += $results[$satker]['bobot_nilai'];
         }
 
         return view('/eksekusi/v_eksekusi_progres', array_merge($data, [
             'results' => $results,
+            'kelasSatker' => $kelasSatker,
+            'totalPerKelas' => $totalPerKelas,
             'eksekusi_total' => $eksekusi_total,
             'eksekusi_masuk_thn_ini' => $eksekusi_masuk_thn_ini,
             'eksekusi_bln_ini' => $eksekusi_bln_ini,
@@ -188,7 +215,7 @@ class EksekusiController extends Controller
     }
 
     // Update fungsi helper untuk menerima parameter tanggal
-    private function hitungDataEksekusi($satker, $startDate = null, $endDate = null)
+    private function hitungDataEksekusi($satker, $startDate = null, $endDate = null, $kelas = null)
     {
         // Query dasar untuk satker tertentu dengan filter tanggal
         $query = DB::table('tb_eksekusi')->where('satker', $satker);
@@ -197,6 +224,9 @@ class EksekusiController extends Controller
         if ($startDate && $endDate) {
             $query->whereBetween('tgl_permohonan', [$startDate, $endDate]);
         }
+
+        // Parameter $kelas bisa digunakan untuk logika tambahan jika diperlukan
+        // Misalnya: perhitungan bobot yang berbeda berdasarkan kelas
 
         // Hitung total eksekusi
         $total = $query->count();
@@ -235,8 +265,8 @@ class EksekusiController extends Controller
 
         $presentase = number_format(round($progres, 2), 2, ',', '.');
 
-        // Hitung bobot nilai
-        $bobot_nilai = ($riil * 5) + ($lelang * 5);
+        // Hitung bobot nilai (bisa dimodifikasi berdasarkan kelas jika needed)
+        $bobot_nilai = ($riil * 5) + ($lelang * 5) + ($dicabut * 1) + ($dicoret * 1) + ($ne * 1);
 
         return [
             'total' => $total,
@@ -250,7 +280,8 @@ class EksekusiController extends Controller
             'selesai' => $selesai,
             'sisa' => $sisa,
             'presentase' => $presentase,
-            'bobot_nilai' => $bobot_nilai
+            'bobot_nilai' => $bobot_nilai,
+            'kelas' => $kelas // Tambahkan kelas dalam return jika diperlukan
         ];
     }
 

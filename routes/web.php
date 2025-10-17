@@ -48,6 +48,7 @@ Route::get('arsip/{id}/download-bundel', [ArsipController::class, 'downloadBunde
 
 //Bank Putusan
 Route::resource('bankput', BankputController::class);
+Route::get('bankput/filter/{filter}', [BankputController::class, 'filter'])->name('bankput.filter');
 // Route::get('/bankput', [BankputController::class, 'index'])->name('bankput');
 // Route::get('/bankput/detail/{id}', [BankputController::class, 'detail'])->name('detail');
 // Route::get('/bankput/add', [BankputController::class, 'add'])->name('add');

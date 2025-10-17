@@ -162,6 +162,7 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                                 </div>
+                                <small>file pdf, max 5MB</small>
                             </div>
 
                             <!-- Konsep -->
@@ -195,6 +196,7 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                                 </div>
+                                <small>file doc,docx,rtf, max 5MB</small>
                             </div>
 
                             <!-- Tombol -->

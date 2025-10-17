@@ -13,8 +13,9 @@
 
         <div class="panel-body">
 
-            <form action="/bankput/update/{{ $bankputs->id }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('bankput.update', $bankputs->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
+                @method('PUT')
                 <div class="row">
                     <!-- left column -->
                     <div class="col">
@@ -33,7 +34,7 @@
                             <div class="col-xs-6">
                                 <label>Tanggal Putus Banding</label>
                                 <input type="date" class="form-control @error('tgl_put_banding') is-invalid @enderror"
-                                    value="{{ $bankputs->tgl_put_banding }}" name="tgl_put_banding">
+                                    value="{{ $bankputs->tgl_put_banding ? \Carbon\Carbon::parse($bankputs->tgl_put_banding)->format('Y-m-d') : '' }}" name="tgl_put_banding">
                                 <div id="validationServerUsernameFeedback" class="invalid-feedback text-danger">
                                     @error('tgl_put_banding')
                                         {{ $message }}

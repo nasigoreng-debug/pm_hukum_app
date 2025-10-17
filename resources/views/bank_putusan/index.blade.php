@@ -33,19 +33,36 @@
             </script>
             <td class="text-center" style="font-size: 5px;">
                 @if (Auth::user()->level === 1)
-                    <a href="{{route('bankput.create')}}" class="btn btn-sm btn-info mb-2">Tambah Data</a>
+                    <a href="{{ route('bankput.create') }}" class="btn btn-sm btn-info mb-2">Tambah Data</a>
                 @elseif(Auth::user()->level === 2)
-                    <a href="{{route('bankput.create')}}" class="btn btn-sm btn-info mb-2">Tambah Data</a>
+                    <a href="{{ route('bankput.create') }}" class="btn btn-sm btn-info mb-2">Tambah Data</a>
                 @elseif(Auth::user()->level === 3)
                 @endif
             </td>
 
-            @if (session('pesan'))
+            {{-- @if (session('pesan'))
                 <div class="alert alert-success alert-dismissible mt-2">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                     {{ session('pesan') }}
                 </div>
+            @endif --}}
+
+            @if (session('pesan'))
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Sukses!',
+                            text: '{{ session('pesan') }}',
+                            timer: 3000,
+                            showConfirmButton: true,
+                            confirmButtonText: 'OK',
+                            timerProgressBar: true
+                        });
+                    });
+                </script>
             @endif
+
             <table class="table table-sm table-hover" id="example-4">
                 <thead class="bg-gray">
                     <tr>
@@ -54,7 +71,7 @@
                         <th style="width: 70px;">Nomor Banding</th>
                         <th style="width: 30px;">Jenis Perkara</th>
                         <!-- <th style="width: 70px;">Pembanding</th>
-                        <th style="width: 70px;">Terbanding</th> -->
+                                <th style="width: 70px;">Terbanding</th> -->
                         <th style="width: 30px;">Putus</th>
                         <th style="width: 30px;">Status</th>
                         <th style="width: 20px;">Putusan</th>
@@ -71,7 +88,7 @@
                         <th>Nomor Banding</thyle=>
                         <th>Jenis Perkara</th>
                         <!-- <th>Pembanding</th>
-                        <th>Terbanding</th> -->
+                                <th>Terbanding</th> -->
                         <th>Putus</th>
                         <th>Status</th>
                         <th>Putusan</th>
@@ -115,28 +132,38 @@
                             <td class="text-center" style="font-size: 5px;">
                                 @if (Auth::user()->level === 1)
                                     <button type="button" class="btn btn-purple btn-xs" data-toggle="modal"
-                                        data-target="#detail{{ $data->id }}">
-                                        <i class="fa fa-eye"></i></a>
+                                        data-target="#detail{{ $data->id }}"
+                                        style="padding: 2px 5px; font-size: 8px; margin: 1px;">
+                                        <i class="fa fa-eye"></i>
                                     </button>
-                                    <a href="/bankput/edit/{{ $data->id }}" class="btn btn-warning btn-xs">
+                                    <a href="{{ route('bankput.edit', $data->id) }}" class="btn btn-warning btn-xs"
+                                        style="padding: 2px 5px; font-size: 8px; margin: 1px;">
                                         <i class="fa fa-edit"></i>
                                     </a>
-                                    <button type="button" class="btn btn-danger btn-xs" data-toggle="modal"
-                                        data-target="#delete{{ $data->id }}">
-                                        <i class="fa fa-trash-o"></i>
-                                    </button>
+                                    <form id="deleteForm" action="{{ route('bankput.destroy', $data->id) }}"
+                                        method="POST" style="display: inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="button" onclick="confirmDelete()" class="btn btn-danger btn-xs"
+                                            style="padding: 2px 5px; font-size: 8px; margin: 1px;">
+                                            <i class="fa fa-trash-o"></i>
+                                        </button>
+                                    </form>
                                 @elseif(Auth::user()->level === 2)
                                     <button type="button" class="btn btn-purple btn-xs" data-toggle="modal"
-                                        data-target="#detail{{ $data->id }}">
-                                        <i class="fa fa-eye"></i></a>
+                                        data-target="#detail{{ $data->id }}"
+                                        style="padding: 2px 5px; font-size: 8px; margin: 1px;">
+                                        <i class="fa fa-eye"></i>
                                     </button>
-                                    <a href="/bankput/edit/{{ $data->id }}" class="btn btn-warning btn-xs">
+                                    <a href="{{ route('bankput.edit', $data->id) }}" class="btn btn-warning btn-xs"
+                                        style="padding: 2px 5px; font-size: 8px; margin: 1px;">
                                         <i class="fa fa-edit"></i>
                                     </a>
                                 @elseif(Auth::user()->level === 3)
                                     <button type="button" class="btn btn-purple btn-xs" data-toggle="modal"
-                                        data-target="#detail{{ $data->id }}">
-                                        <i class="fa fa-eye"></i></a>
+                                        data-target="#detail{{ $data->id }}"
+                                        style="padding: 2px 5px; font-size: 8px; margin: 1px;">
+                                        <i class="fa fa-eye"></i>
                                     </button>
                                 @endif
                             </td>
@@ -169,7 +196,7 @@
                                     @if ($data->put_rtf == '')
                                         ""
                                     @else
-                                        <a href="\public\storage\laporans\rtf\{{ $data->put_rtf }}" class="text-blue"
+                                        <a href="\public\storage\bankput\rtf\{{ $data->put_rtf }}" class="text-blue"
                                             target="_blank"><i class="fa fa-file-pdf-o"></i></a>
                                     @endif
                                 </td>
@@ -180,13 +207,13 @@
                                     @if ($data->put_anonim == '')
                                         ""
                                     @else
-                                        <a href="\public\storage\laporans\anonim\{{ $data->put_anonim }}" class="text-blue"
-                                            target="_blank"><i class="fa fa-file-pdf-o"></i></a>
+                                        <a href="\public\storage\bankput\anonim\{{ $data->put_anonim }}"
+                                            class="text-blue" target="_blank"><i class="fa fa-file-pdf-o"></i></a>
                                     @endif
                                 </td>
                             </tr>
                         </table>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">    
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
